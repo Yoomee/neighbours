@@ -1,0 +1,32 @@
+.span10.offset1
+  %ul.nav.nav-tabs.nav-tabs-register
+    %li.active
+      =link_to "/wireframes/register_help_1" do
+        %span.tab-number
+          1
+        Tell us
+        %br
+        who you are
+    %li
+      =link_to "/wireframes/register_help_2" do
+        %span.tab-number
+          2    
+        Tell us
+        %br
+        where you live  
+    %li
+      =link_to "/wireframes/register_help_3" do
+        %span.tab-number
+          3
+        Validate 
+        %br
+        your account
+        
+  =semantic_form_for(@user, :url => registrations_path)  do |form|  
+    .tab-content.register-tab-content    
+      .register-tab-pane  
+        =hidden_field_tag :user_id, @user.id
+        =render("registrations/steps/#{@user.current_step}", :form => form)
+      .form-actions
+        =form.submit("Next", :class => "btn btn-primary register-btn-next")
+        =link_to("Back", "#", :class => "btn register-btn-back")
