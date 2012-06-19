@@ -1,0 +1,75 @@
+=render('wireframes/control_panel')
+.row
+  .span8.offset2
+    %ul.pager
+      %li
+        =link_to "/wireframes/my_requests" do
+          &uarr;  All requests
+    .request-body.mb2.mt2 
+      %h1 I would like some help with my computer
+      %p I have a windows computer and it is causing me quite some frustration Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi.
+     
+#request-activity.row
+  .span6.offset1
+    %ul.unstyled
+      %li.post
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Sarah
+        .post-speech
+          %p
+            I might be able to help you on a friday at 3pm?
+        .post-actions
+          =link_to "#", :class=>"post-action" do
+            %i.icon-comment
+            Reply
+      %li.post
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Alan
+        .post-speech
+          %p
+            I have some IT experience and I could give you a hand if you wanted. 
+        .post-actions
+          =link_to "#", :class=>"post-action" do
+            %i.icon-comment
+            Reply
+      %li.post
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Bob
+        .post-speech
+          %p
+            I only use Macs I'm afraid. Do you have an iPad?
+        .post-actions
+          =link_to "#", :class=>"post-action" do
+            %i.icon-comment
+            Reply
+
+  .span4
+    %h3.mb1 People offering help
+    %ul.thumbnails
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"
+      %li.span1
+        =link_to "#", :class=>"thumbnail" do
+          =image_tag "person.png"                                                  

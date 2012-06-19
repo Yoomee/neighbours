@@ -1,0 +1,22 @@
+!!!5
+%html
+  %head
+    %title
+      =Settings.site_name
+      ="- #{@page_title}" if @page_title.present?
+    =stylesheet_link_tag("application")
+    =javascript_include_tag("application")
+    =csrf_meta_tags
+    =yield :head
+    =google_analytics_js
+  -body_tag do
+    .main-wrapper
+      -if flash.present?
+        =yield_with_bootstrap(render_flash)
+      =render("layouts/header")
+      =yield_with_bootstrap(yield)
+      .push
+    =render ('layouts/register_popup')
+    
+    .footer-wrapper
+      =render("layouts/footer")

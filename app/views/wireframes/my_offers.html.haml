@@ -1,0 +1,30 @@
+=render('wireframes/control_panel')
+.row
+  .span8.offset2
+    %h1 My offers
+    
+    %ul.nav.nav-tabs.nav-stacked
+      %li
+        =link_to "/wireframes/request" do
+          %h3 Painting my windowsills
+          %p
+            %span.badge 2
+            %span.request-message-text
+              messages
+      %li
+        =link_to "/wireframes/request" do
+          %h3 Walking the dog
+          %p.request-messages
+            %span.badge 2
+            %span.request-message-text
+              messages
+        
+      %li
+        =link_to "/wireframes/request" do
+          %h3 Decorating my kitchen
+          %p.request-messages
+            %span.badge 1
+            %span.request-message-text
+              messages
+                 
+

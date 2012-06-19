@@ -1,0 +1,17 @@
+#hellobar
+  %h3
+    New to this site?
+    =link_to "Find out how it works", "/wireframes/about"
+.container#header
+  .row#header_row
+    .span5
+      %h1#site_logo
+        =link_to "Neighbours Can Help", "/"
+    .span7
+      #nav.main-nav
+        %ul.unstyled
+          %li=link_to "Login", "/wireframes/logged_in_home", :class=>"nav-link btn"        
+          %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"        
+          %li=link_to "About", "/wireframes/about", :class=>"nav-link"
+          %li=link_to "Home", "/", :class=>"nav-link"
+          

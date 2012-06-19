@@ -1,0 +1,579 @@
+/* @override http://localhost:3000/assets/application.css?body=1 */
+
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require bootstrap
+ *= require formtastic-bootstrap
+ *= require font-awesome
+ *= require ym_core
+ *= require chosen
+ *= require_self
+*/
+/*CSS3 magic*/
+
+@-webkit-keyframes reset {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 0;
+}
+}
+ 
+@-webkit-keyframes fade_in {
+0% {
+    opacity: 0;
+}
+60% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+.fade_in{
+    -webkit-animation-name: reset, fade_in;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-iteration-count: 1;
+}
+
+.fade_in.fade_one,{-webkit-animation-delay: 0, 0;}
+.fade_in.fade_two,   {-webkit-animation-delay: 0, 0.3s;}
+.fade_in.fade_three, {-webkit-animation-delay: 0, 0.6s;}
+.fade_in.fade_four,  {-webkit-animation-delay: 0, 0.9s;}
+.fade_in.fade_five,  {-webkit-animation-delay: 0, 1.2s;}
+.fade_in.fade_six, {-webkit-animation-delay: 0, 1.5s;}
+}
+.main-nav a {
+	    
+     -webkit-transition: .2s ease-in;
+     -moz-transition: .2s ease-in;
+     transition: .2s ease-in;
+  
+}
+
+
+/*========== Font stuff ==========*/
+.subnav_link, #social_media_links ul li a  {
+	font-weight: 300;
+	font-size: 15px;
+	color: #777;
+}
+
+/*========== General ==========*/
+
+.shadow {
+  -webkit-box-shadow: 1px 2px 1px rgba(0,0,0,0.09), 2px 2px 5px rgba(0,0,0,0.05), 2px 2px 10px rgba(0,0,0,0.04);
+	-moz-box-shadow: 1px 2px 1px rgba(0,0,0,0.09), 2px 2px 5px rgba(0,0,0,0.05), 2px 2px 10px rgba(0,0,0,0.04);
+	box-shadow:1px 1px 1px rgba(0,0,0,0.09), -1px -1px 1px rgba(0,0,0,0.05), 2px 2px 3px rgba(0,0,0,0.04), 2px 2px 8px rgba(0,0,0,0.03);  
+}
+
+/*========== Forms ==========*/
+select[multiple='multiple']{
+  width:620px;
+}
+button.close {
+  border: none;
+  background: none;
+}
+/*========== Font ==========*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.nav ul,
+a.category,
+#buy-ticket-link,
+.black-btn {
+   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2
+{
+  margin-bottom: 15px;
+}
+h2.home-title, .big-title, .about_page_view #page_title {
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: bold;
+}
+.home-slide-title, .medium-title {
+  font-size: 30px;
+  line-height: 30px; 
+   font-weight: bold;
+}
+.nav ul, .nav li, #site_logo, h2#footer_site_logo, h2, .are-you-title, .block-title, .home-subtitle, .small-title {
+	font-size: 26px;
+	line-height: 28px; 
+}
+.normal-title {
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
+  margin-bottom: 20px;  	
+  
+}
+body, p,
+div, input, select, .btn, label {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 23px;
+}
+a.call-to-action-link, .carousel-text p, .small-text {
+  font-size: 13px;
+  line-height: 16px;
+}
+.center {
+  text-align: center;
+}
+.btn {
+  font-weight: bold;
+}
+input {
+	height: 30px;
+	width: 370px;
+	margin-bottom: 20px;
+}
+textarea {
+  min-height: 100px;
+}
+label {
+  font-weight: bold;
+}
+.form-horizontal .control-group {
+	margin-bottom: 30px;
+}
+.give-mb1-to-inputs input {
+  margin-bottom: 20px;
+}
+.mt1 {
+  margin-top: 20px;
+}
+.mt2 {
+  margin-top: 40px;
+}
+
+.mb1 {
+  margin-bottom: 20px;
+}
+.mb2 {
+  margin-bottom: 40px;
+}
+.mr1 {
+  margin-right: 20px;
+}
+.mr2 {
+  margin-right: 40px;
+}
+.ml1 {
+  margin-left: 20px;
+}
+.ml2 {
+  margin-left: 40px;
+}
+br.clear {
+  clear: both;
+}
+/*========== Header ==========*/
+#hellobar {
+	background: #fd818e;
+	text-align: center;
+	position: relative;
+	width: 100%;
+	padding: 6px 0 10px;
+	color: #fff;  
+}
+#hellobar h3 {
+}
+#hellobar h3 a {
+	color: #b22d35;
+	border-bottom: 1px dotted #b22d35;
+}
+#header {
+  margin-bottom: 20px;  
+}
+#header_row {
+  padding: 20px 0 10px;
+}
+#headline_image {
+	box-shadow:1px 1px 3px #ccc
+  
+}
+#site_logo {
+  font-size: 40px;
+  line-height: 40px;
+  margin:7px 0 0 15px;
+  
+  background: url(/assets/logo.png) no-repeat 0 0;
+}
+#site_logo a {
+  color: #333;
+  padding: 20px 0 30px 140px;
+  display: block;
+}
+#site_logo a:hover {
+  text-decoration: none;
+}
+
+.main-nav li {
+  float: right;
+  margin: 0px;
+}
+.main-nav a {
+  margin: 0px 0 0 10px;
+  padding: 5px 10px;
+  border-radius:15px;
+}
+.main-nav a:hover {
+  text-decoration: none;
+  color: #0088cc;
+  background: #f5f5f5;
+}
+#header_links {
+  float: right;
+}
+.header_link {
+  font-size: 14px;
+  margin-left: 8px;
+}
+.subnav_link {
+  color: #777;
+  margin: 8px 14px 0 0;
+  float: left;
+}
+.homepage-box {
+   background: #f5f5f5;
+
+
+  padding: 20px;
+  height: 260px;
+  
+  box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  -webkit-box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  -moz-box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;  
+  border-radius:3px;
+}
+#social_media_links ul li a {
+	float: left;
+	width: 100%;
+	padding: 4px 0;
+	border-bottom: 1px solid #e8e8e8;
+  
+}
+.homepage-box-short {
+  height: 156px;
+}
+.homepage-box-title {
+  font-size: 20px;
+  line-height: 25px;
+  margin-bottom: 15px;
+}
+.homepage-box-title a {
+  color: inherit;
+}
+.main-nav .active a {
+  color: #00558D;
+}
+
+
+/*========== Homepage ==========*/
+
+#home-map {
+   background: url(/assets/map.png) top center no-repeat;
+
+  padding: 0px;
+  height: 320px;
+  
+  box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  -webkit-box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  -moz-box-shadow:inset 0px 1px 10px rgba(0,0,0,0.03);
+  
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;  
+  border-radius:3px;	
+  
+  margin-bottom: 30px;
+  
+}
+
+.you-are-in {
+	float: right;
+	margin: -60px 0 0 0; 
+}
+.you-are-in select {
+  margin-left: 10px;
+}
+
+.list {
+  clear: left;
+  padding-bottom: 10px;
+  padding-top: 10px;  
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+.list-image {
+  margin-right: 20px;
+  	float: left;
+	width: 60px;
+}
+.list-image img {
+	float: left;
+	width: 60px;
+}
+.list-image .small-text {
+  float: left;
+  margin: -10px 0 0 0;
+  background: #fd818e;
+  color: #fff;
+  padding: 2px 0;
+  width: 100%;
+  text-align: center;
+  
+}
+.list-image a:hover {
+  text-decoration: none;
+}
+.call-to-action, .call-to-action:hover  {
+	color: #fff;
+  text-shadow: none;
+  background: #f8bb61;
+  border-color: #f78a1e;  
+  width: 100%;
+  padding: 15px 0;
+  font-size: 20px;
+  margin: 20px 0;
+}
+.call-to-action.primary, .call-to-action.primary:hover  {
+  background: #abd424;
+  border-color: #67c621;
+	
+}
+
+/*========== I can help/need help pages ==========*/
+
+.help-title {
+	float: left;
+	margin: 4px 15px 0 0;
+}
+.help-well {
+  height: 38px;
+}
+.need-help-input {
+	width: 250px;
+	margin: 0px 10px 0 0;
+	float: left;
+	padding-left: 10px;
+	font-size: 18px;
+	height: 26px;
+}
+.can-help-input {
+	width: 360px;
+	margin: 0px 0 0 0;
+	float: right;
+	padding-left: 10px;
+	font-size: 18px;
+	height: 26px;
+}
+.other-people-help-title {
+  border-bottom: 2px dotted #fd818e;
+  color: #fd818e;
+  padding: 0 0 5px;
+  margin: 0 0 5px;
+}
+
+.list-result .list-text {
+  max-width: 420px;
+  float: left;
+}
+.i-can-help-btn {
+	clear: none;
+	float: left;
+	margin: 15px 0 0 15px;
+}
+
+.need-help-btn {
+	float: left;
+	clear: both;
+	margin: 20px 0 0;
+  
+}
+
+
+/*==========  registation page ==========*/
+.nav-tabs-register {
+  margin-bottom: 0;
+}
+.nav-tabs-register li {
+  margin-right: 7px;
+}
+.nav-tabs-register li.active a {
+	color: #619a5f;
+}
+.nav-tabs-register li:last-child {
+	margin-right: 0;
+}
+.nav-tabs-register li a {
+	width: 226px;
+	font-size: 20px;
+	line-height: 22px;
+	padding: 15px 10px 20px;
+}
+
+span.tab-number {
+	display: block;
+	float: left;
+	font-size: 20px;
+	color: #fff;
+	font-weight: bold;
+	line-height: 45px;
+	width: 45px;
+	height: 45px;
+	background: #0088ce;
+	text-align: center;
+	border-radius:40px;
+	margin: 0 15px 0 10px;
+}
+li.active span.tab-number {
+	background: #619a5f;
+  
+}
+.register-tab-content {
+  border: 1px solid #ccc;
+  border-top: none;
+  margin-bottom: 20px;
+}
+.register-tab-content .form-actions {
+	margin: 0;
+}
+.register-tab-pane {
+  padding: 60px 40px 20px;
+
+}
+.register-btn-next, .register-btn-back {
+  float: right;
+  font-size: 26px;
+  padding: 10px 20px;
+}
+.register-btn-back {
+  float: left;
+}
+li.or {
+	margin: 60px 20px 0 40px;
+	float: left;
+}
+.validate-your-account .caption {
+
+}
+.validate-your-account .caption .btn {
+  width: 100%;
+  text-align: center;
+  padding-left:0;
+  padding-right:0;
+}
+/*========== Page stuff ==========*/
+
+#sign-up-call-to-action .well {
+	font-size: 20px;
+	font-weight: bold;
+	background: #619a5f;
+	color: #fff;
+  
+}
+
+/*========== Footer ==========*/
+/*
+Sticky Footer by Ryan Fait
+http://ryanfait.com/sticky-footer/
+*/
+html, body {
+  height: 100%;
+}
+.main-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -60px; /* the bottom margin is the negative value of the footer's height */
+}
+.push {
+  clear: both;
+  height: 60px;  
+}
+.footer-wrapper {
+	clear: both;
+	height: 60px;
+}
+.footer{
+  border-top: 1px solid #EEE;
+  margin-top: 9px;
+  padding-top: 9px;
+  color: #BFBFBF;
+}
+/*========== Control Panel==========*/
+#control-panel {
+  height: 70px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: #f5f5f5;
+}
+#big-home-icon, #big-home-icon i {
+	font-size: 40px;
+	line-height: 40px;
+	color: #fff;
+}
+#big-home-icon {
+	float: left;
+	margin: 0px 0 0 30px;
+	background: #b4c773;
+	padding:  13px 15px;
+	border-radius:50px;
+}
+/*========== My requests page ==========*/
+
+.request-message-text {
+	color: #888;
+  
+}
+/*========== request page ==========*/
+#request-activity {
+	padding-top: 40px;
+	
+	background: #f6f6f6; /* Old browsers */
+background: -moz-linear-gradient(top,  #f6f6f6 1%, #ffffff 34%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#f6f6f6), color-stop(34%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* IE10+ */
+background: linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+  
+}
+.post {
+	background: #fff;
+	float: left;
+	border-radius:5px;
+	width: 400px;
+	margin: 0 0 20px;
+	padding: 10px 15px 10px;
+	-webkit-box-shadow:0px 0px 4px rgba(0,0,0,0.2)
+}
+.post-action {
+  float: right;
+  font-size: 13px;
+}
+
+
+

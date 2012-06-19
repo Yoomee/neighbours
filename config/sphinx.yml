@@ -1,0 +1,11 @@
+development:
+  bin_path: /usr/local/bin
+  min_prefix_len: 1
+production:
+  min_prefix_len: 1
+  port: 9312
+  config_file: /data/neighbours/shared/production.sphinx.conf
+  searchd_file_path: /data/neighbours/shared/sphinx
+  searchd_log_path: /data/neighbours/shared/searchd.log
+  query_log_file: /data/neighbours/shared/searchd.query.log
+  pid_file: /data/neighbours/shared/searchd.production.pid
