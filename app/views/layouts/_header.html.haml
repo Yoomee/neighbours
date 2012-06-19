@@ -6,8 +6,11 @@
     .span7
       #nav.main-nav
         %ul.unstyled
-          %li=link_to "Login", "/wireframes/logged_in_home", :class=>"nav-link btn"        
-          %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"        
+          -if current_user
+            %li=link_to "Logout", sign_out_path, :method => :delete, :class=>"nav-link btn"
+          -else
+            %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
+          %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"
           %li=link_to "About", "/wireframes/about", :class=>"nav-link"
           %li=link_to "Home", "/", :class=>"nav-link"
           
