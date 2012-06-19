@@ -9,8 +9,12 @@
     =csrf_meta_tags
     =yield :head
     =google_analytics_js
-  -body_tag do
+  -body_tag do  
     .main-wrapper
+      #hellobar
+        %h3
+          New to this site?
+          =link_to "Find out how it works", "/wireframes/about"
       -if flash.present?
         =yield_with_bootstrap(render_flash)
       =render("layouts/header")
