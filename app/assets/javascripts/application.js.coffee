@@ -19,3 +19,11 @@ $(document).ready () ->
         text: term
       )
   )
+
+window.Registration = 
+  initValidateLinks: () ->
+    $('a.validate-by-link').live 'click', (event) ->
+      event.preventDefault()
+      $('a.validate-by-link').removeClass('active')
+      `$(this)`.addClass('active')
+      $('#user_validate_by').val(`$(this)`.data('validate-by'))

@@ -1,20 +1,20 @@
 .span10.offset1
   %ul.nav.nav-tabs.nav-tabs-register
-    %li.active
-      =link_to "/wireframes/register_help_1" do
+    =li_with_active(@user.current_step == "who_you_are") do
+      =link_to "#" do
         %span.tab-number
           1
         Tell us
         %br
         who you are
-    %li
+    =li_with_active(@user.current_step == "where_you_live") do
       =link_to "/wireframes/register_help_2" do
         %span.tab-number
           2    
         Tell us
         %br
         where you live  
-    %li
+    =li_with_active(@user.current_step == "validate") do
       =link_to "/wireframes/register_help_3" do
         %span.tab-number
           3
@@ -22,7 +22,7 @@
         %br
         your account
         
-  =semantic_form_for(@user, :url => registrations_path)  do |form|  
+  =semantic_form_for(@user, :url => registrations_path, :method => :post)  do |form|
     .tab-content.register-tab-content    
       .register-tab-pane  
         =hidden_field_tag :user_id, @user.id

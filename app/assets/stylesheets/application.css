@@ -482,6 +482,9 @@ li.or {
   padding-left:0;
   padding-right:0;
 }
+.validate-by-link.active {
+  border-color: #0088cc;
+}
 /*========== Page stuff ==========*/
 
 #sign-up-call-to-action .well {
