@@ -4,4 +4,6 @@ Neighbours::Application.routes.draw do
   resources :wireframes, :only => [:index, :show]
   resources :registrations, :only => [:new, :create]  
   
+  resources :needs
+  
 end
