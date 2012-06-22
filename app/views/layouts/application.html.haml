@@ -20,7 +20,9 @@
       =render("layouts/header")
       =yield_with_bootstrap(yield)
       .push
-    =render ('layouts/register_popup')
-    
+    -if current_user.nil?
+      =render('modals/register_popup')
+    -elsif params[:modal]=="no_address"
+      =render('modals/no_address')
     .footer-wrapper
       =render("layouts/footer")

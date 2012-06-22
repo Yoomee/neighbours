@@ -1,7 +1,8 @@
 class RegistrationsController < ApplicationController
   
   def new
-    @user = User.new
+    @user = current_user || User.new
+    @user.current_step = params[:step]
   end
   
   def create
