@@ -7,10 +7,13 @@
       -@needs.each do |need|
         %li
           =link_to need do
+            .list-image
+              =image_for(need.user, "60x50#")
+              %p.small-text=need.user
             %h3=need.title
             %p
               %span.badge 2
               %span.request-message-text
                 messages
-                 
+               
 
