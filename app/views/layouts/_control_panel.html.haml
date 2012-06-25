@@ -2,7 +2,7 @@
   #control-panel.span12
     .row
       .span2
-        =link_to "/wireframes/logged_in_home", :id=>"big-home-icon" do
+        =link_to root_path, :id=>"big-home-icon" do
           %i.icon-home
       .span3    
         %h3.control-panel-title
@@ -17,7 +17,7 @@
             %span.badge.badge-info 12
             Messages
       .span3
-        =link_to "/wireframes/my_offers", :class=>"control-panel-link" do
+        =link_to offers_path, :class=>"control-panel-link" do
           %h3.control-panel-title
             My offers
           %p.control-panel-subtitle
