@@ -7,4 +7,8 @@ Neighbours::Application.routes.draw do
   
   resources :needs
   
+  resources :users, :only => []  do
+    resources :needs, :only => :index 
+  end
+  
 end

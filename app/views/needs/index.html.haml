@@ -1,4 +1,16 @@
-%h1=title "Needs"
-%ul
-  -@needs.each do |need|
-    %li=need.title
+=render('layouts/control_panel')
+.row
+  .span8.offset2
+    %h1=title "#{ @user ? 'My' : 'All' } requests"
+    
+    %ul.nav.nav-tabs.nav-stacked
+      -@needs.each do |need|
+        %li
+          =link_to need do
+            %h3=need.title
+            %p
+              %span.badge 2
+              %span.request-message-text
+                messages
+                 
+

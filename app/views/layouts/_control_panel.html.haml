@@ -1,0 +1,25 @@
+.row
+  #control-panel.span12
+    .row
+      .span2
+        =link_to "/wireframes/logged_in_home", :id=>"big-home-icon" do
+          %i.icon-home
+      .span3    
+        %h3.control-panel-title
+          Account status
+        %p.control-panel-subtitle
+          Not validated
+      .span3
+        =link_to user_needs_path(current_user), :class=>"control-panel-link" do
+          %h3.control-panel-title
+            My requests
+          %p.control-panel-subtitle
+            %span.badge.badge-info 12
+            Messages
+      .span3
+        =link_to "/wireframes/my_offers", :class=>"control-panel-link" do
+          %h3.control-panel-title
+            My offers
+          %p.control-panel-subtitle
+            %span.badge.badge-info 9
+            Messages
