@@ -2,6 +2,7 @@
 =render('layouts/control_panel')
 .row                              
   .span6
+    =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
     %h2 Site activity
     %ul.help-list.unstyled
       %li.list
