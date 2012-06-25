@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
     %w{who_you_are where_you_live validate}
   end
   
+  def to_s
+    first_name
+  end
+  
 end
