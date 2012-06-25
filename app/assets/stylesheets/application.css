@@ -579,4 +579,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 
 
+/*========== New offer form ==========*/
+.modal form {
+  margin-bottom:0px;
+}
 

@@ -1,4 +1,4 @@
-=render('wireframes/control_panel')
+=render('layouts/control_panel')
 .row
   .span8.offset2
     %ul.pager
@@ -7,70 +7,40 @@
           =link_to "&uarr; My requests".html_safe, user_needs_path(current_user)
         -else
           =link_to "&uarr; All requests".html_safe,  needs_path
-    .request-body.mb2.mt2 
+    .request-body.mb2.mt2
       %h1=title @need.title
       =simple_format(@need.description)
+      
+      
 #request-activity.row
   .span6.offset1
+    -if @offer.user != current_user
+      =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
     %ul.unstyled
-      %li.post
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Sarah
-        .post-speech
-          %p
-            I might be able to help you on a friday at 3pm?
-        .post-actions
-          =link_to "#", :class=>"post-action" do
-            %i.icon-comment
-            Reply
-      %li.post
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .post-speech
-          %p
-            I have some IT experience and I could give you a hand if you wanted. 
-        .post-actions
-          =link_to "#", :class=>"post-action" do
-            %i.icon-comment
-            Reply
-      %li.post
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Bob
-        .post-speech
-          %p
-            I only use Macs I'm afraid. Do you have an iPad?
-        .post-actions
-          =link_to "#", :class=>"post-action" do
-            %i.icon-comment
-            Reply
+      -@offers.each do |offer|
+        %li.post
+          .list-image
+            =link_to offer.user do
+              =image_for(offer.user, "60x60#")
+              %p.small-text
+                =offer.user
+          .post-speech
+            =simple_format(offer.text)
+          .post-actions
+            =link_to "#", :class=>"post-action" do
+              %i.icon-comment
+              Reply
 
   .span4
     %h3.mb1 People offering help
     %ul.thumbnails
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"
-      %li.span1
-        =link_to "#", :class=>"thumbnail" do
-          =image_tag "person.png"                                                  
+      -@offers.each do |offer|
+        %li.span1
+          =link_to offer.user, :class=>"thumbnail" do
+            =image_for(offer.user, "60x60#")
+
+-if @offer.user != current_user            
+  .row
+    .span12
+      #offer-form.modal.hide.fade
+        =render('offers/modal_form')

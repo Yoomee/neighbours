@@ -1,0 +1,5 @@
+<%if @offer.errors.blank?%>
+  window.location.href = '<%=need_path(@need)%>';
+<%else%>
+  $('#offer-form').html('<%=escape_javascript(render("offers/modal_form"))%>');
+<%end%>
