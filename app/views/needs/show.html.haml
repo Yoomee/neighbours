@@ -32,12 +32,13 @@
               Reply
 
   .span4
-    %h3.mb1 People offering help
-    %ul.thumbnails
-      -@offers.each do |offer|
-        %li.span1
-          =link_to offer.user, :class=>"thumbnail" do
-            =image_for(offer.user, "60x60#")
+    -if @offers.present?
+      %h3.mb1 People offering help
+      %ul.thumbnails
+        -@offers.each do |offer|
+          %li.span1
+            =link_to offer.user, :class=>"thumbnail" do
+              =image_for(offer.user, "60x60#")
 
 -if @offer.user != current_user            
   .row
