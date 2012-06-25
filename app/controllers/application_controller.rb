@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   
   include YmUsers::ApplicationController
   
-  before_filter :authenticate, :redirect_if_address_not_set
+  before_filter :authenticate, :redirect_if_address_not_set, :clear_new_need_attributes
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
     return true unless Rails.env.production?
     authenticate_or_request_with_http_basic do |username|
       AUTH_USERS[username]
+    end
+  end
+
+  def clear_new_need_attributes
+    if !%w{registrations need}.include?(controller_name)
+      session[:new_need_attributes] = nil
     end
   end
 

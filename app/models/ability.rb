@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
+    can :create, Need
     
     if user.try(:admin?)
       can :manage, :all      
