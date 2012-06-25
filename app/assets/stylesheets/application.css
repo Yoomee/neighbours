@@ -578,9 +578,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   font-size: 13px;
 }
 
-
+.request-body {
+  min-height: 140px;  
+}
 /*========== New offer form ==========*/
 .modal form {
   margin-bottom:0px;
 }
 
+/*========== User thumbnails ==========*/
+.user-thumbnail-large img{
+  float:left;
+  
+}
+.user-thumbnail-large p{
+  float: left;
+  margin: -10px 0 0 0;
+  background: #fd818e;
+  color: #fff;
+  padding: 2px 0;
+  width: 120px;
+  text-align: center;
+}

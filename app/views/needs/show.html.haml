@@ -1,13 +1,18 @@
 =render('layouts/control_panel')
 .row
-  .span8.offset2
-    %ul.pager
+  .span10.offset2
+    %ul.pager.mb-2
       %li
         -if @need.user == current_user
           =link_to "&uarr; My requests".html_safe, user_needs_path(current_user)
         -else
           =link_to "&uarr; All requests".html_safe,  needs_path
-    .request-body.mb2.mt2
+  .span2
+    =link_to @need.user, :class => "user-thumbnail-large" do
+      =image_for(@need.user, "120x120#")
+      %p=@need.user
+  .span8
+    .request-body.mb2
       %h1=title @need.title
       =simple_format(@need.description)
       
