@@ -11,6 +11,9 @@ Neighbours::Application.routes.draw do
   
   resources :users, :only => []  do
     resources :needs, :only => :index 
+    resources :offers, :only => :index 
   end
+  
+  resources :offers, :only => :index
   
 end

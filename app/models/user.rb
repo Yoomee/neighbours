@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   include YmCore::Multistep  
   
   has_many :needs
+  has_many :offers
   
   validates :address1, :city, :postcode, :presence => {:if => Proc.new {|u| u.current_step == "where_you_live"}}
   validates :validate_by, :presence => {:if => Proc.new {|u| u.current_step == "validate"}}

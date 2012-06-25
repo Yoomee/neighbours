@@ -15,7 +15,7 @@ class Ability
       can :manage, User, :id => user.id     
       can [:create, :read], Need 
       can :update, Need, :user_id => user.id
-      can :create, Offer
+      can [:create, :index], Offer
     end
     
   end
