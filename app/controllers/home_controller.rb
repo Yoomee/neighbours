@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
   
   def index
-    if current_user
-      render :template => "wireframes/logged_in_home"
+    unless current_user
+      render :template => "home/logged_out_index"
     end
   end
   
