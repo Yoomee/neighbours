@@ -5,7 +5,8 @@ class NeedsController < ApplicationController
   end
   
   def create
-    @need = Need.new(params[:need].merge(:user => current_user))
+    #@need = Need.new(params[:need].merge(:user => current_user))
+    @need.user = current_user
     if @need.save      
       redirect_to needs_path
     else
