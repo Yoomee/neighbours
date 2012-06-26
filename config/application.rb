@@ -46,12 +46,3 @@ module Neighbours
     config.assets.version = '1.0'
   end
 end
-
-Neighbours::REGIONS = [
-  "Argyll and Bute",
-  "Highland",
-  "Moray",
-  "Northern Isles",
-  "Western Isles",
-  "Perthshire"
-]
