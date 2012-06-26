@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       resource_or_scope.needs.create(new_need_attrs)
       needs_path
     else
-      after_sign_in_path_for_without_neighbours
+      after_sign_in_path_for_without_neighbours(resource_or_scope)
     end
   end
   alias_method_chain :after_sign_in_path_for, :neighbours
