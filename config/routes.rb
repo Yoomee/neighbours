@@ -14,6 +14,10 @@ Neighbours::Application.routes.draw do
     resources :offers, :only => :index 
   end
   
-  resources :offers, :only => :index
+  resources :offers, :only => :index do
+    member do
+      get :accept
+    end
+  end
   
 end

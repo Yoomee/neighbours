@@ -12,4 +12,9 @@ class OffersController < ApplicationController
     @offer.user = current_user
     @offer.save
   end
+  
+  def accept
+    @offer.update_attribute(:accepted, true)
+    redirect_to @offer.need
+  end
 end
