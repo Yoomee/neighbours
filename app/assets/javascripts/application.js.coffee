@@ -7,6 +7,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require ym_core
+#= require rails.validations
 #= require_tree .
 
 $(document).ready () ->
