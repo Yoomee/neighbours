@@ -7,7 +7,7 @@ class Need < ActiveRecord::Base
   validates :user, :presence => {:unless => :skip_user_validation?}
   validates :title, :presence => true
   validates :description, :presence => true
-  validate :deadline_is_in_future
+  # validate :deadline_is_in_future
   
   boolean_accessor :skip_user_validation
   
@@ -18,11 +18,11 @@ class Need < ActiveRecord::Base
     is_valid
   end
   
-  private
-  def deadline_is_in_future
-    if new_record? && deadline.present? && (deadline < Date.today)
-      errors.add(:deadline, "must be in the future")
-    end
-  end
+  # private
+  # def deadline_is_in_future
+  #   if new_record? && deadline.present? && (deadline < Date.today)
+  #     errors.add(:deadline, "must be in the future")
+  #   end
+  # end
   
 end
