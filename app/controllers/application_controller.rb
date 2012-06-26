@@ -7,6 +7,16 @@ class ApplicationController < ActionController::Base
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
+  def after_sign_in_path_for_with_neighbours(resource_or_scope)
+    if new_need_attrs = session.delete(:new_need_attributes)
+      resource_or_scope.needs.create(new_need_attrs)
+      needs_path
+    else
+      after_sign_in_path_for_without_neighbours
+    end
+  end
+  alias_method_chain :after_sign_in_path_for, :neighbours
+
   private
   def authenticate
     return true unless Rails.env.production?
@@ -16,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_new_need_attributes
-    if !%w{registrations need}.include?(controller_name)
+    if !%w{registrations need sessions}.include?(controller_name)
       session[:new_need_attributes] = nil
     end
   end

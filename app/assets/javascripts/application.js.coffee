@@ -28,3 +28,17 @@ window.Registration =
       $('a.validate-by-link').removeClass('active')
       `$(this)`.addClass('active')
       $('#user_validate_by').val(`$(this)`.data('validate-by'))
+
+window.NewNeedForm = 
+  force_submit: false
+  init: () ->
+    $('#register-modal-login-link, #register-modal-register-link').click (event) ->
+      event.preventDefault()
+      $('input#return_to').val($(this).attr('href'))
+      NewNeedForm.force_submit = true
+      $('form#new_need').submit()
+    clientSideValidations.callbacks.form.pass = (element, callback) ->
+      console.log('hello')
+      $('#register-popup').modal('show')
+    $('form#new_need').submit () ->
+      NewNeedForm.force_submit

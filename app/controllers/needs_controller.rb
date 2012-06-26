@@ -31,7 +31,7 @@ class NeedsController < ApplicationController
   def redirect_if_logged_out
     if current_user.nil? && @need.valid_without_user?
       session[:new_need_attributes] = params[:need]
-      redirect_to new_registration_path
+      return_or_redirect_to(new_registration_path)
     end
   end
 end
