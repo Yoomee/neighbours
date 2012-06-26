@@ -4,7 +4,7 @@
     %h1 My offers
     
     %ul.nav.nav-tabs.nav-stacked
-      -@offers.each do |offer|
+      -@offers.order("created_at DESC").each do |offer|
         %li
           =link_to offer.need do
             .list-image
