@@ -18,4 +18,6 @@
           -if @need.errors[:deadline].present?
             %span.help-inline
               =@need.errors[:deadline].to_sentence
-    =f.buttons
+    .row
+      .span2.offset5
+        =f.commit_button "Add request", :button_html => { :class => "btn-primary pull-right" } 
