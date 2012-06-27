@@ -1,112 +1,29 @@
-.row
-  .span12.fade_in
+%h1="Welcome #{current_user.first_name}!"
+=render('layouts/control_panel')
+.row                              
+  .span6
+    =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
+    %h2 Site activity
+    %ul.help-list.unstyled
+      -@needs.each do |need|
+        %li.list
+          .list-image
+            =link_to "#" do
+              =image_for(need.user, "60x50#")
+              %p.small-text
+                =need.user
+          .list-text
+            %h3
+              =link_to_self need
+            %p
+              =need.description
+    =#link_to "Make an offer to help", "/wireframes/i_can_help", :class=>"btn call-to-action"
+  .span6
     #home-map
-      .you-are-in
-        %p
-          You are in 
-          %select
-            %option Maltby
-            %option Other areas coming soon!
-.row.fade_in         
-  .span6
-    %h2 Looking for help?
-    %ul.help-list.unstyled
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "#register-popup", :"data-toggle"=>"modal"
+      -if false
+        .you-are-in
           %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "My computer", "#register-popup", :"data-toggle"=>"modal"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "The school run", "#register-popup", :"data-toggle"=>"modal"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Decorating", "#register-popup", :"data-toggle"=>"modal"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.                                       
-
-            
-    =link_to "Add a request for help", "/wireframes/i_need_help", :class=>"btn call-to-action primary"
-                                         
-        
-  .span6
-    %h2 Already helped
-    %ul.help-list.unstyled
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Borrow a ladder", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Tyre pressures", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Visiting my father", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.                                       
-
-            
-    =link_to "Make an offer to help", "/wireframes/i_can_help", :class=>"btn call-to-action"    
+            You are in 
+            %select
+              %option Maltby
+              %option Other areas coming soon!    

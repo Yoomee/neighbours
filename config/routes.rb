@@ -5,6 +5,19 @@ Neighbours::Application.routes.draw do
   resources :registrations, :only => [:new, :create]  
   match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration"
   
-  resources :needs
+  resources :needs do
+    resources :offers, :only => [:create]
+  end
+  
+  resources :users, :only => []  do
+    resources :needs, :only => :index 
+    resources :offers, :only => :index 
+  end
+  
+  resources :offers, :only => :index do
+    member do
+      get :accept
+    end
+  end
   
 end

@@ -8,6 +8,7 @@
         %ul.unstyled
           -if current_user
             %li=link_to "Logout", sign_out_path, :method => :delete, :class=>"nav-link btn"
+            %li=link_to "Requests", needs_path, :class=>"nav-link"
           -else
             %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
           %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"

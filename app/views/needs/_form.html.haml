@@ -1,6 +1,23 @@
-=semantic_form_for @need do |f|
-  =f.inputs do
-    =f.input :title
-    =f.input :description
-    =f.input :deadline, :as => :string
-  =f.buttons
+-if logged_out?
+  -content_for(:head) do
+    :javascript
+      $(document).ready(function() {
+        NewNeedForm.init();
+      });
+
+.well
+  =semantic_form_for @need, :validate => true, :html => { :class => "form-horizontal" }  do |f|
+    =hidden_field_tag :return_to
+    =f.inputs do
+      =f.input :title, :label => "I need help with",  :input_html => { :class => "span5" }, :required => false 
+      =f.input :description, :label => "Add a description",  :input_html => { :class => "span5", :rows => "6" }, :required => false
+      .control-group{:class => "#{@need.errors[:deadline].present? ? 'error' : ''}"}
+        %label.control-label I need to know by
+        .controls
+          =f.date_select :deadline, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year), :end_year => (Time.now.year + 1)}, :class => "input-small"
+          -if @need.errors[:deadline].present?
+            %span.help-inline
+              =@need.errors[:deadline].to_sentence
+    .row
+      .span2.offset5
+        =f.commit_button "Add request", :button_html => { :class => "btn-primary pull-right" } 

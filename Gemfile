@@ -23,6 +23,8 @@ gem 'whenever', :require => false
 gem 'ym_core'
 gem 'ym_users'
 
+gem 'client_side_validations'
+
 ### Groups
 # Gems used only for assets and not required
 # in production environments by default.

@@ -5,11 +5,11 @@
     %h3 Before you go any further...
   .modal-body  
     %p
-      You need to register before you can do this. 
+      You need to register before you can do this.
       %br
       Already registered? 
-      =link_to "Log in here.", "/login"
+      =link_to "Log in here.", "/login", :id => "register-modal-login-link"
   .modal-footer
-    =link_to "Register", new_registration_path, :class=>"btn btn-primary", :data_dismiss=>"modal"
-    =link_to "Close", "#", :class=>"btn", :"data-dismiss"=>"modal"      
+    =link_to "Register", new_registration_path, :class=>"btn btn-primary", :data_dismiss=>"modal", :id => "register-modal-register-link"
+    =link_to "Close", "#", :class=>"btn", :"data-dismiss"=>"modal"
     =#link_to "Login", "/wireframes/register_help_1", :class=>"btn btn-success", :data_dismiss=>"modal"
