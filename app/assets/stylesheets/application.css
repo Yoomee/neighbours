@@ -148,6 +148,9 @@ textarea {
 label {
   font-weight: bold;
 }
+label em.optional {
+  font-weight:normal;
+}
 .form-horizontal .control-group {
 	margin-bottom: 30px;
 }
