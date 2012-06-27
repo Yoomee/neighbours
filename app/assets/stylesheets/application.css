@@ -424,8 +424,8 @@ body#home.logged_out .help-list{
 }
 .i-can-help-btn {
 	clear: none;
-	float: left;
-	margin: 15px 0 0 15px;
+	float: right;
+	margin: 15px 10px 0 0;
 }
 
 .need-help-btn {
