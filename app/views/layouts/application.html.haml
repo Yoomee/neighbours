@@ -16,9 +16,8 @@
           %h3
             New to this site?
             =link_to "Find out how it works", "/wireframes/about"
-      -if flash.present?
-        =yield_with_bootstrap(render_flash)
       =render("layouts/header")
+      =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
       =yield_with_bootstrap(yield)
       .push
     -if current_user.nil?
