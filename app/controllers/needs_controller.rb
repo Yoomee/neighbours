@@ -20,8 +20,9 @@ class NeedsController < ApplicationController
 
   def create
     @need.user = current_user
-    if @need.save      
-      redirect_to needs_path
+    if @need.save
+      flash[:notice] = "Created new request for help"      
+      redirect_to user_needs_path(current_user)
     else
       render :action => 'new'
     end

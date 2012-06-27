@@ -12,7 +12,8 @@ class RegistrationsController < ApplicationController
         sign_in(@user)
         if new_need_attrs = session.delete(:new_need_attributes)
           @user.needs.create(new_need_attrs)
-          redirect_to(needs_path) and return
+          flash[:notice] = "Congratulations! You have added your first request. Once we've validated your account then neighbours can help you."
+          redirect_to(user_needs_path(current_user)) and return
         else
           redirect_to(root_path) and return
         end
