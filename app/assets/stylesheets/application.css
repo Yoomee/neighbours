@@ -295,6 +295,10 @@ br.clear {
   margin-top:-25px;
 }
 
+.flash_container .alert {
+  margin-bottom:15px;
+}
+
 /*========== Homepage ==========*/
 
 #home-map {
