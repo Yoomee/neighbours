@@ -22,6 +22,7 @@ gem 'whenever', :require => false
 
 gem 'ym_core'
 gem 'ym_users'
+gem 'ym_posts'
 
 gem 'client_side_validations'
 
