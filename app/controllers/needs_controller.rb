@@ -15,7 +15,6 @@ class NeedsController < ApplicationController
 
   def show
     @offers = @need.offers
-    @offer = Offer.new
   end
 
   def new

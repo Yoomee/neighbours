@@ -1,0 +1,15 @@
+<%if current_post.valid? && params[:return_to].present?%>
+  window.location.href = '<%=params[:return_to]%>';
+<%elsif current_post.target_type == "Need"%>
+  <%=remotipart_response do%>
+    <%post = (@new_post || current_post)%>
+    $('form#new_post').replaceWith('<%=escape_javascript(render('needs/modal_post_form', :post => post, :need => post.target))%>');
+  <%end%>
+<%else%>
+  <%=remotipart_response do%>
+    $('form#new_post').replaceWith('<%=escape_javascript(render('posts/remote_form', :post => (@new_post || current_post)))%>');
+    <%if current_post.valid?%>
+      $('div.posts').prepend('<%=escape_javascript(render('posts/post', :post => current_post))%>');
+    <%end%>
+  <%end%>
+<%end%>

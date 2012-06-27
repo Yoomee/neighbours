@@ -12,45 +12,55 @@
       %h1=title @need.title
       =simple_format(@need.description)
       
-      
 #request-activity.row
-  .span6.offset1
-    -if @need.user != current_user
-      =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-    %ul.unstyled
-      -@offers.each do |offer|
-        %li.post
-          .row
-            .span1
-              .list-image
+  -if logged_in_as?(@need.user) && @offers.empty?
+    .span9.offset2
+      .alert.alert-info
+        Sorry, no one has offered to help yet.
+  -else
+    .span6.offset1
+      -if @need.user != current_user
+        =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+        %ul.unstyled
+          -@need.posts.order("created_at DESC").each do |post|
+            %li.post
+              .row
+                .span1
+                  .list-image
+                    =link_to post.user do
+                      =image_for(post.user, "60x60#")
+                      %p.small-text
+                        =post.user
+                .span4
+                  .post-speech=simple_format(post.text)
+                  .post-actions
+                    -if @need.user == current_user
+                      =link_to "#", :class=>"post-action" do
+                        %i.icon-comment
+                        Reply
+                      -if offer.accepted?
+                        %span.badge.badge-success Accepted 
+                      -elsif @need.accepted_offer.nil?
+                        =link_to accept_offer_path(offer), :class=>"post-action" do
+                          %i.icon-ok
+                          Accept this offer
+    .span4
+      -if @offers.present?
+        %h3.mb1 People offering help
+        %ul.thumbnails
+          -@offers.each do |offer|
+            %li.span1
+              .list-image.thumbnail
                 =link_to offer.user do
                   =image_for(offer.user, "60x60#")
                   %p.small-text
                     =offer.user
-            .span4
-              .post-speech=simple_format(offer.text)
-              .post-actions
-                -if @need.user == current_user
-                  =link_to "#", :class=>"post-action" do
-                    %i.icon-comment
-                    Reply
-                  -if offer.accepted?
-                    %span.badge.badge-success Accepted 
-                  -elsif @need.accepted_offer.nil?
-                    =link_to accept_offer_path(offer), :class=>"post-action" do
-                      %i.icon-ok
-                      Accept this offer
-  .span4
-    -if @offers.present?
-      %h3.mb1 People offering help
-      %ul.thumbnails
-        -@offers.each do |offer|
-          %li.span1
-            =link_to offer.user, :class=>"thumbnail" do
-              =image_for(offer.user, "60x60#")
 
--if @need.user != current_user            
+-if @need.user != current_user
   .row
     .span12
       #offer-form.modal.hide.fade
-        =render('offers/modal_form')
+        -if @need.offers.exists?(:user_id => current_user.id)
+          =render("needs/modal_post_form", :need => @need)
+        -else
+          =render('offers/modal_form')

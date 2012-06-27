@@ -2,6 +2,7 @@ class Need < ActiveRecord::Base
   
   belongs_to :user
   has_many :offers
+  has_many :posts, :as => :target
   has_one :accepted_offer, :class_name => 'Offer', :conditions => {:accepted => true}
   
   validates :user, :presence => {:unless => :skip_user_validation?}
