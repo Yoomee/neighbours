@@ -374,6 +374,7 @@ body#home.logged_in .call-to-action {
 body#home.logged_out .help-list{
   float:left;
   height:412px;
+  width: 100%;
 }
 
 /*========== I can help/need help pages ==========*/
