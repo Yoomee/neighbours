@@ -1,56 +1,20 @@
-%h1="Welcome #{current_user.first_name}!"
-=render('layouts/control_panel')
 .row                              
   .span6
     =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
     %h2 Site activity
     %ul.help-list.unstyled
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
-      %li.list
-        .list-image
-          =link_to "#" do
-            =image_tag "person.png"
-            %p.small-text
-              Alan
-        .list-text
-          %h3
-            =link_to "Taking cat to the vet", "/wireframes/blog"
-          %p
-            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.                                       
-
-            
+      -@needs.each do |need|
+        %li.list
+          .list-image
+            =link_to "#" do
+              =image_for(need.user, "60x50#")
+              %p.small-text
+                =need.user
+          .list-text
+            %h3
+              =link_to_self need
+            %p
+              =need.description
     =#link_to "Make an offer to help", "/wireframes/i_can_help", :class=>"btn call-to-action"
   .span6
     #home-map

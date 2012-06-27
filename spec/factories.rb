@@ -1,24 +1,24 @@
 FactoryGirl.define do
   
-  factory :need do
-    user
-    title "Take cat to the vet"
-    description "Put the cat in its box, put it in the car, take it to the vet."
-    deadline 1.week.from_now
+  factory :need do |need|
+    need.user
+    need.title "Take cat to the vet"
+    need.description "Put the cat in its box, put it in the car, take it to the vet."
+    need.deadline 1.week.from_now
   end
   
-  factory :offer do
-    need
-    user
-    text "I'd love to take your cat to the vet. Miaow!"
-    accepted false
+  factory :offer do |offer|
+    offer.need
+    offer.user
+    offer.text "I'd love to take your cat to the vet. Miaow!"
+    offer.accepted false
   end
   
-  factory :user do
-    first_name "Charlie"
-    last_name "Barrett"
-    sequence(:email) {|n| "charlie#{n}@yoomee.com" }
-    password "password"
+  factory :user do |user|
+    user.first_name "Charlie"
+    user.last_name "Barrett"
+    user.email {"user_#{rand(1000).to_s}@factory.com" }
+    user.password "password"
   end
   
 end

@@ -148,6 +148,9 @@ textarea {
 label {
   font-weight: bold;
 }
+label em.optional {
+  font-weight:normal;
+}
 .form-horizontal .control-group {
 	margin-bottom: 30px;
 }
@@ -286,6 +289,15 @@ br.clear {
   color: #00558D;
 }
 
+/*========== Flash ==========*/
+
+.flash_container {
+  margin-top:-25px;
+}
+
+.flash_container .alert {
+  margin-bottom:15px;
+}
 
 /*========== Homepage ==========*/
 
@@ -320,6 +332,8 @@ br.clear {
   padding-bottom: 10px;
   padding-top: 10px;  
   float: left;
+  height: 82px;
+  overflow: hidden;
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
@@ -364,6 +378,14 @@ body#home.logged_in .call-to-action {
   margin-top: 0;
 }
 
+/*========== Logged out home ==========*/
+
+body#home.logged_out .help-list{
+  float:left;
+  height:412px;
+  width: 100%;
+}
+
 /*========== I can help/need help pages ==========*/
 
 .help-title {
@@ -402,8 +424,8 @@ body#home.logged_in .call-to-action {
 }
 .i-can-help-btn {
 	clear: none;
-	float: left;
-	margin: 15px 0 0 15px;
+	float: right;
+	margin: 15px 10px 0 0;
 }
 
 .need-help-btn {
@@ -531,7 +553,7 @@ html, body {
   height: 70px;
   border-bottom: 1px solid #ccc;
   margin-bottom: 40px;
-  padding: 20px;
+  padding: 20px 0px;
   background: #f5f5f5;
 }
 #big-home-icon, #big-home-icon i {
@@ -576,9 +598,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 	padding: 10px 15px 10px;
 	-webkit-box-shadow:0px 0px 4px rgba(0,0,0,0.2)
 }
+.post-speech {
+  min-height: 38px;
+}
 .post-action {
   float: right;
   font-size: 13px;
+  margin-left: 10px;
 }
 
 .request-body {

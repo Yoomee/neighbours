@@ -7,4 +7,4 @@
     .controls
       =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year - 18)}, :class => "input-medium"
   =form.input :email, :label => "Email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
-  =form.input :password, :required => false, :input_html => {:placeholder => "******"}
+  =form.input :password, :required => false

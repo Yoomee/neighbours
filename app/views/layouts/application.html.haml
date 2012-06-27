@@ -11,13 +11,13 @@
     =google_analytics_js
   -body_tag do  
     .main-wrapper
-      #hellobar
-        %h3
-          New to this site?
-          =link_to "Find out how it works", "/wireframes/about"
-      -if flash.present?
-        =yield_with_bootstrap(render_flash)
+      -if current_page?(root_path) && !current_user
+        #hellobar
+          %h3
+            New to this site?
+            =link_to "Find out how it works", "/wireframes/about"
       =render("layouts/header")
+      =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
       =yield_with_bootstrap(yield)
       .push
     -if current_user.nil?

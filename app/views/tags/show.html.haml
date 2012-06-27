@@ -1,0 +1,15 @@
+-title "Tag - #{current_tag}"
+.container
+  .row
+    .span8
+      %h1 Latest posts
+  .row
+    .span2
+      %h3.mb-1 Trending tags
+      =render("tags/list", :tags => top_tags, :current_tag => current_tag)
+    .span8
+      %h2.tag_title.mb-2
+        =tag_label(current_tag)
+      -if can?(:create, Post)
+        =render("posts/remote_form", :post => current_user.posts.build)
+      =render("posts/posts", :posts => posts)

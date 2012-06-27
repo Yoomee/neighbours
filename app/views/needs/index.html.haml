@@ -1,19 +1,21 @@
-=render('layouts/control_panel')
 .row
-  .span8.offset2
-    %h1=title "#{ @user ? 'My' : 'All' } requests"
+  .help-box.span8.offset2
+    %h1=title "People who need help"
     
-    %ul.nav.nav-tabs.nav-stacked
+    %ul.help-list.unstyled
       -@needs.order('created_at DESC').each do |need|
-        %li
-          =link_to need do
-            .list-image
+        %li.list.list-result
+          .list-image
+            =link_to need.user do
               =image_for(need.user, "60x50#")
               %p.small-text=need.user
-            %h3=need.title
-            %p
-              %span.badge 2
-              %span.request-message-text
-                messages
-               
+          .list-text
+            %h3
+              =link_to_self(need)
+            =simple_format(need.description)
+          =link_to "I can help", need, :class=>"btn i-can-help-btn"
+    .clearfix
+    .help-well.well
+      %h2.help-title I can help with
+      %input.can-help-input{:type=>"text", :title => "Search...", :placeholder=>"e.g. Gardening"}
 

@@ -7,6 +7,9 @@ class NeedsController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
       @needs = @user.needs
+      render :action => "user_index"
+    else
+      @needs = Need.where("user_id != #{current_user.id}").order("created_at DESC").limit(4)
     end
   end
 
@@ -20,8 +23,9 @@ class NeedsController < ApplicationController
 
   def create
     @need.user = current_user
-    if @need.save      
-      redirect_to needs_path
+    if @need.save
+      flash[:notice] = "Created new request for help"      
+      redirect_to user_needs_path(current_user)
     else
       render :action => 'new'
     end

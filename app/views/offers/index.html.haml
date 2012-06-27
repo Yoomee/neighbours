@@ -1,17 +1,20 @@
-=render('layouts/control_panel')
 .row
   .span8.offset2
-    %h1 My offers
-    
-    %ul.nav.nav-tabs.nav-stacked
-      -@offers.order("created_at DESC").each do |offer|
-        %li
-          =link_to offer.need do
-            .list-image
-              =image_for(offer.user, "60x50#")
-              %p.small-text=offer.user
-            %h3=offer.need.title
-            %p
-              %span.badge 2
-              %span.request-message-text
-                messages
+    %h1 My offers    
+    -if @offers.empty?
+      %em Your haven't offered to help anyone yet.
+    -else
+      %ul.nav.nav-tabs.nav-stacked
+        -@offers.order("created_at DESC").each do |offer|
+          %li
+            =link_to offer.need do
+              .list-image
+                =image_for(offer.user, "60x50#")
+                %p.small-text=offer.user
+              %h3=offer.need.title
+              %p
+                %span.badge 2
+                %span.request-message-text
+                  messages
+    =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"    
+

@@ -1,12 +1,8 @@
-=render('layouts/control_panel')
 .row
-  .span10.offset2
-    %ul.pager.mb-2
-      %li
-        -if @need.user == current_user
-          =link_to "&uarr; My requests".html_safe, user_needs_path(current_user)
-        -else
-          =link_to "&uarr; All requests".html_safe,  needs_path
+  -if @need.user != current_user
+    .span12
+      %ul.pager.mb-2
+        %li=link_to "&uarr; All requests".html_safe,  needs_path
   .span2
     =link_to @need.user, :class => "user-thumbnail-large" do
       =image_for(@need.user, "120x120#")
@@ -19,23 +15,31 @@
       
 #request-activity.row
   .span6.offset1
-    -if @offer.user != current_user
+    -if @need.user != current_user
       =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
     %ul.unstyled
       -@offers.each do |offer|
         %li.post
-          .list-image
-            =link_to offer.user do
-              =image_for(offer.user, "60x60#")
-              %p.small-text
-                =offer.user
-          .post-speech
-            =simple_format(offer.text)
-          .post-actions
-            =link_to "#", :class=>"post-action" do
-              %i.icon-comment
-              Reply
-
+          .row
+            .span1
+              .list-image
+                =link_to offer.user do
+                  =image_for(offer.user, "60x60#")
+                  %p.small-text
+                    =offer.user
+            .span4
+              .post-speech=simple_format(offer.text)
+              .post-actions
+                -if @need.user == current_user
+                  =link_to "#", :class=>"post-action" do
+                    %i.icon-comment
+                    Reply
+                  -if offer.accepted?
+                    %span.badge.badge-success Accepted 
+                  -elsif @need.accepted_offer.nil?
+                    =link_to accept_offer_path(offer), :class=>"post-action" do
+                      %i.icon-ok
+                      Accept this offer
   .span4
     -if @offers.present?
       %h3.mb1 People offering help
@@ -45,7 +49,7 @@
             =link_to offer.user, :class=>"thumbnail" do
               =image_for(offer.user, "60x60#")
 
--if @offer.user != current_user            
+-if @need.user != current_user            
   .row
     .span12
       #offer-form.modal.hide.fade
