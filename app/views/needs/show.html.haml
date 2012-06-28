@@ -28,20 +28,21 @@
             If you think you can help, then click on this button to start a private discussion with
             ="#{@need.user}."
           =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-        %ul.unstyled
-          -@need.posts.order("created_at DESC").each do |post|
-            %li.post
-              .row
-                .span1
-                  .list-image
-                    =link_to post.user do
-                      =image_for(post.user, "60x60#")
-                      %p.small-text
-                        =post.user
-                .span4
-                  .post-speech=simple_format(post.text)
-                  .post-actions
-                    -if @need.user == current_user
+      %ul.unstyled
+        -@need.posts.order("created_at DESC").each do |post|
+          %li.post
+            .row
+              .span1
+                .list-image
+                  =link_to post.user do
+                    =image_for(post.user, "60x60#")
+                    %p.small-text
+                      =post.user
+              .span4
+                .post-speech=simple_format(post.text)
+                .post-actions
+                  -if @need.user == current_user
+                    -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
                       =link_to "#", :class=>"post-action" do
                         %i.icon-comment
                         Reply
