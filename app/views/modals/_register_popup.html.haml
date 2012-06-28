@@ -2,14 +2,13 @@
   .modal-header
     %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
       ×
-    %h3 Before you go any further...
+    %h3 Great! We've got your request
   .modal-body  
     %p
-      You need to register before you can do this.
-      %br
+      But to keep your neighbourhood secure we need to know who you are before we can share your request with the community. Registration is just three easy steps.
+    %br
       Already registered? 
       =link_to "Log in here.", "/login", :id => "register-modal-login-link"
   .modal-footer
-    =link_to "Register", new_registration_path, :class=>"btn btn-primary", :data_dismiss=>"modal", :id => "register-modal-register-link"
-    =link_to "Close", "#", :class=>"btn", :"data-dismiss"=>"modal"
+    =link_to "Continue with easy registration", new_registration_path, :class=>"btn btn-primary", :data_dismiss=>"modal", :id => "register-modal-register-link"
     =#link_to "Login", "/wireframes/register_help_1", :class=>"btn btn-success", :data_dismiss=>"modal"

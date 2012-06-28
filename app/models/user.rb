@@ -18,6 +18,13 @@ class User < ActiveRecord::Base
   validates :security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step?
   validates :expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step?
   
+  scope :validated, where(:validated => true)
+  scope :unvalidated, where(:validated => false)
+  
+  def address
+    [address1, city, county, postcode].compact.join(', ')
+  end
+  
   def has_address?
     %w{address1 city postcode}.all?(&:present?)
   end

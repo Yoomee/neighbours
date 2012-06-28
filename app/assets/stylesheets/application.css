@@ -109,7 +109,7 @@ h2.home-title, .big-title, .about_page_view #page_title {
   line-height: 30px; 
    font-weight: bold;
 }
-.nav ul, .nav li, #site_logo, h2#footer_site_logo, h2, .are-you-title, .block-title, .home-subtitle, .small-title {
+.nav ul, .nav-tabs-register li, #site_logo, h2#footer_site_logo, h2, .are-you-title, .block-title, .home-subtitle, .small-title {
 	font-size: 26px;
 	line-height: 28px; 
 }
@@ -126,6 +126,11 @@ div, input, select, .btn, label {
   font-weight: normal;
   font-size: 16px;
   line-height: 23px;
+}
+
+.btn-small {
+  font-size: 11px;
+  line-height: 16px;
 }
 a.call-to-action-link, .carousel-text p, .small-text {
   font-size: 13px;
@@ -659,3 +664,8 @@ li.post .post-action {
 .card-details-form .control-label {
   width: 200px;
 }
+
+/*========== Admin users index ==========*/
+.table-users td{
+/*  vertical-align:middle;
+*/}
