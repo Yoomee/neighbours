@@ -10,10 +10,13 @@
 .well
   %strong Safety and security
   %p
-    Quisque commodo hendrerit lorem quis egestas. Maecenas quis tortor arcu. Vivamus rutrum nunc non neque consectetur quis placerat neque lobortis. Nam vestibulum, arcu sodales feugiat consectetur, nisl orci bibendum elit, eu euismod magna sapien ut nibh.
+    Your safety is important to us. We make sure that everybody on
+    %em
+      Neighbours Can Help
+    proves their identify to us. You can't use all the facilities on the website until your account is validated. How would you like to do this?
 .validate-your-account
   %h2.mb2.mt2
-    Validate your account
+    Prove your identity
   -if @user.errors[:validate_by].present?
     .control-group.error.mb-2
       %p.help-inline
@@ -22,20 +25,20 @@
     %li
       =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "credit_card"} do
         %i.icon-credit-card
-        %h3 With a credit card
+        %h3 Instantly by credit card
         %p
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+          By entering your credit card details we can check who you are without taking any money from you. We promise never to charge your card and not to keep your details afterwards.
 
     %li
       =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "post"} do
         %i.icon-envelope
-        %h3 By post
+        %h3 Slowly by post 
         %p
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+          If you don't want to use a credit card, then we can send you letter with a unique passcode that you enter to prove that you live at the address.
     %li
       =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "organisation"} do
         %i.icon-group
-        %h3 With an organisation
+        %h3 With a local organisation 
         %p
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+          We work with a number of your local organisations. If you would like them to tell us that you are who you say you are then select this option.
     
