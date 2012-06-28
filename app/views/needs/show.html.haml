@@ -1,8 +1,4 @@
 .row
-  -if @need.user != current_user
-    .span12
-      %ul.pager.mb-2
-        %li=link_to "&uarr; All requests".html_safe,  needs_path
   .span2
     =link_to @need.user, :class => "user-thumbnail-large" do
       =image_for(@need.user, "120x120#")
@@ -16,11 +12,22 @@
   -if logged_in_as?(@need.user) && @offers.empty?
     .span9.offset2
       .alert.alert-info
-        Sorry, no one has offered to help yet.
+        Sorry, no one has offered to help you with this yet. In the meantime why don't you
+        =link_to("click here", need_path)
+        to see who you could help?               
+      =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"
   -else
     .span6.offset1
       -if @need.user != current_user
-        =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+        .well
+          %b
+            %i.icon-exclamation-sign
+            =@need.user
+            needs your help
+          %p.mb3
+            If you think you can help, then click on this button to start a private discussion with
+            ="#{@need.user}."
+          =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
         %ul.unstyled
           -@need.posts.order("created_at DESC").each do |post|
             %li.post

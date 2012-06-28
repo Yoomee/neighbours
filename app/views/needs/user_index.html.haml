@@ -1,7 +1,10 @@
 .row
   .span8.offset2
-    %h1=title "#{ @user ? 'My' : 'All' } requests"
-    
+    %h1=title "My requests"
+    %p
+      Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
+      =link_to("click here",needs_path)
+      to see if you could help someone else.
     %ul.nav.nav-tabs.nav-stacked
       -@needs.order('created_at DESC').each do |need|
         %li
@@ -14,5 +17,7 @@
               %span.badge 2
               %span.request-message-text
                 messages
-               
+.row
+  .span6.offset2
+    =link_to "Add another request for help", new_need_path, :class=>"btn call-to-action primary"               
 
