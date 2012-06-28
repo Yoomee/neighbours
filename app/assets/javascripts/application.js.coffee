@@ -23,24 +23,29 @@ $(document).ready () ->
 
 window.Registration = 
   initValidateStep: () ->
+    $('form.user').submit () ->
+      if $('#user_validate_by').val() != "credit_card"
+        $('.card-details-form input, .card-details-form select').each (index) ->
+          $(this).val('')
+      if $('#user_validate_by').val() != "organisation"
+        $('.organisation select').each (index) ->
+          $(this).val('')        
+      return true
     currentType = $('#user_validate_by').val()
     if currentType.length
       Registration.saveValidateByType(currentType)
     $('a.validate-by-link').live 'click', (event) ->
       event.preventDefault()
       Registration.toggleValidateByType($(this).data('validate-by'))
-    $('form.user').submit () ->
-      if $('#user_validate_by').val() != "credit_card"
-        $('.card-details-form input, .card-details-form select').each (index) ->
-          $(this).val('')
-      true
   removeValidateByType: () ->
-    $('.card-details-form').hide()
+    $('.card-details-form, .organisation-form').hide()
     $('a.validate-by-link').parent().removeClass('alert-info')
     $('#user_validate_by').val('')
   saveValidateByType: (type) ->
     if type == "credit_card"
       $('.card-details-form').show()
+    else if type == "organisation"
+      $('.organisation-form').show()
     $('a.validate-by-link').parent().removeClass('alert-info')
     $("a.validate-by-link[data-validate-by='#{type}']").parent().addClass('alert-info')
     $('#user_validate_by').val(type)
