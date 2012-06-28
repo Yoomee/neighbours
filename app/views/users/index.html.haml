@@ -26,9 +26,7 @@
                 %strong Address
                 =user.address
               .collapse{:id => "user-info-#{user.id}"}
-                %p
-                  %strong Validate by
-                  =user.validate_by.try(:humanize)
+                =render("validation_details", :user => user)
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
@@ -45,9 +43,7 @@
                 %strong Address
                 =user.address
               .collapse{:id => "user-info-#{user.id}"}
-                %p
-                  %strong Validated by
-                  =user.validate_by.try(:humanize)
+                =render("validation_details", :user => user)
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'

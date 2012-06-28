@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   include YmCore::Multistep  
 
   User::CARD_TYPES = %w{visa mastercard american_express}
-  User::ORGANISATIONS = %w{housing_association organisation_2 organisation_3 organisation_4}
+  User::ORGANISATIONS = ["Housing Association", "Organisation 2", "Organisation 3", "Organisation 4"]
   
   has_many :needs
   has_many :offers
@@ -27,6 +27,15 @@ class User < ActiveRecord::Base
   
   def address
     [address1, city, county, postcode].compact.join(', ')
+  end
+  
+  def credit_card_attributes
+    %w{card_type formatted_card_number card_expiry_date}
+  end
+  
+  def formatted_card_number
+    return nil if card_digits.blank?
+    ("**** " * 3) + card_digits.to_s
   end
   
   def has_address?

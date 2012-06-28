@@ -45,4 +45,4 @@
           We work with a number of your local organisations. If you would like them to tell us that you are who you say you are then select this option.
         .organisation-form.hide
           =form.inputs() do
-            =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :label_method => :humanize, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
+            =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
