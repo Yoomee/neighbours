@@ -20,9 +20,9 @@ gem 'whenever', :require => false
 # ym_gem 'posts'
 # ym_gem 'search'
 
-gem 'ym_core' #, :path => "~/Rails/Gems/ym_core"
-gem 'ym_users' #, :path => "~/Rails/Gems/ym_users"
-gem 'ym_posts' #, :path => "~/Rails/Gems/ym_posts"
+gem 'ym_core', "  ~> 0.1" #, :path => "~/Rails/Gems/ym_core"
+gem 'ym_users', " ~> 0.1" #, :path => "~/Rails/Gems/ym_users"
+gem 'ym_posts', " ~> 0.1" #, :path => "~/Rails/Gems/ym_posts"
 
 gem 'client_side_validations'
 

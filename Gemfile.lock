@@ -266,7 +266,7 @@ GEM
       truncate_html
       will_paginate (~> 3.0.3)
       yoomee-decent_exposure
-    ym_posts (0.1)
+    ym_posts (0.1.1)
       jquery-rails
       rails (~> 3.1.0)
       remotipart (~> 1.0)
@@ -310,7 +310,7 @@ DEPENDENCIES
   sqlite3
   uglifier
   whenever
-  ym_core
-  ym_posts
-  ym_users
+  ym_core (~> 0.1)
+  ym_posts (~> 0.1)
+  ym_users (~> 0.1)
   yoomee!
