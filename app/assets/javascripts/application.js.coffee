@@ -45,8 +45,9 @@ window.Registration =
     $("a.validate-by-link[data-validate-by='#{type}']").parent().addClass('alert-info')
     $('#user_validate_by').val(type)
   toggleValidateByType: (type) ->
-    Registration.removeValidateByType()    
-    unless $('#user_validate_by').val() == type
+    currentType = $('#user_validate_by').val()
+    Registration.removeValidateByType()
+    unless currentType == type
       Registration.saveValidateByType(type)
 
 window.NewNeedForm = 

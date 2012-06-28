@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   
   validates :address1, :city, :postcode, :presence => {:if => Proc.new {|u| u.current_step == "where_you_live"}}
   validates :validate_by, :presence => true, :if => :validation_step?
-  validates :card_type, :card_number, :expiry_date, :security_code, :presence => true
+  validates :card_type, :card_number, :expiry_date, :security_code, :presence => true, :if => :validation_step?
   validates :card_type, :inclusion => {:in => User::CARD_TYPES}, :allow_blank => true, :if => :validation_step?
   validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step?
   validates :security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step?
