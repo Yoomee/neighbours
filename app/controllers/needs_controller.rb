@@ -6,7 +6,7 @@ class NeedsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
-      @needs = @user.order('created_at DESC')
+      @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
     else
       @needs = Need.where("user_id != #{current_user.id}").order("created_at DESC").limit(4)
