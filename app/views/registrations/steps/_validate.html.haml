@@ -1,7 +1,7 @@
 -content_for(:head) do
   :javascript
     $(document).ready(function() {
-      Registration.initValidateLinks();
+      Registration.initValidateStep();
     });
     
 =form.hidden_field :current_step, :value => "validate"
@@ -17,25 +17,25 @@
   -if @user.errors[:validate_by].present?
     .control-group.error.mb-2
       %p.help-inline
-        Please click on one of the options below    
+        Please click on one of the options below
   %ul.thumbnails
-    %li
-      =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "credit_card"} do
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "credit_card"} do
         %i.icon-credit-card
         %h3 With a credit card
         %p
           Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+      =render("card_details", :form => form)
 
-    %li
-      =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "post"} do
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "post"} do
         %i.icon-envelope
         %h3 By post
         %p
           Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-    %li
-      =link_to "#", :class => "thumbnail validate-by-link", :data => {:"validate-by" => "organisation"} do
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "organisation"} do
         %i.icon-group
         %h3 With an organisation
         %p
           Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-    

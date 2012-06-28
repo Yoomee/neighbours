@@ -514,6 +514,9 @@ li.or {
   padding-left:0;
   padding-right:0;
 }
+.validate-your-account .thumbnail:hover {
+  border-color: #08C;
+}
 .validate-by-link {
   color:#333;
 }
@@ -643,4 +646,16 @@ li.post .post-action {
   padding: 2px 0;
   width: 120px;
   text-align: center;
+}
+
+/*========== Card details ==========*/
+
+.card-details-form .control-group {
+  margin-bottom: 10px;
+}
+.card-details-form .controls {
+  margin-left: 220px;
+}
+.card-details-form .control-label {
+  width: 200px;
 }

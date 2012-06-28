@@ -22,12 +22,32 @@ $(document).ready () ->
   )
 
 window.Registration = 
-  initValidateLinks: () ->
+  initValidateStep: () ->
+    currentType = $('#user_validate_by').val()
+    if currentType.length
+      Registration.saveValidateByType(currentType)
     $('a.validate-by-link').live 'click', (event) ->
       event.preventDefault()
-      $('a.validate-by-link').removeClass('active')
-      `$(this)`.addClass('active')
-      $('#user_validate_by').val(`$(this)`.data('validate-by'))
+      Registration.toggleValidateByType($(this).data('validate-by'))
+    $('form.user').submit () ->
+      if $('#user_validate_by').val() != "credit_card"
+        $('.card-details-form input, .card-details-form select').each (index) ->
+          $(this).val('')
+      true
+  removeValidateByType: () ->
+    $('.card-details-form').hide()
+    $('a.validate-by-link').parent().removeClass('alert-info')
+    $('#user_validate_by').val('')
+  saveValidateByType: (type) ->
+    if type == "credit_card"
+      $('.card-details-form').show()
+    $('a.validate-by-link').parent().removeClass('alert-info')
+    $("a.validate-by-link[data-validate-by='#{type}']").parent().addClass('alert-info')
+    $('#user_validate_by').val(type)
+  toggleValidateByType: (type) ->
+    Registration.removeValidateByType()    
+    unless $('#user_validate_by').val() == type
+      Registration.saveValidateByType(type)
 
 window.NewNeedForm = 
   force_submit: false
@@ -38,7 +58,6 @@ window.NewNeedForm =
       NewNeedForm.force_submit = true
       $('form#new_need').submit()
     clientSideValidations.callbacks.form.pass = (element, callback) ->
-      console.log('hello')
       $('#register-popup').modal('show')
     $('form#new_need').submit () ->
       NewNeedForm.force_submit
