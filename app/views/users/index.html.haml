@@ -1,0 +1,49 @@
+-title("Users")
+
+%ul.nav.nav-tabs
+  %li.active
+    =link_to '#unvalidated', :'data-toggle' => 'tab' do
+      Unvalidated
+      %span.badge=@unvalidated_users.count
+  %li
+    =link_to '#validated', :'data-toggle' => 'tab' do
+      Validated
+      %span.badge=@validated_users.count
+
+.tab-content
+  #unvalidated.tab-pane.fade.in.active
+    %table.table.table-striped.table-users
+      %tbody
+        -@unvalidated_users.each do |user|
+          %tr
+            %td=user.full_name
+            %td
+              %p
+                %strong Address
+                =user.address
+              .collapse{:id => "user-info-#{user.id}"}
+                %p
+                  %strong Validate by
+                  =user.validate_by.try(:humanize)
+            %td
+              .pull-right
+                =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+                =link_to "Validate",validate_user_path(user), :method => :put, :class => 'btn btn-primary btn-small'
+        
+  #validated.tab-pane.fade.in
+    %table.table.table-striped.table-users
+      %tbody
+        -@validated_users.each do |user|
+          %tr
+            %td=user.full_name
+            %td
+              %p
+                %strong Address
+                =user.address
+              .collapse{:id => "user-info-#{user.id}"}
+                %p
+                  %strong Validated by
+                  =user.validate_by.try(:humanize)
+            %td
+              .pull-right
+                =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
