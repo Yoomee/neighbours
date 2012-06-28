@@ -28,7 +28,10 @@
             %h3.control-panel-title
               Account status
             %p.control-panel-subtitle
-              Not validated
+              -if current_user.validated?
+                Validated
+              -else
+                Not validated
           .span3
             =link_to user_needs_path(current_user), :class=>"control-panel-link" do
               %h3.control-panel-title
