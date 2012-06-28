@@ -7,6 +7,9 @@ Neighbours::Application.routes.draw do
   
   resources :needs do
     resources :offers, :only => [:create]
+    collection do
+      get :search
+    end
   end
   
   resources :users, :only => []  do
