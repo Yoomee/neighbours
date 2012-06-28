@@ -9,7 +9,8 @@ class Ability
     can :create, Need
     
     if user.try(:admin?)
-      can :manage, :all      
+      can :manage, :all
+      can :validate, User  
       # admin ability
     elsif user
       # user ability
