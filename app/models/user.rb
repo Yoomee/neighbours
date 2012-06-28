@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   include YmCore::Multistep  
 
   User::CARD_TYPES = %w{visa mastercard american_express}
-  User::ORGANISATIONS = ["Housing Association", "Organisation 2", "Organisation 3", "Organisation 4"]
+  User::ORGANISATIONS = ["Housing Association", "Neighbourhood watch"]
   
   has_many :needs
   has_many :offers
