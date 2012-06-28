@@ -24,6 +24,7 @@ class NeedsController < ApplicationController
     @query = strip_tags(params[:q]).to_s.strip
     if @query.present?
       @needs = Need.search(@query,:page => params[:page], :per_page => 20)
+      SearchQuery.create(:query => @query, :user => current_user, :results_count => Need.search_count(@query), :model => "Need")
     else
       @needs = []
     end
