@@ -4,6 +4,9 @@
     %button.close{:type => "button", :'data-dismiss' => "modal" } &times;
     %h3 Offer to help
   .modal-body
-    =form.input :post_for_need, :as => :text, :input_html => {:class => "span6", :rows => 5}, :label => "Add a message", :required => false
+    %p
+      Hey thanks for offering to help! Please type your message below, including any questions that you have for
+      ="#{@need.user}."  
+    =form.input :post_for_need, :as => :text, :input_html => {:class => "span6", :rows => 5}, :label => "Type your message", :required => false
   .modal-footer
-    =form.commit_button "Submit", :button_html => {:class => "btn-primary"}
+    =form.commit_button "Send", :button_html => {:class => "btn-primary"}

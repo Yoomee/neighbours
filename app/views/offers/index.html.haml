@@ -2,7 +2,9 @@
   .span8.offset2
     %h1 My offers    
     -if @offers.empty?
-      %em Your haven't offered to help anyone yet.
+      Your haven't offered to help anyone yet. Click 
+      =link_to("here",needs_path)
+      to see who you could help.
     -else
       %ul.nav.nav-tabs.nav-stacked
         -@offers.order("created_at DESC").each do |offer|
@@ -16,5 +18,7 @@
                 %span.badge 2
                 %span.request-message-text
                   messages
+.row
+  .span6.offset2                  
     =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"    
 
