@@ -12,6 +12,12 @@ class Need < ActiveRecord::Base
   
   boolean_accessor :skip_user_validation
   
+  define_index do
+    indexes title, :sortable => true
+    indexes description
+    has user_id, deadline, created_at, updated_at
+  end
+  
   def valid_without_user?
     self.skip_user_validation = true
     is_valid = valid?

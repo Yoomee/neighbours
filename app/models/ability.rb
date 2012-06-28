@@ -17,7 +17,8 @@ class Ability
       can [:read, :create], Post
       can [:update, :destroy], Post, :user_id => user.id
       can :manage, User, :id => user.id     
-      can [:create, :read], Need 
+      cannot :index, User
+      can [:create, :read, :search], Need 
       can :update, Need, :user_id => user.id
       can [:create, :index], Offer
       can :accept, Offer do |offer|

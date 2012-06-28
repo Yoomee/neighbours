@@ -3,7 +3,10 @@
     %h1=title "People who need help"
     
     %ul.help-list.unstyled
-      -@needs.order('created_at DESC').each do |need|
+      -if @needs.empty?
+        %li.list.list-result
+          Sorry, no results found
+      -@needs.each do |need|
         %li.list.list-result
           .list-image
             =link_to need.user do
@@ -17,5 +20,7 @@
     .clearfix
     .help-well.well
       %h2.help-title I can help with
-      %input.can-help-input{:type=>"text", :title => "Search...", :placeholder=>"e.g. Gardening"}
+      %form{:action => search_needs_path, :method => 'get'}
+        =text_field_tag 'q', params[:q], :placeholder=>"e.g. Gardening", :input_html => {:class => "can-help-input"}
+        %input.hide{:type => 'submit', :value => "Go"}
 

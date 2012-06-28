@@ -1,6 +1,5 @@
 .row                              
   .span6
-    =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
     %h2 Site activity
     %ul.help-list.unstyled
       -@needs.each do |need|
@@ -25,3 +24,8 @@
             %select
               %option Maltby
               %option Other areas coming soon!    
+.row
+  .span6
+    =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
+  .span6
+    =link_to "Make an offer to help", needs_path, :class=>"btn call-to-action"    
