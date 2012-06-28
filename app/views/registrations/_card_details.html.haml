@@ -2,5 +2,5 @@
   =form.inputs(:class => "form-horizontal") do
     =form.input :card_type, :as => :select, :collection => User::CARD_TYPES, :label_method => :humanize, :required => false
     =form.input :card_number, :required => false, :input_html => {:size => 16, :maxlength => 16, :class => "span4"}
-    =form.input :expiry_date, :label => "Expiry date (mm/yyyy)", :required => false, :input_html => {:size => 7, :maxlength => 7, :class => "span4"}
-    =form.input :security_code, :required => false, :input_html => {:size => 3, :maxlength => 3, :class => "span4"}
+    =form.input :card_expiry_date, :label => "Expiry date (mm/yyyy)", :required => false, :input_html => {:size => 7, :maxlength => 7, :class => "span4"}
+    =form.input :card_security_code, :label => "Security code", :required => false, :input_html => {:size => 3, :maxlength => 3, :class => "span4"}
