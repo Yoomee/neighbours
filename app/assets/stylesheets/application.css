@@ -498,6 +498,13 @@ li.or {
 	margin: 60px 20px 0 40px;
 	float: left;
 }
+.validate-your-account i{
+  font-size:70px;
+  line-height:90px;
+  height:90px;
+  margin:0px 20px;
+  float:left;
+}
 .validate-your-account .caption {
 
 }
@@ -507,8 +514,16 @@ li.or {
   padding-left:0;
   padding-right:0;
 }
+.validate-by-link {
+  color:#333;
+}
+.validate-by-link:hover {
+  text-decoration:none;
+  color:#000;
+}
 .validate-by-link.active {
   border-color: #0088cc;
+  background-color:#B8E7FF;
 }
 /*========== Page stuff ==========*/
 
