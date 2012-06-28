@@ -3,12 +3,16 @@
 %ul.nav.nav-tabs
   %li.active
     =link_to '#unvalidated', :'data-toggle' => 'tab' do
-      Unvalidated
+      Unvalidated users
       %span.badge=@unvalidated_users.count
   %li
     =link_to '#validated', :'data-toggle' => 'tab' do
-      Validated
+      Validated users
       %span.badge=@validated_users.count
+  %li
+    =link_to '#search', :'data-toggle' => 'tab' do
+      Search queries
+      %span.badge=@search_queries.count
 
 .tab-content
   #unvalidated.tab-pane.fade.in.active
@@ -47,3 +51,21 @@
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+  #search.tab-pane.fade.in
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Search query
+          %th Results found
+          %th User
+          %th Time
+      %tbody
+        -@search_queries.each do |search_query|
+          %tr
+            %td=search_query.query
+            %td=search_query.results_count
+            %td=search_query.user.try(:full_name)
+            %td
+              =time_ago_in_words(search_query.created_at)
+              ago
+    

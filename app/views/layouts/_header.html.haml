@@ -9,7 +9,7 @@
           -if current_user
             %li=link_to "Logout", sign_out_path, :method => :delete, :class=>"nav-link btn"
             -if current_user.is_admin?
-              %li=link_to "Admin", users_path, :class=>"nav-link"
+              %li=link_to "Admin", admin_path, :class=>"nav-link"
             %li=link_to "Requests", needs_path, :class=>"nav-link"
           -else
             %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
