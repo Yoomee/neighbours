@@ -4,9 +4,10 @@
 =form.inputs(:class => "form-horizontal") do
   =form.input :first_name, :required => false, :input_html => {:placeholder => "e.g. John"}
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}
-  .control-group
+  .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
     %label.control-label Date of Birth
     .controls
       =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year - 18)}, :class => "input-medium"
+      %span.help-inline=@user.errors[:dob].try(:first)
   =form.input :email, :label => "Email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
   =form.input :password, :required => false
