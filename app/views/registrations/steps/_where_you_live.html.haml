@@ -5,8 +5,8 @@
 =form.inputs(:class => "form-horizontal") do
   =form.input :current_step, :as => :hidden, :value => "where_you_live"
   =form.input :address1, :label => "Address", :required => false, :input_html => {:placeholder => "Number and street"}
-  =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city"}
-  =form.input :county, :label => false, :required => false, :input_html => {:placeholder => "County"}
-  =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode"}
+  =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city", :value => @user.city}
+  =form.input :county, :label => false, :required => false, :input_html => {:placeholder => "County", :value => @user.county}
+  =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2"}
 =form.inputs(:class => "form-horizontal") do
   =form.input :phone, :label => "Phone number", :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}

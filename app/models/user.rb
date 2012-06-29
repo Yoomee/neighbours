@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
   
   before_save :set_card_digits
   
-  validates :address1, :city, :postcode, :presence => {:if => Proc.new {|u| u.current_step == "where_you_live"}}
+  validates :address1, :city, :presence => {:if => Proc.new {|u| u.current_step == "where_you_live"}}
+  validate :postcode_is_in_maltby, :if => Proc.new { |u| u.current_step == "where_you_live" }
+  validates :postcode, :postcode => { :if => Proc.new {|u| u.current_step == "where_you_live" }}
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
   validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
@@ -28,6 +30,14 @@ class User < ActiveRecord::Base
   
   def address
     [address1, city, county, postcode].compact.join(', ')
+  end
+  
+  def city
+    "Maltby"
+  end
+  
+  def county
+    "South Yorkshire"
   end
   
   def credit_card_attributes
@@ -64,6 +74,10 @@ class User < ActiveRecord::Base
   end
   
   private
+  def postcode_is_in_maltby
+    errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\AS66/)
+  end
+  
   def set_card_digits
     unless card_number.blank?
       self.card_digits = card_number.last(4)
