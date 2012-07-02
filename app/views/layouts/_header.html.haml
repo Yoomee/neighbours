@@ -4,12 +4,24 @@
       %h1#site_logo
         =link_to "Neighbours Can Help", "/"
     .span7
+      #header_links
+        -if current_user
+          .btn-group
+            =link_to(current_user, :class => 'btn') do
+              %icon.icon-user
+              =current_user
+            =link_to('#', :data => {:toggle => "dropdown"}, :class => 'btn dropdown-toggle') do
+              %span.caret
+            %ul.dropdown-menu.pull-right
+              -if current_user.is_admin?
+                %li=link_to "Admin", admin_path, :class=>"nav-link"
+              %li
+                =link_to(sign_out_path, :method => :delete) do
+                  %icon.icon-signout
+                  =t(:logout)
       #nav.main-nav
         %ul.unstyled
           -if current_user
-            %li=link_to "Logout", sign_out_path, :method => :delete, :class=>"nav-link btn"
-            -if current_user.is_admin?
-              %li=link_to "Admin", admin_path, :class=>"nav-link"
             %li=link_to "Requests", needs_path, :class=>"nav-link"
           -else
             %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
