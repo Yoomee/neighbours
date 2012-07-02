@@ -8,5 +8,4 @@
   =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city", :value => @user.city}
   =form.input :county, :label => false, :required => false, :input_html => {:placeholder => "County", :value => @user.county}
   =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2"}
-=form.inputs(:class => "form-horizontal") do
-  =form.input :phone, :label => "Phone number", :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}
+  =form.input :phone, :label => "Phone number <br /><em class='optional'>(optional)</em>".html_safe, :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}
