@@ -18,6 +18,7 @@ class NeedsController < ApplicationController
   end
 
   def new
+    @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
   end
   
   def search
