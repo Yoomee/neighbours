@@ -28,7 +28,5 @@ Neighbours::Application.routes.draw do
       get :reject
     end
   end
-  
-  match "admin" => "users#index", :as => :admin
-  
+    
 end
