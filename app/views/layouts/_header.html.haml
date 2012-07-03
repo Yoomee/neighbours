@@ -15,6 +15,15 @@
             %ul.dropdown-menu.pull-right
               -if current_user.is_admin?
                 %li=link_to "Admin", admin_path, :class=>"nav-link"
+                %li.divider
+              %li
+                =link_to(edit_user_path(current_user)) do
+                  %icon.icon-cog
+                  Edit profile
+              %li
+                =link_to(change_password_path) do
+                  %icon.icon-key
+                  Change password
               %li
                 =link_to(sign_out_path, :method => :delete) do
                   %icon.icon-signout
