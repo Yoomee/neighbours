@@ -9,7 +9,7 @@
   =semantic_form_for @need, :validate => true, :html => { :class => "form-horizontal" }  do |f|
     =hidden_field_tag :return_to
     =f.inputs do
-      =f.input :title, :label => "I need help with",  :input_html => { :class => "span5" }, :required => false 
+      =f.input :category_list, :as => :select, :collection => Tag::CATEGORY_OPTIONS, :label => "I need help with", :prompt => "Please select", :required => false
       =f.input :description, :label => "Add a description",  :input_html => { :class => "span5", :rows => "6" }, :required => false
       .control-group{:class => "#{@need.errors[:deadline].present? ? 'error' : ''}"}
         %label.control-label

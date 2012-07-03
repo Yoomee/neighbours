@@ -4,9 +4,11 @@ class Need < ActiveRecord::Base
   has_many :offers
   has_many :posts, :as => :target
   has_one :accepted_offer, :class_name => 'Offer', :conditions => {:accepted => true}
+
+  acts_as_taggable_on :categories
   
   validates :user, :presence => {:unless => :skip_user_validation?}
-  validates :title, :presence => true
+  validates :category_list, :presence => true
   validates :description, :presence => true
   # validate :deadline_is_in_future
   
@@ -23,6 +25,10 @@ class Need < ActiveRecord::Base
     is_valid = valid?
     self.skip_user_validation = false
     is_valid
+  end
+  
+  def title
+    (category_list.first || "Other").titleize
   end
   
   # private
