@@ -23,6 +23,7 @@ Neighbours::Application.routes.draw do
   resources :offers, :only => :index do
     member do
       get :accept
+      get :reject
     end
   end
   

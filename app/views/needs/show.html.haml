@@ -47,7 +47,10 @@
                         %i.icon-comment
                         Reply
                       -if offer.accepted?
-                        %span.badge.badge-success Accepted 
+                        %span.badge.badge-success Accepted
+                        =link_to reject_offer_path(offer), :class=>"post-action" do
+                          %i.icon-remove
+                          Un-accept
                       -elsif @need.accepted_offer.nil?
                         =link_to accept_offer_path(offer), :class=>"post-action" do
                           %i.icon-ok

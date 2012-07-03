@@ -17,4 +17,9 @@ class OffersController < ApplicationController
     @offer.update_attribute(:accepted, true)
     redirect_to @offer.need
   end
+  
+  def reject
+    @offer.update_attribute(:accepted, false)
+    redirect_to @offer.need
+  end  
 end
