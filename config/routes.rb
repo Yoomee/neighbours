@@ -28,5 +28,7 @@ Neighbours::Application.routes.draw do
       get :reject
     end
   end
+  
+  match "searches" => "searches#index", :as => "searches"
     
 end
