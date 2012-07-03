@@ -14,7 +14,10 @@
               %span.caret
             %ul.dropdown-menu.pull-right
               -if current_user.is_admin?
-                %li=link_to "Admin", admin_path, :class=>"nav-link"
+                %li
+                  =link_to(admin_path) do
+                    %icon.icon-cogs
+                    Admin
                 %li.divider
               %li
                 =link_to(edit_user_path(current_user)) do
