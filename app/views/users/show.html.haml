@@ -1,0 +1,55 @@
+.row
+  .span3
+    .row
+      .span3
+        -if @user.image
+          =image_for(@user, "220x")
+        -else
+          =image_for(@user, "220x")
+          .italic
+            %span Upload your own picture.
+            .action-link
+              =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+  .span9
+    %h1.mb-1=title(@user)
+    -if @user.bio
+      =simple_format(@user.bio)
+      .action-link
+        =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+    -else
+      .italic
+        %span Nothing entered yet.
+        .action-link
+          =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+    -if current_user == @user
+      %p
+        %h4 Date of birth
+        =@user.dob.to_s(:date)
+        .action-link
+          =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+      %p
+        %h4 Email
+        =@user.email
+      %p
+        %h4 Address
+        =@user.address
+        .action-link
+          =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
+      %p
+        %h4 Phone number
+        -unless @user.phone.blank?
+          =@user.phone
+          .action-link
+            =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
+        -else
+          .italic
+            %span Nothing entered yet.
+            .action-link
+              =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
+          
+.row.mt-2
+  .span8
+    =options_panel do
+      =back_link
+      =link_if_can("Edit profile", [:edit, @user])
+      =link_if_can("Delete user", [:destroy, @user], :confirm => "Are you sure?")
