@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   
   private
   def postcode_is_in_maltby
-    errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\AS66/)
+    errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\A[Ss]66/)
   end
   
   def set_card_digits
