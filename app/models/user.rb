@@ -23,7 +23,8 @@ class User < ActiveRecord::Base
   validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :dob, :presence => true 
+  validates :dob, :presence => true
+  validates_confirmation_of :email, :password
   
   scope :validated, where(:validated => true)
   scope :unvalidated, where(:validated => false)

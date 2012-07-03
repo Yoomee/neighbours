@@ -10,4 +10,6 @@
       =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year - 18)}, :class => "input-medium"
       %span.help-inline=@user.errors[:dob].try(:first)
   =form.input :email, :label => "Email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
+  =form.input :email_confirmation, :label => "Confirm email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
   =form.input :password, :required => false
+  =form.input :password_confirmation, :label => "Confirm password", :required => false
