@@ -37,7 +37,7 @@
           %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"
           %li=link_to "About", "/wireframes/about", :class=>"nav-link"
           %li=link_to "Home", "/", :class=>"nav-link"
--if current_user
+-if show_control_panel?
   .container
     .row
       #control-panel.span12
