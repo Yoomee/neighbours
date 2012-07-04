@@ -1,10 +1,10 @@
 .container#header
-  .row#header_row
+  .row#header-row
     .span5
       %h1#site_logo
         =link_to "Neighbours Can Help", "/"
     .span7
-      #header_links
+      #header-links
         -if current_user
           .btn-group
             =link_to(current_user, :class => 'btn') do
@@ -31,15 +31,22 @@
                 =link_to(sign_out_path, :method => :delete) do
                   %icon.icon-signout
                   =t(:logout)
-      #nav.main-nav
-        %ul.unstyled
-          -if current_user
-            %li=link_to "Requests", needs_path, :class=>"nav-link"
-          -else
-            %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
-          %li=link_to "Blog", "/wireframes/blog", :class=>"nav-link"
-          %li=link_to "About", "/wireframes/about", :class=>"nav-link"
-          %li=link_to "Home", "/", :class=>"nav-link"
+.nav-strip  
+  .container                
+    .row
+      .span12              
+        #nav.main-nav
+          %ul.nav.nav-tabs
+            %li.active=link_to "Home", "/", :class=>"nav-link"
+            %li=link_to "About", "/wireframes/about", :class=>"nav-link"
+            %li=link_to "Stories", "/wireframes/blog", :class=>"nav-link"
+            -if current_user
+              %li=link_to "My neighbourhood", needs_path, :class=>"nav-link"
+            -else
+              %li=link_to "Login", sign_in_path, :class=>"nav-link btn"
+          
+          
+          
 -if show_control_panel?
   .container
     .row
