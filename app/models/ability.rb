@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
+    can :show, Page, :published => true
     can :create, Need
     
     if user.try(:admin?)

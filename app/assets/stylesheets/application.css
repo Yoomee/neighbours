@@ -8,6 +8,7 @@
  *= require formtastic-bootstrap
  *= require font-awesome
  *= require ym_core
+ *= require redactor
  *= require chosen
  *= require_self
 */
