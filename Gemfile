@@ -26,6 +26,7 @@ gem 'ym_users',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_users"
 gem 'ym_posts',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_posts"
 gem 'ym_search',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_search"
 gem 'ym_notifications', " ~> 0.1"   #, :path => "~/Rails/Gems/ym_notifications"
+
 gem 'client_side_validations'
 
 ### Groups
