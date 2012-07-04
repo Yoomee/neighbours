@@ -14,9 +14,7 @@
               %p.small-text=need.user
             %h3=need.title
             %p
-              %span.badge 2
-              %span.request-message-text
-                messages
+              =messages_badge(current_user.new_notification_count("my_requests", need))
 .row
   .span6.offset2
     =link_to "Add another request for help", new_need_path, :class=>"btn call-to-action primary"               

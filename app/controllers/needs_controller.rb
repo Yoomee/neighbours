@@ -2,6 +2,7 @@ class NeedsController < ApplicationController
   load_and_authorize_resource
   
   before_filter :redirect_if_logged_out, :only => :create
+  after_filter :set_notifications_to_read, :only => :show
   
   def index
     if params[:user_id]
@@ -52,5 +53,9 @@ class NeedsController < ApplicationController
       session[:new_need_attributes] = params[:need]
       return_or_redirect_to(new_registration_path)
     end
+  end
+  
+  def set_notifications_to_read
+    @need.read_all_notifications!(current_user)
   end
 end

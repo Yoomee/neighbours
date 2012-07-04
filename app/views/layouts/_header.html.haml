@@ -66,15 +66,19 @@
               %h3.control-panel-title
                 My requests
               %p.control-panel-subtitle
-                %span.badge.badge-info 12
-                Messages
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_requests"))
           .span3
             =link_to offers_path, :class=>"control-panel-link" do
               %h3.control-panel-title
                 My offers
               %p.control-panel-subtitle
-                %span.badge.badge-info 9
-                Messages
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_offers"))
   
   
           
