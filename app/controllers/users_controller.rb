@@ -12,7 +12,12 @@ class UsersController < ApplicationController
   
   def show    
   end
-  
+
+  def request_to_be_champion
+    @user.update_attribute(:champion_request_at, Time.now)
+    flash[:notice] = "You've asked to become a community champion"
+    redirect_to @user
+  end
   
   def update
     if @user.update_attributes(params[:user])
