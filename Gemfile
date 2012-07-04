@@ -40,7 +40,7 @@ group :development do
  gem 'growl'
  gem 'ruby-debug19'
  gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
- # comment this when deploying
+ gem 'passenger'
 end
 
 gem "rspec-rails", :group => [:test, :development]
