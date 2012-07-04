@@ -8,6 +8,7 @@
  *= require formtastic-bootstrap
  *= require font-awesome
  *= require ym_core
+ *= require ym_posts 
  *= require chosen
  *= require_self
 */
@@ -146,9 +147,6 @@ input {
 	height: 30px;
 	width: 370px;
 	margin-bottom: 20px;
-}
-textarea {
-  min-height: 100px;
 }
 label {
   font-weight: bold;
@@ -609,30 +607,44 @@ background: -o-linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* Opera 11.10+ */
 background: -ms-linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* IE10+ */
 background: linear-gradient(top,  #f6f6f6 1%,#ffffff 34%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
-  
 }
-li.post {
+.need-posts li {
+  float: left;
+  clear: both;
+}
+.need-post {
 	background: #fff;
 	float: left;
 	border-radius:5px;
-	width: 400px;
-	margin: 0 0 20px;
+	width: 540px;
 	padding: 10px 15px 10px;
 	-webkit-box-shadow:0px 0px 4px rgba(0,0,0,0.2)
 }
-li.post .post-speech {
+.need-post .post-speech {
   min-height: 38px;
 }
-li.post .post-action {
+.need-post .post-action {
   float: right;
   font-size: 13px;
   margin-left: 10px;
 }
-
+.need-posts .comments {
+  width: 480px;
+  float: right;
+  clear: both;
+}
+.comment-list div.comment .comment-text,
+.comment-form form {
+  width: 434px;
+}
+.need-posts .comment-form form textarea {
+  width: 424px;
+  font-size: 12px;  
+}
 .request-body {
   min-height: 140px;  
 }
+
 /*========== New offer form ==========*/
 .modal form {
   margin-bottom:0px;

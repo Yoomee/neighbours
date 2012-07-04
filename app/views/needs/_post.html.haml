@@ -1,0 +1,30 @@
+%li.mb-2{:id => "post#{post.id}"}
+  .need-post
+    .row
+      .span1
+        .list-image
+          =link_to(post.user) do
+            =image_for(post.user, "60x60#")
+            %p.small-text
+              =post.user
+      .span6
+        .post-speech=simple_format(post.text)
+        .post-actions
+          -if @need.user == current_user
+            -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
+              =link_to "#", :class=>"post-action" do
+                %i.icon-comment
+                Reply
+              -if offer.accepted?
+                %span.badge.badge-success Accepted
+                =link_to reject_offer_path(offer), :class=>"post-action" do
+                  %i.icon-remove
+                  Un-accept
+              -elsif @need.accepted_offer.nil?
+                =link_to accept_offer_path(offer), :class=>"post-action" do
+                  %i.icon-ok
+                  Accept this offer
+  .comments
+    .comment-list
+      =render(:partial => "comments/comment", :collection => post.comments)
+    =render("comments/form", :comment => post.comments.build)
