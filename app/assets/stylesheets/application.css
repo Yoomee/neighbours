@@ -411,6 +411,7 @@ border-bottom-color: #b08193;
 .intro-circle-icon:hover {
   width: 40px;
   height: 40px;
+  margin-left: -5px;
   line-height: 40px;
   border-radius:40px;
   font-size: 22px;
@@ -455,7 +456,7 @@ border-bottom-color: #b08193;
 }
 #circle7 {
 	top: 260px;
-	right: 150px;  
+	left: 760px;  
 	background: #cf646d;
 }
 #home-map {
