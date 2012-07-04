@@ -18,44 +18,24 @@
         to see who you could help?               
       =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"
   -else
-    .span6.offset1
+    .span8
       -if @need.user != current_user
         .well
           %b
             %i.icon-exclamation-sign
-            =@need.user
-            needs your help
-          %p.mb3
-            If you think you can help, then click on this button to start a private discussion with
-            ="#{@need.user}."
-          =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-      %ul.unstyled
-        -@need.posts.order("created_at DESC").each do |post|
-          %li.post
-            .row
-              .span1
-                .list-image
-                  =link_to post.user do
-                    =image_for(post.user, "60x60#")
-                    %p.small-text
-                      =post.user
-              .span4
-                .post-speech=simple_format(post.text)
-                .post-actions
-                  -if @need.user == current_user
-                    -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
-                      =link_to "#", :class=>"post-action" do
-                        %i.icon-comment
-                        Reply
-                      -if offer.accepted?
-                        %span.badge.badge-success Accepted
-                        =link_to reject_offer_path(offer), :class=>"post-action" do
-                          %i.icon-remove
-                          Un-accept
-                      -elsif @need.accepted_offer.nil?
-                        =link_to accept_offer_path(offer), :class=>"post-action" do
-                          %i.icon-ok
-                          Accept this offer
+            ="#{@need.user} needs your help"
+          -if @need.offers.exists?(:user_id => current_user.id)
+            %p.mb3
+              ="You can continue your discussion with #{@need.user} by writing a comment below ."
+          -else
+            %p.mb3
+              If you think you can help, then click on this button to start a private discussion with
+              ="#{@need.user}."
+            =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            
+      %ul.unstyled.need-posts
+        -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.id])
+        =render(:partial => "needs/post", :collection => posts)
     .span4
       -if @offers.present?
         %h3.mb1 People offering help
