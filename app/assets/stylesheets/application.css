@@ -272,6 +272,14 @@ br.clear {
 
   background: #f5f5f5;
 }
+.main-nav .active a, .controller_home #link-home a, .slug_about #link-about a, .slug_stories #link-stories a, .controller_needs #link-neighbourhood a {
+  color: #00558D;
+  background: #fff;
+  margin-right: 10px;
+  border: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+
+}
 #header-links {
   float: right;
   margin-top: 25px;
@@ -318,13 +326,7 @@ br.clear {
 .homepage-box-title a {
   color: inherit;
 }
-.main-nav .active a {
-  color: #00558D;
-  margin-right: 10px;
-  border: 1px solid #fff;
-  border-bottom: 1px solid #fff;
 
-}
 
 /*========== Flash ==========*/
 
