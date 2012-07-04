@@ -56,6 +56,14 @@ class User < ActiveRecord::Base
     %w{address1 city postcode}.all?(&:present?)
   end
   
+  def new_notification_count(context, need = nil)
+    if need
+      need.notifications.where(:context => context, :user_id => id, :read => false).count
+    else
+      notifications.where(:context => context, :read => false).count
+    end
+  end
+  
   def steps
     %w{who_you_are where_you_live validate}
   end

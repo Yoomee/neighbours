@@ -18,6 +18,15 @@ class Need < ActiveRecord::Base
     has user_id, category_id, deadline, created_at, updated_at
   end
   
+  def notifications
+    Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
+  end
+  
+  def read_all_notifications!(user)
+    context = (self.user == user) ? 'my_requests' : 'my_offers'
+    notifications.where(["context = '#{context}' AND notifications.user_id = ?", user.id]).update_all(:read => true)
+  end
+  
   def valid_without_user?
     self.skip_user_validation = true
     is_valid = valid?
@@ -29,7 +38,7 @@ class Need < ActiveRecord::Base
     category.to_s
   end
   
-  # private
+  private  
   # def deadline_is_in_future
   #   if new_record? && deadline.present? && (deadline < Date.today)
   #     errors.add(:deadline, "must be in the future")

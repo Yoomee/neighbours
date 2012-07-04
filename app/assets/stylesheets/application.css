@@ -652,14 +652,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   float: right;
   clear: both;
 }
-.comment-list div.comment .comment-text,
-.comment-form form {
-  width: 434px;
-}
-.need-posts .comment-form form textarea {
-  width: 424px;
-  font-size: 12px;  
-}
 .request-body {
   min-height: 140px;  
 }
@@ -700,3 +692,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .table-users td{
 /*  vertical-align:middle;
 */}
+
+/*========== Comments ==========*/
+
+.comment-list .unread {
+  background-color: #f5f5f5;
+}
