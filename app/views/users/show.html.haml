@@ -25,6 +25,7 @@
       .action-link
         =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
     -else
+      %h4 Bio    
       .italic
         %span Nothing entered yet.
         .action-link
@@ -32,7 +33,7 @@
     -if current_user == @user
       %p
         %h4 Date of birth
-        =@user.dob.to_s(:date)
+        =@user.dob.nil? ? 'Not set yet.' : @user.dob.to_s(:date)
         .action-link
           =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
       %p
