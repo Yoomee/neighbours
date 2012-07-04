@@ -64,13 +64,13 @@
       -@needs.each do |need|
         %li.list
           .list-image
-            =link_to "#" do
+            =link_to need do
               =image_for(need.user, "60x50#")
               %p.small-text
                 =need.user
           .list-text
             %h3
-              =link_to need.title, "#register-popup", :"data-toggle"=>"modal"
+              =link_to need.title, need
             %p
               =need.description
             
