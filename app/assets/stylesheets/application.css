@@ -629,7 +629,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-left: 10px;
 }
 .need-posts .comments {
-  width: 480px;
+  width: 475px;
   float: right;
   clear: both;
 }

@@ -23,15 +23,19 @@
         .well
           %b
             %i.icon-exclamation-sign
-            =@need.user
-            needs your help
-          %p.mb3
-            If you think you can help, then click on this button to start a private discussion with
-            ="#{@need.user}."
-          =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            ="#{@need.user} needs your help"
+          -if @need.offers.exists?(:user_id => current_user.id)
+            %p.mb3
+              ="You can continue your discussion with #{@need.user} by writing a comment below ."
+          -else
+            %p.mb3
+              If you think you can help, then click on this button to start a private discussion with
+              ="#{@need.user}."
+            =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            
       %ul.unstyled.need-posts
-        -@need.posts.order("created_at DESC").each do |post|
-          =render("needs/post", :post => post)
+        -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.id])
+        =render(:partial => "needs/post", :collection => posts)
     .span4
       -if @offers.present?
         %h3.mb1 People offering help

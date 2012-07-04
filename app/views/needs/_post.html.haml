@@ -12,9 +12,6 @@
         .post-actions
           -if @need.user == current_user
             -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
-              =link_to "#", :class=>"post-action" do
-                %i.icon-comment
-                Reply
               -if offer.accepted?
                 %span.badge.badge-success Accepted
                 =link_to reject_offer_path(offer), :class=>"post-action" do
