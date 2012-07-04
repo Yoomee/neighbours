@@ -1,40 +1,58 @@
 #home-intro
   .home-intro-text
-    %h2.home-welcome.home-intro-text Welcome to Neighbours Can Help
+    %h2.home-welcome.home-intro-text
+      Hi
+      =current_user
+      , Welcome to Neighbours Can Help 
+      
     %h3.home-where.home-intro-text ...where neighbours help each other
-  %i#circle1.icon-user.intro-circle-icon.fade_in
-  %i#circle2.icon-user.intro-circle-icon.fade_in
-  %i#circle3.icon-user.intro-circle-icon.fade_in
+  %i#circle1.icon-user.intro-circle-icon.circle1.fade_in.fade_one
+  %i#circle2.icon-user.intro-circle-icon.circle1.fade_in.fade_two
+  %i#circle3.icon-user.intro-circle-icon.circle2.fade_in.fade_three
+  %i#circle4.icon-user.intro-circle-icon.circle3.fade_in.fade_four  
+  %i#circle5.icon-user.intro-circle-icon.circle4.fade_in.fade_five     
+  %i#circle6.icon-user.intro-circle-icon.circle4.fade_in.fade_six 
+  %i#circle7.icon-user.intro-circle-icon.circle4.fade_in.fade_six 
 .what-help
   %h2.what-help-text What help would you like?
-.row                              
-  .span6
-    %h2 Site activity
-    %ul.help-list.unstyled
-      -@needs.each do |need|
-        %li.list
-          .list-image
-            =link_to "#" do
-              =image_for(need.user, "60x50#")
-              %p.small-text
-                =need.user
-          .list-text
-            %h3
-              =link_to_self need
+  %select#what-help-select
+    %option Finding my dog, baxter
+    %option Assembling a news team
+    %option Trimming my moustache
+    %option Reading the news
+    %option Staying classy
+
+=link_to ("I'd like to offer some help"), "#", :class=>"home-help-link"
+    
+-if false  
+  .row                              
+    .span6
+      %h2 Site activity
+      %ul.help-list.unstyled
+        -@needs.each do |need|
+          %li.list
+            .list-image
+              =link_to "#" do
+                =image_for(need.user, "60x50#")
+                %p.small-text
+                  =need.user
+            .list-text
+              %h3
+                =link_to_self need
+              %p
+                =need.description
+      =#link_to "Make an offer to help", "/wireframes/i_can_help", :class=>"btn call-to-action"
+    .span6
+      #home-map
+        -if false
+          .you-are-in
             %p
-              =need.description
-    =#link_to "Make an offer to help", "/wireframes/i_can_help", :class=>"btn call-to-action"
-  .span6
-    #home-map
-      -if false
-        .you-are-in
-          %p
-            You are in 
-            %select
-              %option Maltby
-              %option Other areas coming soon!    
-.row
-  .span6
-    =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
-  .span6
-    =link_to "Make an offer to help", needs_path, :class=>"btn call-to-action"    
+              You are in 
+              %select
+                %option Maltby
+                %option Other areas coming soon!    
+  .row
+    .span6
+      =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
+    .span6
+      =link_to "Make an offer to help", needs_path, :class=>"btn call-to-action"    

@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
   
   has_many :needs
   has_many :offers
-  has_one :community_champion, :class_name => "User", :foreign_key => :community_champion_id 
+
+  has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify 
+  belongs_to :community_champion, :class_name => "User"
   
   attr_accessor :card_number, :card_security_code
   
@@ -30,6 +32,7 @@ class User < ActiveRecord::Base
   scope :validated, where(:validated => true)
   scope :unvalidated, where(:validated => false)
   scope :community_champions, where(:is_community_champion => true)
+  scope :community_champion_requesters, where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
   
   def address
     [address1, city, county, postcode].compact.join(', ')
