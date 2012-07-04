@@ -12,6 +12,8 @@ Neighbours::Application.routes.draw do
     end
   end
   
+  resource :neighbourhood, :only => :show
+  
   resources :need_categories, :except => [:show]
   
   resources :users, :only => []  do
