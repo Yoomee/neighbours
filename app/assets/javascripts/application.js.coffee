@@ -7,6 +7,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require ym_core
+#= require ym_cms
 #= require ym_posts
 #= require rails.validations
 #= require_tree .
