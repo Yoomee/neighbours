@@ -9,6 +9,14 @@
     =link_to '#validated', :'data-toggle' => 'tab' do
       Validated users
       %span.badge=@validated_users.count
+  %li
+    =link_to '#champion_requests', :'data-toggle' => 'tab' do
+      Community champion requests
+      %span.badge=@community_champion_requests.count
+  %li
+    =link_to '#champions', :'data-toggle' => 'tab' do
+      Community champions
+      %span.badge=@community_champions.count
 
 .tab-content
   #unvalidated.tab-pane.fade.in.active
@@ -26,8 +34,8 @@
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
-                =link_to "Validate",validate_user_path(user), :method => :put, :class => 'btn btn-primary btn-small'
-        
+                =link_to "Validate",validate_user_path(user), :remote => true, :'data-user-id' => user.id, :class => 'btn btn-primary btn-small'
+                
   #validated.tab-pane.fade.in
     %table.table.table-striped.table-users
       %tbody
@@ -43,7 +51,52 @@
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+                -if user.is_community_champion?
+                  =link_to "&nbsp;&nbsp;Un-champion&nbsp;&nbsp;".html_safe,toggle_champion_user_path(user), :method => :put, :class => 'btn btn-primary btn-small btn-danger'
+                -else
+                  =link_to "Make champion",toggle_champion_user_path(user), :method => :put, :class => 'btn btn-primary btn-small'
 
+
+  #champion_requests.tab-pane.fade.in
+    %table.table.table-striped.table-users
+      %tbody
+        -@community_champion_requests.each do |user|
+          %tr
+            %td=user.full_name
+            %td
+              %p
+                %strong Address
+                =user.address
+              .collapse{:id => "user-info-#{user.id}"}
+                =render("validation_details", :user => user)
+            %td
+              .pull-right
+                =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+                =link_to "Make champion",toggle_champion_user_path(user), :method => :put, :class => 'btn btn-primary btn-small'
+                        
+  #champions.tab-pane.fade.in
+    %table.table.table-striped.table-users
+      %tbody
+        -@community_champions.each do |user|
+          %tr
+            %td=user.full_name
+            %td
+              %p
+                %strong Address
+                =user.address
+              .collapse{:id => "user-info-#{user.id}"}
+                =render("validation_details", :user => user)
+            %td
+              .pull-right
+                =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+                =link_to "Un-champion",toggle_champion_user_path(user), :method => :put, :class => 'btn btn-primary btn-small  btn-danger'
+                
+=options_panel do
+  =back_link
+
+
+#choose-community-champion.modal.hide.fade
+  
 =options_panel do
   =back_link
     
