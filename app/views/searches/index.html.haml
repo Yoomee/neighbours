@@ -1,0 +1,21 @@
+%h1=title("Search queries")
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Search query
+      %th Results found
+      %th User
+      %th Time
+  %tbody
+    -@search_queries.each do |search_query|
+      %tr
+        %td=search_query.query
+        %td=search_query.results_count
+        %td=search_query.user.try(:full_name)
+        %td
+          =time_ago_in_words(search_query.created_at)
+          ago
+
+=options_panel do
+  =back_link

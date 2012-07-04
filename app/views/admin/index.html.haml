@@ -1,0 +1,25 @@
+.row
+  .span12
+    %h1
+      %i.icon-cogs
+      =title "Admin"
+.row
+  .span4
+    .well
+      %h2
+        %i.icon-group
+        Users
+      %ul.unstyled
+        %li=link_to "Manage users", users_path
+    .well
+      %h2
+        %i.icon-tags
+        Categories
+      %ul.unstyled
+        %li=link_to "Manage need categories", need_categories_path
+    .well
+      %h2
+        %i.icon-dashboard
+        Analytics
+      %ul.unstyled
+        %li=link_to "View search queries", searches_path    

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   
   has_many :needs
   has_many :offers
+  has_one :community_champion, :class_name => "User", :foreign_key => :community_champion_id 
   
   attr_accessor :card_number, :card_security_code
   
@@ -28,6 +29,7 @@ class User < ActiveRecord::Base
   
   scope :validated, where(:validated => true)
   scope :unvalidated, where(:validated => false)
+  scope :community_champions, where(:is_community_champion => true)
   
   def address
     [address1, city, county, postcode].compact.join(', ')

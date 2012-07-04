@@ -12,6 +12,8 @@ Neighbours::Application.routes.draw do
     end
   end
   
+  resources :need_categories, :except => [:show]
+  
   resources :users, :only => []  do
     resources :needs, :only => :index 
     resources :offers, :only => :index 
@@ -27,6 +29,6 @@ Neighbours::Application.routes.draw do
     end
   end
   
-  match "admin" => "users#index", :as => :admin
-  
+  match "searches" => "searches#index", :as => "searches"
+    
 end
