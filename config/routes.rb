@@ -19,7 +19,9 @@ Neighbours::Application.routes.draw do
     resources :offers, :only => :index 
     member do
       put :request_to_be_champion
-      put :validate
+      get :validate
+      put :assign_champion
+      put :toggle_champion
     end
   end
   

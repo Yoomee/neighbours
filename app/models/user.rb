@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   
   has_many :needs
   has_many :offers
-  has_one :community_champion, :class_name => "User", :foreign_key => :community_champion_id 
+  has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify 
+  belongs_to :community_champion, :class_name => "User"
   
   attr_accessor :card_number, :card_security_code
   

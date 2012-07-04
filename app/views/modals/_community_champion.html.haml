@@ -1,0 +1,9 @@
+=semantic_form_for user, :url => assign_champion_user_url do |form|
+  .modal-header
+    %button.close{:type => "button", :'data-dismiss' => "modal" } &times;
+    %h3="Choose a community champion for #{user}"
+  .modal-body
+    =form.input :validated, :as => :hidden, :input_html => {:value => 1} 
+    =form.input :community_champion_id, :as => :select,  :collection => User.community_champions, :include_blank => false 
+  .modal-footer
+    =form.commit_button "Validate", :button_html => {:class => "btn-primary"}
