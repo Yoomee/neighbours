@@ -42,12 +42,12 @@
   -webkit-animation-iteration-count: 1;
 }
 
-.fade_in.fade_one,{-webkit-animation-delay: 0, 0;}
-.fade_in.fade_two,   {-webkit-animation-delay: 0, 0.3s;}
-.fade_in.fade_three, {-webkit-animation-delay: 0, 0.6s;}
-.fade_in.fade_four,  {-webkit-animation-delay: 0, 0.9s;}
-.fade_in.fade_five,  {-webkit-animation-delay: 0, 1.2s;}
-.fade_in.fade_six, {-webkit-animation-delay: 0, 1.5s;}
+.fade_in.fade_one{-webkit-animation-delay: 0, 0;}
+.fade_in.fade_two {-webkit-animation-delay: 0, 0.2s;}
+.fade_in.fade_three {-webkit-animation-delay: 0, 0.4s;}
+.fade_in.fade_four  {-webkit-animation-delay: 0, 0.6s;}
+.fade_in.fade_five  {-webkit-animation-delay: 0, 0.8s;}
+.fade_in.fade_six {-webkit-animation-delay: 0, 1s;}
 
 .main-nav a  {
 	    
@@ -339,40 +339,64 @@ br.clear {
 /*========== Homepage ==========*/
 #home-intro {
 	background: url(/assets/home_intro.png) bottom center no-repeat;
-  height: 300px;
+  height: 370px;
   float: left;
+  position: relative;
   width: 100%;
 }
 .home-intro-text {
 	text-align: center;
 	float: left;
 	width: 100%;
-	color: #b08193;
-	font-size: 30px;
-	line-height: 1.2;
+	color: #b3b070;
+	font-size: 33px;
+	line-height: 1.1;
 
 }
 .home-welcome {
   margin: 20px 0 4px;
   color: #333;
 }
-
+.home-where {
+  font-weight: normal;
+  color: #999;
+}
 .what-help {
 	background: #b08193;
 	float: left;
+	position: relative;
 	clear: left;
-	width: 800px;
+	width: 720px;
 	padding: 30px;
-	margin: 0 0 40px 30px; 
+	margin: -30px 0 15px 70px; 
 	box-shadow:1px 1px 10px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.3);
 }
+
+.home-help-link {
+	float: left;
+	clear: left;
+	margin: 0 0 0 350px;
+	color: #999;
+	border-bottom: 1px solid #f5f5f5;
+  
+}
+.home-help-link:hover {
+text-decoration: none;
+border-bottom-color: #b08193;
+
+} 
 .what-help-text {
   margin-bottom: 0;
   color: #fff;
+  float: left;
+  margin: 0 30px 0 30px;
+}
+#what-help-select {
+  width: 300px;
+  margin: 0;
 }
 .intro-circle-icon {
   display: block;
-  background: #f8c57a;
   float: left;
   text-align: center;
   width: 30px;
@@ -381,15 +405,59 @@ br.clear {
   line-height: 30px;
   color: #fff;
   border-radius:30px;
+  position: absolute;
+  
 }
 .intro-circle-icon:hover {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius:50px;
-  font-size: 25px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius:40px;
+  font-size: 22px;
+}
+.circle1 {
+  background: #f8bb61;
+}
+.circle2 {
+  background: #b4c773;
+}
+.circle3 {
+  background: #8bd7dd;
+}
+.circle4 {
+  background: #b08193;
 }
 
+#circle1 {
+	top: 160px;
+	left: 267px;  
+}
+#circle2 {
+	top: 260px;
+	left: 507px;  
+}
+#circle3 {
+	top: 140px;
+	left: 467px;  
+}
+#circle4 {
+	top: 190px;
+	left: 647px;  
+}
+#circle5 {
+	top: 230px;
+	left: 317px;  
+}
+#circle6 {
+	top: 220px;
+	left: 130px;  
+	background: #cf646d;
+}
+#circle7 {
+	top: 260px;
+	right: 150px;  
+	background: #cf646d;
+}
 #home-map {
    background: url(/assets/map.png) top center no-repeat;
 
