@@ -12,13 +12,18 @@ Neighbours::Application.routes.draw do
     end
   end
   
+  resource :neighbourhood, :only => :show
+
   resources :need_categories, :except => [:show]
   
   resources :users, :only => []  do
     resources :needs, :only => :index 
     resources :offers, :only => :index 
     member do
-      put :validate
+      put :request_to_be_champion
+      get :validate
+      put :assign_champion
+      put :toggle_champion
     end
   end
   
