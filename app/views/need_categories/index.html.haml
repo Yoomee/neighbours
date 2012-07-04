@@ -1,0 +1,17 @@
+%h1=title "Need Categories"
+%table.table.table-striped
+  %tr
+    %th Name
+    %th Description
+    %th
+  -@need_categories.each do |need_category|
+    %tr
+      %td=need_category.name
+      %td=need_category.description
+      %td.span2
+        =link_to "Edit", edit_need_category_path(need_category), :class => 'btn btn-small'
+        =link_to "Delete", need_category_path(need_category), :method => :delete, :class => 'btn btn-small btn-danger', :confirm => "Are you sure?"
+    
+=options_panel do
+  =back_link
+  =link_to "New category", new_need_category_path

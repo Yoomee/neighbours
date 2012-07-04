@@ -8,7 +8,6 @@ class UsersController < ApplicationController
   def index
     @validated_users = User.validated
     @unvalidated_users = User.unvalidated
-    @search_queries = SearchQuery.order("created_at DESC")
   end
   
   def show    

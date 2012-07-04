@@ -122,7 +122,7 @@ h2.home-title, .big-title, .about_page_view #page_title {
   
 }
 body, p,
-div, input, select, .btn, label {
+div, input, select, .btn, label, textarea {
   font-weight: normal;
   font-size: 16px;
   line-height: 23px;
