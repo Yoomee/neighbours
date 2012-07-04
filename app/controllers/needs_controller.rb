@@ -19,7 +19,11 @@ class NeedsController < ApplicationController
   end
 
   def new
-    @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
+    if params[:need_category_id]
+      @need = Need.new(:category_id => params[:need_category_id])
+    else
+      @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
+    end
   end
   
   def search

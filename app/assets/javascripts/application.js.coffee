@@ -69,3 +69,9 @@ window.NewNeedForm =
       $('#register-popup').modal('show')
     $('form#new_need').submit () ->
       NewNeedForm.force_submit
+      
+window.NeedSelect =
+  init: ->
+    $('#what-help-select').change ->
+      window.location.href = "/need_categories/#{$('#what-help-select').val()}/needs/new"
+    

@@ -39,11 +39,11 @@
       .span12              
         #nav.main-nav
           %ul.nav.nav-tabs
-            %li#link-home=link_to "Home", "/", :class=>"nav-link"
-            %li#link-about=link_to_slug :about, :class=>"nav-link"
-            %li#link-stories=link_to_slug :stories, :class=>"nav-link"
+            =li_with_active(current_page?(root_path), link_to("Home", root_path, :class=>"nav-link"))
+            =li_with_active(@page && @page.slug == "about", link_to_slug(:about, :class=>"nav-link"))
+            =li_with_active(@page && @page.slug == "stories", link_to_slug(:stories, :class=>"nav-link"))
             -if current_user
-              %li#link-neighbourhood=link_to "My neighbourhood", needs_path, :class=>"nav-link"
+              =li_with_active(controller_name.neighbourhoods?, link_to("My Neighbourhood", neighbourhood_path, :class=>"nav-link"))
           
 -if show_control_panel?
   .container
