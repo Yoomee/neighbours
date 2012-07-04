@@ -567,10 +567,29 @@ html, body {
 }
 .footer{
   border-top: 1px solid #EEE;
-  margin-top: 9px;
-  padding-top: 9px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   color: #BFBFBF;
+  float: left;
+  width: 100%;
 }
+.copyright {
+  float: left;
+}
+.footer-logo {
+	float: right;
+	display: block;
+	text-indent: -9000em;
+	background: url(/assets/nominet_logo.png) no-repeat top right;
+	margin: 5px 0 0 20px;
+	width: 170px;
+	height: 70px;
+}
+a.yoomee-logo {
+	background: url(/assets/yoomee_logo.png) no-repeat top right;
+}
+
 /*========== Control Panel==========*/
 #control-panel {
   height: 70px;
