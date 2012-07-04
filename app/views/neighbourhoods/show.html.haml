@@ -1,0 +1,80 @@
+-title "My Neighbourhood"
+.row
+  .span12.fade_in
+    #home-map
+      .you-are-in
+        %p
+          You are in 
+          %select
+            %option Maltby
+            %option Other areas coming soon!
+.row                                         
+  .span6
+    %h2 Neighbours who've been helped
+    %ul.help-list.unstyled
+      %li.list
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Alan
+        .list-text
+          %h3
+            =link_to "Borrow a ladder", "/wireframes/blog"
+          %p
+            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
+      %li.list
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Alan
+        .list-text
+          %h3
+            =link_to "Tyre pressures", "/wireframes/blog"
+          %p
+            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
+      %li.list
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Alan
+        .list-text
+          %h3
+            =link_to "Visiting my father", "/wireframes/blog"
+          %p
+            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.   
+      %li.list
+        .list-image
+          =link_to "#" do
+            =image_tag "person.png"
+            %p.small-text
+              Alan
+        .list-text
+          %h3
+            =link_to "Taking cat to the vet", "/wireframes/blog"
+          %p
+            Lorem ipsum falli molestiae cu mei, choro facete consequat ex mei. Eum idque dicant offendit in.               
+    =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
+                            
+  .span6
+    %h2 Neighbours who need help
+    %ul.help-list.unstyled
+      -@needs.each do |need|
+        %li.list
+          .list-image
+            =link_to "#" do
+              =image_for(need.user, "60x50#")
+              %p.small-text
+                =need.user
+          .list-text
+            %h3
+              =link_to need.title, "#register-popup", :"data-toggle"=>"modal"
+            %p
+              =need.description
+            
+
+
+            
+    =link_to "I can help", "/wireframes/i_can_help", :class=>"btn call-to-action"    

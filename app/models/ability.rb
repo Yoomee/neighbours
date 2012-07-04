@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
+    can :show, Page, :published => true
     can :create, Need
     
     if user.try(:admin?)
@@ -14,6 +15,7 @@ class Ability
       # admin ability
     elsif user
       # user ability
+      can [:create], Comment
       can [:read, :create], Post
       can [:update, :destroy], Post, :user_id => user.id
       can :manage, User, :id => user.id     
