@@ -1,5 +1,11 @@
 .row
   .help-box.span8.offset2
+    .help-well.well
+      %h2.help-title I can help with
+      %form{:action => search_needs_path, :method => 'get'}
+        =text_field_tag 'q', params[:q], :placeholder=>"e.g. Gardening", :input_html => {:class => "can-help-input"}
+        %input.hide{:type => 'submit', :value => "Go"}
+    
     %h1=title "People who need help"
     
     %ul.help-list.unstyled
@@ -18,9 +24,4 @@
             =simple_format(need.description)
           =link_to "I can help", need, :class=>"btn i-can-help-btn"
     .clearfix
-    .help-well.well
-      %h2.help-title I can help with
-      %form{:action => search_needs_path, :method => 'get'}
-        =text_field_tag 'q', params[:q], :placeholder=>"e.g. Gardening", :input_html => {:class => "can-help-input"}
-        %input.hide{:type => 'submit', :value => "Go"}
-
+    
