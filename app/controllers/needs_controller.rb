@@ -47,6 +47,11 @@ class NeedsController < ApplicationController
     end
   end
   
+  def destroy
+    @need.destroy
+    return_or_redirect_to needs_path
+  end
+  
   private
   def redirect_if_logged_out
     if current_user.nil? && @need.valid_without_user?

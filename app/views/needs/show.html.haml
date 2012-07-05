@@ -47,6 +47,10 @@
                   =image_for(offer.user, "60x60#")
                   %p.small-text
                     =offer.user
+.row
+  .span12
+    =options_panel do
+      =link_if_can("Delete this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
 
 -if @need.user != current_user
   .row

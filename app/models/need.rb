@@ -2,8 +2,8 @@ class Need < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
-  has_many :offers
-  has_many :posts, :as => :target
+  has_many :offers, :dependent => :destroy
+  has_many :posts, :as => :target, :dependent => :destroy
   has_one :accepted_offer, :class_name => 'Offer', :conditions => {:accepted => true}
   
   validates :user, :presence => {:unless => :skip_user_validation?}
