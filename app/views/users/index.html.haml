@@ -51,6 +51,8 @@
             %td
               .pull-right
                 =link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}", :class => 'btn btn-small'
+                -if user.community_champion.blank?
+                  =link_to "Assign a Champion",validate_user_path(user), :remote => true, :'data-user-id' => user.id, :class => 'btn btn-primary btn-small'
                 -if user.is_community_champion?
                   =link_to "&nbsp;&nbsp;Un-champion&nbsp;&nbsp;".html_safe,toggle_champion_user_path(user), :method => :put, :class => 'btn btn-primary btn-small btn-danger'
                 -else
