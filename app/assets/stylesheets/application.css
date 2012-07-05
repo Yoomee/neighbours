@@ -492,7 +492,7 @@ border-bottom-color: #b08193;
   padding-bottom: 10px;
   padding-top: 10px;  
   float: left;
-  height: 82px;
+  height: 91px;
   overflow: hidden;
   width: 100%;
   border-bottom: 1px solid #ccc;
@@ -846,9 +846,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 
 /*========== Admin users index ==========*/
-.table-users td{
-/*  vertical-align:middle;
-*/}
+.table-users td .icon-large{
+  line-height:0.5em;
+}
 
 /*========== Comments ==========*/
 
