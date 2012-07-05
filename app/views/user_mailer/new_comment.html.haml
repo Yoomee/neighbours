@@ -1,0 +1,19 @@
+!!!
+%html
+  %body
+    %p
+      ="Hi #{@user.first_name},"
+    %p
+      Your neighbour
+      =@comment.user
+      commented after you.
+    %p
+      =link_to("View the comment.", need_url(@need))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    
+    

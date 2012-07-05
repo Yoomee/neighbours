@@ -4,6 +4,13 @@ class UserMailer < ActionMailer::Base
   
   default :from => "site@neighbours.yoomee.com", 
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
+          
+  def new_comment(comment)
+    @comment = comment
+    @need = @comment.post.target
+    @user = @comment.user == @comment.post.user ? @need.user : @comment.post.user
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@comment.user}")
+  end
   
   def new_offer(offer)
     @offer = offer
