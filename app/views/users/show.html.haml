@@ -13,13 +13,16 @@
   .span9
     %h1.mb-1=title(@user)
     %h3.mb-1
-      -if @user.community_champion
-        ="Your community champion is #{link_to_self(@user.community_champion)}".html_safe
+      -if @user.is_community_champion?
+        You are a community champion
       -else
         -if @user.champion_request_at
           Your request to become a community champion is being considered
         -else
           ="There isn't a community champion for your area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
+    %h3.mb-1
+      -if @user.community_champion
+        ="Your community champion is #{link_to_self(@user.community_champion)}".html_safe
     -if @user.bio
       =simple_format(@user.bio)
       .action-link
