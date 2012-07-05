@@ -18,6 +18,7 @@ class RegistrationsController < ApplicationController
           flash[:notice] = "Congratulations! You have added your first request. Once we've validated your account then neighbours can help you."
           redirect_to(user_needs_path(current_user)) and return
         elsif session.delete(:redirect_to_needs)
+          flash[:notice] = "Congratulations! You've just registered. Once we've validated your account you'll be able to help your neighbours."
           redirect_to(needs_path) and return
         else
           redirect_to(root_path) and return
