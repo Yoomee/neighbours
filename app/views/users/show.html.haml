@@ -15,6 +15,8 @@
     %h3.mb-1
       -if @user.community_champion
         ="Your community champion is #{link_to_self(@user.community_champion)}".html_safe
+      -if @user.is_community_champion?
+        You are a community champion
       -else
         -if @user.champion_request_at
           Your request to become a community champion is being considered
