@@ -40,6 +40,7 @@ end
 
 group :development do
  gem 'growl'
+ gem 'mailcatcher'
  gem 'ruby-debug19'
  gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
  gem 'passenger'

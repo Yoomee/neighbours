@@ -1,0 +1,10 @@
+Hi <%=@user.first_name%>,
+
+Your neighbour <%=@offer.need.user%> has accepted your offer of help.
+
+<%=need_url(@offer.need)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>

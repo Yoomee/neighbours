@@ -1,0 +1,19 @@
+!!!
+%html
+  %body
+    %p
+      ="Hi #{@user.first_name},"
+    %p
+      Your neighbour
+      =@offer.need.user
+      has accepted your offer of help.
+    %p
+      =link_to("View the request for help.", need_url(@offer.need))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    
+    

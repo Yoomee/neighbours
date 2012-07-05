@@ -11,10 +11,12 @@ class OffersController < ApplicationController
     @offer.need = @need
     @offer.user = current_user
     @offer.save
+    UserMailer.new_offer(@offer).deliver
   end
   
   def accept
     @offer.update_attribute(:accepted, true)
+    UserMailer.accepted_offer(@offer).deliver
     redirect_to @offer.need
   end
   
