@@ -6,4 +6,4 @@
     =form.input :validated, :as => :hidden, :input_html => {:value => 1} 
     =form.input :community_champion_id, :as => :select,  :collection => User.community_champions
   .modal-footer
-    =form.commit_button "Validate", :button_html => {:class => "btn-primary"}
+    =form.commit_button (user.validated? ? "Save" : "Validate"), :button_html => {:class => "btn-primary"}

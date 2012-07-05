@@ -3,8 +3,10 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   
   def assign_champion
+    was_validated = @user.validated
     if @user.update_attributes(params[:user])
-      flash[:notice] = "#{@user} has been validated, #{User.find_by_id(params[:user][:community_champion_id]) ? 'with ' + User.find_by_id(params[:user][:community_champion_id]).to_s + ' assigned as community champion' : 'without a community champion' }"
+      message = was_validated ? "#{@user} has been assigned a community champion" : (@user.community_champion ? "#{@user} has been validated and assigned a community champion" : "#{@user} has been validated")
+      flash[:notice] = message
     else
       flash[:error] = "Something has gone wrong.  Please try again"
     end
