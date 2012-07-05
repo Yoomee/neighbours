@@ -1,10 +1,12 @@
 .row
   .help-box.span8.offset2
-    .help-well.well
-      %h2.help-title I can help with
-      %form{:action => search_needs_path, :method => 'get'}
-        =text_field_tag 'q', params[:q], :placeholder=>"e.g. Gardening", :input_html => {:class => "can-help-input"}
-        %input.hide{:type => 'submit', :value => "Go"}
+    -# Don't show search box for the time being
+    -if false
+      .help-well.well
+        %h2.help-title I can help with
+        %form{:action => search_needs_path, :method => 'get'}
+          =text_field_tag 'q', params[:q], :placeholder=>"e.g. Gardening", :input_html => {:class => "can-help-input"}
+          %input.hide{:type => 'submit', :value => "Go"}
     
     %h1=title "People who need help"
     
