@@ -9,7 +9,7 @@
           .btn-group
             =link_to(current_user, :class => 'btn') do
               %icon.icon-user
-              =current_user
+              =current_user.full_name
             =link_to('#', :data => {:toggle => "dropdown"}, :class => 'btn dropdown-toggle') do
               %span.caret
             %ul.dropdown-menu.pull-right
