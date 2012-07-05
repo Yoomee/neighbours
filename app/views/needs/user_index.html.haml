@@ -1,21 +1,28 @@
 .row
   .span8.offset2
     %h1=title "My requests"
-    %p
-      Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
-      =link_to("click here",needs_path)
-      to see if you could help someone else.
-    %ul.nav.nav-tabs.nav-stacked
-      -@needs.order('created_at DESC').each do |need|
-        %li
-          =link_to need do
-            .list-image
-              =image_for(need.user, "60x50#")
-              %p.small-text=need.user
-            %h3=need.title
-            %p
-              =messages_badge(current_user.new_notification_count("my_requests", need))
-.row
-  .span6.offset2
-    =link_to "Add another request for help", new_need_path, :class=>"btn call-to-action primary"               
+    -if @needs.count > 0
+      %p
+        Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
+        =link_to("click here",needs_path)
+        to see if you could help someone else.
+      %ul.nav.nav-tabs.nav-stacked
+        -@needs.order('created_at DESC').each do |need|
+          %li
+            =link_to need do
+              .list-image
+                =image_for(need.user, "60x50#")
+                %p.small-text=need.user
+              %h3=need.title
+              %p
+                =messages_badge(current_user.new_notification_count("my_requests", need))
+      .row
+        .span6
+          =link_to "Add another request for help", new_need_path, :class=>"btn call-to-action primary"
+    -else
+      %p
+        You haven't asked for any help yet.
+        .row
+          .span6.offset2
+            =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"      
 

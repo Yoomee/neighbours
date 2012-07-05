@@ -2,4 +2,16 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              blank: "enter a password"
+            password_confirmation:
+              blank: "enter a password"
+              
+  devise:
+    sessions:
+      signed_in: 'Welcome back!'
