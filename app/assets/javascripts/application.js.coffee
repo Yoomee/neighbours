@@ -22,6 +22,7 @@ $(document).ready () ->
         text: term
       )
   )
+  YmComments.Form.init({submitOnEnter: false})  
 
 window.Registration = 
   initValidateStep: () ->
