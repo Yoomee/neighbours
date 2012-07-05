@@ -1,6 +1,9 @@
 class RegistrationsController < ApplicationController
   
   def new
+    if params[:redirect_to_needs]
+      session[:redirect_to_needs] = true
+    end
     @user = current_user || User.new
     @user.current_step = params[:step]
   end
@@ -14,6 +17,8 @@ class RegistrationsController < ApplicationController
           @user.needs.create(new_need_attrs)
           flash[:notice] = "Congratulations! You have added your first request. Once we've validated your account then neighbours can help you."
           redirect_to(user_needs_path(current_user)) and return
+        elsif session.delete(:redirect_to_needs)
+          redirect_to(needs_path) and return
         else
           redirect_to(root_path) and return
         end
