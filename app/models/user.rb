@@ -15,10 +15,11 @@ class User < ActiveRecord::Base
   attr_accessor :card_number, :card_security_code
   
   before_save :set_card_digits
+  after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   
-  validates :address1, :city, :presence => {:if => Proc.new {|u| u.current_step == "where_you_live"}}
-  validate :postcode_is_in_maltby, :if => Proc.new { |u| u.current_step == "where_you_live" }
-  validates :postcode, :postcode => { :if => Proc.new {|u| u.current_step == "where_you_live" }}
+  validates :address1, :city, :presence => {:if => :where_you_live_step?}
+  validate :postcode_is_in_maltby, :if => :where_you_live_step?
+  validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
   validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
@@ -27,7 +28,10 @@ class User < ActiveRecord::Base
   validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :dob, :presence => true
-  validates_confirmation_of :email, :password
+  validates_confirmation_of :email, :on => :create, :message => "these don't match"
+  validates_confirmation_of :password, :on => :create, :message => "these didn't match"
+  validates :email_confirmation, :presence => {:if => :who_you_are_step?}
+  validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
   
   scope :validated, where(:validated => true)
   scope :unvalidated, where(:validated => false)
@@ -87,7 +91,32 @@ class User < ActiveRecord::Base
     validation_step? && validate_by == "organisation"
   end
   
+  def who_you_are_step?
+    new_record? && current_step == "who_you_are"
+  end
+  
+  def where_you_live_step?
+    current_step == "where_you_live"
+  end
+  
   private
+  def add_errors_to_confirmation_fields
+    return true if !who_you_are_step?
+    [:email, :password].each do |attr_name|
+      if errors[attr_name].any? {|m| m.match(/match/)}
+        errors.add("#{attr_name}_confirmation", errors[attr_name].detect {|m| m.match(/match/)})
+      end
+    end
+  end
+  
+  def add_password_errors_for_who_you_are_step
+    return true if !who_you_are_step?
+    if errors.present?
+      errors.add(:password, "enter a password") unless errors[:password].present?
+      errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
+    end
+  end
+  
   def postcode_is_in_maltby
     errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\A[Ss]66/)
   end
