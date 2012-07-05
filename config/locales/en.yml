@@ -11,3 +11,7 @@ en:
               blank: "enter a password"
             password_confirmation:
               blank: "enter a password"
+              
+  devise:
+    sessions:
+      signed_in: 'Welcome back!'
