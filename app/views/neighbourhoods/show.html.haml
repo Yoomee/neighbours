@@ -64,17 +64,20 @@
       -@needs.each do |need|
         %li.list
           .list-image
-            =link_to need do
+            =link_to (current_user ? need : "#register-popup"), :'data-toggle' => "#{current_user ? '' : 'modal'}" do
               =image_for(need.user, "60x50#")
               %p.small-text
                 =need.user
           .list-text
             %h3
-              =link_to need.title, need
+              -if current_user
+                =link_to need.title, need
+              -else
+                =link_to need.title, "#register-popup", :"data-toggle"=>"modal"
             %p
               =need.description
-            
 
-
-            
-    =link_to "I can help", "/wireframes/i_can_help", :class=>"btn call-to-action"    
+    -if current_user
+      =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    
+    -else
+      =link_to "I'd like to offer some help", "#register-popup", :"data-toggle"=>"modal", :class=>"btn call-to-action"         
