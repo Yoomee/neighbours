@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   
   def assign_champion
     if @user.update_attributes(params[:user])
-      flash[:notice] = "#{@user} has been validated, with #{User.find_by_id(params[:user][:community_champion_id])} assigned as community champion"
+      flash[:notice] = "#{@user} has been validated, #{User.find_by_id(params[:user][:community_champion_id]) ? 'with ' + User.find_by_id(params[:user][:community_champion_id]).to_s + ' assigned as community champion' : 'without a community champion' }"
     else
       flash[:error] = "Something has gone wrong.  Please try again"
     end
