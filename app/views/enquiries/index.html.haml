@@ -1,0 +1,37 @@
+%h1.mb-2
+  -if params[:form_name] == "feedback"
+    =title("Beta feedback")
+  -elsif params[:form_name] == "promoter"
+    =title("Promoter applications to join")
+  -else
+    =title("Enquiries")
+    
+-if @enquiries.empty?
+  %p
+    There are currently no enquiries.
+-else
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        -if params[:form_name].blank?
+          %th
+        %th Name
+        %th Email
+        %th Date
+        %th{:colspan => 2}
+    %tbody
+      -@enquiries.each do |enquiry|
+        %tr
+          -if params[:form_name].blank?
+            %td=enquiry.form_name.humanize
+          %td=enquiry.full_name if enquiry.full_name.present?
+          %td=enquiry.email_address if enquiry.email_address.present?
+          %td=enquiry.created_at.to_s(:date_and_time)
+          %td=link_to("More info", enquiry)
+          %td
+            =link_to(enquiry, :confirm => 'Are you sure?', :method => :delete) do
+              %i.icon.icon-trash
+              Delete
+        
+=options_panel do
+  =back_link

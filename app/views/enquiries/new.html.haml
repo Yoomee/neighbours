@@ -1,0 +1,8 @@
+-params[:id] ||= params[:enquiry][:form_name]
+.span8
+  %h1.mb-2=title(@enquiry.form_title)
+  -if @enquiry.form_intro.present?
+    %p.well.help-text
+      %i.icon-info-sign
+      =@enquiry.form_intro
+  =render("form", :enquiry => @enquiry)
