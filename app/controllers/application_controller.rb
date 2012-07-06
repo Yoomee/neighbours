@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_new_need_attributes
-    if !%w{registrations need sessions}.include?(controller_name)
+    if !%w{registrations need sessions pages}.include?(controller_name) || (controller_name == :pages && action_name == :neighbourhood_safety)
       session[:new_need_attributes] = nil
     end
   end
