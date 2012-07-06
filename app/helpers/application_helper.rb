@@ -14,7 +14,7 @@ module ApplicationHelper
       out = content_tag(:span, message_count, :class => 'badge')
       out + content_tag(:span, " message#{message_count > 1 ? 's' : ''}", :class => "request-message-text")
     else
-      content_tag(:span, "No messages", :class => "request-message-text")
+      content_tag(:span, "No new messages", :class => "request-message-text")
     end
   end
   
@@ -23,7 +23,7 @@ module ApplicationHelper
       out = content_tag(:span, message_count, :class => 'badge badge-info')
       out + " message#{message_count > 1 ? 's' : ''}"
     else
-      "No messages"
+      "No new messages"
     end
   end
   
