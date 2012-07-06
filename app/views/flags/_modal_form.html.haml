@@ -1,0 +1,10 @@
+=semantic_form_for(flag) do |form|
+  =form.hidden_field :resource_type
+  =form.hidden_field :resource_id
+  .modal-header
+    %button.close{:type => "button", :'data-dismiss' => "modal" } &times;
+    %h3 Report this entry as inappropriate
+  .modal-body
+    =form.input :text, :input_html => {:class => "span6", :rows => 5}, :label => "Add an optional message", :required => false
+  .modal-footer
+    =form.commit_button "Report", :button_html => {:class => "btn-primary", :"data-loading-text" => "Reporting..."}
