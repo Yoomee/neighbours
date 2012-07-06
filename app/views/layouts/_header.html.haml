@@ -51,7 +51,10 @@
             =li_with_active(current_page?(root_path), link_to("Home", root_path, :class=>"nav-link"))
             =li_with_active(@page && @page.slug == "about", link_to_slug(:about, :class=>"nav-link"))
             =li_with_active(@page && @page.slug == "stories", link_to_slug(:stories, :class=>"nav-link"))
-            =li_with_active(controller_name.neighbourhoods?, link_to("My Neighbourhood", neighbourhood_path, :class=>"nav-link"))
+            -if current_user
+              =li_with_active(controller_name.neighbourhoods?, link_to("My Neighbourhood", neighbourhood_path, :class=>"nav-link"))
+            -else
+              =li_with_active(controller_name.neighbourhoods?, link_to("My Neighbourhood", "#register-popup", :class=>"home-help-link", :'data-toggle' => 'modal'))
             =li_with_active(current_page?(feedback_path), link_to("Contact Us", feedback_path, :class => "nav-link"))
             =li_with_active(@page && @page.slug == "help", link_to_slug(:help, :class=>"nav-link"))
           

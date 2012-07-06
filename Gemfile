@@ -21,6 +21,7 @@ gem 'ym_notifications', "~> 0.1"    #, :path => "~/Rails/Gems/ym_notifications"
 gem 'ym_enquiries',     "~> 0.1"    #, :path => "~/Rails/Gems/ym_enquiries"
 
 gem 'client_side_validations'
+gem 'geocoder'
 
 ### Groups
 # Gems used only for assets and not required

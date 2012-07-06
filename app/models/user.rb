@@ -17,8 +17,11 @@ class User < ActiveRecord::Base
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   
-  validates :address1, :city, :presence => {:if => :where_you_live_step?}
-  validate :postcode_is_in_maltby, :if => :where_you_live_step?
+  geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
+  after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
+  
+  validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
+  #validate :postcode_is_in_maltby, :if => :where_you_live_step?
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
@@ -38,17 +41,22 @@ class User < ActiveRecord::Base
   scope :unvalidated, where(:validated => false)
   scope :community_champions, where(:is_community_champion => true)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
+  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
+  
+  def address_changed?
+    house_number_changed? || street_name_changed? || postcode_changed?
+  end
   
   def address
-    [address1, city, county, postcode].compact.join(', ')
+    ["#{house_number} #{street_name}".strip, city, postcode].compact.join(', ')
+  end
+  
+  def address_with_country
+    "#{address}, UK"
   end
   
   def city
-    "Maltby"
-  end
-  
-  def county
-    "South Yorkshire"
+    read_attribute(:city).presence || "Maltby"
   end
   
   def credit_card_attributes
@@ -61,7 +69,7 @@ class User < ActiveRecord::Base
   end
   
   def has_address?
-    %w{address1 city postcode}.all?(&:present?)
+    %w{house_number street_name city postcode}.all?(&:present?)
   end
   
   def new_notification_count(context, need = nil)

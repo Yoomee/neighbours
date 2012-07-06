@@ -1,0 +1,14 @@
+=google_maps_javascript_include_tag
+=content_for :head do
+  :javascript
+    UsersMap.users = #{@users_json};
+    $(document).ready(function() {
+      UsersMap.init();
+    });
+
+.row
+  .span12
+    %h1=title "Users map"
+.row
+  #map-canvas.span12{:style => "height:600px"}
+

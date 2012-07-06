@@ -13,9 +13,9 @@
         But to keep your neighbourhood secure we need to know who you are before we can share your request with the community. Registration is just three easy steps.
       -else
         You need to register before you can do this.
+    %p=link_to_slug("Why do we need to know this?", :neighbourhood_safety)
     %br
       Already registered? 
       =link_to "Log in here.", "/login", :id => "register-modal-login-link"
   .modal-footer
     =link_to "Continue with easy registration", (current_page?(root_path) ? new_registration_path(:redirect_to_needs => 1) : new_registration_path), :class=>"btn btn-primary", :data_dismiss=>"modal", :id => "register-modal-register-link"
-    =#link_to "Login", "/wireframes/register_help_1", :class=>"btn btn-success", :data_dismiss=>"modal"
