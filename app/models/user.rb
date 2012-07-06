@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
   
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
-  #validate :postcode_is_in_maltby, :if => :where_you_live_step?
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
@@ -125,10 +124,6 @@ class User < ActiveRecord::Base
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
     end
-  end
-  
-  def postcode_is_in_maltby
-    errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\A[Ss]66/)
   end
   
   def over_13
