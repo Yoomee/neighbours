@@ -1,3 +1,19 @@
+-if @need.has_accepted_offer?
+  .row
+    .span12
+      -if logged_in_as?(@need.user)
+        .alert.alert-success
+          You have accepted
+          %strong="#{@need.accepted_offer.user}'s offer"
+          to help.
+      -elsif logged_in_as?(@need.accepted_offer.user)
+        .alert.alert-success
+          ="#{@need.user} has accepted your offer to help!"
+      -else
+        .alert
+          ="#{@need.user} has accepted"
+          %strong="#{@need.accepted_offer.user}'s offer"
+          to help.
 .row
   .span2
     =link_to @need.user, :class => "user-thumbnail-large" do
