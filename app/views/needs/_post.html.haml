@@ -10,17 +10,16 @@
       .span6
         .post-speech=simple_format(post.text)
         .post-actions
-          -if @need.user == current_user
-            -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
-              -if offer.accepted?
-                %span.badge.badge-success Accepted
-                =link_to reject_offer_path(offer), :class=>"post-action" do
-                  %i.icon-remove
-                  Un-accept
-              -elsif @need.accepted_offer.nil?
-                =link_to accept_offer_path(offer), :class=>"post-action" do
-                  %i.icon-ok
-                  Accept this offer
+          -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
+            -if offer.accepted? && logged_in_as?(@need.user, offer.user)
+              %span.badge.badge-success Accepted
+              =link_to reject_offer_path(offer), :class=>"post-action" do
+                %i.icon-remove
+                Un-accept
+            -elsif @need.accepted_offer.nil? && logged_in_as?(@need.user)
+              =link_to accept_offer_path(offer), :class=>"post-action" do
+                %i.icon-ok
+                Accept this offer
   .comments
     .comment-list
       =render(:partial => "comments/comment", :collection => post.comments)

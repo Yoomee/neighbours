@@ -12,12 +12,17 @@ class Need < ActiveRecord::Base
   # validate :deadline_is_in_future
 
   scope :unresolved, where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :resolved, where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   
   boolean_accessor :skip_user_validation
   
   define_index do
     indexes description
     has user_id, category_id, deadline, created_at, updated_at
+  end
+  
+  def has_accepted_offer?
+    accepted_offer.present?
   end
   
   def notifications

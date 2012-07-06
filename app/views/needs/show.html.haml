@@ -1,3 +1,17 @@
+-if @need.has_accepted_offer?
+  .row
+    .span12
+      -if logged_in_as?(@need.user)
+        .alert.alert-success
+          You have accepted
+          %strong="#{@need.accepted_offer.user}'s offer"
+          to help.
+      -elsif logged_in_as?(@need.accepted_offer.user)
+        .alert.alert-success
+          ="#{@need.user} has accepted your offer to help!"
+      -else
+        .alert
+          ="#{@need.user} has accepted someone else's offer."
 .row
   .span2
     =link_to @need.user, :class => "user-thumbnail-large" do
@@ -6,8 +20,12 @@
   .span8
     .request-body.mb2
       %h1=title @need.title
-      =simple_format(@need.description)
-  .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
+      -if current_user.validated?
+        =simple_format(@need.description)
+      -else
+        =simple_format(@need.category.description)
+  -if @need.user == current_user
+    .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
 #request-activity.row
   -if logged_in_as?(@need.user) && @offers.empty?
