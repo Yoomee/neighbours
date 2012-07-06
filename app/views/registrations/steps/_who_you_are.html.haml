@@ -9,6 +9,7 @@
     .controls
       =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year)}, :class => "input-medium"
       %span.help-inline=@user.errors[:dob].try(:first)
+      %icon.icon.icon-question-sign.help-icon{:title => "You must be over 13 years old"}
   =form.input :email, :label => "Email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
   =form.input :email_confirmation, :label => "Confirm email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
   =form.input :password, :required => false,:help => "What password would you like to use to login?"
