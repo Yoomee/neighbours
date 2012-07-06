@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
   
   def address
-    [house_number, street_name, city, postcode].compact.join(', ')
+    ["#{house_number} #{street_name}".strip, city, postcode].compact.join(', ')
   end
   
   def address_with_country
@@ -57,11 +57,7 @@ class User < ActiveRecord::Base
   end
   
   def city
-    "Maltby"
-  end
-  
-  def county
-    "South Yorkshire"
+    read_attribute(:city).presence || "Maltby"
   end
   
   def credit_card_attributes

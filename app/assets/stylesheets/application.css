@@ -884,6 +884,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-left:195px;
 }
 
+/*========== Help icons ==========*/
+
+.help-icon {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 16px;
+}
+.formtastic fieldset.inputs .radio {
+  position: relative;
+}
+.formtastic fieldset.inputs .radio .help-icon {
+  position: absolute;
+  right: 19px;
+  top: 0;
+}
+
+
 
 /* ============================= */
 /* ! Layout for mobile version   */
