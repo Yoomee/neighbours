@@ -12,6 +12,7 @@ class Need < ActiveRecord::Base
   # validate :deadline_is_in_future
 
   scope :unresolved, where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :resolved, where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   
   boolean_accessor :skip_user_validation
   

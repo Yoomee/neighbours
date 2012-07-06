@@ -20,8 +20,12 @@
   .span8
     .request-body.mb2
       %h1=title @need.title
-      =simple_format(@need.description)
-  .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
+      -if current_user.validated?
+        =simple_format(@need.description)
+      -else
+        =simple_format(@need.category.description)
+  -if @need.user == current_user
+    .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
 #request-activity.row
   -if logged_in_as?(@need.user) && @offers.empty?
