@@ -4,6 +4,12 @@ class UserMailer < ActionMailer::Base
   
   default :from => "site@neighbours.yoomee.com", 
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
+
+  def new_flag(flag)
+    @flag = flag
+    @need = @flag.resource
+    mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
+  end
           
   def new_comment(comment)
     @comment = comment

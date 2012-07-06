@@ -6,6 +6,7 @@ class FlagsController < ApplicationController
     @flag.user = current_user
     if @flag.save
       flash[:notice] = "Thank you for flagging this content as inappropriate. We have been notified and will take a look as soon as possible."
+      UserMailer.new_flag(@flag).deliver
     else
       flash[:error] = "There was a problem, this content has not been flagged as innapropriate."
     end

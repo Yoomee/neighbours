@@ -1,0 +1,18 @@
+!!!
+%html
+  %body
+    %p Hi site admin,
+    %p
+      Someone has reported
+      =link_to("#{@need.user.full_name}'s request", need_url(@need))
+      as inappropriate.
+    %p
+      =link_to("View all inappropriate content", flags_url)
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    
+    
