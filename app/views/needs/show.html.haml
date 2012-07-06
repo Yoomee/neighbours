@@ -26,6 +26,9 @@
         =simple_format(@need.category.description)
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
+  -else
+    .span2=link_to "I need this help too", new_need_path(:like => @need.id ), :class => "btn"
+    
       
 #request-activity.row
   -if logged_in_as?(@need.user) && @offers.empty?
