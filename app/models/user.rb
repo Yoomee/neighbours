@@ -132,6 +132,7 @@ class User < ActiveRecord::Base
   end
   
   def over_13
+    return true if dob.nil?
     errors.add(:dob, "You must be over 13 to register") if dob > 13.years.ago.to_date
     
   end
