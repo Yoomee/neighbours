@@ -14,7 +14,7 @@
           ="#{@need.user} has accepted someone else's offer."
 .row
   .span2
-    =link_to @need.user, :class => "user-thumbnail-large" do
+    =link_to @need.user, :rel => 'tooltip', :title => @need.user.street_name, :class => "user-thumbnail-large pull-left" do
       =image_for(@need.user, "120x120#")
       %p=@need.user
   .span8
@@ -26,6 +26,9 @@
         =simple_format(@need.category.description)
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
+  -else
+    .span2=link_to "I need this help too", new_need_path(:like => @need.id ), :class => "btn"
+    
       
 #request-activity.row
   -if logged_in_as?(@need.user) && @offers.empty?
@@ -61,7 +64,7 @@
           -@offers.each do |offer|
             %li.span1
               .list-image.thumbnail
-                =link_to offer.user do
+                =link_to offer.user, :rel => 'tooltip', :title => offer.user.street_name, :class => "pull-left" do
                   =image_for(offer.user, "60x60#")
                   %p.small-text
                     =offer.user

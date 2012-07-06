@@ -11,6 +11,8 @@ en:
               blank: "enter a password"
             password_confirmation:
               blank: "enter a password"
+            email:
+              taken: "is already taken.  <a href='/login'>Log in</a> if this is your account"
               
   devise:
     sessions:

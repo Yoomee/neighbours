@@ -17,7 +17,7 @@
       -@needs.each do |need|
         %li.list.list-result
           .list-image
-            =link_to need.user do
+            =link_to need, :rel => 'tooltip', :title => need.user.street_name, :class => "pull-left" do
               =image_for(need.user, "60x50#")
               %p.small-text=need.user
           .list-text
