@@ -550,7 +550,14 @@ border-bottom-color: #b08193;
 .call-to-action.primary, .call-to-action.primary:hover  {
   background: #abd424;
   border-color: #67c621;
-	
+}
+.call-to-action.blue, .call-to-action.blue:hover  {
+  background: #0074CC;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-top-color: rgba(0, 0, 0, 0.0976563);
+  border-right-color: rgba(0, 0, 0, 0.0976563);
+  border-bottom-color: rgba(0, 0, 0, 0.246094);
+  border-left-color: rgba(0, 0, 0, 0.0976563);  
 }
 body#home.logged_in .call-to-action {
   margin-top: 0;
