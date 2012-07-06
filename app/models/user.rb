@@ -17,8 +17,11 @@ class User < ActiveRecord::Base
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   
+  geocoded_by :address, :latitude => :lat, :longitude => :lng
+  after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
+  
   validates :address1, :city, :presence => {:if => :where_you_live_step?}
-  validate :postcode_is_in_maltby, :if => :where_you_live_step?
+  #validate :postcode_is_in_maltby, :if => :where_you_live_step?
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
@@ -38,6 +41,11 @@ class User < ActiveRecord::Base
   scope :unvalidated, where(:validated => false)
   scope :community_champions, where(:is_community_champion => true)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
+  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
+  
+  def address_changed?
+    address1_changed? || postcode_changed?
+  end
   
   def address
     [address1, city, county, postcode].compact.join(', ')
