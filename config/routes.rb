@@ -43,7 +43,11 @@ Neighbours::Application.routes.draw do
     end
   end
 
-  resources :flags, :only => [:create, :index]
+  resources :flags, :only => [:create, :index] do
+    member do
+      put :resolve
+    end
+  end
   
   match "searches" => "searches#index", :as => "searches"
     

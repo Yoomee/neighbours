@@ -14,7 +14,12 @@ class FlagsController < ApplicationController
   end
   
   def index
-    @flags = Flag.scoped
+    @flags = Flag.where('resolved_at IS NULL')
+  end
+  
+  def resolve
+    @flag.update_attribute(:resolved_at, Time.now)
+    redirect_to(flags_path)
   end
   
 end
