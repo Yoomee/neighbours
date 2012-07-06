@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :dob, :presence => true
+  validate :over_13
   validates_confirmation_of :email, :on => :create, :message => "these don't match"
   validates_confirmation_of :password, :on => :create, :message => "these didn't match"
   validates :email_confirmation, :presence => {:if => :who_you_are_step?}
@@ -119,6 +120,11 @@ class User < ActiveRecord::Base
   
   def postcode_is_in_maltby
     errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\A[Ss]66/)
+  end
+  
+  def over_13
+    errors.add(:dob, "You must be over 13 to register") if dob > 13.years.ago.to_date
+    
   end
   
   def set_card_digits

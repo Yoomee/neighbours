@@ -163,6 +163,7 @@ input {
 label {
   font-weight: bold;
 }
+label.radio,
 label em.optional {
   font-weight:normal;
 }
@@ -874,6 +875,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 
 
+/*========== Need form ==========*/
+
+#need_need_to_know_by_input {
+  margin-bottom:0px;
+}
+#need_deadline_input .controls{
+  margin-left:195px;
+}
+
 
 /* ============================= */
 /* ! Layout for mobile version   */
@@ -951,4 +961,3 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 	}*/
 
 }
-
