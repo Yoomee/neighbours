@@ -2,7 +2,7 @@ Neighbours::Application.routes.draw do
   
   root :to => 'home#index'
 
-  match 'feedback' => 'enquiries#new', :id => 'feedback', :as => 'beta'
+  match 'feedback' => 'enquiries#new', :id => 'feedback'
 
   resources :wireframes, :only => [:index, :show]
   resources :registrations, :only => [:new, :create]  
