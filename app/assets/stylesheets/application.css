@@ -217,7 +217,7 @@ br.clear {
 }
 
 #header-row {
-  padding: 15px 0 0px;
+  padding: 30px 0;
 }
 #headline_image {
 	box-shadow:1px 1px 3px #ccc
@@ -225,34 +225,45 @@ br.clear {
 }
 #site_logo {
   font-size: 40px;
-  line-height: 40px;
-  margin:7px 0 0 15px;
+  line-height: 1;
+  float: left;
+  margin:0px 0 0 0px;
   
-  background: url(/assets/logo.png) no-repeat 0 0;
+  /*background: url(/assets/logo.png) no-repeat 0 0;*/
 }
 #site_logo a {
   color: #333;
-  padding: 20px 0 30px 140px;
+  padding: 0px ;
   display: block;
+  float: left;
+  width: 400px;
 }
 #site_logo a:hover {
   text-decoration: none;
 }
+#site_logo span {
+  display: block;
+  float: left;
+  width: 240px;
+  margin: 20px 0 0 15px;
+}
+#site_logo img {
+  float: left;
+  margin-left: 20px;
+}
 .main-nav {
-	margin-top: 0px;
 	font-size: 22px;
-
 }
 .nav-strip {
   float: left;
-  margin: 20px 0 40px;
+  margin: 0px 0 40px;
   width: 100%;
   background: #ebe6dc;
 	box-shadow:inset 1px -1px 5px rgba(0,0,0,0.04);
 }
 .nav-strip .nav-tabs {
   margin-bottom: 0;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-top: 15px;
   border: none;
 }
@@ -268,9 +279,7 @@ br.clear {
 }
 .main-nav li a:hover {
   text-decoration: none;
-
-
-  background: #f5f5f5;
+  background: #e1dcd3;
 }
 .main-nav .active a, .controller_home #link-home a, .slug_about #link-about a, .slug_stories #link-stories a, .controller_needs #link-neighbourhood a {
   color: #00558D;
@@ -283,6 +292,7 @@ br.clear {
 #header-links {
   float: right;
   margin-top: 25px;
+  margin-right: 40px;
 }
 .header_link {
   font-size: 14px;
@@ -340,7 +350,7 @@ br.clear {
 
 /*========== Homepage ==========*/
 #home-intro {
-	background: url(/assets/home_intro.png) bottom center no-repeat;
+	background: url(/assets/home_intro.png) center -50px no-repeat;
   height: 370px;
   float: left;
   position: relative;
@@ -396,6 +406,13 @@ border-bottom-color: #b08193;
 #what-help-select {
   width: 300px;
   margin: 0;
+}
+.intro-circles  {
+  position: absolute;
+  float: left;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 .intro-circle-icon {
   display: block;
@@ -855,3 +872,83 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .comment-list .unread {
   background-color: #f5f5f5;
 }
+
+
+
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+@media handheld, only screen and (max-width: 200679px) {
+
+}
+@media handheld, only screen and (max-width: 1679px) {
+
+}
+@media handheld, only screen and (max-width: 1439px) {
+
+
+}
+@media handheld, only screen and (max-width: 1199px) {
+
+
+}
+@media handheld, only screen and (max-width: 979px) {
+
+#site_logo span {
+  font-size: 30px;
+  width: 200px;
+  margin-top:13px;
+}
+#site_logo img {
+	width: 85px;
+}
+.main-nav {
+	font-size: 18px;
+}
+.main-nav li a {
+	padding-top: 10px;
+	padding-bottom: 15px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+.home-intro-text {
+	font-size: 28px;
+}
+.home-welcome {
+  margin: 0px;
+}
+#home-intro {
+	height: 310px;
+}
+.intro-circles  {
+	top: -30px;
+}
+
+
+}
+
+@media handheld, only screen and (max-width: 719px)  {
+
+
+}
+
+@media handheld, only screen and (max-width: 500px) {
+
+
+}
+
+
+
+/* ========================================== */
+/* ! Provide higher res assets for iPhone 4   */
+/* ========================================== */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) { 
+	
+/*	.logo {
+		background: url(logo2x.jpg) no-repeat;
+		background-size: 212px 303px;
+	}*/
+
+}
+
