@@ -46,3 +46,6 @@
         .organisation-form.hide
           =form.inputs() do
             =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
+  
+  =form.input :agreed_conditions, :label => "Please accept our #{link_to_slug('terms and conditions', :conditions, { :target => "_blank" })}".html_safe, :required => false 
+  

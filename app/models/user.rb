@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
   validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :dob, :presence => true
+  validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
   validate :over_13
   validates_confirmation_of :email, :on => :create, :message => "these don't match"
   validates_confirmation_of :password, :on => :create, :message => "these didn't match"
