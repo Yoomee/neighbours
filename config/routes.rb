@@ -30,6 +30,9 @@ Neighbours::Application.routes.draw do
       put :assign_champion
       put :toggle_champion
     end
+    collection do
+      get :map
+    end
   end
   
   resources :offers, :only => :index do
