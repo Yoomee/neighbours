@@ -11,5 +11,5 @@
       %span.help-inline=@user.errors[:dob].try(:first)
   =form.input :email, :label => "Email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
   =form.input :email_confirmation, :label => "Confirm email address", :required => false, :input_html => {:placeholder => "e.g. john@email.com"}
-  =form.input :password, :required => false
-  =form.input :password_confirmation, :label => "Confirm password", :required => false
+  =form.input :password, :required => false,:help => "What password would you like to use to login?"
+  =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => ""
