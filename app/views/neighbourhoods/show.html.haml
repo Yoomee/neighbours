@@ -22,7 +22,7 @@
       -@helped.each do |need|
         %li.list
           .list-image
-            =link_to need do
+            =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
               =image_for(need.user, "60x50#")
               %p.small-text
                 =need.user
@@ -43,7 +43,7 @@
       -@need_help.each do |need|
         %li.list
           .list-image
-            =link_to need, :rel => 'tooltip', :title => need.user.street_name, :class => "pull-left" do
+            =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
               =image_for(need.user, "60x50#")
               %p.small-text
                 =need.user

@@ -3,7 +3,7 @@
     .row
       .span1
         .list-image
-          =link_to post.user, :rel => 'tooltip', :title => post.user.street_name, :class => "pull-left" do
+          =link_to post.user, :rel => 'tooltip', :title => (post.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
             =image_for(post.user, "60x60#")
             %p.small-text
               =post.user

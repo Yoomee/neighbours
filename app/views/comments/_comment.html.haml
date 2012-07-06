@@ -1,5 +1,5 @@
 .comment{:class => "#{!comment.read_by?(current_user) ? 'unread' : ''}"}
-  =link_to(image_for(comment.user, "32x32#"), comment.user, :class => "comment-image", :rel => 'tooltip', :title => comment.user.street_name)
+  =link_to(image_for(comment.user, "32x32#"), comment.user, :class => "comment-image", :rel => 'tooltip', :title => (comment.user.street_name if current_user.try(:validated?))
   .comment-text
     =link_to_self(comment.user)
     =comment.text
