@@ -1,4 +1,4 @@
-class EnquiryField < ActiveRecord::Migration
+class CreateEnquiryFields < ActiveRecord::Migration
   def change
     create_table :enquiry_fields do |t|
       t.integer :enquiry_id
