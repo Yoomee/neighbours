@@ -11,9 +11,7 @@
           ="#{@need.user} has accepted your offer to help!"
       -else
         .alert
-          ="#{@need.user} has accepted"
-          %strong="#{@need.accepted_offer.user}'s offer"
-          to help.
+          ="#{@need.user} has accepted someone else's offer."
 .row
   .span2
     =link_to @need.user, :class => "user-thumbnail-large" do
