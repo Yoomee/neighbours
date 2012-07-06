@@ -13,8 +13,12 @@ class Need < ActiveRecord::Base
 
   scope :unresolved, where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :resolved, where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
   
   boolean_accessor :skip_user_validation
+  
+  delegate :lat, :lng, :street_name, :to => :user
+  delegate :first_name, :to => :user, :prefix => true
   
   define_index do
     indexes description

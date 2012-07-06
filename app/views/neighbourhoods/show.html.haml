@@ -1,13 +1,20 @@
+=google_maps_javascript_include_tag
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      NeedsMap.needs = #{@needs_json};
+      NeedsMap.init();
+    });
+    
 -title "My Neighbourhood"
 .row
-  .span12.fade_in
-    #home-map
-      .you-are-in
-        %p
-          You are in 
-          %select
-            %option Maltby
-            %option Other areas coming soon!
+  #map-canvas.span12.mb-3{:style => "height:320px"}
+    .you-are-in
+      %p
+        You are in 
+        %select
+          %option Maltby
+          %option Other areas coming soon!
 .row                                         
   .span6
     %h2 Neighbours who've been helped
