@@ -21,7 +21,13 @@
                   =link_to(admin_path) do
                     %icon.icon-cogs
                     Admin
-                %li.divider
+              -else
+                %li
+                  =link_to(current_user) do
+                    %icon.icon-user
+                    View profile  
+              %li.divider
+                
               %li
                 =link_to(edit_user_path(current_user)) do
                   %icon.icon-cog
