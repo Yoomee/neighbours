@@ -17,10 +17,10 @@ class User < ActiveRecord::Base
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   
-  geocoded_by :address, :latitude => :lat, :longitude => :lng
+  geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
   
-  validates :address1, :city, :presence => {:if => :where_you_live_step?}
+  validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
   #validate :postcode_is_in_maltby, :if => :where_you_live_step?
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
@@ -44,11 +44,15 @@ class User < ActiveRecord::Base
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
   
   def address_changed?
-    address1_changed? || postcode_changed?
+    house_number_changed? || street_name_changed? || postcode_changed?
   end
   
   def address
-    [address1, city, county, postcode].compact.join(', ')
+    [house_number, street_name, city, postcode].compact.join(', ')
+  end
+  
+  def address_with_country
+    "#{address}, UK"
   end
   
   def city
@@ -69,7 +73,7 @@ class User < ActiveRecord::Base
   end
   
   def has_address?
-    %w{address1 city postcode}.all?(&:present?)
+    %w{house_number street_name city postcode}.all?(&:present?)
   end
   
   def new_notification_count(context, need = nil)
