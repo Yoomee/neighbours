@@ -163,6 +163,7 @@ input {
 label {
   font-weight: bold;
 }
+label.radio,
 label em.optional {
   font-weight:normal;
 }
@@ -854,4 +855,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 
 .comment-list .unread {
   background-color: #f5f5f5;
+}
+
+
+/*========== Need form ==========*/
+
+#need_need_to_know_by_input {
+  margin-bottom:0px;
+}
+#need_deadline_input .controls{
+  margin-left:195px;
 }
