@@ -1,0 +1,25 @@
+%h1
+  %i.icon-warning-sign
+  =title("Inappropriate content")
+
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th.span4 Request
+      %th.span4 Report message
+      %th.span2 Reported by
+      %th.span2 Time
+  %tbody
+    -@flags.each do |flag|
+      %tr
+        %td.span4
+          .list-image
+            =link_to flag.resource do
+              =image_for(flag.resource.user, "60x50#")
+            %p.small-text=flag.resource.user
+          =link_to_self(flag.resource)
+          %p=truncate(strip_tags(flag.resource.description*100), :length => 100)
+        %td.span4=flag.text
+        %td.span2=link_to(flag.user.full_name, flag.user)
+        %td.span2=flag.created_at.to_s(:date_and_time)
+        

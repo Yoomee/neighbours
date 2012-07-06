@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
   
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
-  #validate :postcode_is_in_maltby, :if => :where_you_live_step?
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
@@ -90,7 +89,7 @@ class User < ActiveRecord::Base
   end
   
   def validation_step?
-    current_step == "validate"
+    is_in_maltby? && current_step == "validate"
   end
   
   def validation_step_with_credit_card?
@@ -107,6 +106,10 @@ class User < ActiveRecord::Base
   
   def where_you_live_step?
     current_step == "where_you_live"
+  end
+  
+  def is_in_maltby?
+    postcode.try(:match, /^S66/)
   end
   
   private
@@ -127,11 +130,8 @@ class User < ActiveRecord::Base
     end
   end
   
-  def postcode_is_in_maltby
-    errors.add(:postcode, "is not in the Maltby area") unless postcode.match(/\A[Ss]66/)
-  end
-  
   def over_13
+    return true if dob.nil?
     errors.add(:dob, "You must be over 13 to register") if dob > 13.years.ago.to_date
     
   end

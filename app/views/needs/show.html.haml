@@ -69,12 +69,16 @@
   .span12
     =options_panel do
       =link_if_can("Delete this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
+      =link_to("#inappropriate", :data => {:toggle => "modal"}) do
+        %i.icon-warning-sign
+        Report this entry as inappropriate
 
 -if @need.user != current_user
-  .row
-    .span12
-      #offer-form.modal.hide.fade
-        -if @need.offers.exists?(:user_id => current_user.id)
-          =render("needs/modal_post_form", :need => @need)
-        -else
-          =render('offers/modal_form')
+  #offer-form.modal.hide.fade
+    -if @need.offers.exists?(:user_id => current_user.id)
+      =render("needs/modal_post_form", :need => @need)
+    -else
+      =render('offers/modal_form')
+-unless logged_in_as?(@need.user)
+  #inappropriate.modal.hide.fade
+    =render("flags/modal_form", :flag => @need.flags.build)

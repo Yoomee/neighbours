@@ -4,7 +4,7 @@ module FormtasticBootstrap::Inputs::Base
   
   def help_html
     return "" if options[:help].blank?
-    "<icon class='icon icon-question-sign help-icon' title='#{options[:help]}'></icon>".html_safe
+    "<i class='icon-question-sign help-icon' title='#{options[:help]}'></i>".html_safe
   end  
   
 end
