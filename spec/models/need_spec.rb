@@ -5,7 +5,6 @@ describe Need do
   it {should have_many(:offers)}
   it {should have_one(:accepted_offer)}
   it {should validate_presence_of(:user)}
-  it {should validate_presence_of(:title)}
   it {should validate_presence_of(:description)}    
   
   describe do
