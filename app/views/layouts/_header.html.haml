@@ -2,7 +2,10 @@
   .row#header-row
     .span5
       %h1#site_logo
-        =link_to "Neighbours Can Help", "/"
+        =link_to "/" do
+          =image_tag "logo.png"
+          %span
+            Neighbours Can Help
     .span7
       #header-links        
         -if current_user
