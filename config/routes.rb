@@ -41,6 +41,8 @@ Neighbours::Application.routes.draw do
       get :reject
     end
   end
+
+  resources :flags, :only => [:create, :index]
   
   match "searches" => "searches#index", :as => "searches"
     
