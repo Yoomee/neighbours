@@ -12,21 +12,13 @@ gem 'formtastic-bootstrap', :git => "git://github.com/cgunther/formtastic-bootst
 gem 'whenever', :require => false
 
 ### Yoomee gems
-# ym_gem 'core'
-# ym_gem 'videos'
-# ym_gem 'cms'
-# ym_gem 'permalinks'
-# ym_gem 'users'
-# ym_gem 'posts'
-# ym_gem 'search'
-
 gem 'ym_core',          "~> 0.1"    #, :path => "~/Rails/Gems/ym_core"
 gem 'ym_cms',           "~> 0.2"    #, :path => "~/Rails/Gems/ym_cms"
 gem 'ym_users',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_users"
 gem 'ym_posts',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_posts"
 gem 'ym_search',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_search"
-gem 'ym_notifications', " ~> 0.1"   #, :path => "~/Rails/Gems/ym_notifications"
-gem 'ym_enquiries',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_enquiries"
+gem 'ym_notifications', "~> 0.1"    #, :path => "~/Rails/Gems/ym_notifications"
+gem 'ym_enquiries',     "~> 0.1"    #, :path => "~/Rails/Gems/ym_enquiries"
 
 gem 'client_side_validations'
 

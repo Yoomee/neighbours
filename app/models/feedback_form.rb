@@ -13,7 +13,7 @@ module FeedbackForm
   
   email_from Settings.site_email
   email_subject "New feedback on #{Settings.site_name}"
-  email_to "panpromoters@gmail.com"
+  email_to Settings.admin_email
 
   response_message "Thanks a lot for your feedback, we really appreciate it!"
   
