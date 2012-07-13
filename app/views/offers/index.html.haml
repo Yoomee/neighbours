@@ -10,9 +10,9 @@
         -@offers.order("created_at DESC").each do |offer|
           %li
             =link_to offer.need do
-              .list-image{:'data-tooltip' => 'tooltip', :title => (offer.user.street_name if current_user.try(:validated?))}
-                =image_for(offer.user, "60x50#")
-                %p.small-text=offer.user
+              .list-image{:'data-tooltip' => 'tooltip', :title => (offer.need.user.street_name if current_user.try(:validated?))}
+                =image_for(offer.need.user, "60x50#")
+                %p.small-text=offer.need.user
               %h3=offer.need.title
               %p
                 =messages_badge(current_user.new_notification_count("my_offers", offer.need))
