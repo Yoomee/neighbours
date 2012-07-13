@@ -1,0 +1,15 @@
+.span8
+  %h3=@page.published_at.to_s(:date) if @page.parent && @page.parent.slug == "blog"
+  %h1=@page.title
+  -if @page.image
+    .row
+      .span8
+        =image_for(@page, "620x")
+  .row
+    .span8
+      =contentize(@page.text)
+    .span8
+      =options_panel do
+        =link_if_can("Edit page", [:edit, @page])
+        =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+        =link_if_can("New page", [:new, Page])

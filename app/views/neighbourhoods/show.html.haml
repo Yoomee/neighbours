@@ -8,13 +8,11 @@
     
 -title "My Neighbourhood"
 .row
-  #map-canvas.span12.mb-3{:style => "height:320px"}
-    .you-are-in
-      %p
-        You are in 
-        %select
-          %option Maltby
-          %option Other areas coming soon!
+  -if current_user.validated?
+    =render "validated_map"
+  -else
+    =render "unvalidated_map"
+    
 .row                                         
   .span6
     %h2 Neighbours who've been helped

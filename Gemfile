@@ -38,6 +38,7 @@ group :development do
  gem 'ruby-debug19'
  gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
  gem 'passenger'
+ gem 'sqlite3'
 end
 
 gem "rspec-rails", :group => [:test, :development]
