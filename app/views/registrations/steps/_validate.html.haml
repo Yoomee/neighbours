@@ -47,9 +47,13 @@
             =form.inputs() do
               =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
 
-    =form.input :agreed_conditions, :label => "Please accept our #{link_to_slug('terms and conditions', :conditions, { :target => "_blank" })}".html_safe, :required => false 
-
+    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'}".html_safe, :required => false 
+    
 -else
   .well
     %strong Sorry - not available yet
     %p Unfortunately, you do not appear to live in Maltby. Neigbourbours Can Help will be rolling out to different areas later this year. We will let you as soon as it's available in your area.
+    
+    
+    
+=render('modals/conditions_popup')
