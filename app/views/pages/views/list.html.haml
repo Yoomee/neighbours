@@ -1,0 +1,30 @@
+.row
+  .span12
+    %h1=@page.title
+    =raw(@page.text)
+.row
+  .span12
+    -@page_children.each do |page|
+      .row.mb-2
+        .span3.fade_in
+          =link_to(image_for(page, "220x160#"), page)
+        .span6
+          %h3
+            =link_to_self(page)
+            -if @page.slug == "blog"
+              \- 
+              =page.published_at.to_s(:date)
+          %p=truncate(strip_tags(page.text), :length => 220)
+          =link_to raw('&rarr; Read more'), page
+    -if can?(:new, Page)
+      .row.mb-2
+        .span2
+          =link_to("+ Add a subpage", new_child_page_path(:parent_id => @page.id))
+.row
+  .span8
+    =options_panel do
+      =back_link
+      =link_if_can("Edit page", [:edit, @page])
+      =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+      =link_if_can("New page", [:new, Page])
+      =link_if_can("Set order", [:order, Page])
