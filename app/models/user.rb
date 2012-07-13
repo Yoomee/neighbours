@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
   User::CARD_TYPES = %w{visa mastercard american_express}
   User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Maltby Academy", "Maltby Town Council"]
   
-  has_many :needs
-  has_many :offers
+  has_many :needs, :dependent => :destroy
+  has_many :offers, :dependent => :destroy
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify 
   belongs_to :community_champion, :class_name => "User"
