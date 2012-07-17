@@ -49,8 +49,11 @@
             %p.mb3
               If you think you can help, then click on this button to start a private discussion with
               ="#{@need.user}."
-            =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-            
+            -if current_user.validated?
+              =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            -else
+              =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+              
       %ul.unstyled.need-posts
         -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.id])
         =render(:partial => "needs/post", :collection => posts)
@@ -82,3 +85,5 @@
 -unless logged_in_as?(@need.user)
   #inappropriate.modal.hide.fade
     =render("flags/modal_form", :flag => @need.flags.build)
+    
+=render "modals/not_validated"
