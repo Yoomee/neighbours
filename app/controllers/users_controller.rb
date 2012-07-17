@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Something has gone wrong.  Please try again"
     end
+    UserMailer.validated(@user).deliver
     redirect_to users_path
   end
   

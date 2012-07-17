@@ -29,5 +29,10 @@ class UserMailer < ActionMailer::Base
     @user = @offer.user
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.need.user} has accepted your offer of help")
   end
+    
+  def validated(user)
+    @user = user
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] You have been validated")
+  end
   
 end
