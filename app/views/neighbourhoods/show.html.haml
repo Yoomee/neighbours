@@ -32,8 +32,8 @@
                 =need.description
               -else
                 =need.category.description
-
-    =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
+    -if current_user.validated?
+      =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
                             
   .span6
     %h2 Neighbours who need help
@@ -53,5 +53,5 @@
                 =need.description
               -else
                 =need.category.description
-
-    =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    
+    -if current_user.validated?
+      =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    

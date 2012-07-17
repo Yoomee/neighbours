@@ -31,10 +31,13 @@
   -if logged_in_as?(@need.user) && @offers.empty?
     .span9.offset2
       .alert.alert-info
-        Sorry, no one has offered to help you with this yet. In the meantime why don't you
-        =link_to("click here", need_path)
-        to see who you could help?               
-      =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"
+        -if current_user.validated?
+          Sorry, no one has offered to help you with this yet. In the meantime why don't you
+          =link_to("click here", need_path)
+          to see who you could help?
+        -else
+          Your request for help will be seen by other people as soon as you're validated.
+      =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action" if current_user.validated?
   -else
     .span8
       -if @need.user != current_user

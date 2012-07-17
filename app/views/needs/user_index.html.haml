@@ -3,9 +3,12 @@
     %h1=title "My requests"
     -if @needs.count > 0
       %p
-        Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
-        =link_to("click here",needs_path)
-        to see if you could help someone else.
+        -if current_user.validated?
+          Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
+          =link_to("click here",needs_path)
+          to see if you could help someone else.
+        -else
+          Your request for help will be seen by other people as soon as you're validated.
       %ul.nav.nav-tabs.nav-stacked
         -@needs.order('created_at DESC').each do |need|
           %li
