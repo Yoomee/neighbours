@@ -23,7 +23,10 @@
           .list-text
             %h3
               =link_to_self(need)
-            =simple_format(need.description)
+            -if current_user.validated?
+              =simple_format(need.description)
+            -else
+              =simple_format(need.category.description)
           -if current_user.validated?
             =link_to "I can help", need, :class=>"btn i-can-help-btn"
           -else
