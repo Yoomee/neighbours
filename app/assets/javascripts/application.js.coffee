@@ -23,7 +23,7 @@ $(document).ready () ->
       )
   )
   $('.help-icon').tooltip()
-  $('a[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
+  $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
 
 window.Registration = 

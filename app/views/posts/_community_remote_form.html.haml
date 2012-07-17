@@ -1,0 +1,19 @@
+-if can?((post.new_record? ? :create : :update), post)
+  =semantic_form_for(post, :format => :js, :remote => true, :multipart => true, :html => {:class => "post_form#{post.errors.present? ? ' expanded' : ''}"}) do |form|
+    =form.inputs do
+      =form.input :target_type, :as => :hidden
+      =form.input :target_id, :as => :hidden
+      .fake-textarea
+        =form.input :text, :label => false, :input_html => {:rows => 3, :placeholder => "Post something"}
+        =form.input :tag_list, :label => "<i class='icon icon-tag'></i>".html_safe, :input_html => {:placeholder => "Tags", :'data-autocomplete' => autocomplete_tags_path, :'data-delimiter' => ', '}, :wrapper_html => {:class => "post_tag_list_input"}
+    .mt-1
+      =form.input :retained_image, :as => :hidden
+      =form.input :image, :as => :file, :label => false, :wrapper_html => {:class => "collapse#{post.errors[:image].present? ? ' in' : ''}"}
+      =form.input :video_url, :label => false, :wrapper_html => {:class => "collapse#{post.errors[:video_url].present? ? ' in' : ''}"}, :input_html => {:placeholder => "URL from YouTube or Vimeo"}
+      =form.input :retained_file, :as => :hidden
+      =form.input :file, :as => :file, :label => false, :wrapper_html => {:class => "collapse#{post.errors[:file].present? ? ' in' : ''}"}      
+      =link_to("Add a photo", "#", :data => {:toggle => "collapse", :target => "#post_image_input", :parent => ".post_form"}, :class => "btn btn-small")
+      =link_to("Add a video", "#", :data => {:toggle => "collapse", :target => "#post_video_url_input", :parent => ".post_form"}, :class => "btn btn-small")
+      =link_to("Add a file", "#", :data => {:toggle => "collapse", :target => "#post_file_input", :parent => ".post_form"}, :class => "btn btn-small")
+      =form.commit_button "Post", :button_html => {:class => "pull-right btn-primary", :"data-loading-text" => "Posting..."}
+      =form.input :private, :wrapper_html => {:class => "post-private-checkbox pull-right", :rel => "tooltip", :title => "Only you and #{current_user.community_champion.first_name} will this message"}, :label => "Private"

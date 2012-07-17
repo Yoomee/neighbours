@@ -36,6 +36,8 @@ Neighbours::Application.routes.draw do
     end
   end
   
+  resource :champion, :only => :show
+  
   resources :offers, :only => :index do
     member do
       get :accept

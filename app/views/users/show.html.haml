@@ -22,7 +22,7 @@
           ="There isn't a community champion for your area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
     %h3.mb-1
       -if @user.community_champion
-        ="Your community champion is #{link_to_self(@user.community_champion)}".html_safe
+        ="Your community champion is #{link_to(@user.community_champion.full_name, champion_path)}".html_safe
     -if @user.bio
       =simple_format(@user.bio)
       .action-link

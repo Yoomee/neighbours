@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   scope :unvalidated, where(:validated => false)
   scope :community_champions, where(:is_community_champion => true)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
-  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
+  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")  
   
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?
@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
   
   def validation_step_with_organisation?
     validation_step? && validate_by == "organisation"
+  end
+  
+  def wall_posts
+    Post.where(["target_type = 'User' AND target_id = ?", id])
   end
   
   def who_you_are_step?

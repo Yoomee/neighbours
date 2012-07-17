@@ -1,0 +1,56 @@
+.row
+  .span3
+    .row
+      .span3
+        -if @champion.image
+          =image_for(@champion, "220x")
+        -else
+          =image_for(@champion, "220x")
+          -if can?(:edit, @champion)
+            .italic
+              %span Upload your own picture.
+              .action-link
+                =link_to("Edit", edit_user_path(@champion, :anchor => "who_you_are"))
+  .span9
+    %h1.mb-1
+      =title(@champion.full_name)
+      \- your community champion
+
+    -if @champion.bio.present?
+      %h4 Bio    
+      =simple_format(@champion.bio)
+      .action-link
+        =link_to("Edit", edit_user_path(@champion, :anchor => "who_you_are")) if can?(:edit, @champion)
+    -elsif can?(:edit, @champion)
+      %h4 Bio    
+      .italic
+        %span Nothing entered yet.
+        .action-link
+          =link_to("Edit", edit_user_path(@champion, :anchor => "who_you_are"))
+    -if @champion.phone.present?
+      %h4 Phone number
+      .action-link
+        =link_to("Edit", edit_user_path(@champion, :anchor => "who_you_are")) if can?(:edit, @champion)
+      =@champion.phone
+    -elsif can?(:edit, @champion)
+      %h4 Phone number
+      .italic
+        %span Add a phone number
+        .action-link
+          =link_to("Edit", edit_user_path(@champion, :anchor => "where_you_live"))
+
+
+.row.mt-2
+  -if can?(:create, Post)
+    .span8
+      =render("posts/community_remote_form", :post => current_user.posts.build(:target => (current_user==@champion ? nil : @champion)))
+  .span8
+    =render("posts/posts", :posts => @wall_posts)
+
+
+          
+.row.mt-2
+  .span8
+    =options_panel do
+      =link_if_can("Edit profile", [:edit, @champion])
+      =link_if_can("Delete user", [:destroy, @champion], :confirm => "Are you sure?")

@@ -983,3 +983,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 	}*/
 
 }
+
+/*************** community champion  ********************/
+.post-private-checkbox .controls .checkbox {
+  font-size: 12px;
+  line-height: 14px;
+  margin-right: 10px;
+}
