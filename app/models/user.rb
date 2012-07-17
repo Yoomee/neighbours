@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :dob, :presence => true
   validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
-  validate :over_13
+  validate :over_16
   validates_confirmation_of :email, :on => :create, :message => "these don't match"
   validates_confirmation_of :password, :on => :create, :message => "these didn't match"
   validates :email_confirmation, :presence => {:if => :who_you_are_step?}
@@ -134,9 +134,9 @@ class User < ActiveRecord::Base
     end
   end
   
-  def over_13
+  def over_16
     return true if dob.nil?
-    errors.add(:dob, "You must be over 13 to register") if dob > 13.years.ago.to_date
+    errors.add(:dob, "You must be over 16 to register") if dob > 16.years.ago.to_date
     
   end
   
