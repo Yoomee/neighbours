@@ -4,8 +4,12 @@
 =form.hidden_field :current_step, :value => "where_you_live"
 =form.inputs(:class => "form-horizontal") do
   =form.input :current_step, :as => :hidden, :value => "where_you_live"
-  =form.input :house_number, :label => "Address", :required => false, :input_html => {:placeholder => "House number or name"}
-  =form.input :street_name, :label => false, :required => false, :input_html => {:placeholder => "Street name"}
-  =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city"}
-  =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2"}
+  -if current_user.admin?
+    =form.input :house_number, :label => "Address", :required => false, :input_html => {:placeholder => "House number or name"}
+    =form.input :street_name, :label => false, :required => false, :input_html => {:placeholder => "Street name"}
+    =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city"}
+    =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2"}
+  -else
+    %em
+      Contact us if you need to change your address
   =form.input :phone, :label => "Phone number <br /><em class='optional'>(optional)</em>".html_safe, :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}

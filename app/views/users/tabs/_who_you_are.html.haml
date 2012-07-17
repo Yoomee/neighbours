@@ -2,8 +2,12 @@
   First, please let us who you are.
 =form.hidden_field :current_step, :value => "who_you_are"
 =form.inputs(:class => "form-horizontal") do
-  =form.input :first_name, :required => false, :input_html => {:placeholder => "e.g. John"}
-  =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}
+  -if current_user.admin?
+    =form.input :first_name, :required => false, :input_html => {:placeholder => "e.g. John"}
+    =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}
+  -else
+    %em
+      Contact us if you need to change your name
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
     %label.control-label Date of Birth
     .controls

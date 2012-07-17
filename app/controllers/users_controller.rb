@@ -55,7 +55,8 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(params[:user])
+    attrs = current_user.admin? ? params[:user] : params[:user].slice!(:first_name, :last_name, :house_number, :street_name, :city, :postcode)
+    if @user.update_attributes(attrs)
       flash[:notice] = "Your profile has been updated"
       redirect_to @user
     else
