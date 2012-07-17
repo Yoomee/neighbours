@@ -3,9 +3,7 @@
     .row
       .span3
         -if @champion.image
-          =image_for(@champion, "220x")
-        -else
-          =image_for(@champion, "220x")
+          =image_for_with_validation(@champion, "220x")
           -if can?(:edit, @champion)
             .italic
               %span Upload your own picture.

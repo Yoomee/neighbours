@@ -16,7 +16,7 @@
         %td.span4
           .list-image
             =link_to flag.resource do
-              =image_for(flag.resource.user, "60x50#")
+              =image_for_with_validation(flag.resource.user, "60x50#")
             %p.small-text=flag.resource.user
           =link_to_self(flag.resource)
           %p=truncate(strip_tags(flag.resource.description), :length => 100)
