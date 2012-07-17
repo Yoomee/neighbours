@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   
   include YmPosts::Comment
   
-  has_many :notifications, :as => :resource
+  has_many :notifications, :as => :resource, :dependent => :destroy
   
   after_create :create_notification
   
