@@ -29,7 +29,7 @@ class RegistrationsController < ApplicationController
           redirect_to(root_path) and return
         end
       else
-        @user.next_step
+        @user.next_step!
       end
     end
     render :action => "new"

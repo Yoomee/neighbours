@@ -3,9 +3,9 @@
     %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
       ×
     %h3
-      =Page.find_by_slug(:conditions).title
+      =Page.find_by_slug(:conditions).try(:title)
   .modal-body  
-    =simple_format(Page.find_by_slug(:conditions).text)
+    =simple_format(Page.find_by_slug(:conditions).try(:text))
   .modal-footer
     %button{:type=>"button", :class=>"btn btn-primary", :"data-dismiss"=>"modal"}
       Close
