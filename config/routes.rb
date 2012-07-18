@@ -6,8 +6,9 @@ Neighbours::Application.routes.draw do
   match 'other-neighbourhoods' => 'enquiries#new', :id => 'other_neighbourhood', :as => "other_neighbourhood" 
 
   resources :wireframes, :only => [:index, :show]
-  resources :registrations, :only => [:new, :create]  
-  match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration"
+  resources :registrations, :only => [:new]
+  match "registrations(/:step)" => "registrations#create", :via => [:post, :put], :as => 'registrations'
+  match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration", :via => :get
   
   resources :needs do
     resources :offers, :only => [:create]

@@ -22,7 +22,7 @@
         %br
         your account
         
-  =semantic_form_for(@user, :url => registrations_path, :method => :post)  do |form|
+  =semantic_form_for(@user, :url => registrations_path(:step => @user.next_step || @user.steps.last), :method => :post)  do |form|
     .tab-content.register-tab-content    
       .register-tab-pane  
         =hidden_field_tag :user_id, @user.id
