@@ -10,7 +10,7 @@ class Need < ActiveRecord::Base
   validates :user, :presence => {:unless => :skip_user_validation?}
   validates :category, :presence => true
   validates :description, :presence => true
-  # validate :deadline_is_in_future
+  validate :deadline_is_in_future
 
   scope :unresolved, where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :resolved, where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
@@ -51,10 +51,10 @@ class Need < ActiveRecord::Base
   end
   
   private  
-  # def deadline_is_in_future
-  #   if new_record? && deadline.present? && (deadline < Date.today)
-  #     errors.add(:deadline, "must be in the future")
-  #   end
-  # end
+  def deadline_is_in_future
+    if new_record? && deadline.present? && (deadline < Date.today)
+      errors.add(:deadline, "must be in the future")
+    end
+  end
   
 end
