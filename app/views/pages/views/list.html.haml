@@ -4,7 +4,7 @@
     =raw(@page.text)
 .row
   .span12
-    -@page_children.each do |page|
+    -@page_children.latest.each do |page|
       .row.mb-2
         .span3.fade_in
           =link_to(image_for(page, "220x160#"), page)
@@ -13,7 +13,7 @@
             =link_to_self(page)
             -if @page.slug == "blog"
               \- 
-              =page.published_at.to_s(:date)
+              =(page.publication_date || page.created_at).to_s(:date)
           %p=truncate(strip_tags(page.text), :length => 220)
           =link_to raw('&rarr; Read more'), page
     -if can?(:new, Page)

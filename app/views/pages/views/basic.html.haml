@@ -1,5 +1,5 @@
 .span8
-  %h3=@page.published_at.to_s(:date) if @page.parent && @page.parent.slug == "blog"
+  %h3=(@page.publication_date || @page.created_at).to_s(:date) if @page.parent && @page.parent.slug == "blog"
   %h1=@page.title
   -if @page.image
     .row
