@@ -17,7 +17,9 @@
       .push
     -if current_user.nil?
       =render('modals/register_popup')
-    -elsif params[:modal]=="no_address"
-      =render('modals/no_address')
+    -elsif params[:modal]=="address_prompt"
+      =render('modals/address_prompt')
+    -elsif params[:modal]=="validation_prompt"
+      =render('modals/validation_prompt')
     .footer-wrapper
       =render("layouts/footer")

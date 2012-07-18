@@ -1,9 +1,9 @@
-#no_address.modal.hide.fade
+#validation_prompt.modal.hide.fade
   .modal-header
     %h3 Before you go any further...
   .modal-body  
     %p
-      You'll need to tell us where you live.
+      You'll need to validate your account and accept out terms and conditions.
   .modal-footer
     =link_to "Log out", sign_out_path, :method => :delete, :class => "btn pull-left"
     =link_to "Ok", "#", :class => "btn btn-primary", :"data-dismiss" => "modal"
