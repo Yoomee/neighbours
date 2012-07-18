@@ -9,6 +9,7 @@
  *= require font-awesome
  *= require ym_core
  *= require redactor
+ *= require ym_cms
  *= require ym_posts 
  *= require chosen
  *= require_self
