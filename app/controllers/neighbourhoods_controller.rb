@@ -1,4 +1,5 @@
 class NeighbourhoodsController < ApplicationController
+  load_and_authorize_resource
   
   def show
     @needs_json = Need.unresolved.with_lat_lng.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])

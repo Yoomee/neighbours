@@ -16,6 +16,7 @@ class Ability
       # admin ability
     elsif user
       # user ability
+      can :read, Neighbourhood
       can [:create], Flag
       can [:create], Comment
       can [:show, :create], Post
