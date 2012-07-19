@@ -17,7 +17,8 @@ Neighbours::Application.routes.draw do
     end
   end
   
-  resource :neighbourhood, :only => :show
+  match "neighbourhood" => "neighbourhoods#show", :as => "neighbourhood"
+  match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
 
   resources :need_categories, :except => [:show] do
     resources :needs, :only => :new
@@ -50,6 +51,10 @@ Neighbours::Application.routes.draw do
     member do
       put :resolve
     end
+  end
+  
+  resources :communities, :only => [] do
+    resources :posts, :only => :index
   end
   
   match "searches" => "searches#index", :as => "searches"

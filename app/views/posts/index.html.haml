@@ -1,0 +1,13 @@
+-posts = @posts
+.container
+  .row
+    .span8
+      %h1=title("Latest posts")
+  .row
+    .span2
+      %h3.mb-1 Trending tags
+      =render("tags/list", :tags => top_tags)
+    .span8
+      -if can?(:create, Post)
+        =render("posts/remote_form", :post => current_user.posts.build(:target => @neighbourhood))
+      =render("posts/posts", :posts => posts)

@@ -1,0 +1,46 @@
+.post.mb-2{:id => "post#{post.id}"}
+  .well.post-content.mb-0
+    .post_user.pull-left.clear.border-bottom.mb-1
+      =link_to(image_for(post.user, "32x32#"), post.user, :class => "pull-left")
+      .pull-left
+        =link_to_self(post.user)
+        -if post.target && post.target_type != "Neighbourhood"
+          %i.icon-chevron-right
+          =link_to_self(post.target)
+        %br
+        %span.small-info-text
+          =time_ago_in_words(post.created_at)
+          ago
+      =link_if_can post, :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'pull-right' do
+        %i.icon-trash
+    .post_content.clear
+      -if post.text.present?
+        =simple_format(auto_link(post.text))
+      -if post.file
+        .row.mb-1
+          .span5
+            =link_if_can([:file, post]) do
+              %i{:class => "icon-doc-#{post.file_ext}"}
+              =post.file_name
+      -if post.image
+        .row
+          .span2
+            =link_to("#", :data => {:toggle => "modal", :backdrop => false, :"modal-url" => modal_post_path(post), :"modal-id" => "post_modal"}) do
+              =image_for(post, '140x', :class => "#{post.has_video? ? 'video-image' : ''}")
+          -if post.has_video? && post.video_title.present?
+            .span5
+              =link_to(post.video_title, "#", :data => {:toggle => "modal", :backdrop => false, :"modal-url" => modal_post_path(post), :"modal-id" => "post_modal"})
+              %br
+              =link_to(post.video_youtube? ? 'youtube.com' : 'vimeo.com', post.video_url, :target => "_blank", :class => "small-info-text")
+              -if post.video_description.present?
+                %p=strip_tags(post.video_description)
+          
+        
+      -if post.tags.present?
+        .post_tags
+          -post.tags.each do |tag|
+            =link_to_tag(tag, :class => "pull-left mr-1")
+  .comments
+    .comment-list
+      =render(:partial => "comments/comment", :collection => post.comments)
+    =render("comments/form", :comment => post.comments.build)

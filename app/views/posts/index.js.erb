@@ -1,0 +1,2 @@
+<%posts = @posts%>
+$('.posts').html('<%=escape_javascript(render('posts/posts', :posts => posts))%>');

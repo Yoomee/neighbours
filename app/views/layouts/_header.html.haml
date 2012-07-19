@@ -27,7 +27,12 @@
                     %icon.icon-user
                     View profile  
               %li.divider
-                
+              -if current_user.is_community_champion? || current_user.is_admin?
+                %li
+                  =link_to(neighbourhood_posts_path(:neighbourhood => "maltby")) do
+                    %icon.icon-comments-alt
+                    Discussion forum  
+                %li.divider
               %li
                 =link_to(edit_user_path(current_user)) do
                   %icon.icon-cog

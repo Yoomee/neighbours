@@ -18,7 +18,7 @@ class Ability
       # user ability
       can [:create], Flag
       can [:create], Comment
-      can [:read, :create], Post
+      can [:show, :create], Post
       can [:update, :destroy], Post, :user_id => user.id
       can :manage, User, :id => user.id     
       cannot :index, User
@@ -27,6 +27,9 @@ class Ability
       can [:create, :index], Offer
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
+      end
+      if user.is_community_champion?
+        can :index, Post
       end
     end
     
