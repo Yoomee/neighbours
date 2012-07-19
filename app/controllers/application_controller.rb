@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   
   include YmUsers::ApplicationController
   
-  before_filter :authenticate, :redirect_if_address_not_set, :clear_new_need_attributes
+  before_filter :authenticate, :redirect_to_registration_if_unfinished, :clear_new_need_attributes
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -31,10 +31,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def redirect_if_address_not_set
-    return true if current_user.nil? || current_user.is_admin? || current_user.has_address? || %w{registrations sessions}.include?(controller_name)
-    address_registration_path = where_you_live_registration_path(:modal => "no_address")
-    redirect_to(address_registration_path) unless current_path == address_registration_path
+  def redirect_to_registration_if_unfinished
+    return true if current_user.nil? || current_user.is_admin? || %w{registrations sessions}.include?(controller_name)
+    path = nil
+    if !current_user.has_address?
+      path = where_you_live_registration_path(:modal => "address_prompt")
+    elsif !current_user.agreed_conditions? || (!current_user.validated? && current_user.validate_by.blank?)
+      path = validate_registration_path(:modal => "validation_prompt")
+    end
+    redirect_to(path) unless path.nil? || current_path == path
   end
-  
+    
 end

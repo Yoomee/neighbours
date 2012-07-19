@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
   end
   
   def has_address?
-    %w{house_number street_name city postcode}.all?(&:present?)
+    all_present?(:house_number, :street_name, :city, :postcode)
   end
   
   def new_notification_count(context, need = nil)
