@@ -906,6 +906,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   top: 0;
 }
 
+.post_tags {
+  display:inline-block;
+}
 
 
 /* ============================= */
