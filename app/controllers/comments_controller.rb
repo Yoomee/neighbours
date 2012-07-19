@@ -4,7 +4,9 @@ class CommentsController < ApplicationController
   
   def create
     @comment = current_user.comments.create(params[:comment])
-    UserMailer.new_comment(@comment).deliver
+    if @comment.post.target && @comment.post.target.is_a?(Need)
+      UserMailer.new_comment(@comment).deliver
+    end
   end
   
 end
