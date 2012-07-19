@@ -1,13 +1,18 @@
+=content_for :head do
+  :javascript
+    setTimeout(function(){$('.intro-circle-icon').popover({placement:'bottom'})},1000);
 #home-intro.mb-2
   .home-intro-text
     %h2.home-welcome.home-intro-text
       When you are validated
     %h3.home-where.home-intro-text you will be able to see activity in your neighbourhood
-  .intro-circles  
-    %i#circle1.icon-user.intro-circle-icon.circle1.fade_in.fade_one
-    %i#circle2.icon-user.intro-circle-icon.circle1.fade_in.fade_two
-    %i#circle3.icon-user.intro-circle-icon.circle2.fade_in.fade_three
-    %i#circle4.icon-user.intro-circle-icon.circle3.fade_in.fade_four  
-    %i#circle5.icon-user.intro-circle-icon.circle4.fade_in.fade_five     
-    %i#circle6.icon-user.intro-circle-icon.circle4.fade_in.fade_six 
-    %i#circle7.icon-user.intro-circle-icon.circle4.fade_in.fade_six
+  .intro-circles
+    -categories = NeedCategory.all.sort_by{rand}
+    -names = User.limit(50).sort_by{rand}
+    %i#circle1.icon-user.intro-circle-icon.circle1.fade_in.fade_one{:title => categories.pop, :'data-content' => "John, Braithwell Road"}
+    %i#circle2.icon-user.intro-circle-icon.circle1.fade_in.fade_two{:title => categories.pop, :'data-content' => "William, Davy Drive"}
+    %i#circle3.icon-user.intro-circle-icon.circle2.fade_in.fade_three{:title => categories.pop, :'data-content' => "Nicola, Cheetham Drive"}
+    %i#circle4.icon-user.intro-circle-icon.circle3.fade_in.fade_four{:title => categories.pop, :'data-content' => "Jane, Devonshire Road"}
+    %i#circle5.icon-user.intro-circle-icon.circle4.fade_in.fade_five{:title => categories.pop, :'data-content' => "Elizabeth, Braithwell Road"}
+    %i#circle6.icon-user.intro-circle-icon.circle4.fade_in.fade_six{:title => categories.pop, :'data-content' => "Bob, Gladstone Road"}
+    %i#circle7.icon-user.intro-circle-icon.circle4.fade_in.fade_six{:title => categories.pop, :'data-content' => "David, Cavendish Place"}
