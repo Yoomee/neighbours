@@ -243,11 +243,16 @@ br.clear {
 #site_logo a:hover {
   text-decoration: none;
 }
-#site_logo span {
+#site_logo span.site_title {
   display: block;
   float: left;
   width: 240px;
   margin: 20px 0 0 15px;
+}
+#site_logo span.badge {
+  float: right;
+  margin-top: -35px;
+  margin-right:10px;
 }
 #site_logo img {
   float: left;

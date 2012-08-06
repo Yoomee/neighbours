@@ -4,8 +4,10 @@
       %h1#site_logo
         =link_to "/" do
           =image_tag "logo.png"
-          %span
-            Neighbours Can Help Staging
+          %span.site_title
+            Neighbours Can Help
+          -if STAGING
+            %span.badge.badge-warning Staging
     .span7
       #header-links        
         -if current_user

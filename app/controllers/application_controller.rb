@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate
-    return true # if Rails.env.development? || Rails.env.test?
+    return true unless STAGING
     authenticate_or_request_with_http_basic do |username|
       AUTH_USERS[username]
     end
