@@ -6,6 +6,7 @@
     
 =form.hidden_field :current_step, :value => "validate"
 =form.hidden_field :validate_by
+=form.hidden_field :requested_validation_by_credit_card
 -if @user.is_in_maltby?
   .well
     %strong Safety and security
@@ -28,7 +29,16 @@
           %h3 Instantly by credit card
           %p
             By entering your credit card details we can check who you are without taking any money from you. We promise not to charge your card and not to keep your details afterwards.
-        =render("card_details", :form => form)
+        #card-modal.modal.fade.hide
+          .modal-header
+            %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+            %h3 Coming soon...
+          .modal-body
+            %p Validation by credit card will be available shortly.
+            %p In the meantime, please choose one of the other options.
+          .modal-footer
+            =link_to "OK", "#", :class => "btn btn-primary", :'data-dismiss' => 'modal'
+        =#render("card_details", :form => form)
 
       %li.thumbnail
         =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "post"} do

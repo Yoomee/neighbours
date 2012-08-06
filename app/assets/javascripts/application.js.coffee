@@ -57,8 +57,12 @@ window.Registration =
   toggleValidateByType: (type) ->
     currentType = $('#user_validate_by').val()
     Registration.removeValidateByType()
-    unless currentType == type
-      Registration.saveValidateByType(type)
+    if type == "credit_card"
+      $('#user_requested_validation_by_credit_card').val(1)
+      $('#card-modal').modal()
+    else
+      unless currentType == type
+        Registration.saveValidateByType(type)
 
 window.NewNeedForm = 
   force_submit: false
