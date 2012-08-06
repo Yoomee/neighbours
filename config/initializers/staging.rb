@@ -1,1 +1,1 @@
-STAGING = true # %x{pwd}.match(/^\/data\/neighbours_staging\//).present?
+STAGING = %x{pwd}.match(/^\/data\/neighbours_staging\//).present?
