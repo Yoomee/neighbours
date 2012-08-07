@@ -14,6 +14,9 @@ class RegistrationsController < ApplicationController
       if @user.last_step?
         sign_in(@user)
         if @user.is_in_maltby?
+          if @user.validate_by == "post" && !@user.validated?
+            flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on what to do next."}
+          end
           if new_need_attrs = session.delete(:new_need_attributes)
             @user.needs.create(new_need_attrs)
             flash[:notice] = "Congratulations! You have added your first request. Once we've validated your account then neighbours can help you."
