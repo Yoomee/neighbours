@@ -901,7 +901,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .table-users td .icon-large{
   line-height:0.5em;
 }
-.table-users td a {
+.table-users tr {
+  cursor:pointer;
 }
 .table-users td a:hover {
 }
@@ -1028,4 +1029,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   font-size: 12px;
   line-height: 14px;
   margin-right: 10px;
+}
+
+.modal dl {
+  margin-top:0px;
 }

@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   
   attr_accessor :card_number, :card_security_code
   
+  before_create :generate_validation_code
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   
@@ -36,12 +37,15 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :on => :create, :message => "these didn't match"
   validates :email_confirmation, :presence => {:if => :who_you_are_step?}
   validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
+  validates :validation_code, :uniqueness => true
   
   scope :validated, where(:validated => true)
   scope :unvalidated, where(:validated => false)
   scope :community_champions, where(:is_community_champion => true)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
-  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")  
+  scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
+  scope :in_maltby, where("postcode LIKE 'S66 %'")
+  scope :not_in_maltby, where("postcode NOT LIKE 'S66 %'")
   
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?
@@ -86,6 +90,11 @@ class User < ActiveRecord::Base
   
   def to_s
     first_name
+  end
+  
+  def validation_code
+    code = read_attribute(:validation_code).to_s
+    "#{code[0..3]} #{code[4..7]}".strip
   end
   
   def validation_step?
@@ -134,10 +143,18 @@ class User < ActiveRecord::Base
     end
   end
   
+  def generate_validation_code
+    return true if validation_code.present?
+    unique_code = nil
+    while unique_code.nil? || User.exists?(:validation_code => unique_code)
+      unique_code = SecureRandom.hex(4).upcase
+    end
+    self.validation_code = unique_code
+  end
+  
   def over_16
     return true if dob.nil?
     errors.add(:dob, "You must be over 16 to register") if dob > 16.years.ago.to_date
-    
   end
   
   def set_card_digits

@@ -17,6 +17,10 @@
     =link_to '#champions', :'data-toggle' => 'tab' do
       Champions
       %span.badge=@community_champions.count
+  %li
+    =link_to '#not-in-maltby', :'data-toggle' => 'tab' do
+      Not in Maltby
+      %span.badge=@not_in_maltby.count
 
 .tab-content
   #unvalidated.tab-pane.fade.in.active
@@ -27,4 +31,6 @@
     =render('table', :users => @community_champion_requests, :tab => "champion_requests")
   #champions.tab-pane.fade.in
     =render('table', :users => @community_champions, :tab => "champions")
+  #not-in-maltby.tab-pane.fade.in
+    =render('table', :users => @not_in_maltby, :tab => "champions")  
 #choose-community-champion.modal.hide.fade

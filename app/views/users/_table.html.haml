@@ -1,27 +1,25 @@
 %table.table.table-striped.table-users
   %tbody
     -users.each do |user|
-      %tr
+      %tr{:'data-toggle'=>"modal", :href=>"##{tab}-user-#{user.id}"}
         %td=name_and_role(user)
         %td
           =user.address
         %td
-          =link_to "#", :class => "bt", :'data-toggle'=>"modal", :href=>"##{tab}-user-#{user.id}" do
-            &nbsp;
-            &nbsp;
-            %i.icon-info-sign
-            &nbsp;
-            &nbsp;
+          %i.icon-info-sign
       .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
         .modal-header
           %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
           %h3=name_and_role(user)
         .modal-body
           %dl
+            %dt Validation code
+            %dd
+              %code=user.validation_code
             %dt Address
             %dd=user.address
             %dt Gender
-            %dd=user.gender
+            %dd=user.gender.titleize
             %dt Date of Birth
             %dd=user.dob.to_s(:date).presence || '-'
             %dt Email address
