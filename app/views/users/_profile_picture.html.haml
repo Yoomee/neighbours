@@ -1,5 +1,5 @@
 -size ||= "60x50#"
-=link_to target, :rel => 'tooltip', :title => (user.street_name if current_user.try(:validated?)), :class => "pull-left #{size == '120x120#' ? 'user-thumbnail-large' : ''}" do
+=link_to (can?(:read,target) ? target : '#'), :rel => 'tooltip', :title => (user.street_name if current_user.try(:validated?)), :class => "pull-left #{size == '120x120#' ? 'user-thumbnail-large' : ''}" do
   =image_for(user, size)
   %p{:class => "#{'small-text' if size == '60x50#'}"}
     =user
