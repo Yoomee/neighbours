@@ -69,6 +69,16 @@
   border-radius:5px;
 }
 
+/*========== Bootstrap extras ==========*/
+
+.badge-square {
+  padding: 1px 3px 2px;
+  font-size: 9.75px;
+  text-transform: uppercase;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
 
 /*========== Font stuff ==========*/
 .subnav_link, #social_media_links ul li a  {
@@ -145,6 +155,10 @@ div, input, select, .btn, label, textarea {
 .btn-small {
   font-size: 11px;
   line-height: 16px;
+}
+.btn-mini {
+  font-size: 11px;
+  line-height: 14px;
 }
 a.call-to-action-link, .carousel-text p, .small-text {
   font-size: 13px;
@@ -880,6 +894,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .table-users td .icon-large{
   line-height:0.5em;
 }
+.table-users td a {
+}
+.table-users td a:hover {
+}
+
 
 /*========== Comments ==========*/
 

@@ -3,115 +3,28 @@
 %ul.nav.nav-tabs
   %li.active
     =link_to '#unvalidated', :'data-toggle' => 'tab' do
-      Unvalidated users
+      Unvalidated
       %span.badge=@unvalidated_users.count
   %li
     =link_to '#validated', :'data-toggle' => 'tab' do
-      Validated users
+      Validated
       %span.badge=@validated_users.count
   %li
     =link_to '#champion_requests', :'data-toggle' => 'tab' do
-      Community champion requests
+      Champion requests
       %span.badge=@community_champion_requests.count
   %li
     =link_to '#champions', :'data-toggle' => 'tab' do
-      Community champions
+      Champions
       %span.badge=@community_champions.count
 
 .tab-content
   #unvalidated.tab-pane.fade.in.active
-    %table.table.table-striped.table-users
-      %tbody
-        -@unvalidated_users.each do |user|
-          %tr
-            %td=user.full_name
-            %td
-              %p
-                %strong Address
-                =user.address
-              .collapse{:id => "user-info-#{user.id}"}
-                =render("validation_details", :user => user)
-            %td
-              .btn-group.pull-right
-                =link_to "#", :class => "btn btn-small dropdown-toggle", :'data-toggle' => "dropdown" do
-                  %i.icon-cog.icon-large
-                  %span.caret
-                %ul.dropdown-menu
-                  %li=link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#user-info-#{user.id}"
-                  %li=link_to "Validate", validate_user_path(user), :remote => true, :'data-user-id' => user.id
-                  %li=link_to "Delete", user_path(user), :method => :delete, :confirm => "Are you sure?"
-                
+    =render('table', :users => @unvalidated_users, :tab => "unvalidated")
   #validated.tab-pane.fade.in
-    %table.table.table-striped.table-users
-      %tbody
-        -@validated_users.each do |user|
-          %tr
-            %td=user.full_name
-            %td
-              %p
-                %strong Address
-                =user.address
-              .collapse{:id => "validated-user-info-#{user.id}"}
-                =render("validation_details", :user => user)
-            %td
-              .btn-group.pull-right
-                =link_to "#", :class => "btn btn-small dropdown-toggle", :'data-toggle' => "dropdown" do
-                  %i.icon-cog.icon-large
-                  %span.caret
-                %ul.dropdown-menu
-                  %li=link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#validated-user-info-#{user.id}"
-                  -if user.community_champion.blank?
-                    %li=link_to "Assign a Champion",validate_user_path(user), :remote => true, :'data-user-id' => user.id
-                  -if user.is_community_champion?
-                    %li=link_to "Un-champion".html_safe,toggle_champion_user_path(user), :method => :put
-                  -else
-                    %li=link_to "Make champion",toggle_champion_user_path(user), :method => :put
-                  %li=link_to "Delete", user_path(user), :method => :delete, :confirm => "Are you sure?"
-
-
+    =render('table', :users => @validated_users, :tab => "validated")
   #champion_requests.tab-pane.fade.in
-    %table.table.table-striped.table-users
-      %tbody
-        -@community_champion_requests.each do |user|
-          %tr
-            %td=user.full_name
-            %td
-              %p
-                %strong Address
-                =user.address
-              .collapse{:id => "request-user-info-#{user.id}"}
-                =render("validation_details", :user => user)
-            %td
-              .btn-group.pull-right
-                =link_to "#", :class => "btn btn-small dropdown-toggle", :'data-toggle' => "dropdown" do
-                  %i.icon-cog.icon-large
-                  %span.caret
-                %ul.dropdown-menu
-                  %li=link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#request-user-info-#{user.id}"
-                  %li=link_to "Make champion",toggle_champion_user_path(user), :method => :put
-                  %li=link_to "Delete", user_path(user), :method => :delete, :confirm => "Are you sure?"
-                        
+    =render('table', :users => @community_champion_requests, :tab => "champion_requests")
   #champions.tab-pane.fade.in
-    %table.table.table-striped.table-users
-      %tbody
-        -@community_champions.each do |user|
-          %tr
-            %td=user.full_name
-            %td
-              %p
-                %strong Address
-                =user.address
-              .collapse{:id => "champion-user-info-#{user.id}"}
-                =render("validation_details", :user => user)
-            %td
-              .btn-group.pull-right
-                =link_to "#", :class => "btn btn-small dropdown-toggle", :'data-toggle' => "dropdown" do
-                  %i.icon-cog.icon-large
-                  %span.caret
-                %ul.dropdown-menu
-                  %li=link_to "Info", "#", :'data-toggle'=>"collapse", :'data-target'=>"#champion-user-info-#{user.id}"
-                  %li=link_to "Un-champion",toggle_champion_user_path(user), :method => :put
-                  %li=link_to "Delete", user_path(user), :method => :delete, :confirm => "Are you sure?"
-                
-
+    =render('table', :users => @community_champions, :tab => "champions")
 #choose-community-champion.modal.hide.fade

@@ -1,0 +1,55 @@
+%table.table.table-striped.table-users
+  %tbody
+    -users.each do |user|
+      %tr
+        %td=name_and_role(user)
+        %td
+          =user.address
+        %td
+          =link_to "#", :class => "bt", :'data-toggle'=>"modal", :href=>"##{tab}-user-#{user.id}" do
+            &nbsp;
+            &nbsp;
+            %i.icon-info-sign
+            &nbsp;
+            &nbsp;
+      .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
+        .modal-header
+          %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+          %h3=name_and_role(user)
+        .modal-body
+          %dl
+            %dt Address
+            %dd=user.address
+            %dt Date of Birth
+            %dd=user.dob.to_s(:date).presence || '-'
+            %dt Email address
+            %dd=user.email.presence || '-'
+            %dt Phone number
+            %dd=user.phone.presence || '-'
+            %dt= user.validated? ? 'Validated by' : 'Requested validation by'
+            %dd=user.validate_by.try(:humanize).presence || '-'
+            -if user.validate_by == "credit_card"
+              -user.credit_card_attributes.each do |attr_name|
+                %dt=attr_name.sub(/^formatted_/, '').humanize
+                %dd=user.send(attr_name).try(:humanize).presence || '-'
+            -elsif user.validate_by == "organisation"
+              %dt Organisation name
+              %dd=user.organisation_name.presence || '-'
+            -if user.validated?
+              %dt Community champion?
+              %dd=user.is_community_champion? ? 'Yes' : 'No'
+              %dt Requested to be a champion?
+              %dd=user.champion_request_at.present? ? 'Yes' : 'No'
+              %dt Assigned community champion
+              %dd=user.community_champion.try(:full_name) || '-'
+        .modal-footer
+          =link_to "Delete user", user_path(user), :class => 'btn btn-danger pull-left', :method => :delete, :confirm => "Are you sure?"
+          -if user.validated?
+            -if user.is_community_champion?
+              =link_to "Un-champion".html_safe,toggle_champion_user_path(user), :class => "btn", :method => :put
+            -else
+              -unless user.champion_request_at.present?
+                =link_to "Assign a champion",validate_user_path(user), :class => "btn", :remote => true, :'data-user-id' => user.id
+              =link_to "Make champion",toggle_champion_user_path(user), :class => "btn", :method => :put
+          -else
+            =link_to "Validate", validate_user_path(user), :class => "btn btn-primary", :remote => true, :'data-user-id' => user.id
