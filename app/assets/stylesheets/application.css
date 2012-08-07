@@ -660,7 +660,6 @@ body#home.logged_out .help-list{
 	line-height: 22px;
 	padding: 15px 10px 20px;
 }
-
 span.tab-number {
 	display: block;
 	float: left;
@@ -732,6 +731,14 @@ li.or {
 .validate-by-link.active {
   border-color: #0088cc;
   background-color:#B8E7FF;
+}
+.form-horizontal .control-group.radio {
+  padding-left:0px;
+}
+#user_gender_input .choice{
+  width:80px;
+  float:left;
+  padding-top:5px;
 }
 /*========== Page stuff ==========*/
 

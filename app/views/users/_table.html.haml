@@ -20,6 +20,8 @@
           %dl
             %dt Address
             %dd=user.address
+            %dt Gender
+            %dd=user.gender
             %dt Date of Birth
             %dd=user.dob.to_s(:date).presence || '-'
             %dt Email address
@@ -28,6 +30,8 @@
             %dd=user.phone.presence || '-'
             %dt= user.validated? ? 'Validated by' : 'Requested validation by'
             %dd=user.validate_by.try(:humanize).presence || '-'
+            %dt Clicked on credit card validation?
+            %dd=user.requested_validation_by_credit_card? ? 'Yes' : 'No'
             -if user.validate_by == "credit_card"
               -user.credit_card_attributes.each do |attr_name|
                 %dt=attr_name.sub(/^formatted_/, '').humanize

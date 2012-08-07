@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
     if params[:redirect_to_needs]
       session[:redirect_to_needs] = true
     end
-    @user = current_user || User.new
+    @user = current_user || User.new(:gender => 'male')
     @user.current_step = params[:step]
   end
   
