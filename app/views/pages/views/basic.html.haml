@@ -8,8 +8,8 @@
   .row
     .span8
       =contentize(@page.text)
-    .span8
-      =link_to("Let us know what you think",feedback_path)
+    -if root_slug_is?('blog')
+      .span8=link_to("Let us know what you think",feedback_path)
     .span8
       =options_panel do
         =link_if_can("Edit page", [:edit, @page])
