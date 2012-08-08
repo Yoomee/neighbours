@@ -17,3 +17,11 @@ en:
   devise:
     sessions:
       signed_in: 'Welcome back!'
+    confirmations:
+      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
+      send_paranoid_instructions: 'If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
+      confirmed: "Thank you for confirming your e-mail. Once your account has been validated we will send you confirmation to this e-mail address. Thank you for wanting to be part of the Neighbours Can Help Community. We hope to make your community stronger and safer together. Best wishes John, David and Rose"
+    mailer:
+      confirmation_instructions:
+        subject: 'Neighbours Can Help - Email confirmation instructions'
+      
