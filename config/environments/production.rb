@@ -58,7 +58,11 @@ Neighbours::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  config.action_mailer.default_url_options = { :host => 'neighbourscanhelp.org.uk' }
+  if STAGING
+    config.action_mailer.default_url_options = { :host => 'neighbours.yoomee.com' }
+  else
+    config.action_mailer.default_url_options = { :host => 'neighbourscanhelp.org.uk' }
+  end
   # TODO: uncomment this once DNS has changed
   # config.action_mailer.default_url_options = { :host => 'unseenamsterdam.com' }
 
