@@ -23,7 +23,10 @@
             %dt Date of Birth
             %dd=user.dob.to_s(:date).presence || '-'
             %dt Email address
-            %dd=user.email.presence || '-'
+            %dd
+              =user.email.presence || '-'
+              %span.badge{:class => "badge-#{user.confirmed? ? 'success' : 'error'}"}
+                =user.confirmed? ? 'Confirmed' : 'Unconfirmed'
             %dt Phone number
             %dd=user.phone.presence || '-'
             %dt= user.validated? ? 'Validated by' : 'Requested validation by'
