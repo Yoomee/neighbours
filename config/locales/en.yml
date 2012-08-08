@@ -15,6 +15,8 @@ en:
               taken: "is already taken.  <a href='/login'>Log in</a> if this is your account"
               
   devise:
+    failure:
+      unconfirmed: "You have to confirm your account before continuing. <a href='/users/confirmation/new'>Resend confirmation instructions</a>."
     sessions:
       signed_in: 'Welcome back!'
     confirmations:
