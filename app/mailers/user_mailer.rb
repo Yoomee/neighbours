@@ -2,7 +2,7 @@ class UserMailer < ActionMailer::Base
   
   helper YmCore::UrlHelper
   
-  default :from => "site@neighbours.yoomee.com", 
+  default :from => "site@neighbourscanhelp.org.uk",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
 
   def new_flag(flag)
