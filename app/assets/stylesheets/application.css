@@ -754,6 +754,7 @@ li.or {
 label#address-label {
   margin-top: 30px;
 }
+
 #user_house_number_input label, #user_street_name_input label {
   float: none;
   width: 100%;
