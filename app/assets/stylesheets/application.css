@@ -755,9 +755,17 @@ label#address-label {
   margin-top: 30px;
 }
 
+input#user_street_name {
+  width: 268px;
+}
+
 #user_house_number_input label, #user_street_name_input label {
   float: none;
   width: 100%;
+}
+
+#user_house_number_input label {
+  margin-left: -20px;
 }
 
 #user_street_name_input label {

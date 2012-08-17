@@ -3,8 +3,8 @@
   =form.input :current_step, :as => :hidden, :value => "where_you_live"
   -if current_user.admin?
     %label.control-label#address-label Address
-    =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "34", :class => "span1"}
-    =form.input :street_name, :label => "Street Name", :required => false, :input_html => {:placeholder => "Street name", :class => "span4"}
+    =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "34", :class => "span1"}, :help => "Please enter your house number or house name."
+    =form.input :street_name, :label => "Street Name", :required => false, :input_html => {:placeholder => "Street name"}
     =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city"}
     =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2"}
   =form.input :phone, :label => "Phone number <br /><em class='optional'>(optional)</em>".html_safe, :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}
