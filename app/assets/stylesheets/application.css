@@ -740,6 +740,28 @@ li.or {
   float:left;
   padding-top:5px;
 }
+
+#user_house_number_input {
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 0;
+}
+
+#user_house_number_input .controls {
+  margin-left: 20px;
+}
+
+label#address-label {
+  margin-top: 30px;
+}
+#user_house_number_input label, #user_street_name_input label {
+  float: none;
+  width: 100%;
+}
+
+#user_street_name_input label {
+  text-align: left;
+}
 /*========== Page stuff ==========*/
 
 #sign-up-call-to-action .well {
