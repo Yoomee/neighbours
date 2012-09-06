@@ -1,17 +1,28 @@
-=google_maps_javascript_include_tag
+=google_maps_javascript_include_tag if current_user && current_user.validated?
 -content_for :head do
   :javascript
     $(document).ready(function() {
+      NeedSelect.init();
       NeedsMap.needs = #{@needs_json};
-      NeedsMap.init();
+      #{'NeedsMap.init();' if current_user}
     });
     
 -title "My Neighbourhood"
 .row
-  -if current_user.validated?
+  -if current_user && current_user.validated?
     =render "validated_map"
   -else
     =render "unvalidated_map"
+  -unless current_user && current_user.validated?
+    .span12
+      .what-help
+        %h2.what-help-text What help would you like?
+        =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "what-help-select")
+      -if current_user
+        =link_to "I'd like to offer some help", needs_path, :class=>"home-help-link"
+      -else
+        =link_to "I'd like to offer some help", "#register-popup", :class=>"home-help-link", :'data-toggle' => 'modal'
+    
     
 .row                                         
   .span6
@@ -28,17 +39,17 @@
             %h3
               =link_to need.title, need
             %p
-              -if current_user.validated?
+              -if current_user.try(:validated?)
                 =need.description
               -else
                 =need.category.description
-    -if current_user.validated?
+    -if current_user.try(:validated?)
       =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
                             
   .span6
     %h2 Neighbours who need help
     %ul.help-list.unstyled
-      -@need_help.each do |need|
+      -@need_help.first(4).each do |need|
         %li.list
           .list-image
             =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
@@ -49,9 +60,9 @@
             %h3
               =link_to need.title, need
             %p
-              -if current_user.validated?
+              -if current_user.try(:validated?)
                 =need.description
               -else
                 =need.category.description
-    -if current_user.validated?
+    -if current_user.try(:validated?)
       =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    

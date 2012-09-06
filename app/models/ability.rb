@@ -8,7 +8,8 @@ class Ability
     # open ability
     can :create, Enquiry
     can :show, Page, :draft => false
-    can :create, Need
+    can [:show, :create], Need
+    can :read, Neighbourhood
     
     if user.try(:admin?)
       can :manage, :all
@@ -16,7 +17,6 @@ class Ability
       # admin ability
     elsif user
       # user ability
-      can :read, Neighbourhood
       can [:create], Flag
       can [:create], Comment
       can [:show, :create], Post

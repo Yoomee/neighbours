@@ -61,6 +61,6 @@ class NeedsController < ApplicationController
   end
   
   def set_notifications_to_read
-    @need.read_all_notifications!(current_user)
+    @need.read_all_notifications!(current_user) if current_user
   end
 end
