@@ -305,10 +305,8 @@ br.clear {
 .main-nav .active a, .controller_home #link-home a, .slug_about #link-about a, .slug_stories #link-stories a, .controller_needs #link-neighbourhood a {
   color: #00558D;
   background: #fff;
-  margin-right: 10px;
   border: 1px solid #fff;
   border-bottom: 1px solid #fff;
-
 }
 #header-links {
   float: right;
@@ -323,6 +321,19 @@ br.clear {
   color: #777;
   margin: 8px 14px 0 0;
   float: left;
+}
+#header-links .btn-group{
+  float: right;
+}
+#header-links #help-links{
+  float:left;
+  padding:6px 10px 0px 0px;
+}
+#header-links #help-links a, #header-links #help-links icon {
+  font-size:14px;
+  float:left;
+  margin-right:5px;
+  color:#333;
 }
 .homepage-box {
    background: #f5f5f5;
