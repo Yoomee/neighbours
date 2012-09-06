@@ -51,8 +51,10 @@
               ="#{@need.user}."
             -if current_user.try(:validated?)
               =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-            -else
+            -elsif current_user
               =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            -else
+              =link_to "Maybe I can help", "#register-popup", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
               
       %ul.unstyled.need-posts
         -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.try(:id)])

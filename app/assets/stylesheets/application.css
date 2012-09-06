@@ -420,13 +420,16 @@ br.clear {
 	box-shadow:1px 1px 10px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.3);
 }
 
+.home-help-links {
+	margin: 0 0 40px 270px;
+  float:left;
+  clear:both;
+}
 .home-help-link {
 	float: left;
-	clear: left;
-	margin: 0 0 40px 350px;
+	margin-right: 40px;
 	color: #999;
 	border-bottom: 1px solid #f5f5f5;
-  
 }
 .home-help-link:hover {
 text-decoration: none;

@@ -18,10 +18,12 @@
       .what-help
         %h2.what-help-text What help would you like?
         =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "what-help-select")
-      -if current_user
-        =link_to "I'd like to offer some help", needs_path, :class=>"home-help-link"
-      -else
-        =link_to "I'd like to offer some help", "#register-popup", :class=>"home-help-link", :'data-toggle' => 'modal'
+      .home-help-links
+        -if current_user
+          =link_to "I'd like to offer some help", needs_path, :class=>"home-help-link"
+        -else
+          =link_to "I'd like to offer some help", "#register-popup", :class=>"home-help-link", :'data-toggle' => 'modal'
+        =link_to "Take our survey", "http://www.surveymonkey.com/s/VGLT22G", :target => "_blank", :class=>"home-help-link"
     
     
 .row                                         
