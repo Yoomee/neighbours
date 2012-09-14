@@ -12,9 +12,22 @@ class NeighbourhoodsController < ApplicationController
       else
         @needs_json = []
       end
-      @helped = Need.resolved.limit(4)
-      @need_help = Need.unresolved.limit(7)
+      @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
+      @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     end
+  end
+  
+  private
+  def get_at_least(num, needs_sent)
+    needs = needs_sent.dup
+    needs.pop if needs.size.odd?
+    count = 0
+    all_needs = needs
+    (num - needs.size).times do |i|
+      all_needs << needs[count] if needs[count]
+      count = (count >= (needs.size - 1)) ? 0 : count + 1
+    end
+    all_needs
   end
   
 end
