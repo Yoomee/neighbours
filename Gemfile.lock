@@ -337,6 +337,9 @@ GEM
       rails (~> 3.1.0)
       thinking-sphinx (~> 2.0.10)
       ym_core
+    ym_snippets (0.1)
+      rails (~> 3.1.0)
+      ym_users (~> 0.1)
     ym_tags (0.1.1)
       acts-as-taggable-on (~> 2.2.2)
       rails (~> 3.1.0)
@@ -382,5 +385,6 @@ DEPENDENCIES
   ym_notifications (~> 0.1)
   ym_posts (~> 0.1)
   ym_search (~> 0.1)
+  ym_snippets (~> 0.1)
   ym_users (~> 0.1)
   yoomee!
