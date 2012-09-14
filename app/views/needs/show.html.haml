@@ -20,7 +20,10 @@
   .span8
     .request-body.mb2
       %h1=title @need.title
-      =simple_format(@need.description)
+      -if current_user && current_user.validated?
+        =simple_format(@need.description)
+      -else
+        =@need.category.description
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       

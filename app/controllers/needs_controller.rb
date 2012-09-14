@@ -10,7 +10,7 @@ class NeedsController < ApplicationController
       @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
     else
-      @needs = Need.unresolved.where("user_id != #{current_user.id}").order("created_at DESC")
+      @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").order("created_at DESC") : Need.unresolved.order("created_at DESC")
     end
   end
 
