@@ -57,7 +57,7 @@
           %ul.nav.nav-tabs
             =li_with_active(current_page?(root_path), link_to("Home", root_path, :class=>"nav-link"))
             =li_with_active(@page && @page.slug == "about", link_to_slug(:about, :class=>"nav-link"))
-            =li_with_active(@page && @page.slug == "blog", link_to_slug(:blog, :class=>"nav-link"))
+            =li_with_active(@page && @page.slug == "news", link_to_slug(:news, :class=>"nav-link"))
             -if current_user
               -if current_user.is_in_maltby?
                 =li_with_active(controller_name.neighbourhoods?, link_to("My Neighbourhood", neighbourhood_path, :class=>"nav-link"))
