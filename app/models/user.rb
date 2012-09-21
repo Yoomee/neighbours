@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
+  has_many :flags, :dependent => :destroy
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify 
   belongs_to :community_champion, :class_name => "User"

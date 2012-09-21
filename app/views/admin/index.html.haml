@@ -37,7 +37,15 @@
   .span4
     .well
       %h2
+        %i.icon-list
+        Site snippets
+      %ul.unstyled
+        %li=link_to "View snippets", snippets_path
+  .span4
+    .well
+      %h2
         %i.icon-envelope-alt
         Enquiries
       %ul.unstyled
         %li=link_to "View enquiries", enquiries_path
+

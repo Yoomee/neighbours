@@ -1,57 +1,85 @@
-=google_maps_javascript_include_tag
+=google_maps_javascript_include_tag if current_user && current_user.validated?
 -content_for :head do
   :javascript
     $(document).ready(function() {
+      NeedSelect.init();
       NeedsMap.needs = #{@needs_json};
-      NeedsMap.init();
+      #{'NeedsMap.init();' if current_user}
+      Needs.startCycle('#resolved', 3000);
+      setTimeout("Needs.startCycle('#unresolved', 3000);", 1500);
     });
+    var Needs = {
+      startCycle: function(accessor, interval) {
+        setInterval("Needs.cycle('" + accessor + "');", interval);
+      },
+      cycle: function(accessor) {
+        $(accessor).animate({top: '-112px'}, 1000, function() {
+          $(this).css('top', '0px');
+          $(this).children('li:first').appendTo($(this).show());
+        });
+        // $('ul.help-list.unstyled#resolved li.list:first').hide('slide', {direction: 'up'}, 1000,function() {
+        //   $('ul.help-list.unstyled#resolved').append(this);
+        //   $(this).show();
+        // });
+      }
+    };
+    
     
 -title "My Neighbourhood"
 .row
-  -if current_user.validated?
+  -if current_user && current_user.validated?
     =render "validated_map"
   -else
     =render "unvalidated_map"
+  -unless current_user && current_user.validated?
+    .span12
+      .what-help
+        %h2.what-help-text What help would you like?
+        =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "what-help-select")
+      .home-help-links
+        =link_to "Please help us improve our services to the community by answering these 6 simple questions", "http://www.surveymonkey.com/s/VGLT22G", :target => "_blank", :class=>"home-help-link"
     
-.row                                         
+    
+.row#needs-cycle                                
   .span6
-    %h2 Neighbours who've been helped
-    %ul.help-list.unstyled
-      -@helped.each do |need|
-        %li.list
-          .list-image
-            =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-              =image_for_with_validation(need.user, "60x50#")
-              %p.small-text
-                =need.user
-          .list-text
-            %h3
-              =link_to need.title, need
-            %p
-              -if current_user.validated?
-                =need.description
-              -else
-                =need.category.description
-    -if current_user.validated?
-      =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
+    %h2
+      Neighbours who've been helped
+    .help-list-wrapper
+      %ul.help-list.unstyled#resolved
+        -@helped.each do |need|
+          %li.list
+            .list-image
+              =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =image_for_with_validation(need.user, "60x50#")
+                %p.small-text
+                  =need.user
+            .list-text
+              %h3
+                =link_to need.title, need
+              %p
+                -if current_user.try(:validated?)
+                  =need.description
+                -else
+                  =need.category.description
+    =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
                             
   .span6
     %h2 Neighbours who need help
-    %ul.help-list.unstyled
-      -@need_help.each do |need|
-        %li.list
-          .list-image
-            =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-              =image_for_with_validation(need.user, "60x50#")
-              %p.small-text
-                =need.user
-          .list-text
-            %h3
-              =link_to need.title, need
-            %p
-              -if current_user.validated?
-                =need.description
-              -else
-                =need.category.description
-    -if current_user.validated?
-      =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    
+    .help-list-wrapper
+      %ul.help-list.unstyled#unresolved
+        -@need_help.each do |need|
+          %li.list
+            .list-image
+              =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =image_for_with_validation(need.user, "60x50#")
+                %p.small-text
+                  =need.user
+            .list-text
+              %h3
+                =link_to need.title, need
+              %p
+                -if current_user.try(:validated?)
+                  =need.description
+                -else
+                  =need.category.description
+    =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    

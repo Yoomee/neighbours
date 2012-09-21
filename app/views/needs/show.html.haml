@@ -20,10 +20,10 @@
   .span8
     .request-body.mb2
       %h1=title @need.title
-      -if current_user.validated?
+      -if current_user && current_user.validated?
         =simple_format(@need.description)
       -else
-        =simple_format(@need.category.description)
+        =@need.category.description
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
@@ -31,13 +31,13 @@
   -if logged_in_as?(@need.user) && @offers.empty?
     .span9.offset2
       .alert.alert-info
-        -if current_user.validated?
+        -if current_user.try(:validated?)
           Sorry, no one has offered to help you with this yet. In the meantime why don't you
           =link_to("click here", need_path)
           to see who you could help?
         -else
           Your request for help will be seen by other people as soon as you're validated.
-      =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action" if current_user.validated?
+      =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action" if current_user.try(:validated?)
   -else
     .span8
       -if @need.user != current_user
@@ -45,20 +45,22 @@
           %b
             %i.icon-exclamation-sign
             ="#{@need.user} needs your help"
-          -if @need.offers.exists?(:user_id => current_user.id)
+          -if current_user && @need.offers.exists?(:user_id => current_user.id)
             %p.mb3
               ="You can continue your discussion with #{@need.user} by writing a comment below ."
           -else
             %p.mb3
               If you think you can help, then click on this button to start a private discussion with
               ="#{@need.user}."
-            -if current_user.validated?
+            -if current_user.try(:validated?)
               =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-            -else
+            -elsif current_user
               =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+            -else
+              =link_to "Maybe I can help", "#register-popup", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
               
       %ul.unstyled.need-posts
-        -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.id])
+        -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.try(:id)])
         =render(:partial => "needs/post", :collection => posts)
     .span4
       -if @offers.present?
@@ -77,11 +79,11 @@
       =link_if_can("Delete this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
       =link_to("#inappropriate", :data => {:toggle => "modal"}) do
         %i.icon-warning-sign
-        Report this entry as inappropriate
+        Report this page as inappropriate
 
 -if @need.user != current_user
   #offer-form.modal.hide.fade
-    -if @need.offers.exists?(:user_id => current_user.id)
+    -if current_user && @need.offers.exists?(:user_id => current_user.id)
       =render("needs/modal_post_form", :need => @need)
     -else
       =render('offers/modal_form')

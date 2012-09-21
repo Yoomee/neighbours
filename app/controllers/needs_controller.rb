@@ -10,7 +10,7 @@ class NeedsController < ApplicationController
       @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
     else
-      @needs = Need.unresolved.where("user_id != #{current_user.id}").order("created_at DESC")
+      @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").order("created_at DESC") : Need.unresolved.order("created_at DESC")
     end
   end
 
@@ -61,6 +61,6 @@ class NeedsController < ApplicationController
   end
   
   def set_notifications_to_read
-    @need.read_all_notifications!(current_user)
+    @need.read_all_notifications!(current_user) if current_user
   end
 end

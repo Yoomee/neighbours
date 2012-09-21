@@ -43,12 +43,13 @@
   -webkit-animation-iteration-count: 1;
 }
 
-.fade_in.fade_one{-webkit-animation-delay: 0, 0;}
-.fade_in.fade_two {-webkit-animation-delay: 0, 0.2s;}
-.fade_in.fade_three {-webkit-animation-delay: 0, 0.4s;}
-.fade_in.fade_four  {-webkit-animation-delay: 0, 0.6s;}
-.fade_in.fade_five  {-webkit-animation-delay: 0, 0.8s;}
-.fade_in.fade_six {-webkit-animation-delay: 0, 1s;}
+.fade_in.fade_1{-webkit-animation-delay: 0, 0;}
+.fade_in.fade_2 {-webkit-animation-delay: 0, 0.2s;}
+.fade_in.fade_3 {-webkit-animation-delay: 0, 0.4s;}
+.fade_in.fade_4  {-webkit-animation-delay: 0, 0.6s;}
+.fade_in.fade_5  {-webkit-animation-delay: 0, 0.8s;}
+.fade_in.fade_6 {-webkit-animation-delay: 0, 1s;}
+.fade_in.fade_7 {-webkit-animation-delay: 0, 1s;}
 
 .main-nav a  {
 	    
@@ -304,10 +305,8 @@ br.clear {
 .main-nav .active a, .controller_home #link-home a, .slug_about #link-about a, .slug_stories #link-stories a, .controller_needs #link-neighbourhood a {
   color: #00558D;
   background: #fff;
-  margin-right: 10px;
   border: 1px solid #fff;
   border-bottom: 1px solid #fff;
-
 }
 #header-links {
   float: right;
@@ -323,10 +322,21 @@ br.clear {
   margin: 8px 14px 0 0;
   float: left;
 }
+#header-links .btn-group{
+  float: right;
+}
+#header-links #help-links{
+  float:left;
+  padding:6px 10px 0px 0px;
+}
+#header-links #help-links a, #header-links #help-links icon {
+  font-size:14px;
+  float:left;
+  margin-right:5px;
+  color:#333;
+}
 .homepage-box {
-   background: #f5f5f5;
-
-
+  background: #f5f5f5;
   padding: 20px;
   height: 260px;
   
@@ -355,6 +365,11 @@ br.clear {
 }
 .homepage-box-title a {
   color: inherit;
+}
+
+#map-canvas {
+  margin-bottom: 30px;
+  height: 320px;
 }
 
 
@@ -403,14 +418,11 @@ br.clear {
 	margin: -30px 0 15px 70px; 
 	box-shadow:1px 1px 10px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.3);
 }
-
 .home-help-link {
 	float: left;
-	clear: left;
-	margin: 0 0 40px 350px;
-	color: #999;
+	margin: 0 0 40px 120px;
+	color: #333;
 	border-bottom: 1px solid #f5f5f5;
-  
 }
 .home-help-link:hover {
 text-decoration: none;
@@ -454,6 +466,8 @@ border-bottom-color: #b08193;
   line-height: 40px;
   border-radius:40px;
   font-size: 22px;
+  color:white;
+  text-decoration:none;
 }
 .circle1 {
   background: #f8bb61;
@@ -464,7 +478,7 @@ border-bottom-color: #b08193;
 .circle3 {
   background: #8bd7dd;
 }
-.circle4 {
+.circle4, .circle5, .circle6, .circle7 {
   background: #b08193;
 }
 
@@ -473,25 +487,25 @@ border-bottom-color: #b08193;
 	left: 267px;  
 }
 #circle2 {
-	top: 260px;
-	left: 507px;  
-}
-#circle3 {
 	top: 140px;
 	left: 467px;  
 }
-#circle4 {
+#circle3 {
 	top: 190px;
 	left: 647px;  
 }
+#circle4 {
+  	top: 220px;
+  	left: 130px;  
+  	background: #cf646d;
+  }
 #circle5 {
 	top: 230px;
 	left: 317px;  
 }
 #circle6 {
-	top: 220px;
-	left: 130px;  
-	background: #cf646d;
+	top: 260px;
+	left: 507px;  
 }
 #circle7 {
 	top: 260px;
@@ -976,6 +990,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-top: 10px;
 }
 
+/*************** community champion  ********************/
+.post-private-checkbox .controls .checkbox {
+  font-size: 12px;
+  line-height: 14px;
+  margin-right: 10px;
+}
+
+.modal dl {
+  margin-top:0px;
+}
+
+/*========== Neighbourhood page ==========*/
+.help-list-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 450px;
+  width: 100%;
+}
+.help-list-wrapper .help-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
 
 /* ============================= */
 /* ! Layout for mobile version   */
@@ -1027,6 +1066,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 
 
+
 }
 
 @media handheld, only screen and (max-width: 719px)  {
@@ -1052,15 +1092,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 		background-size: 212px 303px;
 	}*/
 
-}
-
-/*************** community champion  ********************/
-.post-private-checkbox .controls .checkbox {
-  font-size: 12px;
-  line-height: 14px;
-  margin-right: 10px;
-}
-
-.modal dl {
-  margin-top:0px;
 }
