@@ -13,7 +13,7 @@
         setInterval("Needs.cycle('" + accessor + "');", interval);
       },
       cycle: function(accessor) {
-        $(accessor).animate({top: '-112px'}, 1000, function() {
+        $(accessor).animate({top: '-112px'}, 2000, function() {
           $(this).css('top', '0px');
           $(this).children('li:first').appendTo($(this).show());
         });
@@ -23,8 +23,8 @@
         // });
       }
     };
-    
-    
+
+
 -title "My Neighbourhood"
 .row
   -if current_user && current_user.validated?
@@ -38,9 +38,9 @@
         =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "what-help-select")
       .home-help-links
         =link_to "Please help us improve our services to the community by answering these 6 simple questions", "http://www.surveymonkey.com/s/VGLT22G", :target => "_blank", :class=>"home-help-link"
-    
-    
-.row#needs-cycle                                
+
+
+.row#needs-cycle
   .span6
     %h2
       Neighbours who've been helped
@@ -62,7 +62,7 @@
                 -else
                   =need.category.description
     =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
-                            
+
   .span6
     %h2 Neighbours who need help
     .help-list-wrapper
@@ -82,4 +82,4 @@
                   =need.description
                 -else
                   =need.category.description
-    =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"    
+    =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"
