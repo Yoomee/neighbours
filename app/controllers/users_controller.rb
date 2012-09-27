@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include YmUsers::UsersController
   load_and_authorize_resource
-  
+
   def assign_champion
     was_validated = @user.validated
     if @user.update_attributes(params[:user])
@@ -13,10 +13,10 @@ class UsersController < ApplicationController
     UserMailer.validated(@user).deliver
     redirect_to users_path
   end
-  
+
   def edit
   end
-  
+
   def index
     @validated_users = User.in_maltby.validated
     @unvalidated_users = User.in_maltby.unvalidated
@@ -24,11 +24,11 @@ class UsersController < ApplicationController
     @community_champions = User.in_maltby.community_champions
     @not_in_maltby = User.not_in_maltby
   end
-  
+
   def map
     @users_json = User.with_lat_lng.to_json(:only => [:id, :lat, :lng, :house_number, :street_name], :methods => [:full_name])
   end
-  
+
   def toggle_champion
     if @user.is_community_champion?
       if @user.update_attributes(:is_community_champion => false)
@@ -44,10 +44,10 @@ class UsersController < ApplicationController
         flash[:error] = "Something has gone wrong.  Please try again"
       end
     end
-    redirect_to users_path    
+    redirect_to users_path
   end
-  
-  def show    
+
+  def show
   end
 
   def request_to_be_champion
@@ -55,7 +55,16 @@ class UsersController < ApplicationController
     flash[:notice] = "You've asked to become a community champion. We'll get back to you soon"
     redirect_to @user
   end
-  
+
+  def unvalidate
+    if @user.update_attributes(:validated => false)
+      flash[:notice] = "#{@user} has been unvalidated"
+    else
+      flash[:error] = "Something has gone wrong.  Please try again"
+    end
+    redirect_to users_path
+  end
+
   def update
     attrs = current_user.admin? ? params[:user] : params[:user].slice!(:first_name, :last_name, :house_number, :street_name, :city, :postcode)
     if @user.update_attributes(attrs)
@@ -65,7 +74,7 @@ class UsersController < ApplicationController
       render :action => "edit"
     end
   end
-  
+
   def validate
   end
 end
