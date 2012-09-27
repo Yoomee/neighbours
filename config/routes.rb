@@ -34,6 +34,7 @@ Neighbours::Application.routes.draw do
       put :unvalidate
       put :assign_champion
       put :toggle_champion
+      put :toggle_is_deleted
     end
     collection do
       get :map

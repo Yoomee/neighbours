@@ -28,7 +28,7 @@
       .action-link
         =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
     -else
-      %h4 Bio    
+      %h4 Bio
       .italic
         %span Nothing entered yet.
         .action-link
@@ -58,9 +58,9 @@
             %span Nothing entered yet.
             .action-link
               =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
-          
+
 .row.mt-2
   .span8
     =options_panel do
       =link_if_can("Edit profile", [:edit, @user])
-      =link_if_can("Delete user", [:destroy, @user], :confirm => "Are you sure?")
+      =link_if_can("Delete user", [:toggle_is_deleted, @user],:method => :put, :confirm => "Are you sure?")

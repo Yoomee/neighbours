@@ -48,7 +48,7 @@
               %dt Assigned community champion
               %dd=user.community_champion.try(:full_name) || '-'
         .modal-footer
-          =link_to "Delete user", user_path(user), :class => 'btn btn-danger pull-left', :method => :delete, :confirm => "Are you sure?"
+          =link_to "#{user.is_deleted? ? 'Un-delete user' : 'Delete user'}", toggle_is_deleted_user_path(user), :class => 'btn btn-danger pull-left', :method => :put, :confirm => "Are you sure?"
           -if user.validated?
             =link_to "Unvalidate", unvalidate_user_path(user), :class => 'btn btn-danger pull-left', :method => :put
             -if user.is_community_champion?

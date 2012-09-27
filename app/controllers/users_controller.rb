@@ -23,10 +23,20 @@ class UsersController < ApplicationController
     @community_champion_requests = User.in_maltby.community_champion_requesters
     @community_champions = User.in_maltby.community_champions
     @not_in_maltby = User.not_in_maltby
+    @deleted_users = User.deleted
   end
 
   def map
     @users_json = User.with_lat_lng.to_json(:only => [:id, :lat, :lng, :house_number, :street_name], :methods => [:full_name])
+  end
+
+  def toggle_is_deleted
+    if @user.update_attributes(:is_deleted => !@user.is_deleted)
+      flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}"
+    else
+      flash[:error] = "Something has gone wrong.  Please try again"
+    end
+    redirect_to users_path
   end
 
   def toggle_champion
