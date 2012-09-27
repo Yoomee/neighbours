@@ -3,7 +3,7 @@
 #  be included in the compiled file accessible from http://example.com/assets/application.js
 #  It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 #  the compiled file.
-# 
+#
 #= require jquery
 #= require jquery_ujs
 #= require ym_core
@@ -25,8 +25,13 @@ $(document).ready () ->
   $('.help-icon').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
+  FormErrors.scrollToFirstError()
 
-window.Registration = 
+window.FormErrors =
+  scrollToFirstError: () ->
+    YmCore.scrollTo($('form .control-group.error:first').parents('.form-group'))
+
+window.Registration =
   initValidateStep: () ->
     $('form.user').submit () ->
       if $('#user_validate_by').val() != "credit_card"
@@ -34,7 +39,7 @@ window.Registration =
           $(this).val('')
       if $('#user_validate_by').val() != "organisation"
         $('.organisation select').each (index) ->
-          $(this).val('')        
+          $(this).val('')
       return true
     currentType = $('#user_validate_by').val()
     if currentType.length
@@ -64,7 +69,7 @@ window.Registration =
       unless currentType == type
         Registration.saveValidateByType(type)
 
-window.NewNeedForm = 
+window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
     NewNeedForm.showHideDeadline()
@@ -86,10 +91,9 @@ window.NewNeedForm =
     else
       $('#need_deadline_input select').val(null)
       $('#need_deadline_input').css('visibility','hidden')
-    
-      
+
+
 window.NeedSelect =
   init: ->
     $('#what-help-select').change ->
       window.location.href = "/need_categories/#{$('#what-help-select').val()}/needs/new"
-    
