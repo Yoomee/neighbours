@@ -3,7 +3,7 @@
     $(document).ready(function() {
       Registration.initValidateStep();
     });
-    
+
 =form.hidden_field :current_step, :value => "validate"
 =form.hidden_field :validate_by
 =form.hidden_field :requested_validation_by_credit_card
@@ -14,7 +14,7 @@
       Your safety is important to us. We make sure that everybody on
       %em
         Neighbours Can Help
-      proves their identify to us. You can't use all the facilities on the website until your account is validated. How would you like to do this?
+      proves their identify to us. You can't use all the facilities on the website until your membership is validated. How would you like to do this?
   .validate-your-account
     %h2.mb2.mt2
       Prove your identity
@@ -43,27 +43,27 @@
       %li.thumbnail
         =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "post"} do
           %i.icon-envelope
-          %h3 Slowly by post 
+          %h3 Slowly by post
           %p
             If you don't want to use a credit card, then we can send you a letter with a unique passcode that you enter to prove that you live at the address.
-        
+
       %li.thumbnail
         =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "organisation"} do
           %i.icon-group
-          %h3 With a local organisation 
+          %h3 With a local organisation
           %p
             We work with a number of your local organisations. If you would like them to tell us that you are who you say you are then select this option.
         .organisation-form.hide
           =form.inputs() do
             =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
 
-    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'}".html_safe, :required => false 
-    
+    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
+
 -else
   .well
     %strong Sorry - not available yet
     %p Unfortunately, you do not appear to live in Maltby. Neigbourbours Can Help will be rolling out to different areas later this year. We will let you as soon as it's available in your area.
-    
-    
-    
+
+
+
 =render('modals/conditions_popup')
