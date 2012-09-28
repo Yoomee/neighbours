@@ -1,31 +1,45 @@
-.span10.offset1
-  %ul.nav.nav-tabs.nav-tabs-register
-    =li_with_active(@user.current_step == "who_you_are") do
-      =link_to "#" do
+-content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      $("#why-age-modal-button").click(function() {
+        $('#user_undisclosed_age').val($('#undisclosed_age_check_box').is(':checked'));
+      });
+    });
+.row
+  .span10.offset1
+    %ul.nav.nav-tabs.nav-tabs-register
+      =li_with_active(@user.current_step == "who_you_are") do
         %span.tab-number
           1
         Tell us
         %br
         who you are
-    =li_with_active(@user.current_step == "where_you_live") do
-      =link_to "#" do
+      =li_with_active(@user.current_step == "where_you_live") do
         %span.tab-number
           2
         Tell us
         %br
         where you live
-    =li_with_active(@user.current_step == "validate") do
-      =link_to "#" do
+      =li_with_active(@user.current_step == "validate") do
         %span.tab-number
           3
         Validate your
         %br
         membership
 
-  =semantic_form_for(@user, :url => registrations_path(:step => @user.next_step || @user.steps.last), :method => :post)  do |form|
-    .tab-content.register-tab-content
-      .register-tab-pane
-        =hidden_field_tag :user_id, @user.id
-        =render("registrations/steps/#{@user.current_step}", :form => form)
-      .form-actions
-        =form.submit("Next", :class => "btn btn-primary register-btn-next")
+    =semantic_form_for(@user, :url => registrations_path, :method => :post, :html => {:class => "loading-text-disabled"})  do |form|
+      .tab-content.register-tab-content
+        .register-tab-pane
+          =form.hidden_field :current_step
+          %div{:class => @user.current_step == 'who_you_are' ? '' : 'hide'}
+            =render("registrations/steps/who_you_are", :form => form)
+          %div{:class => @user.current_step == 'where_you_live' ? '' : 'hide'}
+            =render("registrations/steps/where_you_live", :form => form)
+          %div{:class => @user.current_step == 'validate' ? '' : 'hide'}
+            =render("registrations/steps/validate", :form => form)
+        .form-actions
+          =form.submit("Next", :class => "btn btn-primary register-btn-next")
+          -unless @user.first_step?
+            =form.submit('Back', :name => 'back', :class => "btn btn-primary register-btn-back")
+
+=render "modals/why_age"

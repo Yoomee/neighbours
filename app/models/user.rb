@@ -33,8 +33,8 @@ class User < ActiveRecord::Base
   validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :dob, :presence => true
   validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
+  validate :dob_or_undiclosed_age
   validate :over_16
   validates_confirmation_of :email, :on => :create, :message => "these don't match"
   validates_confirmation_of :password, :on => :create, :message => "these didn't match"
@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
 
   def credit_card_attributes
     %w{card_type formatted_card_number card_expiry_date}
+  end
+
+  def dob_or_undiclosed_age
+    dob.present? || undisclosed_age?
   end
 
   def formatted_card_number
@@ -157,8 +161,8 @@ class User < ActiveRecord::Base
   end
 
   def over_16
-    return true if dob.nil?
-    errors.add(:dob, "You must be over 16 to register") if dob > 16.years.ago.to_date
+    return true if undisclosed_age? || admin?
+    errors.add(:dob, "You must be over 16 to register") unless dob.present? && dob < 16.years.ago.to_date
   end
 
   def set_card_digits

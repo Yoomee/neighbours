@@ -8,6 +8,7 @@ Neighbours::Application.routes.draw do
   resources :wireframes, :only => [:index, :show]
   resources :registrations, :only => [:new]
   match "registrations(/:step)" => "registrations#create", :via => [:post, :put], :as => 'registrations'
+  match "registrations/who_you_are" => "registrations#new", :step => "who_you_are", :as => "who_you_are_registration", :via => :get
   match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration", :via => :get
   match "registrations/validate" => "registrations#new", :step => "validate", :as => "validate_registration"
 

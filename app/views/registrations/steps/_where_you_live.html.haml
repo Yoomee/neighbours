@@ -1,9 +1,7 @@
 %p.mb-3
   Next, we need to know where you live in
   =neighbourhood
-=form.hidden_field :current_step, :value => "where_you_live"
 =form.inputs(:class => "form-horizontal") do
-  =form.input :current_step, :as => :hidden, :value => "where_you_live"
   %label.control-label#address-label Address
   =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "34", :class => "span1"}, :help => "Please enter your house number or house name."
   =form.input :street_name, :label => "Street name", :required => false, :input_html => {:placeholder => "Street name", :class => "span4"}, :help => "We will only show your address to people that want to help you."

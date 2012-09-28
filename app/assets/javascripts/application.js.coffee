@@ -29,7 +29,7 @@ $(document).ready () ->
 
 window.FormErrors =
   scrollToFirstError: () ->
-    YmCore.scrollTo($('form .control-group.error:first').parents('.form-group'))
+    YmCore.scrollTo($('form .control-group.error:first'), {offset: 10})
 
 window.Registration =
   initValidateStep: () ->
