@@ -7,7 +7,9 @@
   =semantic_form_for @need, :validate => true, :html => { :class => "form-horizontal" }  do |f|
     =hidden_field_tag :return_to
     =f.inputs do
-      -unless @need.category.present?
+      -if @need.category.present?
+        =f.hidden_field :category_id, :value => @need.category.id
+      -else
         =f.input :category, :label => "I need help with", :help => "Select the most relevant category", :prompt => "Please select...", :required => false, :collection => NeedCategory.select_options, :input_html => {:class => "span5"}
       =f.input :description, :label => "Add a description", :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span5", :rows => "6" }, :required => false
       =f.input :need_to_know_by, :as => :radio, :collection => [["Any time","anytime"],["As soon as possible","asap"], ["A specific date", "date"]], :label => "I need to know by", :help => "When would you like to know if anybody can help you?"
