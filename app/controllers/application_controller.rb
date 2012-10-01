@@ -1,21 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+
   include YmUsers::ApplicationController
-  
+
   before_filter :authenticate, :redirect_to_registration_if_unfinished, :clear_new_need_attributes
 
   AUTH_USERS = { "neighbour" => "maltby123" }
-
-  def after_sign_in_path_for_with_neighbours(resource_or_scope)
-    if new_need_attrs = session.delete(:new_need_attributes)
-      resource_or_scope.needs.create(new_need_attrs)
-      needs_path
-    else
-      after_sign_in_path_for_without_neighbours(resource_or_scope)
-    end
-  end
-  alias_method_chain :after_sign_in_path_for, :neighbours
 
   private
   def authenticate
@@ -41,5 +31,5 @@ class ApplicationController < ActionController::Base
     end
     redirect_to(path) unless path.nil? || current_path == path
   end
-    
+
 end
