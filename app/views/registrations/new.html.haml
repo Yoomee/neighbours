@@ -2,7 +2,15 @@
   :javascript
     $(document).ready(function() {
       $("#why-age-modal-button").click(function() {
-        $('#user_undisclosed_age').val($('#undisclosed_age_check_box').is(':checked'));
+        var undisclosed_age = $('#undisclosed_age_check_box').is(':checked');
+        $('#user_undisclosed_age').val(undisclosed_age);
+        if( undisclosed_age) {
+          $('#age-select-controls').addClass('hide');
+          $('#undisclosed-age-text').removeClass('hide');
+        } else {
+          $('#age-select-controls').removeClass('hide');
+          $('#undisclosed-age-text').addClass('hide');
+        }
       });
     });
 .row
