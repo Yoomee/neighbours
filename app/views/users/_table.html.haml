@@ -21,7 +21,7 @@
             %dt Gender
             %dd=user.gender.titleize
             %dt Date of Birth
-            %dd=user.dob.to_s(:date).presence || '-'
+            %dd=user.dob.present? ? user.dob.to_s(:date) : "not disclosed"
             %dt Email address
             %dd
               =user.email.presence || '-'
