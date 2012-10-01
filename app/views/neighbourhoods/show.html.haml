@@ -5,25 +5,8 @@
       NeedSelect.init();
       NeedsMap.needs = #{@needs_json};
       #{'NeedsMap.init();' if current_user}
-      Needs.startCycle('#resolved', 3000);
-      setTimeout("Needs.startCycle('#unresolved', 3000);", 1500);
+      Needs.init();
     });
-    var Needs = {
-      startCycle: function(accessor, interval) {
-        setInterval("Needs.cycle('" + accessor + "');", interval);
-      },
-      cycle: function(accessor) {
-        $(accessor).animate({top: '-112px'}, 2000, function() {
-          $(this).css('top', '0px');
-          $(this).children('li:first').appendTo($(this).show());
-        });
-        // $('ul.help-list.unstyled#resolved li.list:first').hide('slide', {direction: 'up'}, 1000,function() {
-        //   $('ul.help-list.unstyled#resolved').append(this);
-        //   $(this).show();
-        // });
-      }
-    };
-
 
 -title "My Neighbourhood"
 .row
