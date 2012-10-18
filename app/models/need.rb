@@ -27,6 +27,7 @@ class Need < ActiveRecord::Base
     join user
     has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
+    set_property :delta => true
   end
   
   class << self
