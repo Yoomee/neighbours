@@ -3,7 +3,7 @@
 #  be included in the compiled file accessible from http://example.com/assets/application.js
 #  It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 #  the compiled file.
-# 
+#
 #= require jquery
 #= require jquery_ujs
 #= require ym_core
@@ -25,8 +25,43 @@ $(document).ready () ->
   $('.help-icon').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
+  FormErrors.scrollToFirstError()
 
-window.Registration = 
+window.Needs =
+  init: ->
+    Needs.startCycle "#resolved", 3000
+    setTimeout "Needs.startCycle('#unresolved', 3000);", 1500
+    $("#resolved,#unresolved").hover ->
+      accessor = $(this).attr("id")
+      if accessor is "resolved"
+        clearInterval Needs.resolvedCycle
+      else
+        clearInterval Needs.unresolvedCycle
+    , ->
+      accessor = $(this).attr("id")
+      Needs.cycle "\##{accessor}"
+      Needs.startCycle "\##{accessor}", 3000
+
+  startCycle: (accessor, interval) ->
+    if accessor is "#resolved"
+      Needs.resolvedCycle = setInterval("Needs.cycle('" + accessor + "');", interval)
+    else
+      Needs.unresolvedCycle = setInterval("Needs.cycle('" + accessor + "');", interval)
+
+  cycle: (accessor) ->
+    $(accessor).animate
+      top: "-112px",
+      2000,
+      ->
+        $(this).css "top", "0px"
+        $(this).children("li:first").appendTo $(this).show()
+
+
+window.FormErrors =
+  scrollToFirstError: () ->
+    YmCore.scrollTo($('form .control-group.error:first'), {offset: 10})
+
+window.Registration =
   initValidateStep: () ->
     $('form.user').submit () ->
       if $('#user_validate_by').val() != "credit_card"
@@ -34,7 +69,7 @@ window.Registration =
           $(this).val('')
       if $('#user_validate_by').val() != "organisation"
         $('.organisation select').each (index) ->
-          $(this).val('')        
+          $(this).val('')
       return true
     currentType = $('#user_validate_by').val()
     if currentType.length
@@ -64,7 +99,7 @@ window.Registration =
       unless currentType == type
         Registration.saveValidateByType(type)
 
-window.NewNeedForm = 
+window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
     NewNeedForm.showHideDeadline()
@@ -86,10 +121,9 @@ window.NewNeedForm =
     else
       $('#need_deadline_input select').val(null)
       $('#need_deadline_input').css('visibility','hidden')
-    
-      
+
+
 window.NeedSelect =
   init: ->
     $('#what-help-select').change ->
       window.location.href = "/need_categories/#{$('#what-help-select').val()}/needs/new"
-    

@@ -1,5 +1,8 @@
 .help-box.span8.offset2
   %h2=title 'Add a request for help'
-  %p
-    Please tell us what you would like help with and then press 'Send'.
+  -if @need.category.present?
+    %p="Ok, so you need help with \"#{@need.category}\"."
+    %p Please give more description of what help you need and then press 'Send'.
+  -else
+    %p Please tell us what you would like help with and then press 'Send'.
   =render('form')

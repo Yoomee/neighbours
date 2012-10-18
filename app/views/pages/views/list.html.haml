@@ -16,6 +16,10 @@
               =(page.publication_date || page.created_at).to_s(:date)
           %p=truncate(strip_tags(page.text), :length => 220)
           =link_to raw('&rarr; Read more'), page
+    -if slug_is?('blog')
+      .row.mb-2
+        .span9
+          =link_to("Let us know what you think",feedback_path)
     -if can?(:new, Page)
       .row.mb-2
         .span2

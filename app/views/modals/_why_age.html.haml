@@ -1,0 +1,11 @@
+#why-age.modal.hide.fade
+  .modal-header
+    %h3 Why do we need to know your age?
+  .modal-body
+    %p To keep people safe while using Neighbours Can Help, we need to be sure everyone using the site is over 16.
+    %p If you don't want to tell us your exact age, please just tick the box below confirming you are over 16.
+    %p
+      .pull-left.mr-2=label_tag "I am over 16"
+      =check_box_tag :undisclosed_age_check_box, @user.undisclosed_age? ? 0 : 1, @user.undisclosed_age? ? true : false
+  .modal-footer
+    =link_to "Ok", "", :class => "btn btn-primary", :id => "why-age-modal-button", :"data-dismiss" => "modal"
