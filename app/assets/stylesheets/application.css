@@ -371,7 +371,9 @@ br.clear {
   margin-bottom: 30px;
   height: 320px;
 }
-
+#map-canvas.admin-map-canvas {
+  height:640px;
+}
 
 /*========== Flash ==========*/
 

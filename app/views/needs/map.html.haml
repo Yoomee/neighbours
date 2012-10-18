@@ -1,0 +1,20 @@
+=google_maps_javascript_include_tag
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      NeedsMap.needs = #{@needs_json};
+      NeedsMap.init(true);
+      new google.maps.Circle({
+        strokeColor: "#000000",
+        strokeOpacity: 1,
+        strokeWeight: 1,
+        fillColor: "#000000",
+        fillOpacity: 0.5,
+        map: NeedsMap.map,
+        center: new google.maps.LatLng(#{@current_user.lat}, #{@current_user.lng}),
+        radius: 50
+      });
+      
+    });
+.container
+#map-canvas.admin-map-canvas

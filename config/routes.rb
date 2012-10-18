@@ -16,6 +16,7 @@ Neighbours::Application.routes.draw do
     resources :offers, :only => [:create]
     collection do
       get :search
+      get :map
     end
   end
 

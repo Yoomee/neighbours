@@ -6,7 +6,7 @@ module ApplicationHelper
   
   def show_control_panel?
     return false unless current_user
-    !action_name.new? && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?
+    !action_name.in?(%w{new map}) && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?
   end
   
   def messages_badge(message_count)

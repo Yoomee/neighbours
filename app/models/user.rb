@@ -83,6 +83,10 @@ class User < ActiveRecord::Base
   def has_address?
     all_present?(:house_number, :street_name, :city, :postcode)
   end
+  
+  def has_lat_lng?
+    lat.present? && lng.present?
+  end
 
   def new_notification_count(context, need = nil)
     if need
