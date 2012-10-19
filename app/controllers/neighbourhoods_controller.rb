@@ -22,6 +22,15 @@ class NeighbourhoodsController < ApplicationController
 
     end
   end
+  
+  def update
+    if @neighbourhood.update_attributes(params[:neighbourhood])
+      flash[:message] = "Area maximums updated"
+    else
+      flash[:error] = "Sorry. Something's gone wrong. Please try again."
+    end
+    redirect_to area_radius_maximums_path
+  end
 
   private
   def get_at_least(num, needs_sent)

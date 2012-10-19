@@ -72,6 +72,7 @@ GEM
       ffi (~> 1.0.6)
     chronic (0.6.7)
     client_side_validations (3.1.4)
+    cocoon (1.1.0)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -361,6 +362,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   client_side_validations
+  cocoon
   coffee-rails (~> 3.1.0)
   exception_notification
   factory_girl_rails
