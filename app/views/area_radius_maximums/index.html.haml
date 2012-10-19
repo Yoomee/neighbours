@@ -1,0 +1,27 @@
+.help-box.span8.offset2
+  %h2=title 'Maximum request radius'
+  %p Set maximum radius to which users can request help.
+  %p 
+    Current default is
+    =(AreaRadiusMaximum::DEFAULT_MAXIMUM / 1609.344).round(2).to_s.chomp(".0")
+    miles.
+  
+  =semantic_form_for @neighbourhood do |form|
+    %table.table.table-bordered.table-condensed
+      %thead
+        %tr
+          %th
+            Postcode fragment
+          %th
+            Radius (in miles)
+          %th
+      %tbody#area_radius_maximums
+        =form.semantic_fields_for :area_radius_maximums do |area_radius_maximum|
+          =render 'area_radius_maximum_fields', :f => area_radius_maximum
+        %tr.links
+          %td{:colspan => 3}
+            =link_to_add_association 'add', form, :area_radius_maximums, :'data-association-insertion-node' => '.links', :class => "btn btn-small btn-primary"
+        %tr
+          %td{:colspan => 3}
+            =form.buttons do
+              =form.submit "Save", :class => "btn btn-primary"

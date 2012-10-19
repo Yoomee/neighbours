@@ -1,0 +1,7 @@
+%tr.nested-fields
+  %td  
+    =f.input  :postcode_fragment, :label => false, :required => false, :input_html => {:class => "span2"}
+  %td
+    =f.input :maximum_radius_in_miles, :label => false, :required => false, :input_html => {:class => "span2"}
+  %td
+    =link_to_remove_association "remove", f, :class => "btn btn-small btn-danger"

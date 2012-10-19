@@ -96,6 +96,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def radius_options
+    max_radius = AreaRadiusMaximum.find_by_postcode_fragment(postcode.split[0].strip).try(:maximum_radius_in_miles) || AreaRadiusMaximum::DEFAULT_MAXIMUM
+    Need.radius_options.select { |k,v| v <= (max_radius.to_i * 1609.344).round }
+  end
+
   def steps
     %w{who_you_are where_you_live validate}
   end

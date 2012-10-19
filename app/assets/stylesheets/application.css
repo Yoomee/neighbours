@@ -1021,7 +1021,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   left: 0;
 }
 
-
+/*========== Area radius maximums page ==========*/
+#area_radius_maximums .control-group,
+#area_radius_maximums input {
+  margin-bottom: 0
+}
 
 /* ============================= */
 /* ! Layout for mobile version   */
