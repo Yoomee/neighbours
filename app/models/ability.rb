@@ -8,7 +8,7 @@ class Ability
     # open ability
     can :create, Enquiry
     can :show, Page, :draft => false
-    can [:read, :create], Need
+    can [:show, :create], Need
     can :read, Neighbourhood
     
     if user.try(:admin?)
