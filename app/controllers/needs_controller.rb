@@ -10,7 +10,7 @@ class NeedsController < ApplicationController
       @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
     else
-      @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").order("created_at DESC") : Need.unresolved.order("created_at DESC")
+      @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").visible_to_user(current_user).order("created_at DESC") : Need.unresolved.order("created_at DESC")
     end
   end
 
@@ -24,6 +24,12 @@ class NeedsController < ApplicationController
     else
       @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
     end
+    @need.radius = Need.default_radius
+  end
+  
+  def map
+    authorize!(:map, Need)
+    @needs_json = Need.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id, :radius], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
   end
   
   def search

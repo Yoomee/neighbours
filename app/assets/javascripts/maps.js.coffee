@@ -28,7 +28,8 @@ window.UsersMap =
         UsersMap.infowindow.open(UsersMap.map,this);
 
 window.NeedsMap =
-	init: ->
+	init: (admin)->
+    admin ||= false
     mapOptions = {
       center: new google.maps.LatLng(DEFAULT_LOCATION[0],DEFAULT_LOCATION[1]),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -46,6 +47,17 @@ window.NeedsMap =
           map: NeedsMap.map,
           title:need.name
       });
+      if admin
+        new google.maps.Circle({
+          strokeColor: "#0080FF",
+          strokeOpacity: 0.8,
+          strokeWeight: 1,
+          fillColor: "#0080FF",
+          fillOpacity: 0.1,
+          map: NeedsMap.map,
+          center: marker.position,
+          radius: need.radius
+        })
       marker.needId = need.id
       marker.contentString = "<div class='need-infowindow'><h3>#{need.title}</h3><p>#{need.street_name}</p><a href='/needs/#{need.id}'>View request &rarr;</a></div>"
 

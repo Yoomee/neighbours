@@ -16,11 +16,9 @@ Neighbours::Application.routes.draw do
     resources :offers, :only => [:create]
     collection do
       get :search
+      get :map
     end
   end
-
-  match "neighbourhood" => "neighbourhoods#show", :as => "neighbourhood"
-  match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
 
   resources :need_categories, :except => [:show] do
     resources :needs, :only => :new
@@ -60,7 +58,13 @@ Neighbours::Application.routes.draw do
   resources :communities, :only => [] do
     resources :posts, :only => :index
   end
-
+  
+  resources :area_radius_maximums, :only => :index
+  resources :neighbourhoods, :only => :update
+  
+  get "neighbourhood" => "neighbourhoods#show"
+  match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
+  
   match "searches" => "searches#index", :as => "searches"
 
 end

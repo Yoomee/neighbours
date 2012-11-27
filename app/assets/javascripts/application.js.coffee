@@ -10,6 +10,7 @@
 #= require ym_cms
 #= require ym_posts
 #= require rails.validations
+#= require cocoon
 #= require_tree .
 
 $(document).ready () ->

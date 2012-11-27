@@ -83,6 +83,10 @@ class User < ActiveRecord::Base
   def has_address?
     all_present?(:house_number, :street_name, :city, :postcode)
   end
+  
+  def has_lat_lng?
+    lat.present? && lng.present?
+  end
 
   def new_notification_count(context, need = nil)
     if need
@@ -90,6 +94,11 @@ class User < ActiveRecord::Base
     else
       notifications.where(:context => context, :read => false).count
     end
+  end
+
+  def radius_options
+    max_radius = AreaRadiusMaximum.find_by_postcode_fragment(postcode.split[0].strip).try(:maximum_radius_in_miles) || AreaRadiusMaximum::DEFAULT_MAXIMUM
+    Need.radius_options.select { |k,v| v <= (max_radius.to_i * 1609.344).round }
   end
 
   def steps

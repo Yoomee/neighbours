@@ -10,14 +10,26 @@ class NeighbourhoodsController < ApplicationController
       render :template => "enquiries/new"
     else
       if current_user
-        @needs_json = Need.unresolved.with_lat_lng.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
+        @needs_json = Need.unresolved.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
+        @helped = get_at_least(20, Need.resolved.visible_to_user(current_user).order(:created_at).reverse_order)
+        @need_help = get_at_least(20, Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
       else
+        @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
+        @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+        @unvalidated_map_needs = get_unvalidated_map_needs
         @needs_json = []
       end
-      @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
-      @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
-      @unvalidated_map_needs = get_unvalidated_map_needs
+
     end
+  end
+  
+  def update
+    if @neighbourhood.update_attributes(params[:neighbourhood])
+      flash[:message] = "Area maximums updated"
+    else
+      flash[:error] = "Sorry. Something's gone wrong. Please try again."
+    end
+    redirect_to area_radius_maximums_path
   end
 
   private
