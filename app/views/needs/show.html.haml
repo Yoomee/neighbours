@@ -19,11 +19,14 @@
       %p=@need.user
   .span8
     .request-body.mb2
-      %h1=title @need.title
+      %h1=title "I need help with #{@need.title.downcase}"
       -if current_user && current_user.validated?
         =simple_format(@need.description)
       -else
         =@need.category.description
+      .need_to_know_by
+        I would like to know
+        =show_deadline(@need)
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
