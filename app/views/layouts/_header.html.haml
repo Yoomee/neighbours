@@ -61,7 +61,9 @@
             =li_with_active(current_page?(root_path), link_to("My Neighbourhood", root_path, :class=>"nav-link"))
             =li_with_active(@page && @page.slug == "about", link_to_slug(:about, :class=>"nav-link"))
             =li_with_active(@page && (@page.slug == "news" || @page.descendant_of_slug("news")), link_to_slug(:news, :class=>"nav-link"))
+            =li_with_active(@page && (@page.slug == "safety_tips" || @page.descendant_of_slug("safety_tips")), link_to_slug(:safety_tips, :class=>"nav-link"))
             =li_with_active(current_page?(feedback_path), link_to("Contact", feedback_path, :class => "nav-link"))
+
           
 -if show_control_panel?
   .container
