@@ -12,8 +12,8 @@ class Need < ActiveRecord::Base
   validates :description, :presence => true
   validate :deadline_is_in_future
 
-  scope :unresolved, joins(:user).where(:users => {:validated => true}).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
-  scope :resolved, joins(:user).where(:users => {:validated => true}).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
 
   boolean_accessor :skip_user_validation
@@ -49,7 +49,8 @@ class Need < ActiveRecord::Base
     def visible_from_location(lat,lng)
       sphinx_search = search_for_ids({
         :with => { "@geodist" => 0.0..Need.maximum_radius.to_f },
-        :geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)]
+        :geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)],
+        :per_page => 100000
       })
       need_ids = []
       sphinx_search.results[:matches].each do |match|

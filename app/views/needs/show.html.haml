@@ -25,7 +25,7 @@
       -else
         =@need.category.description
       .need_to_know_by
-        I would like to know
+        I would like to know 
         =show_deadline(@need)
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
@@ -44,10 +44,14 @@
   -else
     .span8
       -if @need.user != current_user
-        .well
-          %b
-            %i.icon-exclamation-sign
-            ="#{@need.user} needs your help"
+        -if !@need.user.validated?
+          .alert
+            %b
+              %i.icon-exclamation-sign
+              =" #{@need.user} is a new user"
+              %p
+                They will not see your offer of help until we have validated their account.
+        .span
           -if current_user && @need.offers.exists?(:user_id => current_user.id)
             %p.mb3
               ="You can continue your discussion with #{@need.user} by writing a comment below ."

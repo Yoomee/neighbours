@@ -30,5 +30,6 @@
         =edit_snippet_link(:mission_statement)
 
   .intro-circles
-    -@unvalidated_map_needs.each_with_index do |need, idx|
-      =link_to('', "#{need[0]}", :id => "circle#{idx+1}", :class => "icon-user intro-circle-icon circle#{idx+1} fade_in fade_#{idx+1}",:title => "#{need[1]}", :'data-content' => need[2])
+    -if @unvalidated_map_needs
+      -@unvalidated_map_needs.each_with_index do |need, idx|
+        =link_to('', "#{need[0]}", :id => "circle#{idx+1}", :class => "icon-user intro-circle-icon circle#{idx+1} fade_in fade_#{idx+1}",:title => "#{need[1]}", :'data-content' => need[2])

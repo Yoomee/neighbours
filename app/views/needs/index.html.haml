@@ -27,10 +27,8 @@
               =simple_format(need.description)
             -else
               =simple_format(need.category.description)
-          -if current_user && current_user.validated?
+          -if current_user
             =link_to "I can help", need, :class=>"btn i-can-help-btn"
-          -elsif current_user
-            =link_to "I can help", "#not-validated", :class=>"btn i-can-help-btn", :'data-toggle' => "modal"
           -else
             =link_to "I can help", "#register-popup", :class=>"btn i-can-help-btn", :'data-toggle' => "modal"
     .clearfix

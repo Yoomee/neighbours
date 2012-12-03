@@ -1,4 +1,4 @@
-=google_maps_javascript_include_tag if current_user && current_user.validated?
+=google_maps_javascript_include_tag if current_user
 -content_for :head do
   :javascript
     $(document).ready(function() {
@@ -10,11 +10,11 @@
 
 -title "My Neighbourhood"
 .row
-  -if current_user && current_user.validated?
+  -if current_user
     =render "validated_map"
   -else
     =render "unvalidated_map"
-  -unless current_user && current_user.validated?
+  -if !current_user
     .span12
       .what-help
         %h2.what-help-text What help would you like?
