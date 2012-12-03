@@ -16,7 +16,8 @@
   .span2
     =link_to (can?(:read,@need.user) ? @need.user : '#'), :class => "user-thumbnail-large pull-left" do
       =image_for_with_validation(@need.user, "120x120#")
-      .validated-icon{ :rel => 'tooltip', :title =>"validated"}
+      -if @need.user.validated?
+        .validated-icon{ :rel => 'tooltip', :title =>"validated"}
       
       %p=@need.user
   .span8

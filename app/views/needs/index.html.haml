@@ -20,7 +20,8 @@
             =link_to need, :class => "pull-left" do
               =image_for_with_validation(need.user, "60x50#")
               %p.small-text=need.user
-              .validated-icon{ :rel => 'tooltip', :title =>"validated"}
+              -if need.user.validated?
+                .validated-icon{ :rel => 'tooltip', :title =>"Validated"}
           .list-text
             %h3
               =link_to_self(need)
