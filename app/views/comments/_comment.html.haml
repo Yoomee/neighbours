@@ -1,7 +1,7 @@
 .comment{:class => "#{!comment.read_by?(current_user) ? 'unread' : ''}"}
   =link_to(image_for_with_validation(comment.user, "32x32#"), (can?(:read,comment.user) ? comment.user : '#'), :class => "comment-image", :rel => 'tooltip', :title => (comment.user.street_name if current_user.try(:validated?)))
   .comment-text
-    =link_to_self(comment.user)
+    %b=comment.user
     =comment.text
     .small-info-text
       =time_ago_in_words(comment.created_at) + " ago"
