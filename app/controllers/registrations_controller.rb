@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
           if @user.save
             if @user.is_in_maltby?
               if @user.validate_by == "post" && !@user.validated?
-                flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on what to do next."}
+                flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
               end
               if new_need_attrs = session.delete(:new_need_attributes)
                 @user.needs.create(new_need_attrs)
