@@ -12,7 +12,7 @@ class NeighbourhoodsController < ApplicationController
       if current_user
         @needs_json = Need.unresolved.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
         @helped = get_at_least(20, Need.resolved.visible_to_user(current_user).order(:created_at).reverse_order)
-        @need_help = get_at_least(20, Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
+        @need_help = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
       else
         @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
         @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
@@ -35,7 +35,7 @@ class NeighbourhoodsController < ApplicationController
   private
   def get_at_least(num, needs_sent)
     needs = needs_sent.dup
-    needs.pop if needs.size.odd?
+    needs.pop if needs.size.odd? && needs.size > num
     count = 0
     all_needs = needs
     (num - needs.size).times do |i|
