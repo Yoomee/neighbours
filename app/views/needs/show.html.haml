@@ -14,12 +14,18 @@
           ="#{@need.user} has accepted someone else's offer."
 .row
   .span2
-    =link_to (can?(:read,@need.user) ? @need.user : '#'), :rel => 'tooltip', :title => (@need.user.street_name if current_user.try(:validated?)), :class => "user-thumbnail-large pull-left" do
+    =link_to (can?(:read,@need.user) ? @need.user : '#'), :class => "user-thumbnail-large pull-left" do
       =image_for_with_validation(@need.user, "120x120#")
+      .validated-icon{ :rel => 'tooltip', :title =>"validated"}
+      
       %p=@need.user
   .span8
     .request-body.mb2
       %h1=title "I need help with #{@need.title.downcase}"
+      -if current_user.try(:validated?)
+        %p.location-smallprint
+          %i.icon-map-marker
+          =(@need.user.street_name)
       -if current_user && current_user.validated?
         =simple_format(@need.description.capitalize)
       -else

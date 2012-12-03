@@ -545,7 +545,7 @@ border-bottom-color: #b08193;
   padding-bottom: 10px;
   padding-top: 10px;
   float: left;
-  height: 91px;
+  min-height: 91px;
   overflow: hidden;
   width: 100%;
   border-bottom: 1px solid #ccc;
@@ -553,6 +553,7 @@ border-bottom-color: #b08193;
 .list-image {
   margin-right: 20px;
 	float: left;
+	position: relative;
 	width: 60px;
 }
 .list-image img {
@@ -922,9 +923,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 
 /*========== User thumbnails ==========*/
+.user-thumbnail-large, .user-thumbnail {
+  position: relative;
+  display: block;
+}
+
 .user-thumbnail-large img{
   float:left;
 
+}
+.user-thumbnail-large:hover {
+  text-decoration: none;
 }
 .user-thumbnail-large p{
   float: left;
@@ -935,7 +944,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   width: 120px;
   text-align: center;
 }
+.validated-icon {
+  position: absolute;
+  top: 5px;
+  right: 24px;
+  width: 25px;
+  height: 30px;
+  background: url(/assets/validated-icon.png) no-repeat;
+}
+.list-image .validated-icon {
+  right: -8px;
+  top: -8px;
+}
+.location-smallprint {
+  color: #999;
 
+  font-size: 14px;
+  line-height: 1;
+}
 /*========== Card details ==========*/
 
 .card-details-form .control-group {

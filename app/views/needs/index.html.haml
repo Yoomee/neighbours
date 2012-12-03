@@ -17,14 +17,18 @@
       -@needs.each do |need|
         %li.list.list-result
           .list-image
-            =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+            =link_to need, :class => "pull-left" do
               =image_for_with_validation(need.user, "60x50#")
               %p.small-text=need.user
+              .validated-icon{ :rel => 'tooltip', :title =>"validated"}
           .list-text
             %h3
               =link_to_self(need)
             -if current_user && current_user.validated?
               =simple_format(need.description)
+              %p.location-smallprint
+                %i.icon-map-marker
+                =(need.user.street_name)              
             -else
               =simple_format(need.category.description)
           -if current_user
