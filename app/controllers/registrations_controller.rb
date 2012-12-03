@@ -20,6 +20,7 @@ class RegistrationsController < ApplicationController
       if @user.valid?
         if @user.last_step?
           if @user.save
+            sign_in(@user)
             if @user.is_in_maltby?
               if @user.validate_by == "post" && !@user.validated?
                 flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
