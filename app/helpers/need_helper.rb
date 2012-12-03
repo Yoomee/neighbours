@@ -6,9 +6,9 @@ module NeedHelper
   
   def show_deadline(need)
     if need.need_to_know_by == 'date'
-      "by #{need.deadline}"
+      "by #{need.deadline.to_s(:long)}"
     else
-      need.need_to_know_by.to_s(:date)
+      need.need_to_know_by
     end
   end
 

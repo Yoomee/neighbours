@@ -21,7 +21,7 @@
     .request-body.mb2
       %h1=title "I need help with #{@need.title.downcase}"
       -if current_user && current_user.validated?
-        =simple_format(@need.description)
+        =simple_format(@need.description.capitalize)
       -else
         =@need.category.description
       .need_to_know_by
