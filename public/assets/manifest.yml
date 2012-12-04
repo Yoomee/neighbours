@@ -10,6 +10,7 @@ logo.png: logo-10127f1e79f08591c57de4cf7530104f.png
 map.png: map-f33f65f8fbb7c8a38b70569362a197c8.png
 nominet_logo.png: nominet_logo-07300095d513f4033a1c76ad0f4c09ea.png
 person.png: person-f5e3f92e3468f215c6a158401d125ef2.png
+validated-icon.png: validated-icon-614ae7ecf361a897877ae0c8a6441cd9.png
 yoomee_logo.png: yoomee_logo-81a26569424b63e1e20f4a502aa405fd.png
 chosen.koenpunt.jquery.js: chosen.koenpunt.jquery-e55b1223c2a41af7e4be2abee18bfad8.js
 rails.validations.js: rails.validations-d7473b8840f5d0dd36c041567b644afc.js
@@ -39,4 +40,4 @@ redactor_image_upload_error.png: redactor_image_upload_error-813aad6b1e2ce7476fa
 jquery-ui-1.8.18.min.js: jquery-ui-1.8.18.min-dff515822d55d13f64b01beeeb73eaff.js
 jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 application.js: application-b640b9d36dc500d0e967d4a2173652ec.js
-application.css: application-c55cc96579d0ff93355405d4ff213abd.css
+application.css: application-b80e566db602c90fe104360d152e889d.css
