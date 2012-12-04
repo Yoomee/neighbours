@@ -1,0 +1,11 @@
+#privacy-popup.modal.hide.fade
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      =Page.find_by_slug(:privacy).try(:title)
+  .modal-body  
+    =simple_format(Page.find_by_slug(:privacy).try(:text))
+  .modal-footer
+    %button{:type=>"button", :class=>"btn btn-primary", :"data-dismiss"=>"modal"}
+      Close

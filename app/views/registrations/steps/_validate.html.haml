@@ -6,7 +6,7 @@
 
 =form.hidden_field :validate_by
 =form.hidden_field :requested_validation_by_credit_card
--if @user.is_in_maltby?
+-if @user.is_in_sheffield?
   .well
     %strong Safety and security
     %p
@@ -56,13 +56,14 @@
           =form.inputs() do
             =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
 
-    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
+    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
 
 -else
   .well
     %strong Sorry - not available yet
-    %p Unfortunately, you do not appear to live in Maltby. Neigbourbours Can Help will be rolling out to different areas later this year. We will let you as soon as it's available in your area.
+    %p Unfortunately, you do not appear to live in the Sheffield postcode area. Neigbourbours Can Help will be rolling out to different areas later this year. We will let you as soon as it's available in your area.
 
 
 
 =render('modals/conditions_popup')
+=render('modals/privacy_popup')
