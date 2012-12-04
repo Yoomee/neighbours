@@ -25,8 +25,9 @@
             %dt Email address
             %dd
               =user.email.presence || '-'
-              %span.badge{:class => "badge-#{user.confirmed? ? 'success' : 'error'}"}
-                =user.confirmed? ? 'Confirmed' : 'Unconfirmed'
+              -#
+                %span.badge{:class => "badge-#{user.confirmed? ? 'success' : 'error'}"}
+                  =user.confirmed? ? 'Confirmed' : 'Unconfirmed'
             %dt Phone number
             %dd=user.phone.presence || '-'
             %dt= user.validated? ? 'Validated by' : 'Requested validation by'
