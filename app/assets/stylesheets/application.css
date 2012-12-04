@@ -917,6 +917,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   min-height: 140px;
 }
 
+#need-title small{
+  display:block;
+  font-weight:bold;
+  line-height:18px;
+}
+#need-title span{
+  display:block;
+}
 /*========== New offer form ==========*/
 .modal form {
   margin-bottom:0px;
@@ -1045,6 +1053,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/*========== Categories page ==========*/
+.sub-category td.span4{
+  padding-left:25px;
 }
 
 /*========== Area radius maximums page ==========*/

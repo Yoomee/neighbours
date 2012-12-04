@@ -6,11 +6,22 @@
     %th
   -@need_categories.each do |need_category|
     %tr
-      %td=need_category.name
+      %td.span4
+        -unless need_category.sub_categories.count.zero?
+          %i.icon-chevron-down
+        =need_category.name
       %td=need_category.description
       %td.span2
         =link_to "Edit", edit_need_category_path(need_category), :class => 'btn btn-small'
         =link_to "Delete", need_category_path(need_category), :method => :delete, :class => 'btn btn-small btn-danger', :confirm => "Are you sure?"
+    -need_category.sub_categories.each do |sub_category|
+      %tr.sub-category
+        %td.span4
+          =sub_category.name
+        %td=sub_category.description
+        %td.span2
+          =link_to "Edit", edit_need_category_path(sub_category), :class => 'btn btn-small'
+          =link_to "Delete", need_category_path(sub_category), :method => :delete, :class => 'btn btn-small btn-danger', :confirm => "Are you sure?"
     
 =options_panel do
   =link_to "New category", new_need_category_path

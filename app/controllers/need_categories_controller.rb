@@ -2,7 +2,7 @@ class NeedCategoriesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @need_categories = NeedCategory.order(:name)
+    @need_categories = NeedCategory.root
   end
   
   def create

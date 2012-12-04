@@ -22,7 +22,9 @@
       %p=@need.user
   .span8
     .request-body.mb2
-      %h1=title "I need help with #{@need.title.downcase}"
+      %h1#need-title
+        %small I need help with
+        %span=title @need.title
       -if current_user.try(:validated?)
         %p.location-smallprint
           %i.icon-map-marker

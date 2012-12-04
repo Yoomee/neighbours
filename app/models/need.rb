@@ -2,6 +2,7 @@ class Need < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
+  belongs_to :sub_category, :class_name => "NeedCategory"
   has_many :offers, :dependent => :destroy
   has_many :posts, :as => :target, :dependent => :destroy
   has_many :flags, :as => :resource, :dependent => :destroy
@@ -94,7 +95,7 @@ class Need < ActiveRecord::Base
   end
 
   def title
-    category.to_s
+    [category,sub_category].compact.map(&:to_s).join(': ')
   end
 
   private
