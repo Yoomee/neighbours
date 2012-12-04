@@ -4,7 +4,7 @@ class NeighbourhoodsController < ApplicationController
   include YmSnippets::SnippetsHelper
 
   def show
-    if current_user && !current_user.is_in_maltby?
+    if current_user && !current_user.is_in_sheffield?
       params[:id] = "other_neighbourhood"
       @enquiry = Enquiry.new(:form_name => "other_neighbourhood", :first_name => current_user.first_name, :last_name => current_user.last_name, :email => current_user.email)
       render :template => "enquiries/new"

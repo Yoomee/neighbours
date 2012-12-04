@@ -47,8 +47,8 @@ class User < ActiveRecord::Base
   scope :community_champions, where(:is_community_champion => true, :is_deleted => false)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL AND is_deleted = false").order("champion_request_at DESC")
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
-  scope :in_maltby, where("postcode LIKE 'S66 %' AND is_deleted = false")
-  scope :not_in_maltby, where("postcode NOT LIKE 'S66 %' AND is_deleted = false")
+  scope :in_sheffield, where("postcode LIKE 'S% ' AND is_deleted = false")
+  scope :not_in_sheffield, where("postcode NOT LIKE 'S%' AND is_deleted = false")
   scope :deleted, where(:is_deleted => true)
 
   def address_changed?
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def city
-    read_attribute(:city).presence || "Maltby"
+    read_attribute(:city).presence || "Sheffield"
   end
 
   def credit_card_attributes
@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def validation_step?
-    is_in_maltby? && current_step == "validate"
+    is_in_sheffield? && current_step == "validate"
   end
 
   def validation_step_with_credit_card?
@@ -138,8 +138,8 @@ class User < ActiveRecord::Base
     current_step == "where_you_live"
   end
 
-  def is_in_maltby?
-    postcode.try(:match, /^S66/)
+  def is_in_sheffield?
+    postcode.try(:match, /^S/)
   end
 
   private
