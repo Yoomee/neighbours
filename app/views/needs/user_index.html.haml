@@ -8,7 +8,7 @@
           =link_to("click here",needs_path)
           to see if you could help someone else.
         -else
-          Your request for help will be seen by other people as soon as you're validated.
+          You will be able to see who is offering help as soon as you're validated.
       %ul.nav.nav-tabs.nav-stacked
         -@needs.order('created_at DESC').each do |need|
           %li
