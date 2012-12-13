@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   scope :community_champions, where(:is_community_champion => true, :is_deleted => false)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL AND is_deleted = false").order("champion_request_at DESC")
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
-  scope :in_sheffield, where("postcode LIKE 'S% ' AND is_deleted = false")
+  scope :in_sheffield, where("postcode LIKE 'S%' AND is_deleted = false")
   scope :not_in_sheffield, where("postcode NOT LIKE 'S%' AND is_deleted = false")
   scope :deleted, where(:is_deleted => true)
 
