@@ -1,0 +1,63 @@
+!!!5
+%html
+  %head
+    %title
+      =Settings.site_name
+      ="- #{@page_title}" if @page_title.present?
+    =stylesheet_link_tag("application")
+    =javascript_include_tag("application")
+    =csrf_meta_tags
+    =yield :head
+    =google_analytics_js
+  -body_tag do  
+    .main-wrapper
+      .header-intro
+        .container
+          .row
+            .span12
+              %h1.logo-intro
+                =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
+              =link_to "Get involved", "#", :class=>"cta-intro"  
+              %ul.nav-intro.unstyled
+                %li=link_to "About us", "#about-us", :class=>"intro-nav-link"
+                %li=link_to "Security", "#security", :class=>"intro-nav-link"                
+              
+      .intro-text
+        .container
+          .row
+            .span8.offset2
+              %h2.center Help people out around you. It feels good.
+              %p.center Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at 
+      #comic-1.comic-strip
+        .container
+          .row
+            .span4
+              .comic-text
+                %p
+                  In today’s society, many people can live in a  community for months, or even years, before getting to know their neighbours.
+      #comic-2.comic-strip
+        .container
+          .row
+            .span4
+              .comic-text
+                %p
+                  People often don’t know their neighbours because they don’t know their needs. And that’s because it’s not easy asking for help from a stranger.          
+      #comic-3.comic-strip
+        .comic-text
+          %p
+            This website aims to help neighbours connect to each other, local service providers & community organisations - so that they can offer and request help whenever it’s needed. 
+      #comic-4.comic-strip
+        .comic-text
+          %p
+            Neighbours Can Help believes that by breaking down barriers created by garden fences, we can open up a whole new avenue for neighbourhood altruism to emerge.    
+      #comic-5.comic-strip
+        .comic-text
+          %p
+            The organisation hopes the new website will enable people to make new friends, share experiences and offer support to each other all year round.      
+      #comic-6.comic-strip
+        .comic-text
+          %p
+            Neighbours Can Help believes that together we can strengthen our communities, enabling people to come together to deliver a locally based response to the many needs hidden in every UK street.                              
+      .push
+    .footer-wrapper
+      =render("layouts/footer")

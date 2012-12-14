@@ -13,6 +13,7 @@
  *= require ym_posts
  *= require chosen
  *= require_self
+ *= require mobile
 */
 /*CSS3 magic*/
 
@@ -1066,80 +1067,75 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-bottom: 0
 }
 
-/* ============================= */
-/* ! Layout for mobile version   */
-/* ============================= */
-@media handheld, only screen and (max-width: 200679px) {
-
+/*========== intro page ==========*/
+.header-intro {
+  background: #fff;
+  border-bottom: 2px solid #ccc;
+  height: 116px;
 }
-@media handheld, only screen and (max-width: 1679px) {
-
+.logo-intro {
+  display: block;
+  float: left;
+  margin: 0;
+  
 }
-@media handheld, only screen and (max-width: 1439px) {
-
-
+.logo-intro-link {
+  background: url(/assets/logo-intro.png) no-repeat 0 0;
+  display: block;
+  width: 244px;
+  height: 83px;
+  text-indent: -9000em;
+  float: left;
+  margin: 15px 0 0;
 }
-@media handheld, only screen and (max-width: 1199px) {
-
-
+.nav-intro {
+  float: right;
+  margin: 45px 0 0;
 }
-@media handheld, only screen and (max-width: 979px) {
-
-#site_logo span {
-  font-size: 30px;
-  width: 200px;
-  margin-top:13px;
+.nav-intro li {
+  float: right;
+  margin: 0 0 0 30px;
 }
-#site_logo img {
-	width: 85px;
+.intro-nav-link {
+  color: #999;
 }
-.main-nav {
-	font-size: 18px;
+.cta-intro {
+  float: right;
+  display: block;
+  background: #98cd41;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  
+  margin: 30px 0 0 20px;
 }
-.main-nav li a {
-	padding-top: 10px;
-	padding-bottom: 15px;
-	padding-left: 25px;
-	padding-right: 25px;
-}
-.home-intro-text {
-	font-size: 28px;
-}
-.home-welcome {
-  margin: 0px;
-}
-#home-intro {
-	height: 310px;
-}
-.intro-circles  {
-	top: -30px;
-}
-
-
-
+.cta-intro:hover {
+  text-decoration: none;
+  color: #fff;
 }
 
-@media handheld, only screen and (max-width: 719px)  {
-
-
+.intro-text {
+  background: #f9f7f6;
+  padding: 30px 0;
+  float: left;
+  width: 100%;
+  
 }
-
-@media handheld, only screen and (max-width: 500px) {
-
-
+.comic-strip {
+  float: left;
+  width: 100%;
+  padding: 30px 0;
 }
+#comic-1 {
+  background: #dcd7d3;
+} 
 
 
 
-/* ========================================== */
-/* ! Provide higher res assets for iPhone 4   */
-/* ========================================== */
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
 
-/*	.logo {
-		background: url(logo2x.jpg) no-repeat;
-		background-size: 212px 303px;
-	}*/
 
-}
+
+
+

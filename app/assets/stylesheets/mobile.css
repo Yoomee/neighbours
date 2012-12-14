@@ -1,0 +1,77 @@
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+@media handheld, only screen and (max-width: 200679px) {
+
+}
+@media handheld, only screen and (max-width: 1679px) {
+
+}
+@media handheld, only screen and (max-width: 1439px) {
+
+
+}
+@media handheld, only screen and (max-width: 1199px) {
+
+
+}
+@media handheld, only screen and (max-width: 979px) {
+
+#site_logo span {
+  font-size: 30px;
+  width: 200px;
+  margin-top:13px;
+}
+#site_logo img {
+	width: 85px;
+}
+.main-nav {
+	font-size: 18px;
+}
+.main-nav li a {
+	padding-top: 10px;
+	padding-bottom: 15px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+.home-intro-text {
+	font-size: 28px;
+}
+.home-welcome {
+  margin: 0px;
+}
+#home-intro {
+	height: 310px;
+}
+.intro-circles  {
+	top: -30px;
+}
+
+
+
+}
+
+@media handheld, only screen and (max-width: 719px)  {
+
+
+}
+
+@media handheld, only screen and (max-width: 500px) {
+
+
+}
+
+
+
+/* ========================================== */
+/* ! Provide higher res assets for iPhone 4   */
+/* ========================================== */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+
+/*	.logo {
+		background: url(logo2x.jpg) no-repeat;
+		background-size: 212px 303px;
+	}*/
+
+}

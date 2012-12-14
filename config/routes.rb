@@ -5,7 +5,6 @@ Neighbours::Application.routes.draw do
   match 'feedback' => 'enquiries#new', :id => 'feedback'
   match 'other-neighbourhoods' => 'enquiries#new', :id => 'other_neighbourhood', :as => "other_neighbourhood"
 
-  resources :wireframes, :only => [:index, :show]
   resources :registrations, :only => [:new]
   match "registrations(/:step)" => "registrations#create", :via => [:post, :put], :as => 'registrations'
   match "registrations/who_you_are" => "registrations#new", :step => "who_you_are", :as => "who_you_are_registration", :via => :get
