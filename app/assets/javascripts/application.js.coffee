@@ -12,7 +12,6 @@
 #= require rails.validations
 #= require cocoon
 #= require jquery.scrollTo
-#= require jquery.localscroll
 #= require_tree .
 
 $(document).ready () ->
@@ -32,6 +31,10 @@ $(document).ready () ->
 
 window.IntroPageNav =
   init: ->
+    $('.nav li a,.to-top-link').click (e) ->
+      e.preventDefault()
+      div = $("#{$(this).attr('href')}")
+      $('body').animate({'scrollTop':div.position().top - 50},1000)
     $(window).scroll ->
       if $("body").scrollTop() > 116
         $('#header-intro').addClass('header-intro-fixed')
