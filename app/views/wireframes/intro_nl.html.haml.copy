@@ -15,16 +15,15 @@
       });
 
     =google_analytics_js
-  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do  
+  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 90) do  
     .main-wrapper
-      #top
-      #header-intro.header-intro        
+      #header-intro.header-intro
         .container
           .row
             .span12
               %h1.logo-intro
                 =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
-              =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+              =link_to "Get involved", "#", :class=>"cta-intro"  
               %ul.nav.nav-intro.unstyled                
                 %li=link_to "About", "#comic-1", :class=>"intro-nav-link-about intro-nav-link"
                 %li=link_to "How it works", "#how-it-works", :class=>"intro-nav-link-how intro-nav-link"
@@ -93,7 +92,6 @@
             .span4
               %p
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.              
-            .span12.pencil-line    
 
                 
       #security.intro-strip
@@ -106,20 +104,11 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.
             .span4
               %p
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta.  
-      #big-cta
-        .container
-          .row
-            .span6.offset3
-              .well
-                %h2 Be part of it
-                =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
-                .clearfix
-              =link_to "Top", "#top", :class=>"to-top-link"
-
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta.               
+.                
+                
                                 
               
       .push
     .footer-wrapper
       =render("layouts/footer")
-    =render ('/wireframes/sign_up_popup')       

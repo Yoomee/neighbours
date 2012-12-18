@@ -11,6 +11,8 @@
 #= require ym_posts
 #= require rails.validations
 #= require cocoon
+#= require jquery.scrollTo
+#= require jquery.localscroll
 #= require_tree .
 
 $(document).ready () ->
@@ -27,6 +29,16 @@ $(document).ready () ->
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
+
+window.IntroPageNav =
+  init: ->
+    $(window).scroll ->
+      if $("body").scrollTop() > 116
+        $('#header-intro').addClass('header-intro-fixed')
+        $('#header-intro-placeholder').height(116)
+      else
+        $('#header-intro').removeClass('header-intro-fixed')
+        $('#header-intro-placeholder').height(0)
 
 window.Needs =
   init: ->

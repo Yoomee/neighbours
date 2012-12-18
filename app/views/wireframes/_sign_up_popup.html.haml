@@ -1,0 +1,30 @@
+#sign-up-popup.modal.hide.fade
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      Be part of it
+  .modal-body
+    .new-message-form
+      %p.popup-intro
+        Enter your details below to get involved.
+        
+        %form.form-horizontal
+          .control-group
+            %label.control-label{:for => "inputPostcode"} Postcode
+            .controls
+              %input#inputPostcode.span2{:placeholder => "Postcode", :type => "text"}
+          .control-group
+            %label.control-label{:for => "inputName"} Name
+            .controls
+              %input#inputName.span4{:placeholder => "Name", :type => "text"}   
+          .control-group
+            %label.control-label{:for => "inputEmail"} Email
+            .controls
+              %input#inputEmail.span4{:placeholder => "Email", :type => "text"}                                                        
+          .control-group
+            .controls
+              %button.btn.btn-primary.btn-large{:type => "submit"} Go
+              
+              
+                
