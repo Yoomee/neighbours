@@ -1265,6 +1265,11 @@ a.intro-nav-link-security {
 #how-it-works {
   background: url(/assets/how-it-works-map.jpg) no-repeat center;
 }
+.pencil-line {
+  background: url(/assets/pencil-line.png) no-repeat center top;
+  height: 20px;
+  margin-top: 20px;
+}
 #security {
   padding-bottom: 20px;
   background: url(/assets/security.jpg) no-repeat center 100px;
@@ -1284,7 +1289,7 @@ a.intro-nav-link-security {
   
 }
 #big-cta {
-  height: 400px;
+  height: 450px;
   float: left;
   width: 100%;
 }
@@ -1294,6 +1299,23 @@ a.intro-nav-link-security {
   line-height: 1;
   font-weight: bold;
 }
+
+.to-top-link {
+  display: block;
+  float: left;
+  color: #b4b4b4;
+  margin: 70px 0 100px 180px;
+  padding: 50px 30px;
+  background: url(/assets/to-top-link.png) no-repeat top center;
+}
+.popup-intro {
+	margin:0 0 30px 20px;  
+
+}
+
+
+
+
 
 
 
