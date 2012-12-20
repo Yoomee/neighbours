@@ -10,20 +10,20 @@
     =yield :head
     :javascript
       $(document).ready(function() {
-        IntroPageNav.init();  
-        $.localScroll();
+        IntroPageNav.init();
       });
 
     =google_analytics_js
-  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 90) do  
+  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do  
     .main-wrapper
-      #header-intro.header-intro
+      #top
+      #header-intro.header-intro        
         .container
           .row
             .span12
               %h1.logo-intro
                 =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
-              =link_to "Get involved", "#", :class=>"cta-intro"  
+              =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
               %ul.nav.nav-intro.unstyled                
                 %li=link_to "About", "#comic-1", :class=>"intro-nav-link-about intro-nav-link"
                 %li=link_to "How it works", "#how-it-works", :class=>"intro-nav-link-how intro-nav-link"
@@ -37,50 +37,58 @@
         .container
           .row
             .span8.offset2
-              %h2.center Help people out around you. It feels good.
-              %p.center Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at 
+              %h2.center Help people out around you. It feels good.              
+              %p.center We'd like to join with you in making your neighbourhood a better place by helping people to help their neighbours:
+              %ul
+                %li
+                  a) because we believe most people want to be helpful and
+                %li
+                  b) because we hope everyone and every neighbourhood 
+                  will be better off by doing so
+              %p.center
+                So what is Neighbours Can Help...what's it all about........?
       #comic-1.comic-strip
         .container
           .row
             .span12.comic-strip-inner
               .comic-text
                 %p
-                  In today’s society, many people can live in a  community for months, or even years, before getting to know their neighbours.
+                  Sometimes it can be hard to get to know our neighbours.
       #comic-2.comic-strip
         .container
           .row
             .span12.comic-strip-inner
               .comic-text
                 %p
-                  People often don’t know their neighbours because they don’t know their needs. And that’s because it’s not easy asking for help from a stranger.          
+                  Even though we could often help each other, it’s difficult to ask if we’re strangers.          
       #comic-3.comic-strip
         .container
           .row
             .span12.comic-strip-inner      
               .comic-text
                 %p
-                  This website aims to help neighbours connect to each other, local service providers & community organisations - so that they can offer and request help whenever it’s needed. 
+                  NCH is a new website to help neighbours to connect to each other. It’s quick, easy and free to use.
       #comic-4.comic-strip
         .container
           .row
             .span12.comic-strip-inner      
               .comic-text
                 %p
-                  Neighbours Can Help believes that by breaking down barriers created by garden fences, we can open up a whole new avenue for neighbourhood altruism to emerge.    
+                  Its aim is to strengthen communities by making it easier for people to help each other.
       #comic-5.comic-strip
         .container
           .row
             .span12.comic-strip-inner      
               .comic-text
                 %p
-                  The organisation hopes the new website will enable people to make new friends, share experiences and offer support to each other all year round.      
+                  By finding new ways to support each other we hope to build better neighbourhoods together.      
       #comic-6.comic-strip
         .container
           .row
             .span12.comic-strip-inner      
               .comic-text
                 %p
-                  Neighbours Can Help believes that together we can strengthen our communities, enabling people to come together to deliver a locally based response to the many needs hidden in every UK street.
+                  Check out the website to learn more. Make a difference to your community!
       #how-it-works.intro-strip
         .container
           .row
@@ -92,6 +100,7 @@
             .span4
               %p
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.              
+            .span12.pencil-line    
 
                 
       #security.intro-strip
@@ -104,11 +113,20 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.
             .span4
               %p
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta.               
-.                
-                
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta.  
+      #big-cta
+        .container
+          .row
+            .span6.offset3
+              .well
+                %h2 Be part of it
+                =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+                .clearfix
+              =link_to "Top", "#top", :class=>"to-top-link"
+
                                 
               
       .push
     .footer-wrapper
       =render("layouts/footer")
+    =render ('/wireframes/sign_up_popup')
