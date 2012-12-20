@@ -53,4 +53,5 @@ redactor_image_upload_error.png: redactor_image_upload_error-813aad6b1e2ce7476fa
 jquery-ui-1.8.23.js: jquery-ui-1.8.23-248a0ac88e98ecc0bbe895ab2f7713ce.js
 jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 application.js: application-af1e1f4875822f33c008ece2896d0c4d.js
-application.css: application-a88c5c5422e43a078079bce62c01fa98.css
+application.css: application-8b795fb5b17a124daf4058c7f3769a76.css
+ie6.css: ie6-f9dc129c36c733a6ed2559ed155029ea.css
