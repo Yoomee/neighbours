@@ -1,0 +1,76 @@
+!!!5
+%html
+  %head
+    %title
+      =Settings.site_name
+      ="- #{@page_title}" if @page_title.present?
+    =stylesheet_link_tag("application")
+    =javascript_include_tag("application")
+    =csrf_meta_tags
+    =yield :head
+    :javascript
+      $(document).ready(function() {
+        IntroPageNav.init();
+      });
+
+    =google_analytics_js
+  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do  
+    .main-wrapper
+      #top
+      #header-intro.header-intro        
+        .container
+          .row
+            .span12
+              %h1.logo-intro
+                =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
+              =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+              %ul.nav.nav-intro.unstyled                
+                %li=link_to "About", "/wireframes/home", :class=>"intro-nav-link-about intro-nav-link"
+                %li=link_to "How it works", "#how-it-works", :class=>"intro-nav-link-how intro-nav-link"
+                %li=link_to "Security", "#security", :class=>"intro-nav-link-security intro-nav-link"
+
+                              
+
+      #header-intro-placeholder
+              
+      .intro-text
+        .container
+          .row
+            .preregister-header.mb-2.span8.offset2
+              %h2.your-location-title
+                %i.icon-map-marker
+                Sheffield
+
+              %h3
+                We are launching soon in Sheffield!
+            .preregister-share.span8.offset2.mb-2
+              %p
+                Share with friends to help grow the community
+              =link_to "#", :class=>"share-btn facebook-share-btn btn" do
+                %i.icon-facebook
+                Share on Facebook
+              =link_to "#", :class=>"share-btn twitter-share-btn btn" do
+                %i.icon-twitter
+                Share on Twitter
+            .preregister-i-can-help-with.span8.offset2
+              %p
+                I can help with
+              %p
+                I might need help with
+            .preregister-feedback.span8.offset2
+              %h3
+                Give us feedback
+              %p
+                =link_to "Tell us what we can do for you", "#", :class=>"feedback-link"
+                
+                
+              
+      .push
+    .footer-wrapper
+      =render("layouts/footer")
+    =render ('/wireframes/sign_up_popup')
+
+
+
+    
+    

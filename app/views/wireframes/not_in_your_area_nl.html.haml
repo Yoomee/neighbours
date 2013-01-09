@@ -1,0 +1,73 @@
+!!!5
+%html
+  %head
+    %title
+      =Settings.site_name
+      ="- #{@page_title}" if @page_title.present?
+    =stylesheet_link_tag("application")
+    =javascript_include_tag("application")
+    =csrf_meta_tags
+    =yield :head
+    :javascript
+      $(document).ready(function() {
+        IntroPageNav.init();
+      });
+
+    =google_analytics_js
+  -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do  
+    .main-wrapper
+      #top
+      #header-intro.header-intro        
+        .container
+          .row
+            .span12
+              %h1.logo-intro
+                =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
+              =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+              %ul.nav.nav-intro.unstyled                
+                %li=link_to "About", "/wireframes/home", :class=>"intro-nav-link-about intro-nav-link"
+                %li=link_to "How it works", "#how-it-works", :class=>"intro-nav-link-how intro-nav-link"
+                %li=link_to "Security", "#security", :class=>"intro-nav-link-security intro-nav-link"
+
+                              
+
+      #header-intro-placeholder
+              
+      .intro-text
+        .container
+          .row
+            .preregister-header.mb-2.span8.offset2
+              %h2.your-location-title
+                %i.icon-map-marker
+                Reading
+
+              %h3
+                We have 12 users in your area, but need more before we can launch
+            
+            .preregister-existing.span8.offset2
+              %h3.mb-1
+                Elsewhere
+                
+              %ul.elsewhere-list
+                %li
+                  %h4
+                    %i.icon-map-marker
+                    Maltby  
+                  %p
+                    Live
+                %li
+                  %h4
+                    %i.icon-map-marker
+                    Sheffield  
+                  %p
+                    Coming soon
+
+              
+      .push
+    .footer-wrapper
+      =render("layouts/footer")
+    =render ('/wireframes/sign_up_popup')
+
+
+
+    

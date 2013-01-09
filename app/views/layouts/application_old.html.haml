@@ -1,0 +1,29 @@
+!!!5
+%html
+  %head
+    %title
+      =Settings.site_name
+      ="- #{@page_title}" if @page_title.present?
+    =stylesheet_link_tag("application")
+    <!--[if IE 6]>
+    =stylesheet_link_tag("ie6")
+    <![endif]-->
+    =javascript_include_tag("application")
+    =csrf_meta_tags
+    =yield :head
+    
+    =google_analytics_js
+  -body_tag do
+    .main-wrapper
+      =render("layouts/header")
+      =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
+      =yield_with_bootstrap(yield)
+      .push
+    -if current_user.nil?
+      =render('modals/register_popup')
+    -elsif params[:modal]=="address_prompt"
+      =render('modals/address_prompt')
+    -elsif params[:modal]=="validation_prompt"
+      =render('modals/validation_prompt')
+    .footer-wrapper
+      =render("layouts/footer")
