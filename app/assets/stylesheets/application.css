@@ -1339,10 +1339,32 @@ a.cta-small {
   margin-bottom: 20px;
 }
 /*========== preregistering pages ==========*/
+.your-location-title {
+  font-size: 36px;
+}
+.your-location-title i {
+  color: #b35860;
+}
+.preregister-share .well {
+}
+.share-btn, .share-btn:hover {
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 15px;
+  text-shadow: none;
+  background: #536ba7;
+  border: none;
+  margin: 0 10px 0 0;
+}
+.share-btn i {
+  margin-right: 6px;
+}
+.twitter-share-btn, .twitter-share-btn:hover {
+  background: #3aa4e5;
+}
 
  .elsewhere-list li {
-	margin: 0 0 4px;
-
+	margin: 0 0 4px
   
 }
 
