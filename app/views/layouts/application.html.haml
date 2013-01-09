@@ -11,18 +11,12 @@
     =javascript_include_tag("application")
     =csrf_meta_tags
     =yield :head
+    :javascript
+      $(document).ready(function() {
+        IntroPageNav.init();
+      });
     =google_analytics_js
-  -body_tag do  
-    .main-wrapper
-      =render("layouts/header")
-      =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
-      =yield_with_bootstrap(yield)
-      .push
-    -if current_user.nil?
-      =render('modals/register_popup')
-    -elsif params[:modal]=="address_prompt"
-      =render('modals/address_prompt')
-    -elsif params[:modal]=="validation_prompt"
-      =render('modals/validation_prompt')
-    .footer-wrapper
-      =render("layouts/footer")
+  -if current_user.nil?
+    =render('layouts/logged_out/body')
+  -else
+    =render('layouts/logged_in/body')
