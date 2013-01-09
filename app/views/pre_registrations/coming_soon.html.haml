@@ -1,0 +1,35 @@
+#header-intro-placeholder
+        
+.intro-text
+  .container
+    .row
+      .preregister-header.mb-2.span8.offset2
+        %h2.your-location-title
+          %i.icon-map-marker
+          =@pre_registration.area
+
+        %h3
+          We are launching soon in
+          =@pre_registration.area
+      .preregister-share.span8.offset2.mb-2
+        .well
+          %p
+            Share with friends to help grow the community
+          =link_to "#", :class=>"share-btn facebook-share-btn btn" do
+            %i.icon-facebook
+            Share on Facebook
+          =link_to "#", :class=>"share-btn twitter-share-btn btn" do
+            %i.icon-twitter
+            Share on Twitter
+      .preregister-i-can-help-with.span8.offset2
+        %p
+          I can help with
+        %p
+          I might need help with
+      .preregister-feedback.span8.offset2
+        %h3
+          Give us feedback
+        %p
+          =link_to "Tell us what we can do for you", "#", :class=>"feedback-link"
+          
+          

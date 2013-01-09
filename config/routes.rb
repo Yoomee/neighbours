@@ -10,6 +10,8 @@ Neighbours::Application.routes.draw do
   match "registrations/who_you_are" => "registrations#new", :step => "who_you_are", :as => "who_you_are_registration", :via => :get
   match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration", :via => :get
   match "registrations/validate" => "registrations#new", :step => "validate", :as => "validate_registration"
+ 
+  resources :pre_registrations
 
   resources :needs do
     resources :offers, :only => [:create]
