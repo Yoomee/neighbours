@@ -1,3 +1,8 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      IntroPageNav.init();
+    });
 -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do
   .main-wrapper
     =render("layouts/logged_out/header")
