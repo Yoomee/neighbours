@@ -9,22 +9,17 @@
           =@pre_registration.area
 
         %h3
-          We have 12 users in your area, but need more before we can launch
+          We have users in your area, but need more before we can launch
       
       .preregister-existing.span8.offset2
         %h3.mb-1
           Elsewhere
-          
+                    
         %ul.elsewhere-list
-          %li
-            %h4
-              %i.icon-map-marker
-              Maltby  
-            %p
-              Live
-          %li
-            %h4
-              %i.icon-map-marker
-              Sheffield  
-            %p
-              Coming soon
+          -Neighbourhood.order("created_at DESC").each do |area|
+            %li
+              %h4
+                %i.icon-map-marker
+                =area.name  
+              %p
+                =area.status  
