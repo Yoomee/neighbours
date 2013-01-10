@@ -1300,12 +1300,16 @@ a.cta-small {
   height: 20px;
   margin-top: 20px;
 }
+
+
 #security {
   padding-bottom: 20px;
   background: url(/assets/security.jpg) no-repeat center 100px;
   position: relative;
   z-index: 6;
 }
+
+
 #big-cta h2 {
   text-align: center;
 }
@@ -1363,6 +1367,8 @@ a.cta-small {
  margin: 10px 20px; 
  font-size: 14px;
 }
+
+
 /*========== preregistering pages ==========*/
 .your-location-title {
   font-size: 36px;
@@ -1394,6 +1400,30 @@ a.cta-small {
 	margin: 0 0 4px
   
 }
+
+a.need-help-button {
+  float: left;
+  display: block;
+  background: #b4c772;
+  color: #fff;
+  padding: 10px;
+  margin: 0 5px 5px;
+  
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  
+}
+a.need-help-button:hover {
+  background: #609a5f;
+  text-decoration: none;
+}
+.preregister-i-can-help-with .well {
+  background: url(/assets/pencil-line.png) no-repeat 0 0;
+  border: none;
+  box-shadow:none;
+  padding-top: 40px;
+}
+
 
 
 

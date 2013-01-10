@@ -1,28 +1,39 @@
 #header-intro-placeholder
-        
-.intro-text
-  .container
-    .row
-      .preregister-header.mb-2.span8.offset2
-        %h2.your-location-title
-          %i.icon-map-marker
-          =@pre_registration.area
 
-        %h3
-          We are launching soon in
-          =@pre_registration.area
-      .preregister-share.span8.offset2.mb-2
-        .well
-          =render("/pre_registrations/share_buttons")
-      .preregister-i-can-help-with.span8.offset2
-        %p
-          I can help with
-        %p
-          I might need help with
-      .preregister-feedback.span8.offset2
-        %h3
-          Give us feedback
-        %p
-          =link_to "Tell us what we can do for you", "#", :class=>"feedback-link"
-          
-          
+.container
+  .row
+    .preregister-header.mb-2.span8.offset2
+      %h2.your-location-title
+        %i.icon-map-marker
+        =@pre_registration.area
+
+      %h3
+        We are launching soon in
+        =@pre_registration.area
+    .preregister-share.span8.offset2.mb-2
+      .well
+        =render("/pre_registrations/share_buttons")
+    .preregister-i-can-help-with.span8.offset2
+      .well
+        %h3.mb-1
+          I can help in my area with
+        =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "preregister-help-select")  
+        .i-might-need-help-with
+          %h3.mt-2
+            In the future I might need help with...
+          %ul.unstyled.i-might-need-help-with-list.mt-1
+            %li=link_to "Computer stuff", "#", :class=>"need-help-button"
+            %li=link_to "Shopping", "#", :class=>"need-help-button"
+            %li=link_to "DIY", "#", :class=>"need-help-button"
+            %li=link_to "Childcare", "#", :class=>"need-help-button"
+            %li=link_to "Health", "#", :class=>"need-help-button"
+            %li=link_to "Gardening", "#", :class=>"need-help-button"
+        .clearfix    
+                                      
+    .preregister-feedback.span8.offset2
+      %h3
+        Give us feedback
+      %p
+        =link_to "Tell us what we can do for you", "#", :class=>"feedback-link"
+        
+        
