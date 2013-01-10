@@ -13,14 +13,7 @@
           =@pre_registration.area
       .preregister-share.span8.offset2.mb-2
         .well
-          %p
-            Share with friends to help grow the community
-          =link_to "#", :class=>"share-btn facebook-share-btn btn" do
-            %i.icon-facebook
-            Share on Facebook
-          =link_to "#", :class=>"share-btn twitter-share-btn btn" do
-            %i.icon-twitter
-            Share on Twitter
+          =render("/pre_registrations/share_buttons")
       .preregister-i-can-help-with.span8.offset2
         %p
           I can help with

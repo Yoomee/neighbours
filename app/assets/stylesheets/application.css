@@ -1155,6 +1155,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   text-align: center;
  
 }
+.intro-nav-link-login {
+  float: right;
+  margin: 40px 13px 0 23px;
+}
+.header-intro-fixed .intro-nav-link-login {
+  margin-top: 23px;
+}
+
 a.intro-nav-link-about {
 	width: 55px;
 }
