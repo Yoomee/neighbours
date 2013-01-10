@@ -7,7 +7,7 @@
       %h3
         Be part of it
     .modal-body
-      .new-message-form
+      .preregister-form
         %p.popup-intro
           Enter your details below to get involved.
         
@@ -23,6 +23,6 @@
             .control-group
               .controls
                 =form.commit_button "Go", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
-                =link_to "Already registered?", "/login"
+                =link_to "Already registered?", "/login", :class=>"already-registered-link"
               
               

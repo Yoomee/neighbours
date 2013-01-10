@@ -1346,10 +1346,29 @@ a.cta-small {
   margin-top: 30px;
   margin-bottom: 20px;
 }
+/*========== preregister modal form ==========*/
+.preregister-form .control-label {
+  float: left;
+  display: block;
+  width: 100px;
+  text-align: right;
+  margin: 8px 20px 0 0;
+}
+.preregister-form #new-pre-registration-form-submit {
+ margin: 0 0 0 120px; 
+ float: left;
+}
+.already-registered-link {
+ float: left;
+ margin: 10px 20px; 
+ font-size: 14px;
+}
 /*========== preregistering pages ==========*/
 .your-location-title {
   font-size: 36px;
 }
+
+
 .your-location-title i {
   color: #b35860;
 }
