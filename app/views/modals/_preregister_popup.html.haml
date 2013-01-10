@@ -1,5 +1,11 @@
+-if @pre_registration && !@pre_registration.valid?
+  =#content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $('#sign-up-popup').modal('show');
+    })
 #sign-up-popup.modal.hide.fade
-  =semantic_form_for(PreRegistration.new) do |form|
+  =semantic_form_for(@pre_registration || PreRegistration.new) do |form|
     .modal-header
 
       %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}

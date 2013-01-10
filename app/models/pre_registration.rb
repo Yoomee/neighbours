@@ -1,15 +1,23 @@
 class PreRegistration < ActiveRecord::Base
     include YmCore::Model
+    validates :name, :email, :postcode, :presence => true
+    validates :email, :email => true
+    validates :postcode, :postcode => true
     
     before_save :set_area
     
     def coming_soon?
-      neighbourhood = Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)
+      if (neighbourhood = (Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)))
+        if neighbourhood.live == 1
+          false
+        end
+      end
     end
     
     def live?
-      false
-      #TODO
+      if (neighbourhood = Neighbourhood.find_by_name(area))
+        neighbourhood.live
+      end
     end
     
     def postcode_start

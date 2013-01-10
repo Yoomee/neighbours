@@ -10,6 +10,8 @@ class PreRegistrationsController < ApplicationController
       else
         render 'not_in_your_area'  
       end  
+    else
+      render "home/preregister"
     end
   end
   

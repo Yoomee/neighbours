@@ -1,5 +1,4 @@
 -body_tag(:'data-spy'=>"scroll", :'data-target' => ".header-intro", :'data-offset'=> 110) do
-  =yield :foobar
   .main-wrapper
     =render("layouts/logged_out/header")
     =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?

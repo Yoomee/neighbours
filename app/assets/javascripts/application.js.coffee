@@ -31,7 +31,7 @@ $(document).ready () ->
 
 window.IntroPageNav =
   init: ->
-    $('.nav li a,.to-top-link').click (e) ->
+    $('.scroll-nav li a,.to-top-link').click (e) ->
       e.preventDefault()
       div = $("#{$(this).attr('href')}")
       $('body').animate({'scrollTop':div.position().top - 50},1000)
