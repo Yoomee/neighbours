@@ -418,7 +418,7 @@ br.clear {
   width: 100%;
 }
 #home-intro-2 {
-	background: url(/assets/home_intro_2.jpg) center 0px no-repeat;
+	background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
   height: 430px;
   float: left;
   position: relative;
@@ -1232,7 +1232,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-top: 13px;
 }
 .header-intro-fixed .nav {
-  margin-top: 25px;
+  margin-top: 22px;
 }
 
 
@@ -1309,8 +1309,8 @@ a.intro-nav-link-security {
      border-bottom-right-radius:5px;
      border-bottom-left-radius:5px;
      
-     
-     box-shadow:1px 2px 2px rgba(0,0,0,0.15);
+     -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
+     box-shadow:1px 1px 2px rgba(0,0,0,0.2);
 
 }
 .help-link:hover {
