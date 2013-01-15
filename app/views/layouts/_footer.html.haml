@@ -1,8 +1,16 @@
-.container
-  .row
-    .span12
-      %footer.footer
+%footer.footer
+  .container
+    .row
+      .span6
         %p.copyright
-          &copy; Neighbours Can Help Ltd          
+          &copy; Neighbours Can Help Ltd 
+        %ul.unstyled.footer-links
+          %li
+            =link_to_slug(:help, :class=>"") do
+              %icon.icon-question-sign
+              Help
+          =li_with_active(@page && (@page.slug == "safety_tips" || @page.descendant_of_slug("safety_tips")), link_to_slug(:safety_tips, :class=>""))
+          =li_with_active(current_page?(feedback_path), link_to("Contact us", feedback_path, :class => ""))
+      .span6      
         =link_to "Nominet trust", "http://www.nominettrust.org.uk/", :Target=>"_blank", :class=>"nominet-logo footer-logo"
         =link_to "Yoomee", "http://www.yoomee.com/", :Target=>"_blank", :class=>"yoomee-logo footer-logo"

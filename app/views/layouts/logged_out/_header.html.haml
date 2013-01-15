@@ -1,14 +1,21 @@
 #top
 #header-intro.header-intro        
-  .container
+  .container.header-intro-inner
     .row
-      .span12
+      .span12   
         %h1.logo-intro
           =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
         =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
-        =link_to "Login", "/login", :class=>"intro-nav-link-login intro-nav-link"
+        
         %ul.nav.nav-intro.unstyled                
-          %li=link_to "About", "#comic-1", :class=>"intro-nav-link-about intro-nav-link"
-          %li=link_to "How it works", "#how-it-works", :class=>"intro-nav-link-how intro-nav-link"
-          %li=link_to "Security", "#security", :class=>"intro-nav-link-security intro-nav-link"
+          %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"        
+          %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
+          %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
+
+          
+          %li=link_to "Login", "/login", :class=>"intro-nav-link-login intro-nav-link"
+    =link_to_slug(:help, :class=>"help-link") do
+      %icon.icon-question-sign
+      Help
+          
           

@@ -17,35 +17,7 @@
 }
 @media handheld, only screen and (max-width: 979px) {
 
-#site_logo span {
-  font-size: 30px;
-  width: 200px;
-  margin-top:13px;
-}
-#site_logo img {
-	width: 85px;
-}
-.main-nav {
-	font-size: 18px;
-}
-.main-nav li a {
-	padding-top: 10px;
-	padding-bottom: 15px;
-	padding-left: 25px;
-	padding-right: 25px;
-}
-.home-intro-text {
-	font-size: 28px;
-}
-.home-welcome {
-  margin: 0px;
-}
-#home-intro {
-	height: 310px;
-}
-.intro-circles  {
-	top: -30px;
-}
+
 
 
 
