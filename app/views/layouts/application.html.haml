@@ -11,6 +11,11 @@
     =javascript_include_tag("application")
     =csrf_meta_tags
     =yield :head
+    -if current_user.nil?
+      :javascript
+        $(document).ready(function() {
+          IntroPageNav.init();
+        });
     =google_analytics_js
   -if current_user.nil?
     =render('layouts/logged_out/body')
