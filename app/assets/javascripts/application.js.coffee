@@ -31,14 +31,10 @@ $(document).ready () ->
 
 window.IntroPageNav =
   init: ->
-    $('.nav li a,.to-top-link').click (e) ->
-      e.preventDefault()
-      div = $("#{$(this).attr('href')}")
-      $('body').animate({'scrollTop':div.position().top - 50},1000)
     $(window).scroll ->
-      if $("body").scrollTop() > 116
+      if $("body").scrollTop() > 160
         $('#header-intro').addClass('header-intro-fixed')
-        $('#header-intro-placeholder').height(116)
+        $('#header-intro-placeholder').height(160)
       else
         $('#header-intro').removeClass('header-intro-fixed')
         $('#header-intro-placeholder').height(0)
