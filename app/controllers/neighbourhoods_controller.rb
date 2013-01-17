@@ -15,12 +15,15 @@ class NeighbourhoodsController < ApplicationController
         @helped = get_at_least(20, Need.resolved.visible_to_user(current_user).order(:created_at).reverse_order)
         @need_help = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
       else
-        @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
-        @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
-        @unvalidated_map_needs = get_unvalidated_map_needs
-        @needs_json = []
+        if @neighbourhood = Neighbourhood.find_by_id(params[:id])
+          render :action => "coming_soon"
+        else          
+          @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
+          @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+          @unvalidated_map_needs = get_unvalidated_map_needs
+          @needs_json = []
+        end
       end
-
     end
   end
   

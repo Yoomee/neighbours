@@ -12,6 +12,8 @@ Neighbours::Application.routes.draw do
   match "registrations/validate" => "registrations#new", :step => "validate", :as => "validate_registration"
  
   resources :pre_registrations
+  get "pr/:id" => "pre_registrations#show"
+  
 
   resources :needs do
     resources :offers, :only => [:create]
@@ -64,6 +66,7 @@ Neighbours::Application.routes.draw do
   resources :neighbourhoods, :only => :update
   
   get "neighbourhood" => "neighbourhoods#show"
+  get "area/:id" => "neighbourhoods#show"
   match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
   
   match "searches" => "searches#index", :as => "searches"

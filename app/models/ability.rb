@@ -6,7 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
-    can :create, PreRegistration
+    can [:show, :create], PreRegistration
     can :create, Enquiry
     can :show, Page, :draft => false
     can [:show, :create], Need

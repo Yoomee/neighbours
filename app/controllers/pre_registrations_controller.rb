@@ -1,23 +1,24 @@
 class PreRegistrationsController < ApplicationController  
-  load_and_authorize_resource
+  load_and_authorize_resource :only => :create
   
   def create
     if @pre_registration.save
       if @pre_registration.coming_soon?
-        render 'coming_soon'
+        @redirect_url = "/area/#{@pre_registration.neighbourhood.id}-#{@pre_registration.neighbourhood.name.parameterize}"
       elsif @pre_registration.live?
         user = @pre_registration.create_user
-        logger.debug @pre_registration
         sign_in user
-        redirect_to "/neighbourhood"
+        @redirect_url = "/neighbourhood"
       else
-        #render 'not_in_your_area'  
-        render 'coming_soon'
+        @redirect_url = "/pr/#{@pre_registration.id}"
       end  
-    else
-      render "home/preregister"
     end
   end
+  
+  def show
+    @pr = PreRegistration.find(params[:id])
+  end
+
   
   
 end

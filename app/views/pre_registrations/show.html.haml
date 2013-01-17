@@ -1,0 +1,85 @@
+=google_maps_javascript_include_tag
+=content_for :head do
+  :javascript
+    $(document).ready(function() {
+      var mapOptions = {
+        center: new google.maps.LatLng(#{@pr.lat_lng.join(',')}),
+        zoom: 16,
+        disableDefaultUI: true,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    });
+
+
+.container    
+
+#header-intro-placeholder
+
+.container
+
+  .row
+    .preregister-header.mb-2.span8.offset2
+      %h2.your-location-title
+        %i.icon-map-marker
+        =@pr.area
+
+
+  .row
+    #map-canvas.span8.offset2{:style => "height:150px"}
+    
+  
+  .row
+    .preregister-header.mb-2.span8.offset2
+
+      %h3
+        =snippet_text(:not_in_your_area_title, "We have users in your area, but need more before we can launch")
+             
+      %p.mt-2
+        =snippet_text(:not_in_your_area_intro, "Here is some text that will be edited by John. This area is not available yet. This is the text shown at the top of all the areas that are not available yet. It will explain what it happening and what you can do next.")
+    .preregister-share.span8.offset2.mb-2
+      .well
+        =render("/neighbourhoods/share_buttons")
+        
+    .preregister-existing.span8.offset2
+      %h3.mb-1
+        Elsewhere
+
+      %ul.elsewhere-list
+        -Neighbourhood.order("created_at DESC").each do |area|
+          %li
+            %h4
+              %i.icon-map-marker
+              =area.name  
+            %p
+              =area.status  
+
+        
+        
+        
+    -if false    
+      .preregister-i-can-help-with.span8.offset2
+        .well
+          %h3.mb-1
+            I can help in my area with
+          =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "preregister-help-select")  
+          .i-might-need-help-with
+            %h3.mt-2
+              In the future I might need help with...
+            %ul.unstyled.i-might-need-help-with-list.mt-1
+              %li=link_to "Computer stuff", "#", :class=>"need-help-button"
+              %li=link_to "Shopping", "#", :class=>"need-help-button"
+              %li=link_to "DIY", "#", :class=>"need-help-button"
+              %li=link_to "Childcare", "#", :class=>"need-help-button"
+              %li=link_to "Health", "#", :class=>"need-help-button"
+              %li=link_to "Gardening", "#", :class=>"need-help-button"
+        .clearfix    
+                                      
+    .preregister-feedback.span8.offset2
+      %h3
+        Give us feedback
+      %p
+        =link_to "Tell us what we can do for you", "/feedback", :class=>"feedback-link"
+        
+        

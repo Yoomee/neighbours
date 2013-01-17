@@ -13,5 +13,11 @@ class Neighbourhood < ActiveRecord::Base
       "Coming soon"
     end
   end
+  
+  def lat_lng
+    results = Geocoder.search("#{postcode_prefix}, UK")
+    geometry = results.first.data['geometry']
+    [geometry['location']['lat'],geometry['location']['lng']]
+  end
     
 end

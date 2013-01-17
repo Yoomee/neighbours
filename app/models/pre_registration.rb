@@ -7,17 +7,15 @@ class PreRegistration < ActiveRecord::Base
     before_save :set_area
     
     def coming_soon?
-      if (neighbourhood = (Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)))
-        if neighbourhood.live == 1
-          false
-        end
-      end
+      neighbourhood && !neighbourhood.live?
+    end
+    
+    def neighbourhood
+      Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)
     end
     
     def live?
-      if (neighbourhood = Neighbourhood.find_by_name(area))
-        neighbourhood.live
-      end
+      neighbourhood && neighbourhood.live?
     end
     
     def postcode_start

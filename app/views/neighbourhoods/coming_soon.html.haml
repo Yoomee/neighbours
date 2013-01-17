@@ -1,18 +1,47 @@
+=google_maps_javascript_include_tag
+=content_for :head do
+  :javascript
+    $(document).ready(function() {
+      var mapOptions = {
+        center: new google.maps.LatLng(#{@neighbourhood.lat_lng.join(',')}),
+        zoom: 16,
+        disableDefaultUI: true,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    });
+
+
+.container    
+
 #header-intro-placeholder
 
 .container
+
   .row
-    .preregister-header.mb-2.span8.offset2
+    .preregister-header.mt-2.mb-2.span8.offset2
       %h2.your-location-title
         %i.icon-map-marker
-        =@pre_registration.area
+        =@neighbourhood
+
+
+  .row
+    #map-canvas.span8.offset2{:style => "height:150px"}
+    
+  
+  .row
+    .preregister-header.mb-2.span8.offset2
 
       %h3
         We are launching soon in
-        =@pre_registration.area
+        =@neighbourhood
+        
+      %p.mt-2
+        =snippet_text(:coming_soon_intro, "Here is some text that will be edited by John. This is the text shown at the top of all the coming soon areas. It will explain what it happening and what you can do next.")
     .preregister-share.span8.offset2.mb-2
       .well
-        =render("/pre_registrations/share_buttons")
+        =render("share_buttons")
     -if false    
       .preregister-i-can-help-with.span8.offset2
         .well
@@ -35,6 +64,6 @@
       %h3
         Give us feedback
       %p
-        =link_to "Tell us what we can do for you", "#", :class=>"feedback-link"
+        =link_to "Tell us what we can do for you", "/feedback", :class=>"feedback-link"
         
         

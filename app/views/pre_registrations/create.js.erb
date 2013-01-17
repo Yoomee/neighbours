@@ -1,0 +1,5 @@
+<%if @redirect_url.present?%>
+window.location = '<%=@redirect_url%>';
+<%else%>
+$('#sign-up-popup-preregister').html('<%=escape_javascript(render("modals/preregister_form"))%>');
+<%end%>	
