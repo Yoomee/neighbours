@@ -33,9 +33,10 @@
         =simple_format(@need.description.capitalize)
       -else
         =@need.category.description
-      .need_to_know_by
-        I would like to know 
-        =show_deadline(@need)
+      -if current_user  
+        .need_to_know_by
+          I would like to know 
+          =show_deadline(@need)
   -if @need.user == current_user
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
@@ -66,14 +67,22 @@
               ="You can continue your discussion with #{@need.user} by writing a comment below ."
           -else
             %p.mb3
-              If you think you can help, then click on this button to start a private discussion with
-              ="#{@need.user}."
-            -if current_user.try(:validated?)
-              =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-            -elsif current_user
-              =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-            -else
-              =link_to "Maybe I can help", "#register-popup", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+              -if current_user
+                .row
+                  If you think you can help, then click on this button to start a private discussion with
+                  ="#{@need.user}."
+                .row.mt-2                
+                  -if current_user.try(:validated?)
+                    =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                  -elsif current_user
+                    =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                  -else
+                    =link_to "Maybe I can help", "#register-popup", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+              -else
+                .row
+                  =snippet_text(:need_cannot_use, "Here is some text explaining why this page be cannot be used. This will be edited by John.")
+                .row
+                  =link_to "Get involved", "#sign-up-popup", :id=>"cta-3", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
               
       %ul.unstyled.need-posts
         -posts = logged_in_as?(@need.user) ? @need.posts.order("created_at DESC") : @need.posts.where(["posts.user_id = ?", current_user.try(:id)])
@@ -93,9 +102,10 @@
   .span12
     =options_panel do
       =link_if_can("Delete this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
-      =link_to("#inappropriate", :data => {:toggle => "modal"}) do
-        %i.icon-warning-sign
-        Report this page as inappropriate
+      -if current_user
+        =link_to("#inappropriate", :data => {:toggle => "modal"}) do
+          %i.icon-warning-sign
+          Report this page as inappropriate
 
 -if @need.user != current_user
   #offer-form.modal.hide.fade
