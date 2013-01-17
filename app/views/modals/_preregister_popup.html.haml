@@ -4,7 +4,20 @@
     $(document).ready(function(){
       $('#sign-up-popup').modal('show');
     })
-#sign-up-popup.modal.hide.fade
+    
+#sign-up-popup.modal.hide
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      Get involved
+    .modal-body
+      %p.popup-intro
+        =snippet_text(:preregister_popup, "Here is some text explaining what happens next. This will be edited by John.")
+        
+      =link_to "Next >>", "#sign-up-popup-preregister", :class=>"cta-intro", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
+    
+#sign-up-popup-preregister.modal.hide
   =semantic_form_for(@pre_registration || PreRegistration.new) do |form|
     .modal-header
 
@@ -15,7 +28,7 @@
     .modal-body
       .preregister-form
         %p.popup-intro
-          Enter your details below to get involved.
+          =snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
         
           %form.form-horizontal
             .control-group              
@@ -30,5 +43,7 @@
               .controls
                 =form.commit_button "Go", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
                 =link_to "Already registered?", "/login", :class=>"already-registered-link"
+                
+            
               
               
