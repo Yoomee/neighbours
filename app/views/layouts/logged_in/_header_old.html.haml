@@ -1,0 +1,104 @@
+.container#header
+  .row#header-row
+    .span5
+      %h1#site_logo
+        =link_to "/" do
+          =image_tag "logo.png"
+          %span.site_title
+            Neighbours Can Help
+          -if STAGING
+            %span.badge.badge-warning Staging
+    .span7
+      #header-links
+        #help-links
+          %icon.icon-question-sign
+          =link_to_slug(:help, :class=>"nav-link")
+        -if current_user
+          .btn-group
+            =link_to(current_user, :class => 'btn') do
+              %icon.icon-user
+              =current_user.full_name
+            =link_to('#', :data => {:toggle => "dropdown"}, :class => 'btn dropdown-toggle') do
+              %span.caret
+            %ul.dropdown-menu.pull-right
+              -if current_user.is_admin?
+                %li
+                  =link_to(admin_path) do
+                    %icon.icon-cogs
+                    Admin
+              -else
+                %li
+                  =link_to(current_user) do
+                    %icon.icon-user
+                    View profile  
+              %li.divider
+              -if current_user.is_community_champion? || current_user.is_admin?
+                %li
+                  =link_to(neighbourhood_posts_path(:neighbourhood => "sheffield")) do
+                    %icon.icon-comments-alt
+                    Discussion forum  
+                %li.divider
+              %li
+                =link_to(edit_user_path(current_user)) do
+                  %icon.icon-cog
+                  Edit profile
+              %li
+                =link_to(change_password_path) do
+                  %icon.icon-key
+                  Change password
+              %li
+                =link_to(sign_out_path, :method => :delete) do
+                  %icon.icon-signout
+                  =t(:logout)
+        -else
+          =link_to "Login", sign_in_path, :class=>"nav-link btn"
+          =link_to "Register", new_registration_path, :class=>"nav-link btn"
+.nav-strip  
+  .container                
+    .row
+      .span12              
+        #nav.main-nav
+          %ul.nav.nav-tabs
+            =li_with_active(current_page?(root_path), link_to("My Neighbourhood", root_path, :class=>"nav-link"))
+            =li_with_active(@page && @page.slug == "about", link_to_slug(:about, :class=>"nav-link"))
+            =li_with_active(@page && (@page.slug == "news" || @page.descendant_of_slug("news")), link_to_slug(:news, :class=>"nav-link"))
+            =li_with_active(@page && (@page.slug == "safety_tips" || @page.descendant_of_slug("safety_tips")), link_to_slug(:safety_tips, :class=>"nav-link"))
+            =li_with_active(current_page?(feedback_path), link_to("Contact", feedback_path, :class => "nav-link"))
+
+          
+-if show_control_panel?
+  .container
+    .row
+      #control-panel.span12
+        .row
+          .span2.offset1
+            =link_to root_path, :id=>"big-home-icon" do
+              %i.icon-home
+          .span3    
+            %h3.control-panel-title
+              Account status
+            %p.control-panel-subtitle
+              -if current_user.validated?
+                Validated
+              -else
+                Not validated
+          .span3
+            =link_to user_needs_path(current_user), :class=>"control-panel-link" do
+              %h3.control-panel-title
+                My requests
+              %p.control-panel-subtitle
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_requests"))
+          .span3
+            =link_to offers_path, :class=>"control-panel-link" do
+              %h3.control-panel-title
+                My offers
+              %p.control-panel-subtitle
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_offers"))
+  
+  

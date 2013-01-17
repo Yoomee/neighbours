@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def validation_step?
-    is_in_sheffield? && current_step == "validate"
+    current_step == "validate"
   end
 
   def validation_step_with_credit_card?
@@ -136,10 +136,6 @@ class User < ActiveRecord::Base
 
   def where_you_live_step?
     current_step == "where_you_live"
-  end
-
-  def is_in_sheffield?
-    postcode.try(:match, /^S/)
   end
 
   private
