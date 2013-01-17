@@ -55,12 +55,20 @@ class PreRegistration < ActiveRecord::Base
       user
     end
     
+    def lat_lng
+      results = Geocoder.search("#{postcode}, UK")
+      geometry = results.first.data['geometry']
+      [geometry['location']['lat'],geometry['location']['lng']]
+    end
     
     class << self
       def name_of_town(postcode)
         results = Geocoder.search("#{postcode}, UK")
-        results.last.data['address_components'].last['long_name']
+        address_components = results.first.data['address_components']
+        town_component = address_components.select{|component| component['types'].include?('postal_town')}.first
+        town_component.try(:[],'short_name')        
       end
+      
    end
     
 end
