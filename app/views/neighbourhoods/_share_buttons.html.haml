@@ -1,13 +1,16 @@
 %p
   Share with friends to help grow the community
-=link_to "#", :class=>"share-btn facebook-share-btn btn" do
+
+=link_to "https://twitter.com/intent/tweet?url=#{url_encode(request.url)}&text=#{url_encode(snippet_text(:twitter_share_text,"Spread the word and help your neighbours by signing up with this new website"))}:", :class=>"share-btn twitter-share-btn btn", :target=>"_new" do
+  %i.icon-twitter
+  Share on Twitter
+
+=link_to "https://www.facebook.com/dialog/feed?app_id=#{Settings.facebook_app_id}&description=#{url_encode(snippet_text(:facebook_share_text,"Spread the word and help your neighbours by signing up with this new website"))}&link=#{url_encode(request.url)}&name=#{url_encode(snippet_text(:facebook_share_title,"We have users in your area, but need more before we can launch"))}&redirect_uri=#{url_encode(request.url)}", :class=>"share-btn facebook-share-btn btn", :target=>"_new" do
   %i.icon-facebook
   Share on Facebook
-=facebook_share(:share_text => "blabla")
-=link_to "#", :class=>"share-btn twitter-share-btn btn" do
-  %i.icon-twitter
-  Share on Twitter  
-=twitter_share()
-=link_to "#", :class=>"share-btn email-share-btn btn" do
+ 
+=link_to "/share/email_form?#{@email_share_params}", :class=>"share-btn email-share-btn btn" do
   %i.icon-envelope-alt
   Share on Email
+  
+  
