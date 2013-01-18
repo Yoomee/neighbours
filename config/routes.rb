@@ -11,7 +11,11 @@ Neighbours::Application.routes.draw do
   match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration", :via => :get
   match "registrations/validate" => "registrations#new", :step => "validate", :as => "validate_registration"
  
-  resources :pre_registrations
+  resources :pre_registrations do
+    collection do
+      get :map
+    end
+  end
   get "pr/:id" => "pre_registrations#show"
   
   get "share/email_form" => "share#email_form"

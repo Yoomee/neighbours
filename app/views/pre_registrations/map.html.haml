@@ -1,0 +1,15 @@
+=google_maps_javascript_include_tag
+=content_for :head do
+  =javascript_include_tag("markerclusterer")
+  =javascript_include_tag("overlappingmarkerspiderfier")
+  :javascript
+    PreRegistrationMap.users = #{@pr_json};
+    $(document).ready(function() {
+      PreRegistrationMap.init();
+    });
+
+.row
+  .span12
+    %h1=title "Pre-registration map"
+.row
+  #map-canvas.span12{:style => "height:600px"}

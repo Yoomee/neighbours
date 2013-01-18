@@ -27,6 +27,54 @@ window.UsersMap =
         UsersMap.infowindow.setContent(this.contentString)
         UsersMap.infowindow.open(UsersMap.map,this);
 
+
+window.PreRegistrationMap =
+	init: ->
+    mapOptions = {
+      center: new google.maps.LatLng(DEFAULT_LOCATION[0],DEFAULT_LOCATION[1]),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      streetViewControl: false,
+      mapTypeControl: false,
+      zoom: 6
+    }
+
+    PreRegistrationMap.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    PreRegistrationMap.infowindow = new google.maps.InfoWindow({maxWidth: 400})
+       
+    markers = []
+    
+    oms = new OverlappingMarkerSpiderfier(PreRegistrationMap.map, {keepSpiderfied: true})
+    oms.addListener 'click', (marker) ->
+      PreRegistrationMap.infowindow.setContent(marker.contentString);
+      PreRegistrationMap.infowindow.open(PreRegistrationMap.map, marker);
+      
+    oms.addListener 'spiderfy', (markers) ->
+      PreRegistrationMap.infowindow.close()
+        
+    for user in PreRegistrationMap.users
+      marker = new google.maps.Marker({
+          position: new google.maps.LatLng(user.lat_lng[0], user.lat_lng[1]),
+          title:user.name
+      });
+      marker.userId = user.id
+      marker.contentString = "<div class='user-infowindow'><h3>#{user.name}</h3><p>#{user.email}<br/>#{user.postcode}<br/>#{user.area}</p></div>"
+      
+      oms.addMarker(marker)
+      markers.push(marker)
+
+
+    markerClustererOptions =
+      gridSize: 50
+      maxZoom: 19
+    markerClusterer = new MarkerClusterer(PreRegistrationMap.map,markers,markerClustererOptions)
+    
+   # google.maps.event.addListener marker, 'click', ->
+   #      PreRegistrationMap.infowindow.close()
+   #      PreRegistrationMap.infowindow.setContent(this.contentString)
+   #      PreRegistrationMap.infowindow.open(PreRegistrationMap.map,this);
+
+
+
 window.NeedsMap =
 	init: (admin)->
     admin ||= false

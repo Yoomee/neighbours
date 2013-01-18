@@ -24,6 +24,8 @@ class PreRegistrationsController < ApplicationController
     @email_share_params = "pr=#{@pr.id}"
   end
 
-  
+  def map
+    @pr_json = PreRegistration.all.select{|pr| pr.lat_lng.present?}.to_json(:methods => [:lat_lng])
+  end
   
 end

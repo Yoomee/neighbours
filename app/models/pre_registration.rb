@@ -54,9 +54,12 @@ class PreRegistration < ActiveRecord::Base
     end
     
     def lat_lng
-      results = Geocoder.search("#{postcode}, UK")
-      geometry = results.first.data['geometry']
-      [geometry['location']['lat'],geometry['location']['lng']]
+      @lat_lng ||= begin
+        results = Geocoder.search("#{postcode}, UK")
+        return nil if results.empty?
+        geometry = results.first.data['geometry']
+        [geometry['location']['lat'],geometry['location']['lng']]
+     end
     end
     
     class << self
