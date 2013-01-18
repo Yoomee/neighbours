@@ -12,10 +12,12 @@ comic-4.jpg: comic-4-8e6de58ab8c6e3a8a57a1c6767d669df.jpg
 comic-5.jpg: comic-5-4a7be97e74d15e43f88136e6ecad3f63.jpg
 comic-6.jpg: comic-6-8487761862cc38bca7e24cf6d0405de1.jpg
 home_intro.png: home_intro-6288cbe903f8c4e526b2676c8fdb66d4.png
+home_intro_2.jpg: home_intro_2-de2972993bc0df0eaa2f7ddbef1a769d.jpg
 how-it-works-map.jpg: how-it-works-map-9c27cfaa3218a9424b371bf8fdeae38e.jpg
-logo-intro.png: logo-intro-b6eaef3bad07dd5dfdcdde1664cb5fed.png
+logo-intro.png: logo-intro-9aeeb7552bdbce15b541ccd1545b7c9c.png
 logo.png: logo-10127f1e79f08591c57de4cf7530104f.png
 map.png: map-f33f65f8fbb7c8a38b70569362a197c8.png
+nav-strip.png: nav-strip-4440ad29eb56d6a9ee21b59f28bd8ebf.png
 nominet_logo.png: nominet_logo-07300095d513f4033a1c76ad0f4c09ea.png
 pencil-line.png: pencil-line-e89fc06545a87fa523f671eac7bcf8f7.png
 person.png: person-f5e3f92e3468f215c6a158401d125ef2.png
@@ -30,8 +32,8 @@ rails.validations.js: rails.validations-d7473b8840f5d0dd36c041567b644afc.js
 jquery.iframe-transport.js: jquery.iframe-transport-cd8c19f535a2be5f0330f92142ae3842.js
 jquery.remotipart.js: jquery.remotipart-6816976a6b97ebbf84d9a1073c9327b8.js
 jquery.autogrow-textarea.js: jquery.autogrow-textarea-c83c65df8b25f871e4e6757a02cf959b.js
-jquery-ui.min.js: jquery-ui.min-449c6576aff2d5aef9fea2c0b667083b.js
-jquery.min.js: jquery.min-c17ee58f451d313a5585c3a1b1571ff2.js
+jquery-ui.min.js: jquery-ui.min-261bf7a9e55e851952f6f5ede08a5413.js
+jquery.min.js: jquery.min-0deb727998a74e33441fc9222494d56a.js
 jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40.png: jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40-c3e0e1955420032feb67368f05648ded.png
 jquery-ui/ui-bg_diagonals-thick_20_666666_40x40.png: jquery-ui/ui-bg_diagonals-thick_20_666666_40x40-b54ce924a9f2343e1aada33aba870889.png
 jquery-ui/ui-bg_flat_10_000000_40x100.png: jquery-ui/ui-bg_flat_10_000000_40x100-cd2e3b2d176258c1e138e82b015b3c2d.png
@@ -52,6 +54,6 @@ loader-square.gif: loader-square-385b70624cc94017209ecc4a21490252.gif
 redactor_image_upload_error.png: redactor_image_upload_error-813aad6b1e2ce7476faca6e60a759623.png
 jquery-ui-1.8.23.js: jquery-ui-1.8.23-248a0ac88e98ecc0bbe895ab2f7713ce.js
 jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
-application.js: application-af1e1f4875822f33c008ece2896d0c4d.js
-application.css: application-8b795fb5b17a124daf4058c7f3769a76.css
+application.js: application-09b2e1a990179a7af3648d8f720be7fd.js
+application.css: application-c5ca56b60eae366c10e95d56ceda36a5.css
 ie6.css: ie6-f9dc129c36c733a6ed2559ed155029ea.css
