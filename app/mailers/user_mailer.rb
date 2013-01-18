@@ -1,6 +1,8 @@
 class UserMailer < ActionMailer::Base
   
   helper YmCore::UrlHelper
+  helper YmSnippets::SnippetsHelper
+  
   
   default :from => "site@neighbourscanhelp.org.uk",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
@@ -33,6 +35,16 @@ class UserMailer < ActionMailer::Base
   def validated(user)
     @user = user
     mail(:to => @user.email, :subject => "[Neighbours Can Help] You have been validated")
+  end
+  
+  def send_invite(from, to, message)
+     @message = message
+     mail(:from => from, :to => to, :subject => "Your personal invite to Neighbours Can Help")
+  end
+  
+  def preregister_thank_you(pre_registration)
+    @pre_registration = pre_registration
+    mail(:to => @pre_registration.email, :subject => "[Neighbours Can Help] Thank you for pre-registering")
   end
   
 end

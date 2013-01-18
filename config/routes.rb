@@ -14,6 +14,8 @@ Neighbours::Application.routes.draw do
   resources :pre_registrations
   get "pr/:id" => "pre_registrations#show"
   
+  get "share/email_form" => "share#email_form"
+  match "share/send_email"
 
   resources :needs do
     resources :offers, :only => [:create]

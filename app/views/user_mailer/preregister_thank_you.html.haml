@@ -1,0 +1,11 @@
+!!!
+%html
+  %body
+    %p
+      ="Dear #{@pre_registration.name},"
+    %p
+      =simple_format(snippet_text(:preregister_email_thank_you, "Thanks for pre-registering. We will notify you when we are live in your area.\n\nIn the meantime why not share the site with your neighbours and help us build the community."))
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
