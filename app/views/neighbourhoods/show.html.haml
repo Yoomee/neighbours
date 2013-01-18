@@ -10,35 +10,26 @@
 
 -title "My Neighbourhood"
 
--if false
-  .row
-    -if current_user
-      =render "validated_map"
-    -else
-      =render "unvalidated_map"
-    -if !current_user
-      .span12
-        .what-help
-          %h2.what-help-text What help would you like?
-          =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "what-help-select")
-        .home-help-links
-          =link_to "Please help us improve our services to the community by answering these 6 simple questions", "http://www.surveymonkey.com/s/VGLT22G", :target => "_blank", :class=>"home-help-link", :target => :blank
+-if current_user
+  =render "validated_map"
 
-.container
-#home-intro-2
+      
+-else current_user
   .container
-    .row
-      .span12.home-intro-inner
-        .home-intro-text
-          %h2.home-welcome.home-intro-text
-            -if current_user
-              ="Hi #{current_user}, welcome to Neighbours Can Help"
-            -else
-              Welcome to Neighbours Can Help
-          %h3.home-where.home-intro-text=snippet_text(:mission_statement, "..where neighbours are helping each other")
-        =link_to_slug('Find out more', :about, :class=>"illustration-link")  
-        =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
-        =link_to "Get involved", "#sign-up-popup", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
+  #home-intro-2
+    .container
+      .row
+        .span12.home-intro-inner
+          .home-intro-text
+            %h2.home-welcome.home-intro-text
+              -if current_user
+                ="Hi #{current_user}, welcome to Neighbours Can Help"
+              -else
+                Welcome to Neighbours Can Help
+            %h3.home-where.home-intro-text=snippet_text(:mission_statement, "..where neighbours are helping each other")
+          =link_to_slug('Find out more', :about, :class=>"illustration-link")  
+          =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
+          =link_to "Get involved", "#sign-up-popup", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
 
 .container
   .home-help-links
@@ -67,7 +58,7 @@
                     =need.description
                   -else
                     =need.category.description
-      =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
+      =link_to "I'd like some help", '#sign-up-popup', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
 
     .span6
       %h2 Neighbours who need help
@@ -88,4 +79,5 @@
                     =need.description
                   -else
                     =need.category.description
-      =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"
+      =link_to "I'd like to offer some help", '#sign-up-popup', :class=>"btn call-to-action", :"data-toggle"=>"modal"
+      

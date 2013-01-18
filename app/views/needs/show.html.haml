@@ -12,7 +12,7 @@
       -else
         .alert
           ="#{@need.user} has accepted someone else's offer."
-.row
+.row.mt-2
   .span2
     =link_to (can?(:read,@need.user) ? @need.user : '#'), :class => "user-thumbnail-large pull-left" do
       =image_for_with_validation(@need.user, "120x120#")

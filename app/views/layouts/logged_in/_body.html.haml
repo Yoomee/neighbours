@@ -1,7 +1,6 @@
 -body_tag do  
   .main-wrapper
     =render("layouts/logged_in/header")
-    =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
     =yield_with_bootstrap(yield)
     .push
   -if current_user.nil?

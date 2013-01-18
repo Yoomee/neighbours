@@ -11,7 +11,7 @@ class PreRegistration < ActiveRecord::Base
     end
     
     def neighbourhood
-      Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)
+      Neighbourhood.find_by_postcode_prefix(postcode) || Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)
     end
     
     def live?

@@ -52,4 +52,43 @@
     =link_to_slug(:help, :class=>"help-link") do
       %icon.icon-question-sign
       Help
+      
+      
+=yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
+      
+-if show_control_panel?      
+  .container
+    .row
+      #control-panel.span12
+        .row
+          .span2.offset1
+            =link_to root_path, :id=>"big-home-icon" do
+              %i.icon-home
+          .span3    
+            %h3.control-panel-title
+              Account status
+            %p.control-panel-subtitle
+              -if current_user.validated?
+                Validated
+              -else
+                Not validated
+          .span3
+            =link_to user_needs_path(current_user), :class=>"control-panel-link" do
+              %h3.control-panel-title
+                My requests
+              %p.control-panel-subtitle
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_requests"))
+          .span3
+            =link_to offers_path, :class=>"control-panel-link" do
+              %h3.control-panel-title
+                My offers
+              %p.control-panel-subtitle
+                -if controller_name.needs? && action_name.show?
+                  =header_messages_badge(0)
+                -else
+                  =header_messages_badge(current_user.new_notification_count("my_offers"))    
+
           

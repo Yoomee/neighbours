@@ -1160,7 +1160,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   
   z-index: 100;
   height: 120px;
-}.controller_neighbourhoods .header-intro {
+}
+
+.controller_neighbourhoods .header-intro, .controller_needs .header-intro, .controller_offers .header-intro   {
   margin-bottom: 0;
 }
 .header-intro-inner {
