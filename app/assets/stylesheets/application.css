@@ -1539,6 +1539,9 @@ a.cta-small {
 .twitter-share-btn, .twitter-share-btn:hover {
   background: #3aa4e5;
 }
+.email-share-btn, .email-share-btn:hover {
+  background: rgb(69,128,62);
+}
 
  .elsewhere-list li {
 	margin: 0 0 4px
