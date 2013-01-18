@@ -28,13 +28,32 @@ class NeighbourhoodsController < ApplicationController
     end
   end
   
+  def create
+    if @neighbourhood.save
+       flash_notice @neighbourhood
+       redirect_to neighbourhoods_path
+    else    
+       render :action => "new"
+    end
+  end
+  
+  def destroy
+    if @neighbourhood.destroy
+      flash_notice @neighbourhood
+    else
+      flash_error @neighbourhood
+    end
+    redirect_to neighbourhoods_path
+  end
+  
+  
   def update
     if @neighbourhood.update_attributes(params[:neighbourhood])
       flash[:message] = "Area maximums updated"
     else
       flash[:error] = "Sorry. Something's gone wrong. Please try again."
     end
-    redirect_to area_radius_maximums_path
+    redirect_to neighbourhoods_path
   end
 
   private

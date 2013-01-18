@@ -65,7 +65,7 @@ Neighbours::Application.routes.draw do
   end
   
   resources :area_radius_maximums, :only => :index
-  resources :neighbourhoods, :only => :update
+  resources :neighbourhoods
   
   get "neighbourhood" => "neighbourhoods#show"
   get "area/:id" => "neighbourhoods#show"

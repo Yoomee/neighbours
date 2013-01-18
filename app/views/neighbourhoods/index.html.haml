@@ -1,0 +1,30 @@
+%h2.mb-2
+  =title("All areas/neighbourhoods")
+  
+  
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Postcode
+      %th Status
+      %th Actions
+  %tbody
+    -@neighbourhoods.each do |area|
+      %tr
+        %td=area.name
+        %td=area.postcode_prefix
+        %td=area.status        
+        %td
+          =link_to(area, :confirm => 'Are you sure?', :method => :delete) do
+            %i.icon.icon-trash
+            Delete
+          &nbsp;
+          =link_to(edit_neighbourhood_path(area)) do
+            %i.icon.icon-edit
+            Edit
+      
+=options_panel do
+  =back_link
+  =link_to "Add new area", new_neighbourhood_path
+  
