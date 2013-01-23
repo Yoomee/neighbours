@@ -9,9 +9,14 @@ class PreRegistrationsController < ApplicationController
         @redirect_url = "/area/#{@pre_registration.neighbourhood.id}-#{@pre_registration.neighbourhood.name.parameterize}"
         UserMailer.preregister_thank_you(@pre_registration).deliver
       elsif @pre_registration.live?
-        user = @pre_registration.create_user
-        sign_in user
-        @redirect_url = "/neighbourhood"
+        if User.find_by_email(@pre_registration.email.downcase).present?
+          flash[:notice] = "An account with this email address already exits. Sign in here."
+          @redirect_url = "/login"
+        else
+          user = @pre_registration.create_user
+          sign_in user
+          @redirect_url = "/neighbourhood"
+        end
       else
         @redirect_url = "/pr/#{@pre_registration.id}"
         UserMailer.preregister_thank_you(@pre_registration).deliver    
