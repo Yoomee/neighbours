@@ -49,11 +49,10 @@
           %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"        
           %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
           %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")                            
-    =link_to_slug(:help, :class=>"help-link") do
+    =link_to_slug(:safety_tips, :class=>"help-link") do
       %icon.icon-question-sign
-      Help
-      
-      
+      Stay safe
+
 =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
       
 -if show_control_panel?      
