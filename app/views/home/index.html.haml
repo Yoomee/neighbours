@@ -24,9 +24,3 @@
   .row
     .span8.offset2
       %h3.center I can't find 'Neighbours who've been helped' and 'Neighbours who need help'- have you put it anywhere Andy?
-
--if false
-  -if current_user
-    =link_to "I'd like to offer some help", needs_path, :class=>"home-help-link"
-  -else
-    =link_to "I'd like to offer some help", "#register-popup", :class=>"home-help-link", :'data-toggle' => 'modal'
