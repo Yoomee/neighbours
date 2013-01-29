@@ -4,7 +4,11 @@ class RegistrationsController < ApplicationController
     if params[:redirect_to_needs]
       session[:redirect_to_needs] = true
     end
-    @user = params[:user].present? ? User.new(params[:user]) : User.new(:gender => "male")
+    if @pre_registration = PreRegistration.find_by_id(session.delete(:pre_registration_id))
+      @user = @pre_registration.create_user
+    else
+      @user = params[:user].present? ? User.new(params[:user]) : User.new(:gender => "male")
+    end
     @user.current_step = params[:step]
   end
 
@@ -21,7 +25,7 @@ class RegistrationsController < ApplicationController
         if @user.last_step?
           if @user.save
             sign_in(@user)
-            if @user.is_in_sheffield?
+            if true
               if @user.validate_by == "post" && !@user.validated?
                 flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
               end

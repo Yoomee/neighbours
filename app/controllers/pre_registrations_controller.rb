@@ -13,9 +13,8 @@ class PreRegistrationsController < ApplicationController
           flash[:notice] = "An account with this email address already exits. Sign in here."
           @redirect_url = "/login"
         else
-          user = @pre_registration.create_user
-          sign_in user
-          @redirect_url = "/neighbourhood"
+          session[:pre_registration_id] = @pre_registration.id
+          @redirect_url = "/registrations/new"
         end
       else
         @redirect_url = "/pr/#{@pre_registration.id}"

@@ -37,19 +37,9 @@ class PreRegistration < ActiveRecord::Base
       user.email_confirmation = email
       user.first_name = names.first
       user.last_name = names.last
-      user.password_confirmation = user.password
       user.postcode = postcode
-      
-      #Fake this data. TODO: fix      
-      user.dob = "1900-01-01"
-      user.house_number = "1"
-      user.street_name = "Unknown"
-      user.agreed_conditions = true
-      user.validate_by = "post"
-      user.password = "password"
             
       user.city = PreRegistration.name_of_town(postcode)
-      user.save
       user
     end
     
