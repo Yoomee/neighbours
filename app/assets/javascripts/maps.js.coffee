@@ -79,11 +79,11 @@ window.NeedsMap =
 	init: (admin)->
     admin ||= false
     mapOptions = {
-      center: new google.maps.LatLng(DEFAULT_LOCATION[0],DEFAULT_LOCATION[1]),
+      center: new google.maps.LatLng(user_lat,user_lng),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       streetViewControl: false,
       mapTypeControl: false,
-      zoom: 12
+      zoom: 18
     }
     
     NeedsMap.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
