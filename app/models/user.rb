@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include YmUsers::User
   include YmCore::Multistep
 
-  # devise :confirmable
+  devise :confirmable
 
   User::CARD_TYPES = %w{visa mastercard american_express}
   User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Maltby Academy", "Maltby Town Council"]
