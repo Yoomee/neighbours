@@ -30,7 +30,7 @@
           -if current_user.try(:validated?)
             ="#{@need.user.street_name}, #{@need.created_at.strftime("%e %B %Y")}"
           -else
-            ="#{@need.user.street_name}"  
+            ="#{@need.created_at.strftime("%e %B %Y")}"  
             
       -if current_user && current_user.validated?
         =simple_format(@need.description.capitalize)
