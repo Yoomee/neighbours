@@ -32,4 +32,15 @@ class PreRegistrationsController < ApplicationController
     @pr_json = PreRegistration.all.select{|pr| pr.lat_lng.present?}.to_json(:methods => [:lat_lng])
   end
   
+  def index
+    respond_to do |format|
+      format.html do
+        redirect_to map_pre_registrations_path
+      end
+      format.xls do
+        @pre_registrations = PreRegistration.all
+      end
+    end
+  end
+  
 end
