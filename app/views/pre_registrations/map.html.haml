@@ -9,7 +9,11 @@
     });
 
 .row
-  .span12
+  .span8
     %h1=title "Pre-registration map"
+  .span4
+    =link_to(pre_registrations_path(:format => 'xls'), :class => 'btn btn-primary pull-right mt-1') do
+      %i.icon-download-alt
+      Download spreadsheet
 .row
   #map-canvas.span12{:style => "height:600px"}
