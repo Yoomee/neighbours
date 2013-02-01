@@ -21,7 +21,7 @@
               =image_for_with_validation(need.user, "60x50#")
               %p.small-text=need.user
               -if need.user.validated?
-                .validated-icon{ :rel => 'tooltip', :title =>"Validated"}
+                .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
           .list-text
             %h3
               =link_to_self(need)

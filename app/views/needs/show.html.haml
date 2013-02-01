@@ -15,9 +15,9 @@
 .row.mt-2
   .span2
     =link_to (can?(:read,@need.user) ? @need.user : '#'), :class => "user-thumbnail-large pull-left" do
-      =image_for_with_validation(@need.user, "120x120#")
+      =image_for_with_validation(@need.user, "120x120#", :rel => 'tooltip', :title =>"Joined on #{@need.user.created_at.strftime("%e %B %Y")}")
       -if @need.user.validated?
-        .validated-icon{ :rel => 'tooltip', :title =>"validated"}
+        .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
       
       %p=@need.user
   .span8
@@ -25,10 +25,13 @@
       %h1#need-title
         %small I need help with
         %span=title @need.title
-      -if current_user.try(:validated?)
         %p.location-smallprint
           %i.icon-map-marker
-          =(@need.user.street_name)
+          -if current_user.try(:validated?)
+            ="#{@need.user.street_name}, #{@need.created_at.strftime("%e %B %Y")}"
+          -else
+            ="#{@need.user.street_name}"  
+            
       -if current_user && current_user.validated?
         =simple_format(@need.description.capitalize)
       -else

@@ -1571,7 +1571,12 @@ a.need-help-button:hover {
   padding-top: 40px;
 }
 
-
+.joined-date {
+	font-size: 11px;
+	text-align: center;
+	width: 120px;
+	color: #777777;
+}
 
 
 
