@@ -6,6 +6,15 @@ class PreRegistration < ActiveRecord::Base
     
     before_save :geocode
     
+    class << self
+      def name_of_town(postcode)
+        results = Geocoder.search("#{postcode}, UK")
+        address_components = results.first.data['address_components']
+        town_component = address_components.select{|component| component['types'].include?('postal_town')}.first
+        town_component.try(:[],'short_name')        
+      end
+    end
+    
     def coming_soon?
       neighbourhood && !neighbourhood.live?
     end
