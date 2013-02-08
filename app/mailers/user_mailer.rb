@@ -47,4 +47,10 @@ class UserMailer < ActionMailer::Base
     mail(:to => @pre_registration.email, :subject => "[Neighbours Can Help] Thank you for pre-registering")
   end
   
+  def admin_message(subject, message, hash)
+    @message = message
+    @hash = hash
+    mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] #{subject}")   
+  end
+  
 end

@@ -19,6 +19,7 @@ class PreRegistrationsController < ApplicationController
       else
         @redirect_url = "/pr/#{@pre_registration.id}"
         UserMailer.preregister_thank_you(@pre_registration).deliver    
+        UserMailer.admin_message("A new pre-registration", "There has been a new pre-registration on the website", @pre_registration.attributes).deliver
       end  
     end
   end
