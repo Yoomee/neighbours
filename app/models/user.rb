@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   attr_accessor :card_number, :card_security_code
 
   before_create :generate_validation_code
+  after_create :email_admin
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -154,6 +155,10 @@ class User < ActiveRecord::Base
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
     end
+  end
+  
+  def email_admin
+    UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
   end
 
   def generate_validation_code
