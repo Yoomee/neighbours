@@ -1245,7 +1245,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 .nav-intro li {
   float: left;
-  margin: 0 0 0 30px;
+  margin: 0 0 0 27px;
 }
 .intro-nav-link {
   color: #333;
@@ -1257,6 +1257,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 }
 .header-intro li.active a,
 .root_slug_about .intro-nav-link-about,
+.slug_help .intro-nav-link-help,
 .controller_home .intro-nav-link-home,
 .root_slug_news .intro-nav-link-latest
  {
@@ -1265,7 +1266,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 
 }
 .intro-nav-link-login {
-	margin:  0 10px 0 50px;
+	margin:  0 10px 0 33px;
 
 }
 .header-intro-fixed .intro-nav-link {
