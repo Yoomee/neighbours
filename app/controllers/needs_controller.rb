@@ -1,5 +1,6 @@
 class NeedsController < ApplicationController
   load_and_authorize_resource
+  skip_load_and_authorize_resource :only => :show
   
   before_filter :redirect_if_logged_out, :only => :create
   after_filter :set_notifications_to_read, :only => :show
@@ -15,6 +16,12 @@ class NeedsController < ApplicationController
   end
 
   def show
+    if current_user.try(:admin?)
+      @need = Need.unscoped.find(params[:id])
+    else
+      @need = Need.find(params[:id])
+    end
+    authorize! :show, @need
     @offers = @need.offers
   end
 
@@ -54,8 +61,8 @@ class NeedsController < ApplicationController
   end
   
   def destroy
-    @need.destroy
-    return_or_redirect_to needs_path
+    @need.update_attribute(:removed, true)
+    return_or_redirect_to @need
   end
   
   private

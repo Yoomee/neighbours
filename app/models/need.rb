@@ -13,6 +13,8 @@ class Need < ActiveRecord::Base
   validates :description, :presence => true
   validate :sub_category_if_available
   validate :deadline_is_in_future
+  
+  default_scope where(:removed => false)
 
   scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
@@ -74,7 +76,7 @@ class Need < ActiveRecord::Base
     end
     
   end
-
+  
   def has_accepted_offer?
     accepted_offer.present?
   end

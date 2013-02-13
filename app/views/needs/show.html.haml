@@ -1,3 +1,8 @@
+-if @need.removed?
+  .row
+    .span12
+      .alert.alert-error
+        This request has been removed from the site and is only visible to admins.
 -if @need.has_accepted_offer?
   .row
     .span12
@@ -52,7 +57,7 @@
           =link_to("click here", need_path)
           to see who you could help?
         -else
-          Your request for help will be published byimmediately.
+          Your request for help will be published immediately.
       =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action" if current_user.try(:validated?)
   -else
     .span8
@@ -104,7 +109,7 @@
 .row
   .span12
     =options_panel do
-      =link_if_can("Delete this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
+      =link_if_can("Remove this request", @request, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
       -if current_user
         =link_to("#inappropriate", :data => {:toggle => "modal"}) do
           %i.icon-warning-sign
