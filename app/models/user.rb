@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
 
   geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
+  after_validation :allow_non_unique_email_if_deleted
 
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
@@ -154,6 +155,17 @@ class User < ActiveRecord::Base
     if errors.present?
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
+    end
+  end
+  
+  def allow_non_unique_email_if_deleted
+    email_errors_messages = errors.messages.delete(:email)
+    non_unique_message = I18n.t("activerecord.errors.models.user.attributes.email.taken")
+    if email_errors_messages.delete(non_unique_message) && User.exists?(:email => email, :is_deleted => false)
+      email_errors_messages << non_unique_message
+    end
+    email_errors_messages.each do |message|
+      self.errors.add(:email,message)
     end
   end
   

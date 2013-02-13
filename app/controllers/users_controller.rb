@@ -31,7 +31,8 @@ class UsersController < ApplicationController
   end
 
   def toggle_is_deleted
-    if @user.update_attributes(:is_deleted => !@user.is_deleted)
+    @user.is_deleted = !@user.is_deleted
+    if @user.save
       flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}"
     else
       flash[:error] = "Something has gone wrong.  Please try again"
