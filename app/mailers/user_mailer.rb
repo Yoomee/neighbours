@@ -53,4 +53,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] #{subject}")   
   end
   
+  def new_registration_with_post_validation(user)
+    @user = user
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
+  end
+  
 end
