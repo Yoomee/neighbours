@@ -2,6 +2,7 @@
   =form.inputs do
     =form.input :name, :input_html => {:class => "span6"}, :placeholder => "eg. Maltby or Carver Close"
     =form.input :postcode_prefix, :label => "Postcode prefix (optional)" ,:input_html => {:class => "span3"}, :placeholder => "eg. S66 or S10 5DN"
+    =form.input :admin, :collection => User.order([:first_name, :last_name]), :prompt => "Please select..."
     =form.input :live, :label => "Tick to make live" ,:as => :boolean
     
   =form.buttons do
