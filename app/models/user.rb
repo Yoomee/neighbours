@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   attr_accessor :card_number, :card_security_code
 
   before_create :generate_validation_code
-  after_create :email_admin
+  after_create :send_emails
   before_save :set_card_digits
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def radius_options
-    max_radius = AreaRadiusMaximum.find_by_postcode_fragment(postcode.split[0].strip).try(:maximum_radius_in_miles) || AreaRadiusMaximum::DEFAULT_MAXIMUM
+    max_radius = AreaRadiusMaximum.find_by_postcode_fragment(postcode.to_s.split[0].to_s.strip).try(:maximum_radius_in_miles) || AreaRadiusMaximum::DEFAULT_MAXIMUM
     Need.radius_options.select { |k,v| v <= (max_radius.to_i * 1609.344).round }
   end
 
@@ -157,7 +157,10 @@ class User < ActiveRecord::Base
     end
   end
   
-  def email_admin
+  def send_emails
+    if validate_by == "post"
+      UserMailer.new_registration_with_post_validation(self).deliver
+    end
     UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
   end
 

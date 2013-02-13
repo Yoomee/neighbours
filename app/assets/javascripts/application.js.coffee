@@ -113,23 +113,25 @@ window.Registration =
 
 window.NewNeedForm =
   force_submit: false
+  configureSubcategories: ->
+    category_id = parseInt($('select#need_category_id').val(), 10)
+    cat = $.grep(NewNeedForm.categories, (e) ->
+      e.id is category_id
+    )[0]
+    $('select#need_sub_category_id').empty()
+    if cat && cat.sub_categories.length
+      $("select#need_sub_category_id").append('<option>Please select...</option>')
+      $.each cat.sub_categories, (idx,sub_cat) ->
+        console.log sub_cat
+        $("select#need_sub_category_id").append($("<option></option>").attr("value", sub_cat.id).text(sub_cat.name))
+      $("#sub_category_input").show()
+    else
+      $("#sub_category_input").hide()
   init: (logged_in) ->
     NewNeedForm.showHideDeadline()
     $('select#need_category_id').change ->
-      category_id = parseInt($(this).val(), 10)
-      cat = $.grep(NewNeedForm.categories, (e) ->
-        e.id is category_id
-      )[0]
-      $('select#need_sub_category_id').empty()
-      if cat.sub_categories.length
-        $("select#need_sub_category_id").append('<option>Please select...</option>')
-        $.each cat.sub_categories, (idx,sub_cat) ->
-          console.log sub_cat
-          $("select#need_sub_category_id").append($("<option></option>").attr("value", sub_cat.id).text(sub_cat.name))
-        $("#sub_category_input").show()
-      else
-        $("#sub_category_input").hide()
-        
+      NewNeedForm.configureSubcategories()
+    NewNeedForm.configureSubcategories()
       
     $('#need_need_to_know_by_input input[type="radio"]').change ->
       NewNeedForm.showHideDeadline()

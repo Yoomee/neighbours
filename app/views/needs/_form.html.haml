@@ -8,15 +8,15 @@
   =semantic_form_for @need, :validate => true, :html => { :class => "form-horizontal" }  do |f|
     =hidden_field_tag :return_to
     =f.inputs do
-      -if @need.category.present?
+      -if @need.category.present? && @need.category.sub_categories.count.zero?
         =f.hidden_field :category_id, :value => @need.category.id
       -else
         =f.input :category, :label => "I need help with", :help => "Select the most relevant category", :prompt => "Please select...", :required => false, :collection => NeedCategory.select_options, :input_html => {:class => "span5"}
       -if @need.sub_category.present?
         =f.hidden_field :sub_category_id, :value => @need.sub_category.id
       -else
-        #sub_category_input.hide
-          =f.input :sub_category, :label => false, :required => false, :collection => [], :help => "Select a sub-category", :input_html => {:class => "span5"}
+        #sub_category_input{:class => ('hide' unless @need.category && !@need.category.sub_categories.count.zero?)}
+          =f.input :sub_category, :label => "More specifically", :required => false, :collection => [], :help => "Select a sub-category", :input_html => {:class => "span5"}
       =f.input :description, :label => "Add a description", :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span5", :rows => "6" }, :required => false
       =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => "Broadcast radius", :help => "People who live within this distance from you will hear about your need", :input_html => {:class => "span5"}
       =f.input :need_to_know_by, :as => :radio, :collection => [["Any time","anytime"],["As soon as possible","asap"], ["A specific date", "date"]], :label => "I need to know by", :help => "When would you like to know if anybody can help you?"
