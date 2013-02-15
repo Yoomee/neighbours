@@ -9,7 +9,7 @@ class ShareController < ApplicationController
     if params[:pr]
       @pr = PreRegistration.find(params[:pr]) 
       @area = @pr.area 
-      @link = "http://#{request.host}/pr/#{@pr.id}"
+      @link = "http://#{request.host}/about"
     end
     if session[:email] 
       @from = session[:email] 

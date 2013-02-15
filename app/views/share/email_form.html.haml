@@ -16,7 +16,6 @@
         =snippet_text(:email_intro,"Help us grow the community by emailing your friends about Neighbours Can Help.")      
           
       =semantic_form_for :email, :url => {:controller => 'share' , :action => 'send_email' }do |form|
-        
         =form.inputs do
           =form.input :from, :label => "From:", :input_html => {:class => "span6", :value => "#{@from if @from}"}, :required => false, :placeholder => "Your email address"
           =form.input :to, :label => "To:", :input_html => {:class => "span6"}, :placeholder => "Your friend's email address"
