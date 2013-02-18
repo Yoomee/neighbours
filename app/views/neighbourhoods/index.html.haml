@@ -8,21 +8,19 @@
       %th Name
       %th Postcode
       %th Status
+      %th Admin
       %th Actions
   %tbody
     -@neighbourhoods.each do |area|
       %tr
         %td=area.name
         %td=area.postcode_prefix
-        %td=area.status        
+        %td=area.status
+        %td=link_to(area.admin.full_name,area.admin) if area.admin
         %td
-          =link_to(area, :confirm => 'Are you sure?', :method => :delete) do
-            %i.icon.icon-trash
-            Delete
-          &nbsp;
-          =link_to(edit_neighbourhood_path(area)) do
-            %i.icon.icon-edit
-            Edit
+          =link_to("Edit", edit_neighbourhood_path(area))
+          &middot;
+          =link_to("Delete", area, :confirm => 'Are you sure?', :method => :delete)
       
 =options_panel do
   =back_link
