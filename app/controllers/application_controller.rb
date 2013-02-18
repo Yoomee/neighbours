@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include YmUsers::ApplicationController
 
-  before_filter :authenticate, :redirect_to_registration_if_unfinished, :clear_new_need_attributes
+  before_filter :authenticate, :clear_new_need_attributes
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -19,17 +19,6 @@ class ApplicationController < ActionController::Base
     if !%w{registrations need sessions pages}.include?(controller_name) || (controller_name == :pages && action_name == :neighbourhood_safety)
       session[:new_need_attributes] = nil
     end
-  end
-
-  def redirect_to_registration_if_unfinished
-    return true if current_user.nil? || current_user.is_admin? || %w{registrations sessions}.include?(controller_name)
-    path = nil
-    if !current_user.has_address?
-      path = where_you_live_registration_path(:modal => "address_prompt")
-    elsif !current_user.agreed_conditions? || (!current_user.validated? && current_user.validate_by.blank?)
-      path = validate_registration_path(:modal => "validation_prompt")
-    end
-    redirect_to(path) unless path.nil? || current_path == path
   end
 
 end
