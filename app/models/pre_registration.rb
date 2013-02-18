@@ -20,17 +20,13 @@ class PreRegistration < ActiveRecord::Base
     end
     
     def neighbourhood
-      Neighbourhood.find_by_postcode_prefix(postcode) || Neighbourhood.find_by_postcode_prefix(postcode_start) || Neighbourhood.find_by_name(area)
+      Neighbourhood.find_by_postcode_or_area(postcode, area)
     end
     
     def live?
       neighbourhood && neighbourhood.live?
     end
-    
-    def postcode_start
-      postcode.gsub(/\s.+/, '')
-    end
-    
+
     def postcode_with_uk
       "#{postcode}, UK"
     end
@@ -58,7 +54,7 @@ class PreRegistration < ActiveRecord::Base
       self.lat = geometry['location']['lat']
       self.lng = geometry['location']['lng']
       
-      if (neighbourhood = Neighbourhood.find_by_postcode_prefix(postcode_start))
+      if neighbourhood
         self.area = neighbourhood.name
       else
         address_components = results.first.data['address_components']
