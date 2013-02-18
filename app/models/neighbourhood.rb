@@ -16,6 +16,7 @@ class Neighbourhood < ActiveRecord::Base
     end
 
     def find_by_postcode(postcode)
+      return nil if postcode.blank?
       neighbourhoods = where('postcode_prefix LIKE ? OR postcode_prefix = ?', "#{postcode.to_s.split.first} %", postcode.to_s.split.first)
       postcode_fragment = postcode.downcase
       while postcode_fragment.size >= postcode.split.first.size do
