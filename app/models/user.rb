@@ -15,12 +15,13 @@ class User < ActiveRecord::Base
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
+  belongs_to :neighbourhood
 
   attr_accessor :card_number, :card_security_code
 
   before_create :generate_validation_code
   after_create :send_emails
-  before_save :set_card_digits
+  before_save :set_card_digits, :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
   geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
@@ -178,6 +179,12 @@ class User < ActiveRecord::Base
       UserMailer.new_registration_with_organisation_validation(self).deliver
     end
     UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
+  end
+
+  def set_neighbourhood
+    unless neighbourhood
+      self.neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
+    end
   end
 
   def generate_validation_code
