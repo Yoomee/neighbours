@@ -7,11 +7,6 @@ class Neighbourhood < ActiveRecord::Base
   
   accepts_nested_attributes_for :area_radius_maximums, :reject_if => :all_blank, :allow_destroy => true 
   
-  def status
-    if live then
-      "Live"
-    else
-      "Coming soon"
     end
   end
   
@@ -19,6 +14,10 @@ class Neighbourhood < ActiveRecord::Base
     results = Geocoder.search("#{postcode_prefix}, UK")
     geometry = results.first.data['geometry']
     [geometry['location']['lat'],geometry['location']['lng']]
+  end
+
+  def status
+    live? ? "Live" : "Coming soon"
   end
     
 end
