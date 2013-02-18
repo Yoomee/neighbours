@@ -16,9 +16,8 @@ class NeedsController < ApplicationController
   end
 
   def show
-    if current_user.try(:admin?)
-      @need = Need.unscoped.find(params[:id])
-    else
+    @need = Need.unscoped.find(params[:id])
+    if !can?(:destroy, @need)
       @need = Need.find(params[:id])
     end
     authorize! :show, @need

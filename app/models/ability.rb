@@ -33,6 +33,10 @@ class Ability
       if user.is_community_champion?
         can :index, Post
       end
+      # neighbourhood admin
+      can [:manage], Need do |need|
+        need.user.neighbourhood.try(:admin_id) == user.id
+      end
     end
     
   end
