@@ -173,6 +173,8 @@ class User < ActiveRecord::Base
   def send_emails
     if validate_by == "post"
       UserMailer.new_registration_with_post_validation(self).deliver
+    elsif validate_by == "organisation"
+      UserMailer.new_registration_with_organisation_validation(self).deliver
     end
     UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
   end
