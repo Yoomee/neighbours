@@ -160,6 +160,7 @@ class User < ActiveRecord::Base
   end
   
   def allow_non_unique_email_if_deleted
+    return true if errors.messages.blank?
     email_errors_messages = errors.messages.delete(:email)
     non_unique_message = I18n.t("activerecord.errors.models.user.attributes.email.taken")
     if email_errors_messages.delete(non_unique_message) && User.exists?(:email => email, :is_deleted => false)
@@ -173,6 +174,8 @@ class User < ActiveRecord::Base
   def send_emails
     if validate_by == "post"
       UserMailer.new_registration_with_post_validation(self).deliver
+    elsif validate_by == "organisation"
+      UserMailer.new_registration_with_organisation_validation(self).deliver
     end
     UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
   end
