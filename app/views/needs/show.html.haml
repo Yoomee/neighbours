@@ -53,9 +53,7 @@
     .span9.offset2
       .alert.alert-info
         -if current_user.try(:validated?)
-          Sorry, no one has offered to help you with this yet. In the meantime why don't you
-          =link_to("click here", need_path)
-          to see who you could help?
+          Sorry, no one has offered to help you with this yet. In the meantime why don't you click below to see who you could help?
         -else
           Your request for help will be published immediately.
       =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action" if current_user.try(:validated?)
