@@ -7,4 +7,5 @@
   =form.input :street_name, :label => "Street name", :required => false, :input_html => {:placeholder => "Street name", :class => "span4"}, :help => "We will only show your address to people that want to help you."
   =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city", :value => @user.city}
   =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2", :disabled => true}
+  =form.input :postcode, :as => :hidden
   =form.input :phone, :label => "Phone number <br /><em class='optional'>(optional)</em>".html_safe, :required => false, :input_html => {:placeholder => "e.g. 0114 123123"}, :help => "This is optional but will help if we need to contact you. We promise to keep this private."

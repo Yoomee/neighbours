@@ -161,8 +161,7 @@ class User < ActiveRecord::Base
   end
   
   def allow_non_unique_email_if_deleted
-    return true if errors.messages.blank?
-    email_errors_messages = errors.messages.delete(:email)
+    return true if errors.messages.blank? || (email_errors_messages = errors.messages.delete(:email)).blank?
     non_unique_message = I18n.t("activerecord.errors.models.user.attributes.email.taken")
     if email_errors_messages.delete(non_unique_message) && User.exists?(:email => email, :is_deleted => false)
       email_errors_messages << non_unique_message
