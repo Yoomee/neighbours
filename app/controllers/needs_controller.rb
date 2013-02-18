@@ -53,8 +53,13 @@ class NeedsController < ApplicationController
   def create
     @need.user = current_user
     if @need.save
-      flash[:notice] = "Created new request for help"      
-      redirect_to user_needs_path(current_user)
+      flash[:notice] = "Created new request for help"
+      if current_user.validated?
+        url_options = {}
+      else
+        url_options = { :modal => 'new_need_not_validated' }
+      end
+      redirect_to user_needs_path(current_user, url_options)
     else
       render :action => 'new'
     end
