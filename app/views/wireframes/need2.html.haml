@@ -1,0 +1,94 @@
+.span12
+  %h1 I'd like some help
+  
+.span12.tag-selectors  
+  .tag-selector.tag-selector-row-1.clearfix
+    %h4.mb1
+      Select a category below
+    %ul.help-tags.unstyled
+      %li=link_to "Bike", "#", :class=>"help-tag btn"
+      %li=link_to "Bins", "#", :class=>"help-tag btn btn-inverse help-tag-selected"
+      %li=link_to "Car", "#", :class=>"help-tag btn"
+      %li=link_to "Childcare", "#", :class=>"help-tag btn"
+      %li=link_to "Cleaning", "#", :class=>"help-tag btn"
+      %li=link_to "Clubs and Societies", "#", :class=>"help-tag btn"
+      %li=link_to "Community", "#", :class=>"help-tag btn"
+      %li=link_to "Computers, technology and IT", "#", :class=>"help-tag btn"      
+      %li=link_to "Disability Assistance", "#", :class=>"help-tag btn"
+      %li=link_to "Gardening", "#", :class=>"help-tag btn"      
+      %li=link_to "Health", "#", :class=>"help-tag btn"
+      %li=link_to "House and DIY", "#", :class=>"help-tag btn"
+      %li=link_to "Lift to", "#", :class=>"help-tag btn"
+      %li=link_to "Nature", "#", :class=>"help-tag btn"
+      %li=link_to "Pets", "#", :class=>"help-tag btn"
+      %li=link_to "Shopping", "#", :class=>"help-tag btn"
+      %li=link_to "Social", "#", :class=>"help-tag btn"
+      %li=link_to "Swap", "#", :class=>"help-tag btn"
+      %li=link_to "This website", "#", :class=>"help-tag btn"
+      %li=link_to "Volunteers", "#", :class=>"help-tag btn"
+      %li=link_to "Other", "#", :class=>"help-tag btn"
+
+
+  .tag-selector.tag-selector-row-2.clearfix
+    %span.tag-selector-arrow
+    %h3.mb1 More specifically...
+    %ul.help-tags.unstyled
+      %li=link_to "Space in your spare bin", "#", :class=>"help-tag btn"
+      %li=link_to "Can someone please put my bin out?", "#", :class=>"help-tag btn"
+      %li=link_to "Miscellaneous request", "#", :class=>"help-tag btn"
+
+
+.span6
+  %h2
+    People currently offering help    
+  %ul.help-list.unstyled#resolved
+    %li.list
+      .list-image
+        =link_to "#", :class => "pull-left" do
+          =image_tag "person.png"
+          %p.small-text
+            Phil
+      .list-text
+        %h3
+          I can help with bin space
+        %p
+          I hardly ever fill up my bin. If anyone lives nearby and wants to use it get in touch
+        =link_to "Accept help from Phil", "#" , :class=>"btn small-help-btn"
+    %li.list
+      .list-image
+        =link_to "#", :class => "pull-left" do
+          =image_tag "person.png"
+          %p.small-text
+            Phil
+      .list-text
+        %h3
+          I can help with bin space
+        %p
+          I hardly ever fill up my bin. If anyone lives nearby and wants to use it get in touch
+        =link_to "Accept help from Phil", "#" , :class=>"btn small-help-btn"              
+
+.span6
+  .well
+    %h3.mb1
+      If you can't find anyone offering help, post your request below
+    .need-offer-form
+      :plain
+        <fieldset class="inputs"> 
+          <div class="text control-group optional" id="need_description_input"><div class="controls"><textarea class="span5" data-validate="true" id="need_description" name="need[description]" rows="6"></textarea>
+
+        <i class="icon-question-sign help-icon" data-original-title="Describe what you need help with. Be sure to include when you need the help and how flexible you can be."></i></div></div>
+          <div class="select control-group optional" id="need_radius_input"><label class=" control-label" for="need_radius">Broadcast radius</label><div class="controls"><select class="span5" id="need_radius" name="need[radius]"><option value="402">1/4 mile</option>
+          <option value="805">1/2 mile</option>
+          <option value="1609" selected="selected">1 mile</option>
+          <option value="3219">2 miles</option>
+          <option value="8047">5 miles</option>
+          <option value="16093">10 miles</option></select>
+
+          <i class="icon-question-sign help-icon" data-original-title="People who live within this distance from you will hear about your need"></i></div></div>
+          <div class="radio control-group optional" id="need_need_to_know_by_input"><label class=" control-label">I need to know by</label><div class="choices controls"><label class="choice radio" for="need_need_to_know_by_anytime"><input checked="checked" id="need_need_to_know_by_anytime" name="need[need_to_know_by]" type="radio" value="anytime">Any time</label>
+          <label class="choice radio" for="need_need_to_know_by_asap"><input id="need_need_to_know_by_asap" name="need[need_to_know_by]" type="radio" value="asap">As soon as possible</label>
+          <label class="choice radio" for="need_need_to_know_by_date"><input id="need_need_to_know_by_date" name="need[need_to_know_by]" type="radio" value="date">A specific date</label>
+        </fieldset>
+      =link_to "Send help request", "/wireframes/need3", :class=>"btn btn-primary mt1"    
+
+  
