@@ -1,0 +1,49 @@
+class AddSnippetsToNeighbourhoods < ActiveRecord::Migration
+  def change
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_1_url, :text
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_1_user, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_1_text, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_2_url, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_2_user, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_2_text, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_3_url, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_3_user, :text    
+    add_column :neighbourhoods, :snippet_unvalidated_map_need_3_text, :text    
+    add_column :neighbourhoods, :snippet_mission_statement_extra, :text    
+    add_column :neighbourhoods, :snippet_mission_statement_extra_title, :text    
+    add_column :neighbourhoods, :snippet_mission_statement, :text    
+    add_column :neighbourhoods, :snippet_reg_form_intro, :text    
+    add_column :neighbourhoods, :snippet_preregister_popup, :text    
+    add_column :neighbourhoods, :snippet_preregister_popup_intro, :text    
+    add_column :neighbourhoods, :snippet_about_title, :text    
+    add_column :neighbourhoods, :snippet_about_heading, :text    
+    add_column :neighbourhoods, :snippet_about_para_1, :text    
+    add_column :neighbourhoods, :snippet_about_para_2, :text    
+    add_column :neighbourhoods, :snippet_about_para_3, :text    
+    add_column :neighbourhoods, :snippet_about_para_4, :text    
+    add_column :neighbourhoods, :snippet_about_para_5, :text    
+    add_column :neighbourhoods, :snippet_about_para_6, :text    
+    add_column :neighbourhoods, :snippet_about_how_it_works_title_1, :text    
+    add_column :neighbourhoods, :snippet_about_how_it_works_para_1, :text    
+    add_column :neighbourhoods, :snippet_about_how_it_works_title_2, :text    
+    add_column :neighbourhoods, :snippet_about_how_it_works_para_2, :text    
+    add_column :neighbourhoods, :snippet_about_live_title, :text    
+    add_column :neighbourhoods, :snippet_about_live_para_1, :text    
+    add_column :neighbourhoods, :snippet_about_live_para_2, :text    
+    add_column :neighbourhoods, :snippet_about_long_term_title_1, :text    
+    add_column :neighbourhoods, :snippet_about_long_term_para_1, :text    
+    add_column :neighbourhoods, :snippet_about_long_term_title_2, :text    
+    add_column :neighbourhoods, :snippet_about_long_term_para_2, :text    
+    add_column :neighbourhoods, :snippet_about_footer, :text    
+    add_column :neighbourhoods, :snippet_reregister_email_thank_you, :text    
+    add_column :neighbourhoods, :snippet_not_in_your_area_title, :text    
+    add_column :neighbourhoods, :snippet_not_in_your_area_intro, :text    
+    add_column :neighbourhoods, :snippet_twitter_share_text, :text    
+    add_column :neighbourhoods, :snippet_acebook_share_text, :text    
+    add_column :neighbourhoods, :snippet_facebook_share_title, :text    
+    add_column :neighbourhoods, :snippet_coming_soon_intro, :text    
+    add_column :neighbourhoods, :snippet_email_intro, :text    
+    add_column :neighbourhoods, :snippet_email_intro_text, :text    
+    add_column :neighbourhoods, :snippet_need_cannot_use, :text   
+  end
+end
