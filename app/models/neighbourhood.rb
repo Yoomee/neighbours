@@ -1,7 +1,7 @@
 class Neighbourhood < ActiveRecord::Base
   
   validates :name, :presence => true
-  validates :postcode_fragment, :uniqueness => true
+  validates :postcode_prefix, :uniqueness => true
   has_many :posts, :as => :target
   belongs_to :admin, :class_name => "User"
   has_many :area_radius_maximums, :dependent => :destroy
