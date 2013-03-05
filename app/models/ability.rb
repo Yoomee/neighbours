@@ -37,6 +37,13 @@ class Ability
       can [:manage], Need do |need|
         need.user.try(:neighbourhood).try(:admin_id) == user.id
       end
+      can :index, :admin do
+        user.is_neighbourhood_admin?
+      end
+      can [:manage], User do |u|
+        u.try(:neighbourhood).try(:admin_id) == user.id
+      end
+      
     end
     
   end

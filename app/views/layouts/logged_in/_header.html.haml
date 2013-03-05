@@ -16,16 +16,15 @@
             =link_to('#', :data => {:toggle => "dropdown"}, :class => 'btn dropdown-toggle') do
               %span.caret
             %ul.dropdown-menu.pull-right
-              -if current_user.is_admin?
+              -if can?(:index, :admin)
                 %li
                   =link_to(admin_path) do
                     %icon.icon-cogs
                     Admin
-              -else
-                %li
-                  =link_to(current_user) do
-                    %icon.icon-user
-                    View profile  
+              %li
+                =link_to(current_user) do
+                  %icon.icon-user
+                  View profile  
               %li.divider
               -if current_user.is_community_champion? || current_user.is_admin?
                 %li

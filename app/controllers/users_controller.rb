@@ -18,10 +18,10 @@ class UsersController < ApplicationController
   end
 
   def index
-    @validated_users = User.in_sheffield.validated
-    @unvalidated_users = User.in_sheffield.unvalidated
-    @community_champion_requests = User.in_sheffield.community_champion_requesters
-    @community_champions = User.in_sheffield.community_champions
+    @validated_users = User.not_deleted.validated
+    @unvalidated_users = User.not_deleted.unvalidated
+    @community_champion_requests = User.not_deleted.community_champion_requesters
+    @community_champions = User.not_deleted.community_champions
     @not_in_sheffield = User.not_in_sheffield
     @deleted_users = User.deleted
   end
