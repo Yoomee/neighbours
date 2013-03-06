@@ -21,6 +21,9 @@
           =link_to("Edit", edit_neighbourhood_path(area))
           &middot;
           =link_to("Delete", area, :confirm => 'Are you sure?', :method => :delete)
+          &middot;     
+          =link_to("Snippets", neighbourhood_snippets_path(area))
+          
       
 =options_panel do
   =back_link

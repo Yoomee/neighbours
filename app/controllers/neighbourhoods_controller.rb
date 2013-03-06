@@ -46,6 +46,16 @@ class NeighbourhoodsController < ApplicationController
     redirect_to neighbourhoods_path
   end
   
+  def snippets
+    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood])
+    if params[:commit]
+      @neighbourhood.update_attributes(params[:slugs])
+      flash[:notice]="Updated text snippets for #{@neighbourhood}"
+      redirect_to neighbourhoods_path
+    else
+      @snippets = YmSnippets::Snippet.all
+    end
+  end
   
   def update
     if @neighbourhood.update_attributes(params[:neighbourhood])
@@ -73,9 +83,9 @@ class NeighbourhoodsController < ApplicationController
     unresolved_needs = Need.unresolved.order(:created_at).reverse_order.limit(2).collect {|n| ["/needs/#{n.id}", "#{n.user.to_s} needs help with", n.category]}
     resolved_needs = Need.resolved.order(:created_at).reverse_order.limit(2).collect {|n| ["/needs/#{n.id}", "#{n.accepted_offer.user.to_s} helped #{n.user.to_s}", n.category]}
     snippet_needs = [
-      [snippet_text(:unvalidated_map_need_1_url), snippet_text(:unvalidated_map_need_1_user), snippet_text(:unvalidated_map_need_1_text)],
-      [snippet_text(:unvalidated_map_need_2_url), snippet_text(:unvalidated_map_need_2_user), snippet_text(:unvalidated_map_need_2_text)],
-      [snippet_text(:unvalidated_map_need_3_url), snippet_text(:unvalidated_map_need_3_user), snippet_text(:unvalidated_map_need_3_text)]
+      [neighbourhood_neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_1_url), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_1_user), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_1_text)],
+      [neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_2_url), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_2_user), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_2_text)],
+      [neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_3_url), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_3_user), neighbourhood_neighbourhood_snippet_text(:unvalidated_map_need_3_text)]
     ]
     [snippet_needs[0], snippet_needs[1], snippet_needs[2], unresolved_needs[0], resolved_needs[0], unresolved_needs[1], resolved_needs[1]]
   end

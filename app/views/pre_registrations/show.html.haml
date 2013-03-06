@@ -34,10 +34,10 @@
     .preregister-header.mb-2.span8.offset2
 
       %h3
-        =snippet_text(:not_in_your_area_title, "We have users in your area, but need more before we can launch")
+        =neighbourhood_snippet_text(:not_in_your_area_title, "We have users in your area, but need more before we can launch")
              
       %p.mt-2
-        =snippet_text(:not_in_your_area_intro, "Here is some text that will be edited by John. This area is not available yet. This is the text shown at the top of all the areas that are not available yet. It will explain what it happening and what you can do next.")
+        =neighbourhood_snippet_text(:not_in_your_area_intro, "Here is some text that will be edited by John. This area is not available yet. This is the text shown at the top of all the areas that are not available yet. It will explain what it happening and what you can do next.")
     .preregister-share.span8.offset2.mb-2
       .well
         =render("/neighbourhoods/share_buttons")

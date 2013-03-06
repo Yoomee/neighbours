@@ -13,14 +13,14 @@
     .preregister-header.mb-2.span8.offset2
 
       %p
-        =snippet_text(:email_intro,"Help us grow the community by emailing your friends about Neighbours Can Help.")      
+        =neighbourhood_snippet_text(:email_intro,"Help us grow the community by emailing your friends about Neighbours Can Help.")      
           
       =semantic_form_for :email, :url => {:controller => 'share' , :action => 'send_email' }do |form|
         =form.inputs do
           =form.input :from, :label => "From:", :input_html => {:class => "span6", :value => "#{@from if @from}"}, :required => false, :placeholder => "Your email address"
           =form.input :to, :label => "To:", :input_html => {:class => "span6"}, :placeholder => "Your friend's email address"
           =form.input :send_again_url, :as => :hidden,  :input_html => {:value => request.url}
-          =form.input :message, :label => "Message", :as => :text, :input_html => {:class => "span6", :rows => 10, :value => "#{snippet_text(:email_intro_text, "Hi there,\n\nI though you would be an ideal person to help us grow the community by emailing your friends about Neighbours Can Help. Please click on the following link to find out more:\n")}\n#{@link}\n\nThanks!"}
+          =form.input :message, :label => "Message", :as => :text, :input_html => {:class => "span6", :rows => 10, :value => "#{neighbourhood_snippet_text(:email_intro_text, "Hi there,\n\nI though you would be an ideal person to help us grow the community by emailing your friends about Neighbours Can Help. Please click on the following link to find out more:\n")}\n#{@link}\n\nThanks!"}
         =form.commit_button "Click to send", :button_html => {:data => {:"loading-text" => 'Sending...'}, :class => "btn btn-primary pull-right"} 
       
   
