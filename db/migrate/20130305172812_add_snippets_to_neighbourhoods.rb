@@ -35,11 +35,11 @@ class AddSnippetsToNeighbourhoods < ActiveRecord::Migration
     add_column :neighbourhoods, :snippet_about_long_term_title_2, :text    
     add_column :neighbourhoods, :snippet_about_long_term_para_2, :text    
     add_column :neighbourhoods, :snippet_about_footer, :text    
-    add_column :neighbourhoods, :snippet_reregister_email_thank_you, :text    
+    add_column :neighbourhoods, :snippet_preregister_email_thank_you, :text    
     add_column :neighbourhoods, :snippet_not_in_your_area_title, :text    
     add_column :neighbourhoods, :snippet_not_in_your_area_intro, :text    
     add_column :neighbourhoods, :snippet_twitter_share_text, :text    
-    add_column :neighbourhoods, :snippet_acebook_share_text, :text    
+    add_column :neighbourhoods, :snippet_facebook_share_text, :text    
     add_column :neighbourhoods, :snippet_facebook_share_title, :text    
     add_column :neighbourhoods, :snippet_coming_soon_intro, :text    
     add_column :neighbourhoods, :snippet_email_intro, :text    
