@@ -1,0 +1,16 @@
+%h2.mb-2
+  =title("Text snippets for #{@neighbourhood}")
+  
+=form_tag neighbourhood_snippets_path, :method => :post do
+  -@snippets.each do |snippet|
+    .span12
+      %h3="#{snippet.slug}"
+      = text_area_tag "slugs[snippet_#{snippet.slug}]", "#{@neighbourhood.snippet_text(snippet.slug)}", :rows => 5, :style => 'width:100%'
+  
+  .span12
+    = submit_tag "Submit"
+      
+=options_panel do
+  =back_link
+
+  

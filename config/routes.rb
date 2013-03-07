@@ -72,8 +72,11 @@ Neighbours::Application.routes.draw do
   resources :neighbourhoods
   
   get "neighbourhood" => "neighbourhoods#show"
-  get "area/:id" => "neighbourhoods#show"
+  get "area/:id" => "neighbourhoods#area"
   match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
+  match "neighbourhoods/:neighbourhood/snippets" => "neighbourhoods#snippets", :as => 'neighbourhood_snippets'
+  match "neighbourhoods/:neighbourhood/about" => "neighbourhoods#about", :as => 'neighbourhood_about'
+  
   
   match "searches" => "searches#index", :as => "searches"
 
