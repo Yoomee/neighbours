@@ -10,7 +10,7 @@ class Ability
     can :create, Enquiry
     can :show, Page, :draft => false
     can [:show, :create], Need
-    can [:show, :area, :about, :news], Neighbourhood
+    can [:show, :area, :about, :news, :help], Neighbourhood
     
     if user.try(:admin?)
       can :manage, :all
