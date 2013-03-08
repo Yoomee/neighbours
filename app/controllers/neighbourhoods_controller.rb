@@ -4,8 +4,7 @@ class NeighbourhoodsController < ApplicationController
   include YmSnippets::SnippetsHelper
   
   def about
-    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood])
-    
+    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) 
   end
 
   def area

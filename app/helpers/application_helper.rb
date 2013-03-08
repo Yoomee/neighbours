@@ -27,9 +27,9 @@ module ApplicationHelper
     end
   end
   
-  def neighbourhood_snippet_text(key, text)
-    if false
-      snippet_text(key,text)
+  def neighbourhood_snippet_text(key, text=nil)
+    if @neighbourhood
+      @neighbourhood.snippet_text(key,text)
     else
       snippet_text(key,text)
     end
