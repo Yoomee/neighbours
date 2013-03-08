@@ -6,6 +6,7 @@ class Neighbourhood < ActiveRecord::Base
   belongs_to :admin, :class_name => "User"
   has_many :area_radius_maximums, :dependent => :destroy
   has_many :users
+  has_many :pages
   has_permalinks
   
   accepts_nested_attributes_for :area_radius_maximums, :reject_if => :all_blank, :allow_destroy => true 
