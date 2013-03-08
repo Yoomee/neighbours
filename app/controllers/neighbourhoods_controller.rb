@@ -4,7 +4,7 @@ class NeighbourhoodsController < ApplicationController
   include YmSnippets::SnippetsHelper
   
   def about
-    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) 
+    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
   end
 
   def area
@@ -26,14 +26,14 @@ class NeighbourhoodsController < ApplicationController
   end
 
   def news
-    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood])
+    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
     @page = Page.find_by_slug(:news)
     @page_children = @page.children.where(:neighbourhood_id => @neighbourhood.id) || []
     render "/pages/views/#{@page.view_name}"
   end
 
   def show
-    @neighbourhood = Neighbourhood.find_by_id(params[:id])
+    @neighbourhood = Neighbourhood.find_by_id(params[:id]) || current_user.try(:neighbourhood)
     @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
     @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     @unvalidated_map_needs = get_unvalidated_map_needs
