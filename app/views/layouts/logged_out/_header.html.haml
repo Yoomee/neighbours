@@ -12,7 +12,7 @@
           %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"     
           -if @neighbourhood   
             %li=link_to('About', neighbourhood_about_path(@neighbourhood), :class=>"intro-nav-link-about intro-nav-link")          
-            %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
+            %li=link_to('Latest news', neighbourhood_news_path(@neighbourhood), :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")
           -else
             %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")          

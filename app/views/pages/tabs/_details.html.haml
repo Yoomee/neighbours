@@ -1,0 +1,23 @@
+=form.inputs do
+  -if current_user.is_neighbourhood_admin?
+    =form.input :neighbourhood_id, :as => :hidden, :value => current_user.neighbourhood.id
+    =form.input :parent_id, :as => :hidden, :value => Page.find_by_slug(:news).id
+  -else
+    =parent_page_select(form)
+    =form.input :neighbourhood
+  =form.input :title
+  =form.input :short_title
+  .control-group
+    =form.label :publication_date
+    .controls
+      =form.date_select :publication_date, {:order => [:day, :month, :year], :prompt => @page.new_record?, :default => @page.created_at}, :class => "span2"
+  =form.input :text, :as => :redactor  
+  -if !@page.new_record? && @page.image
+    .control-group
+      =image_for(@page, "100x100#")
+  =form.input :retained_image, :as => :hidden
+  =form.input :image, :as => :file, :label => "Cover image"
+  =form.input :view_name, :as => :select, :collection => Page::view_names, :include_blank => false, :member_label => "titleize", :label => "Layout"
+  =form.input :permalink_path, :label => "Permalink"
+  =form.input :slug if current_user.try(:yoomee_staff?)  
+  =form.input :draft, :label => "This is a draft"

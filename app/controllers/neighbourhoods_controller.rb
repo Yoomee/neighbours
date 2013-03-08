@@ -24,7 +24,14 @@ class NeighbourhoodsController < ApplicationController
       end
     end
   end
-  
+
+  def news
+    @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood])
+    @page = Page.find_by_slug(:news)
+    @page_children = @page.children.where(:neighbourhood_id => @neighbourhood.id) || []
+    render "/pages/views/#{@page.view_name}"
+  end
+
   def show
     @neighbourhood = Neighbourhood.find_by_id(params[:id])
     @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)

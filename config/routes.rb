@@ -78,6 +78,7 @@ Neighbours::Application.routes.draw do
   match "neighbourhoods/:neighbourhood/snippets" => "neighbourhoods#snippets", :as => 'neighbourhood_snippets'
   match "neighbourhoods/:neighbourhood/about" => "neighbourhoods#about", :as => 'neighbourhood_about'
   
+  get 'neighbourhoods/:neighbourhood/news' => 'neighbourhoods#news', :as => 'neighbourhood_news'
   
   match "searches" => "searches#index", :as => "searches"
 
