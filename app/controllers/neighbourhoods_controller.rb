@@ -1,5 +1,7 @@
 class NeighbourhoodsController < ApplicationController
   load_and_authorize_resource
+  
+  skip_before_filter :set_neighbourhood, :except => [:about, :help, :news]
 
   include YmSnippets::SnippetsHelper
   
