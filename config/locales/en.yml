@@ -27,3 +27,5 @@ en:
       confirmation_instructions:
         subject: 'Neighbours Can Help - Email confirmation instructions'
       
+    general:
+      back: Back  
