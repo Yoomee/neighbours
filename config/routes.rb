@@ -4,6 +4,7 @@ Neighbours::Application.routes.draw do
 
   match 'feedback' => 'enquiries#new', :id => 'feedback'
   match 'other-neighbourhoods' => 'enquiries#new', :id => 'other_neighbourhood', :as => "other_neighbourhood"
+  get 'about' => 'neighbourhoods#about'
 
   resources :registrations, :only => [:new]
   match "registrations(/:step)" => "registrations#create", :via => [:post, :put], :as => 'registrations'
@@ -72,8 +73,12 @@ Neighbours::Application.routes.draw do
   resources :neighbourhoods
   
   get "neighbourhood" => "neighbourhoods#show"
-  get "area/:id" => "neighbourhoods#show"
-  match "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
+  get "area/:id" => "neighbourhoods#area"
+  get "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
+  match "neighbourhoods/:neighbourhood/snippets" => "neighbourhoods#snippets", :as => 'neighbourhood_snippets'
+  get "neighbourhoods/:neighbourhood/about" => "neighbourhoods#about", :as => 'neighbourhood_about'
+  get 'neighbourhoods/:neighbourhood/news' => 'neighbourhoods#news', :as => 'neighbourhood_news'  
+  get 'neighbourhoods/:neighbourhood/help' => 'neighbourhoods#help', :as => 'neighbourhood_help'  
   
   match "searches" => "searches#index", :as => "searches"
 

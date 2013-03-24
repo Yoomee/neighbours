@@ -28,7 +28,7 @@
                 ="Hi #{current_user}, welcome to Neighbours Can Help"
               -else
                 Welcome to Neighbours Can Help
-            %h3.home-where.home-intro-text=snippet_text(:mission_statement, "..where neighbours are helping each other")
+            %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
           =link_to_slug('Find out more', :about, :class=>"illustration-link")  
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
           =link_to "Get involved", "#sign-up-popup", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
@@ -63,7 +63,7 @@
       
      
       -if current_user
-        =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
+        =link_to "I'd like some help", "/wireframes/need", :class=>"btn call-to-action primary"
       -else              
         =link_to "I'd like some help", '#sign-up-popup', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
 
@@ -88,7 +88,7 @@
                     =need.category.description
                     
       -if current_user
-        =link_to "I'd like to offer some help", needs_path, :class=>"btn call-to-action"
+        =link_to "I'd like to offer some help", "/wireframes/offer", :class=>"btn call-to-action"
       -else              
         =link_to "I'd like to offer some help", '#sign-up-popup', :class=>"btn call-to-action", :"data-toggle"=>"modal"
       

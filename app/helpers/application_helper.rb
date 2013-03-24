@@ -6,7 +6,7 @@ module ApplicationHelper
   
   def show_control_panel?
     return false unless current_user
-    !action_name.in?(%w{new map}) && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?
+    !action_name.in?(%w{new map news about}) && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?
   end
   
   def messages_badge(message_count)
@@ -24,6 +24,14 @@ module ApplicationHelper
       out + " message#{message_count > 1 ? 's' : ''}"
     else
       "No new messages"
+    end
+  end
+  
+  def neighbourhood_snippet_text(key, text=nil)
+    if @neighbourhood
+      @neighbourhood.snippet_text(key,text)
+    else
+      snippet_text(key,text)
     end
   end
   

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
   has_many :flags, :dependent => :destroy
-  has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood"
+  has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   scope :community_champions, where(:is_community_champion => true, :is_deleted => false)
   scope :community_champion_requesters, where("champion_request_at IS NOT NULL AND is_deleted = false").order("champion_request_at DESC")
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
-  scope :in_sheffield, where("postcode LIKE 'S%' AND is_deleted = false")
+  scope :not_deleted, where("is_deleted = false")
   scope :not_in_sheffield, where("postcode NOT LIKE 'S%' AND is_deleted = false")
   scope :deleted, where(:is_deleted => true)
 
@@ -90,6 +90,10 @@ class User < ActiveRecord::Base
   
   def has_lat_lng?
     lat.present? && lng.present?
+  end
+  
+  def is_neighbourhood_admin?
+    neighbourhoods_as_admin.count > 0
   end
 
   def new_notification_count(context, need = nil)

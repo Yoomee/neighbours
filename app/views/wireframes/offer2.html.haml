@@ -1,0 +1,73 @@
+.span12
+  %h1 I'd like to offer help
+  
+.span12.tag-selectors  
+  .tag-selector.tag-selector-row-1.clearfix
+    %h3.mb1
+      Select a category below...
+    %ul.help-tags.unstyled
+      %li=link_to "Bike", "#", :class=>"help-tag btn"
+      %li=link_to "Bins", "#", :class=>"help-tag btn btn-inverse help-tag-selected"
+      %li=link_to "Car", "#", :class=>"help-tag btn"
+      %li=link_to "Childcare", "#", :class=>"help-tag btn"
+      %li=link_to "Cleaning", "#", :class=>"help-tag btn"
+      %li=link_to "Clubs and Societies", "#", :class=>"help-tag btn"
+      %li=link_to "Community", "#", :class=>"help-tag btn"
+      %li=link_to "Computers, technology and IT", "#", :class=>"help-tag btn"      
+      %li=link_to "Disability Assistance", "#", :class=>"help-tag btn"
+      %li=link_to "Gardening", "#", :class=>"help-tag btn"      
+      %li=link_to "Health", "#", :class=>"help-tag btn"
+      %li=link_to "House and DIY", "#", :class=>"help-tag btn"
+      %li=link_to "Lift to", "#", :class=>"help-tag btn"
+      %li=link_to "Nature", "#", :class=>"help-tag btn"
+      %li=link_to "Pets", "#", :class=>"help-tag btn"
+      %li=link_to "Shopping", "#", :class=>"help-tag btn"
+      %li=link_to "Social", "#", :class=>"help-tag btn"
+      %li=link_to "Swap", "#", :class=>"help-tag btn"
+      %li=link_to "This website", "#", :class=>"help-tag btn"
+      %li=link_to "Volunteers", "#", :class=>"help-tag btn"
+      %li=link_to "Other", "#", :class=>"help-tag btn"
+
+
+  .tag-selector.tag-selector-row-2.clearfix
+    %span.tag-selector-arrow
+    %h3.mb1 More specifically...
+    %ul.help-tags.unstyled
+      %li=link_to "Space in your spare bin", "#", :class=>"help-tag btn"
+      %li=link_to "Can someone please put my bin out?", "#", :class=>"help-tag btn"
+      %li=link_to "Miscellaneous request", "#", :class=>"help-tag btn"
+
+
+.span6
+  .well
+    %h3.mb1
+      Describe how you can help
+    .need-offer-form
+      %textarea{:placeholder=>""}
+      =link_to "Tell my neighbours", "/wireframes/offer3", :class=>"btn btn-primary"
+.span6
+  %h3
+    People who need help    
+  %ul.help-list.unstyled#resolved
+    %li.list
+      .list-image
+        =link_to "#", :class => "pull-left" do
+          =image_tag "person.png"
+          %p.small-text
+            Phil
+      .list-text
+        %h3
+          I need help with my bin
+        %p
+          I'm running out of space in my bin. Does anyone have any space?
+        =link_to "Help Phil", "#" , :class=>"btn small-help-btn"
+
+  
+  
+  
+  
+    
+  
+  
+  
+  

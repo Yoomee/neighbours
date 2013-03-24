@@ -31,4 +31,4 @@
       =link_if_can("Edit page", [:edit, @page])
       =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
       =link_if_can("New page", [:new, Page])
-      =link_if_can("Set order", [:order, Page])
+      =#link_if_can("Set order", [:order, Page])

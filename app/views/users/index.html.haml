@@ -4,27 +4,21 @@
   %li.active
     =link_to '#unvalidated', :'data-toggle' => 'tab' do
       Unvalidated
-      %span.badge=@unvalidated_users.count
   %li
     =link_to '#validated', :'data-toggle' => 'tab' do
       Validated
-      %span.badge=@validated_users.count
   %li
     =link_to '#champion_requests', :'data-toggle' => 'tab' do
       Champion requests
-      %span.badge=@community_champion_requests.count
   %li
     =link_to '#champions', :'data-toggle' => 'tab' do
       Champions
-      %span.badge=@community_champions.count
   %li
     =link_to '#not-in-sheffield', :'data-toggle' => 'tab' do
       Not in Sheffield
-      %span.badge=@not_in_sheffield.count
   %li
     =link_to '#deleted', :'data-toggle' => 'tab' do
       Deleted
-      %span.badge=@deleted_users.count
 
 .tab-content
   #unvalidated.tab-pane.fade.in.active

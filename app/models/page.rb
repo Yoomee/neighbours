@@ -1,4 +1,6 @@
 class Page < ActiveRecord::Base
+  belongs_to :neighbourhood
+
   include YmCms::Page
   
   class << self

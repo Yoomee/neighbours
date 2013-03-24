@@ -10,7 +10,7 @@ class Ability
     can :create, Enquiry
     can :show, Page, :draft => false
     can [:show, :create], Need
-    can :show, Neighbourhood
+    can [:show, :area, :about, :news, :help], Neighbourhood
     
     if user.try(:admin?)
       can :manage, :all
@@ -37,6 +37,18 @@ class Ability
       can [:manage], Need do |need|
         need.user.try(:neighbourhood).try(:admin_id) == user.id
       end
+      can :index, :admin do
+        user.is_neighbourhood_admin?
+      end
+      can [:manage], User do |u|
+        u.try(:neighbourhood).try(:admin_id) == user.id
+      end
+      can [:manage], Page do |p|
+        p.try(:neighbourhood).try(:admin_id) == user.id
+      end
+      can :new, Page do
+        user.is_neighbourhood_admin?
+      end  
     end
     
   end

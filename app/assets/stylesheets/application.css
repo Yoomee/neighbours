@@ -1162,7 +1162,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   height: 120px;
 }
 
-.controller_neighbourhoods .header-intro, .controller_needs .header-intro, .controller_offers .header-intro   {
+.controller_neighbourhoods.action_show  .header-intro, .controller_needs .header-intro, .controller_offers .header-intro   {
   margin-bottom: 0;
 }
 .header-intro-inner {
@@ -1236,7 +1236,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .header-intro-fixed .nav {
   margin-top: 22px;
 }
-
+.header-intro-fixed #logged-in-user-button {
+  margin-top: 15px;
+}
 
 
 .nav-intro {
@@ -1578,6 +1580,96 @@ a.need-help-button:hover {
 	width: 120px;
 	color: #777777;
 }
+/*========== offer page wireframe ==========*/
+
+.tag-selectors {
+	border-radius:6px;
+	-webkit-border-radius:6px;
+	
+	background: #f5f5f5;
+	margin-bottom:30px;
+	
+	border: 1px solid #ccc;
+	box-shadow:1px 1px 4px rgba(0,0,0,0.1)
+} 
+
+.tag-selector {
+  padding: 20px;
+  position: relative;
+  
+}
+.tag-selector-arrow {
+  display: block;
+  width: 28px;
+  height: 14px;
+  background: url(/assets/tag-selector-row-2.png);
+  position: absolute;
+  top: -14px;
+  left: 46%;
+}
+.tag-selector-row-1 {
+
+}
+.tag-selector-row-2 {
+  background: #d5d5d5;
+}
+
+.help-tags li {
+  float: left;
+  margin: 0 10px 10px 0px;
+}
+.help-tag {
+	font-size: 14px;
+  display: block;
+  padding: 4px 10px;
+  
+}
+.help-tag-selected {
+  background: #619a5f;
+  color: #fff;
+}
+.need-offer-form textarea {
+	width:400px;
+	min-height: 100px;
+	margin-bottom: 20px;
+  
+}
+.need-offer-form .btn-primary {
+  background: #619a5f;
+}
+
+a.small-help-btn {
+  float: left;
+  clear: both;
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px 10px;
+  margin: -5px 0 0 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
