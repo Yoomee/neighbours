@@ -1,0 +1,8 @@
+.tag-selector.tag-selector-row-2.clearfix
+  %span.tag-selector-arrow
+  %h3.mb1 More specifically...
+  %ul.help-tags.unstyled
+    -need_category.sub_categories.each do |category|
+      %li=link_to category, need_select_children_path(:category => category), :class=>"help-tag btn", :remote => true
+      
+

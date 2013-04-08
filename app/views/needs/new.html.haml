@@ -1,8 +1,35 @@
-.help-box.span8.offset2
-  %h2.mt-3=title 'Add a request for help'
-  -if @need.category.present? && @need.category.sub_categories.count.zero?
-    %p="Ok, so you need help with \"#{@need.category}\"."
-    %p Please give more description of what help you need and then press 'Send'.
-  -else
-    %p Please tell us what you would like help with and then press 'Send'.
-  =render('form')
+-content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $('.help-tag').click(function(){
+      	$('.help-tag').removeClass('btn-primary');
+        $(this).addClass('btn-primary');
+      });
+    });
+
+.row.mt-3
+  .span12
+    %h1 I'd like some help
+  
+.span12.tag-selectors  
+  .tag-selector.tag-selector-row-1.clearfix
+    %h4.mb1
+      Select a category below
+    %ul.help-tags.unstyled
+      -NeedCategory.root.each do |category|
+        %li=link_to category, need_show_children_path(:category => category), :class=>"help-tag btn", :remote => true, :id => 'select-child-needs-button'
+      
+  #select-child-needs
+    &nbsp;
+
+.row
+  %hr
+
+  .help-box.span8.offset2
+    %h2.mt-3=title 'Add a request for help'
+    -if @need.category.present? && @need.category.sub_categories.count.zero?
+      %p="Ok, so you need help with \"#{@need.category}\"."
+      %p Please give more description of what help you need and then press 'Send'.
+    -else
+      %p Please tell us what you would like help with and then press 'Send'.
+    =render('form')

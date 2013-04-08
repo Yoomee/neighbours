@@ -29,11 +29,14 @@ Neighbours::Application.routes.draw do
       get :map
     end
   end
-
+  
   resources :need_categories, :except => [:show] do
     resources :needs, :only => :new
   end
-
+  match 'need_show_children' => 'need_categories#show_children'
+  match 'need_select_children' => 'need_categories#select_children'
+  
+  
   resources :users, :only => []  do
     resources :needs, :only => :index
     resources :offers, :only => :index

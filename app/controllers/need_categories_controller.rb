@@ -18,6 +18,10 @@ class NeedCategoriesController < ApplicationController
     redirect_to need_categories_path
   end
   
+  def show_children
+    @need_category = NeedCategory.find(params[:category])
+  end
+  
   def update
     if @need_category.update_attributes(params[:need_category])
       redirect_to need_categories_path
