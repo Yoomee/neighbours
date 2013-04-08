@@ -3,7 +3,6 @@ class UserMailer < ActionMailer::Base
   helper YmCore::UrlHelper
   helper YmSnippets::SnippetsHelper
   
-  
   default :from => "site@neighbourscanhelp.org.uk",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
 
@@ -54,6 +53,11 @@ class UserMailer < ActionMailer::Base
   end
   
   def new_registration_with_post_validation(user)
+    @user = user
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
+  end
+  
+  def new_registration_with_organisation_validation(user)
     @user = user
     mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
   end
