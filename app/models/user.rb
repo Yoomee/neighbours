@@ -71,6 +71,11 @@ class User < ActiveRecord::Base
     read_attribute(:city).presence || "Sheffield"
   end
 
+  # overwritten devise method: users don't need to confirm their email address, so everyone is confirmed
+  def confirmed?
+    true
+  end
+
   def credit_card_attributes
     %w{card_type formatted_card_number card_expiry_date}
   end
@@ -204,6 +209,11 @@ class User < ActiveRecord::Base
     unless card_number.blank?
       self.card_digits = card_number.last(4)
     end
+  end
+
+  protected
+  def confirmation_required?
+    false
   end
 
 end
