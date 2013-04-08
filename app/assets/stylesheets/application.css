@@ -407,7 +407,9 @@ br.clear {
 .flash_container .span12 {
   margin: 0 auto;
   float: none;
-
+}
+.flash_container .modal {
+  color: black;
 }
 /*========== Homepage ==========*/
 #home-intro {
