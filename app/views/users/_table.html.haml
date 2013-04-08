@@ -1,7 +1,7 @@
 %table.table.table-striped.table-users
   %tbody
     -users.each do |user|
-      -if user.try(:neighbourhood).try(:admin_id) == current_user.id
+      -if current_user.admin? || user.try(:neighbourhood).try(:admin_id) == current_user.id
         %tr{:'data-toggle'=>"modal", :href=>"##{tab}-user-#{user.id}"}
           %td=name_and_role(user)
           %td
