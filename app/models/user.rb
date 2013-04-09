@@ -46,14 +46,15 @@ class User < ActiveRecord::Base
   validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
   validates :validation_code, :uniqueness => true
 
-  scope :validated, where(:validated => true, :is_deleted => false)
-  scope :unvalidated, where(:validated => false, :is_deleted => false)
-  scope :community_champions, where(:is_community_champion => true, :is_deleted => false)
-  scope :community_champion_requesters, where("champion_request_at IS NOT NULL AND is_deleted = false").order("champion_request_at DESC")
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
-  scope :in_sheffield, where("postcode LIKE 'S%' AND is_deleted = false")
-  scope :not_in_sheffield, where("postcode NOT LIKE 'S%' AND is_deleted = false")
+  scope :not_deleted, where(:is_deleted => false)  
   scope :deleted, where(:is_deleted => true)
+  scope :validated, not_deleted.where(:validated => true)
+  scope :unvalidated, not_deleted.where(:validated => false)
+  scope :community_champions, not_deleted.where(:is_community_champion => true)
+  scope :community_champion_requesters, not_deleted.where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
+  scope :in_sheffield, not_deleted.where("postcode LIKE 'S%'")
+  scope :not_in_sheffield, not_deleted.where("postcode NOT LIKE 'S%'")
 
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?

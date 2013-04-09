@@ -7,10 +7,10 @@ class Neighbourhood < ActiveRecord::Base
   has_many :area_radius_maximums, :dependent => :destroy
   has_many :users
   
-  
   accepts_nested_attributes_for :area_radius_maximums, :reject_if => :all_blank, :allow_destroy => true 
 
   class << self
+    
     def find_by_postcode_or_area(postcode, area=nil)
       find_by_postcode(postcode) || find_by_name(area)
     end
@@ -37,8 +37,12 @@ class Neighbourhood < ActiveRecord::Base
     [geometry['location']['lat'],geometry['location']['lng']]
   end
 
+  def pre_registrations
+    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix} %")
+  end
+
   def status
     live? ? "Live" : "Coming soon"
   end
-    
+  
 end

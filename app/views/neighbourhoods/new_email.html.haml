@@ -1,0 +1,22 @@
+%h2.mb-2
+  =title("Email everyone in #{@neighbourhood}")
+  
+%p
+  Enter the content of the email below and click send. An email will be sent to all
+  ="#{@neighbourhood.pre_registrations.count} people in #{@neighbourhood}."
+  
+=form_tag(email_neighbourhood_path(@neighbourhood)) do
+  %div{:class => "control-group#{request.post? && params[:subject].blank? ? ' error' : ''}"}
+    %label.control-label Subject
+    =text_field_tag 'subject', params[:subject]
+    -if request.post? && params[:subject].blank?
+      %span.help-inline Can't be blank
+  %p.lead='Dear <User>'
+  %div{:class => "control-group#{request.post? && params[:email_body].blank? ? ' error' : ''}"}
+    =text_area_tag 'email_body', params[:email_body], :placeholder => 'Enter the email content here', :class => 'span12', :rows => 10
+    -if request.post? && params[:email_body].blank?
+      %span.help-inline Can't be blank
+  %button.btn{:type => 'submit'} Send emails
+    
+=options_panel do
+  =back_link
