@@ -85,6 +85,10 @@ class Need < ActiveRecord::Base
     Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
   end
 
+  def posts_viewable_by(user)
+    (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)])
+  end
+
   def read_all_notifications!(user)
     context = (self.user == user) ? 'my_requests' : 'my_offers'
     notifications.where(["context = '#{context}' AND notifications.user_id = ?", user.id]).update_all(:read => true)
