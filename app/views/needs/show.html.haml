@@ -120,7 +120,7 @@
       =render("needs/modal_post_form", :need => @need)
     -else
       =render('offers/modal_form')
--unless logged_in_as?(@need.user)
+-if current_user
   #inappropriate.modal.hide.fade
     =render("flags/modal_form", :flag => @need.flags.build)
     
