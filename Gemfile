@@ -24,6 +24,8 @@ gem 'ym_snippets',     "~> 0.1.1"     #, :path => "~/Rails/Gems/ym_snippets"
 gem 'client_side_validations'
 gem 'geocoder'
 gem 'cocoon'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 ### Groups
 # Gems used only for assets and not required
