@@ -44,10 +44,11 @@ class Need < ActiveRecord::Base
       radius_options.last.last
     end
         
-    def radius_options
+    def radius_options(max_miles = nil)
+      max_miles ||= Need::RADIUS_OPTIONS.last.last
       Need::RADIUS_OPTIONS.map do |name, miles|
         [name, (miles * 1609.344).round]
-      end
+      end.select { |k,v| v <= (max_miles * 1609.344).round }
     end
   
     def visible_from_location(lat,lng)

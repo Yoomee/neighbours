@@ -1,7 +1,7 @@
 module NeedHelper
 
   def need_radius_options
-    logged_in? ? current_user.radius_options : Need.radius_options.select { |k,v| v <= AreaRadiusMaximum::DEFAULT_MAXIMUM.to_i }
+    logged_in? ? current_user.radius_options : Need.radius_options(Neighbourhood::DEFAULT_MAX_RADIUS)
   end
   
   def show_deadline(need)
