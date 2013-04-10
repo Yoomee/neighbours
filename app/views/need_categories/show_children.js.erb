@@ -1,6 +1,0 @@
-$('#category_id_field').val('<%=@need_category.id%>');
-$('.help-tag').click(function(){
-	$('.help-tag').removeClass('btn-primary');
-  $(this).addClass('btn-primary');
-});
-$('#select-child-needs').html('<%=escape_javascript(render('needs/select_child_needs', :need_category => @need_category))%>');

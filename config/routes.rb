@@ -32,10 +32,7 @@ Neighbours::Application.routes.draw do
   
   resources :need_categories, :except => [:show] do
     resources :needs, :only => :new
-  end
-  match 'need_show_children' => 'need_categories#show_children'
-  match 'need_select_children' => 'need_categories#select_children'
-  
+  end  
   
   resources :users, :only => []  do
     resources :needs, :only => :index

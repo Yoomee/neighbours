@@ -17,10 +17,12 @@
       Select a category below
     %ul.help-tags.unstyled
       -NeedCategory.root.each do |category|
-        %li=link_to category, need_show_children_path(:category => category), :class=>"help-tag btn", :remote => true, :id => 'select-child-needs-button'
-      
-  #select-child-needs
-    &nbsp;
+        %li=link_to(category, '#', :class => "need-category help-tag btn#{@need.category_id == category.id ? ' btn-primary' : ''}", :data => {:category_id => category.id})
+        
+  #need-sub-categories.tag-selector.tag-selector-row-2.clearfix
+    %span.tag-selector-arrow
+    %h3.mb1 More specifically...
+    %ul.help-tags.unstyled
 
 .row
   %hr

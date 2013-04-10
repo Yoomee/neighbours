@@ -113,25 +113,36 @@ window.Registration =
 
 window.NewNeedForm =
   force_submit: false
-  configureSubcategories: ->
-    category_id = parseInt($('select#need_category_id').val(), 10)
+  selectCategory: (categoryId) ->
+    $('input#need_category_id').val(categoryId)
+    $('input#need_sub_category_id').val('')    
     cat = $.grep(NewNeedForm.categories, (e) ->
-      e.id is category_id
+      e.id is categoryId
     )[0]
-    $('select#need_sub_category_id').empty()
     if cat && cat.sub_categories.length
-      $("select#need_sub_category_id").append('<option>Please select...</option>')
-      $.each cat.sub_categories, (idx,sub_cat) ->
-        console.log sub_cat
-        $("select#need_sub_category_id").append($("<option></option>").attr("value", sub_cat.id).text(sub_cat.name))
-      $("#sub_category_input").show()
+      $("#need-sub-categories .help-tags").empty()
+      $.each cat.sub_categories, (idx, subCat) ->
+        console.log subCat
+        subCatLink = $("<a href='#' class='help-tag btn need-sub-category' data-sub-category-id=#{subCat.id}>#{subCat.name}</>")
+        $("#need-sub-categories .help-tags").append($('<li>').append(subCatLink))
+      $("#need-sub-categories").show()
     else
-      $("#sub_category_input").hide()
+      $("#need-sub-categories").hide()
+  selectSubCategory: (subCategoryId) ->
+    $('input#need_sub_category_id').val(subCategoryId)
   init: (logged_in) ->
     NewNeedForm.showHideDeadline()
-    $('select#need_category_id').change ->
-      NewNeedForm.configureSubcategories()
-    NewNeedForm.configureSubcategories()
+    $('a.need-category').click (event) ->
+      event.preventDefault()
+      categoryId = $(this).data('categoryId')
+      unless $('input#need_category_id').val() == categoryId
+        NewNeedForm.selectCategory(categoryId)
+    $('a.need-sub-category').live 'click', (event) ->
+      event.preventDefault()
+      console.log('hello')
+      console.log($(this).data('subCategoryId'))
+      NewNeedForm.selectSubCategory($(this).data('subCategoryId'))
+    NewNeedForm.selectCategory($('input#need_category_id').val())
       
     $('#need_need_to_know_by_input input[type="radio"]').change ->
       NewNeedForm.showHideDeadline()
