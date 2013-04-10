@@ -45,7 +45,7 @@ class Neighbourhood < ActiveRecord::Base
   end
 
   def pre_registrations
-    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix} %")
+    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix}%")
   end
 
   def status
