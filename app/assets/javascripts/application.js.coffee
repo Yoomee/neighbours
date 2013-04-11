@@ -122,7 +122,6 @@ window.NewNeedForm =
     if cat && cat.sub_categories.length
       $("#need-sub-categories .help-tags").empty()
       $.each cat.sub_categories, (idx, subCat) ->
-        console.log subCat
         subCatLink = $("<a href='#' class='help-tag btn need-sub-category' data-sub-category-id=#{subCat.id}>#{subCat.name}</>")
         $("#need-sub-categories .help-tags").append($('<li>').append(subCatLink))
       $("#need-sub-categories").show()
@@ -139,8 +138,8 @@ window.NewNeedForm =
         NewNeedForm.selectCategory(categoryId)
     $('a.need-sub-category').live 'click', (event) ->
       event.preventDefault()
-      console.log('hello')
-      console.log($(this).data('subCategoryId'))
+      $('a.need-sub-category').removeClass('btn-primary')
+      $(this).addClass('btn-primary')
       NewNeedForm.selectSubCategory($(this).data('subCategoryId'))
     NewNeedForm.selectCategory($('input#need_category_id').val())
       
