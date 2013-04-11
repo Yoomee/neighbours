@@ -1,7 +1,7 @@
 class NeedCategory < ActiveRecord::Base
   include YmCore::Model
   
-  has_many :needs,:dependent => :nullify
+  has_many :needs, :foreign_key => :category_id, :dependent => :nullify
   belongs_to :parent, :class_name => "NeedCategory"
   has_many :sub_categories, :class_name => "NeedCategory", :foreign_key => :parent_id
   validates :name, :description, :presence => true

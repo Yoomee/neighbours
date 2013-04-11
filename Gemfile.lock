@@ -82,6 +82,12 @@ GEM
     coffee-script-source (1.3.3)
     columnize (0.3.6)
     daemon_controller (1.0.0)
+    daemons (1.1.8)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.4.4)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -126,6 +132,7 @@ GEM
     guard-rspec (1.1.0)
       guard (>= 1.1)
     haml (4.0.1)
+    haml (4.0.2)
       tilt
     highline (1.6.13)
     hike (1.2.1)
@@ -348,6 +355,8 @@ DEPENDENCIES
   client_side_validations
   cocoon
   coffee-rails (~> 3.1.0)
+  daemons
+  delayed_job_active_record
   exception_notification
   factory_girl_rails
   formtastic-bootstrap!

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :confirmable
 
   User::CARD_TYPES = %w{visa mastercard american_express}
-  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Maltby Academy", "Maltby Town Council"]
+  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Town Council"]
 
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
@@ -46,14 +46,15 @@ class User < ActiveRecord::Base
   validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
   validates :validation_code, :uniqueness => true
 
-  scope :validated, where(:validated => true, :is_deleted => false)
-  scope :unvalidated, where(:validated => false, :is_deleted => false)
-  scope :community_champions, where(:is_community_champion => true, :is_deleted => false)
-  scope :community_champion_requesters, where("champion_request_at IS NOT NULL AND is_deleted = false").order("champion_request_at DESC")
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
-  scope :not_deleted, where("is_deleted = false")
-  scope :not_in_sheffield, where("postcode NOT LIKE 'S%' AND is_deleted = false")
+  scope :not_deleted, where(:is_deleted => false)
   scope :deleted, where(:is_deleted => true)
+  scope :validated, not_deleted.where(:validated => true)
+  scope :unvalidated, not_deleted.where(:validated => false)
+  scope :community_champions, not_deleted.where(:is_community_champion => true)
+  scope :community_champion_requesters, not_deleted.where("champion_request_at IS NOT NULL").order("champion_request_at DESC")
+  scope :in_sheffield, not_deleted.where("postcode LIKE 'S%'")
+  scope :not_in_sheffield, not_deleted.where("postcode NOT LIKE 'S%'")
 
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?
@@ -110,8 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def radius_options
-    max_radius = AreaRadiusMaximum.find_by_postcode_fragment(postcode.to_s.split[0].to_s.strip).try(:maximum_radius_in_miles) || AreaRadiusMaximum::DEFAULT_MAXIMUM
-    Need.radius_options.select { |k,v| v <= (max_radius.to_i * 1609.344).round }
+    Need.radius_options((neighbourhood.try(:max_radius_in_miles) || Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES).to_f)
   end
 
   def steps

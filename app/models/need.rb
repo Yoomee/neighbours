@@ -44,10 +44,11 @@ class Need < ActiveRecord::Base
       radius_options.last.last
     end
         
-    def radius_options
+    def radius_options(max_miles = nil)
+      max_miles ||= Need::RADIUS_OPTIONS.last.last
       Need::RADIUS_OPTIONS.map do |name, miles|
         [name, (miles * 1609.344).round]
-      end
+      end.select { |k,v| v <= (max_miles * 1609.344).round }
     end
   
     def visible_from_location(lat,lng)
@@ -83,6 +84,10 @@ class Need < ActiveRecord::Base
 
   def notifications
     Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
+  end
+
+  def posts_viewable_by(user)
+    (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)])
   end
 
   def read_all_notifications!(user)

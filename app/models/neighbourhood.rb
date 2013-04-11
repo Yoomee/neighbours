@@ -1,17 +1,17 @@
 class Neighbourhood < ActiveRecord::Base
   
   validates :name, :presence => true
-  validates :postcode_prefix, :uniqueness => true
+  validates :postcode_prefix, :uniqueness => true, :presence => true
+  validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+
   has_many :posts, :as => :target
   belongs_to :admin, :class_name => "User"
-  has_many :area_radius_maximums, :dependent => :destroy
   has_many :users
   has_many :pages
   has_permalinks
-  
-  accepts_nested_attributes_for :area_radius_maximums, :reject_if => :all_blank, :allow_destroy => true 
 
   class << self
+    
     def find_by_postcode_or_area(postcode, area=nil)
       find_by_postcode(postcode) || find_by_name(area)
     end
@@ -46,8 +46,22 @@ class Neighbourhood < ActiveRecord::Base
     end
   end
 
+  def max_radius
+    read_attribute(:max_radius) || (Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES * 1609.344).round
+  end
+
+  def max_radius_in_miles
+    (max_radius.to_i / 1609.344).round(2).to_s.chomp(".0")
+  end
+
+  def pre_registrations
+    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix}%")
+  end
+
   def status
     live? ? "Live" : "Coming soon"
   end
-    
+  
 end
+
+Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES = 5

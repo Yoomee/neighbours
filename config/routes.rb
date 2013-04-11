@@ -69,8 +69,12 @@ Neighbours::Application.routes.draw do
     resources :posts, :only => :index
   end
   
-  resources :area_radius_maximums, :only => :index
-  resources :neighbourhoods
+  resources :neighbourhoods do
+    member do
+      get "email" => "neighbourhoods#new_email"
+      post "email" => "neighbourhoods#create_email"
+    end
+  end
   
   get "neighbourhood" => "neighbourhoods#show"
   get "area/:id" => "neighbourhoods#area"

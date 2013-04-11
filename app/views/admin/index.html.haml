@@ -4,18 +4,7 @@
       %i.icon-cogs
       =title "Admin"
       
--if current_user.is_neighbourhood_admin?      
-      
-  .row
-    .span4
-      .well
-        %h2
-          %i.icon-group
-          Users
-        %ul.unstyled
-          %li=link_to "Manage users", users_path          
--else
-
+-if current_user.is_neighbourhood_admin?
   .row
     .span4
       .well
@@ -24,11 +13,16 @@
           Users
         %ul.unstyled
           %li=link_to "Manage users", users_path
-          %li=link_to "Users map", map_users_path          
-          
-        
-        
-        
+-else
+  .row
+    .span4
+      .well
+        %h2
+          %i.icon-group
+          Users
+        %ul.unstyled
+          %li=link_to "Manage users", users_path
+          %li=link_to "Users map", map_users_path
     .span4        
       .well
         %h2
@@ -36,7 +30,7 @@
           Categories
         %ul.unstyled
           %li=link_to "Manage need categories", need_categories_path
-    .span4        
+    .span4
       .well
         %h2
           %i.icon-dashboard
@@ -72,6 +66,4 @@
           Neighbourhoods
         %ul.unstyled
           %li=link_to "Preregistrations map", map_pre_registrations_path
-          %li=link_to "Edit/view neighbourhood areas", neighbourhoods_path  
-          %li=link_to "Set maximum request radius", area_radius_maximums_path   
-
+          %li=link_to "Edit/view neighbourhood areas", neighbourhoods_path

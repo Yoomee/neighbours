@@ -1,0 +1,12 @@
+{
+  "license": "MIT",
+  "maintainer": "Engine Yard LLC",
+  "maintainer_email": "drnic@engineyard.com",
+  "version": "1.0",
+  "description": "Delayed Job for EY Cloud",
+  "name": "delayed_job",
+  "attributes": {
+
+  },
+  "long_description": ""
+}

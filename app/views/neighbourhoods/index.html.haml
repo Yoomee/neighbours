@@ -1,7 +1,6 @@
 %h2.mb-2
   =title("All areas/neighbourhoods")
   
-  
 %table.table.table-bordered.table-striped
   %thead
     %tr
@@ -18,6 +17,9 @@
         %td=area.status
         %td=link_to(area.admin.full_name,area.admin) if area.admin
         %td
+          -if !area.pre_registrations.empty?
+            =link_to("Email #{pluralize(area.pre_registrations.count, 'unregistered neighbour')}", email_neighbourhood_path(area))
+            &middot;
           =link_to("Edit", edit_neighbourhood_path(area))
           &middot;
           =link_to("Delete", area, :confirm => 'Are you sure?', :method => :delete)
@@ -28,4 +30,3 @@
 =options_panel do
   =back_link
   =link_to "Add new area", new_neighbourhood_path
-  
