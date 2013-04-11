@@ -52,10 +52,11 @@ Neighbours::Application.routes.draw do
 
   resource :champion, :only => :show
 
-  resources :offers, :only => :index do
+  resources :offers, :only => [:index, :new, :create] do
     member do
       get :accept
       get :reject
+      get :thanks
     end
   end
 

@@ -10,6 +10,7 @@
 #= require ym_cms
 #= require ym_posts
 #= require rails.validations
+#= require rails.validations.formtastic
 #= require cocoon
 #= require jquery.scrollTo
 #= require_tree .
@@ -111,12 +112,11 @@ window.Registration =
       unless currentType == type
         Registration.saveValidateByType(type)
 
-window.NewNeedForm =
-  force_submit: false
+window.NeedCategorySelector =
   selectCategory: (categoryId) ->
-    $('input#need_category_id').val(categoryId)
-    $('input#need_sub_category_id').val('')    
-    cat = $.grep(NewNeedForm.categories, (e) ->
+    $('input#category-id').val(categoryId)
+    $('input#sub-category-id').val('')    
+    cat = $.grep(NeedCategorySelector.categories, (e) ->
       e.id is categoryId
     )[0]
     if cat && cat.sub_categories.length
@@ -128,21 +128,28 @@ window.NewNeedForm =
     else
       $("#need-sub-categories").hide()
   selectSubCategory: (subCategoryId) ->
-    $('input#need_sub_category_id').val(subCategoryId)
-  init: (logged_in) ->
-    NewNeedForm.showHideDeadline()
+    $('input#sub-category-id').val(subCategoryId)
+  init: ->    
     $('a.need-category').click (event) ->
       event.preventDefault()
+      $('a.need-category').removeClass('btn-primary')
+      $(this).addClass('btn-primary')
       categoryId = $(this).data('categoryId')
-      unless $('input#need_category_id').val() == categoryId
-        NewNeedForm.selectCategory(categoryId)
+      unless $('input#category-id').val() == categoryId
+        NeedCategorySelector.selectCategory(categoryId)
     $('a.need-sub-category').live 'click', (event) ->
       event.preventDefault()
       $('a.need-sub-category').removeClass('btn-primary')
       $(this).addClass('btn-primary')
-      NewNeedForm.selectSubCategory($(this).data('subCategoryId'))
-    NewNeedForm.selectCategory($('input#need_category_id').val())
-      
+      NeedCategorySelector.selectSubCategory($(this).data('subCategoryId'))
+      callback()
+    NeedCategorySelector.selectCategory($('input#category-id').val())
+    
+window.NewNeedForm =
+  force_submit: false
+  init: (logged_in) ->
+    NewNeedForm.showHideDeadline()
+    NeedCategorySelector.init()
     $('#need_need_to_know_by_input input[type="radio"]').change ->
       NewNeedForm.showHideDeadline()
     if logged_in == 0
@@ -151,8 +158,8 @@ window.NewNeedForm =
         $('input#return_to').val($(this).attr('href'))
         NewNeedForm.force_submit = true
         $('form#new_need').submit()
-      clientSideValidations.callbacks.form.pass = (element, callback) ->
-        $('#register-popup').modal('show')
+      ClientSideValidations.callbacks.form.pass = (element, callback) ->
+        $('#register-popup').modal('show')        
       $('form#new_need').submit () ->
         NewNeedForm.force_submit
   showHideDeadline: ->
@@ -162,6 +169,9 @@ window.NewNeedForm =
       $('#need_deadline_input select').val(null)
       $('#need_deadline_input').css('visibility','hidden')
 
+window.NewOfferForm =
+  init: (logged_in) ->
+    NeedCategorySelector.init()
 
 window.NeedSelect =
   init: ->
