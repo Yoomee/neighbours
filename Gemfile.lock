@@ -207,6 +207,10 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     rake (0.8.7)
+    randumb (0.3.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      rake
     rb-fchange (0.0.5)
       ffi
     rb-fsevent (0.9.1)
@@ -292,7 +296,7 @@ GEM
       ym_core (~> 0.1.8)
       ym_permalinks (~> 0.1)
       ym_videos (~> 0.1)
-    ym_core (0.1.55)
+    ym_core (0.1.56)
       bootstrap-will_paginate (~> 0.0.6)
       dragonfly (~> 0.9.10)
       formtastic (~> 2.0.2)
@@ -302,6 +306,7 @@ GEM
       jquery-ui-rails
       rails (~> 3.1.0)
       rails_config (~> 0.2.6)
+      randumb
       rinku
       will_paginate (~> 3.0.3)
       yoomee-decent_exposure
@@ -379,7 +384,7 @@ DEPENDENCIES
   uglifier
   whenever
   ym_cms (~> 0.3.3)
-  ym_core (~> 0.1.55)
+  ym_core (~> 0.1.56)
   ym_enquiries (~> 0.1)
   ym_notifications (~> 0.1)
   ym_posts (~> 0.1)

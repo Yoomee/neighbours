@@ -31,7 +31,8 @@ Neighbours::Application.routes.draw do
   end
   
   resources :need_categories, :except => [:show] do
-    resources :needs, :only => :new
+    resources :needs, :only => [:new, :index]
+    resources :offers, :only => [:index]
   end  
   
   resources :users, :only => []  do
@@ -52,7 +53,7 @@ Neighbours::Application.routes.draw do
 
   resource :champion, :only => :show
 
-  resources :offers, :only => [:index, :new, :create] do
+  resources :offers, :only => [:index, :new, :create, :show] do
     member do
       get :accept
       get :reject

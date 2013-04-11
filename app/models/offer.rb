@@ -14,9 +14,15 @@ class Offer < ActiveRecord::Base
   validates :post_for_need, :presence => {:on => :create, :unless => :general_offer?}
   validates_uniqueness_of :user_id, :scope => :need_id, :allow_blank => true, :unless => :general_offer?
   validate :only_one_accepted_offer
+
+  scope :general_offers, where(:need_id => nil)
   
   def general_offer?
     need.nil?
+  end
+  
+  def title
+    [category,sub_category].compact.map(&:to_s).join(': ')
   end
   
   private

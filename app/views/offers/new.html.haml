@@ -16,6 +16,11 @@
       %ul.help-tags.unstyled
   
 .row
-  .help-box.span6
+  .span6
     =render('form')
-  
+  .span6
+    %h3
+      People who need help
+    %ul#suggested-needs.loader-square.help-list.unstyled
+      -Need.unresolved.visible_to_user(current_user).random(5).each do |need|
+        =render('needs/list_item', :need => need)

@@ -17,11 +17,10 @@
 
 .row
   %hr
-  .help-box.span8.offset2
-    %h2.mt-3=title 'Add a request for help'
-    -if @need.category.present? && @need.category.sub_categories.count.zero?
-      %p="Ok, so you need help with \"#{@need.category}\"."
-      %p Please give more description of what help you need and then press 'Send'.
-    -else
-      %p Please tell us what you would like help with and then press 'Send'.
+  .span6
+    %h2 People currently offering help    
+    %ul#suggested-offers.loader-square.help-list.unstyled
+      -Offer.general_offers.random(5).each do |offer|
+        =render('offers/list_item', :offer => offer)
+  .help-box.span6
     =render('form')

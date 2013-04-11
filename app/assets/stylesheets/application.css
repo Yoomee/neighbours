@@ -1090,7 +1090,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   margin-bottom:0px;
 }
 #need_deadline_input .controls{
-  margin-left:195px;
+  margin-left: 20px;
 }
 
 /*========== Help icons ==========*/
@@ -1648,34 +1648,6 @@ a.small-help-btn {
   padding: 6px 10px;
   margin: -5px 0 0 80px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#suggested-needs.loading {
+  margin-top: 20px;
+}

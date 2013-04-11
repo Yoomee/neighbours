@@ -12,7 +12,7 @@ gem 'formtastic-bootstrap', :git => "git://github.com/cgunther/formtastic-bootst
 gem 'whenever', :require => false
 
 ### Yoomee gems
-gem 'ym_core',          "~> 0.1.55" #, :path => "~/Rails/Gems/ym_core"
+gem 'ym_core',          "~> 0.1.56" #, :path => "~/Rails/Gems/ym_core"
 gem 'ym_cms',           "~> 0.3.3"  #, :path => "~/Rails/Gems/ym_cms"
 gem 'ym_users',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_users"
 gem 'ym_posts',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_posts"

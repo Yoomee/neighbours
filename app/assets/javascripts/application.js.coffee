@@ -129,7 +129,7 @@ window.NeedCategorySelector =
       $("#need-sub-categories").hide()
   selectSubCategory: (subCategoryId) ->
     $('input#sub-category-id').val(subCategoryId)
-  init: ->    
+  init: (offersOrNeeds) ->
     $('a.need-category').click (event) ->
       event.preventDefault()
       $('a.need-category').removeClass('btn-primary')
@@ -137,19 +137,24 @@ window.NeedCategorySelector =
       categoryId = $(this).data('categoryId')
       unless $('input#category-id').val() == categoryId
         NeedCategorySelector.selectCategory(categoryId)
+      $("#suggested-#{offersOrNeeds}").addClass('loading')
+      $.ajax
+        url: "/need_categories/#{categoryId}/#{offersOrNeeds}",
+        dataType: 'script'          
+        success: () ->
+          $("#suggested-#{offersOrNeeds}").removeClass('loading')
     $('a.need-sub-category').live 'click', (event) ->
       event.preventDefault()
       $('a.need-sub-category').removeClass('btn-primary')
       $(this).addClass('btn-primary')
       NeedCategorySelector.selectSubCategory($(this).data('subCategoryId'))
-      callback()
     NeedCategorySelector.selectCategory($('input#category-id').val())
     
 window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
     NewNeedForm.showHideDeadline()
-    NeedCategorySelector.init()
+    NeedCategorySelector.init('offers')
     $('#need_need_to_know_by_input input[type="radio"]').change ->
       NewNeedForm.showHideDeadline()
     if logged_in == 0
@@ -171,7 +176,7 @@ window.NewNeedForm =
 
 window.NewOfferForm =
   init: (logged_in) ->
-    NeedCategorySelector.init()
+    NeedCategorySelector.init('needs')
 
 window.NeedSelect =
   init: ->
