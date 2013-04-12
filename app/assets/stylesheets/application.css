@@ -1001,7 +1001,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   min-height: 140px;
 }
 
-#need-title small{
+#need-title small, #offer-title small {
   display:block;
   font-weight:bold;
   line-height:18px;
