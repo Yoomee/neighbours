@@ -11,7 +11,9 @@
         .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
           .modal-header
             %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
-            %h3=name_and_role(user)
+            %h3
+              =name_and_role(user)
+              =link_to('View bio',user,:class => 'btn btn-small')
           .modal-body
             %dl
               %dt Validation code
