@@ -1,0 +1,26 @@
+.row.mt-3
+  .span12
+    %h1 I'd like to offer some help
+.row
+  .span12.tag-selectors  
+    .tag-selector.tag-selector-row-1.clearfix
+      %h3.mb1
+        Select a category below...
+      %ul.help-tags.unstyled
+        -NeedCategory.root.each do |category|
+          %li=link_to(category, '#', :class => "need-category help-tag btn#{@offer.category_id == category.id ? ' btn-primary' : ''}", :data => {:category_id => category.id})
+        
+    #need-sub-categories.tag-selector.tag-selector-row-2.clearfix.hide
+      %span.tag-selector-arrow
+      %h3.mb1 More specifically...
+      %ul.help-tags.unstyled
+  
+.row
+  .span6
+    =render('form')
+  .span6
+    %h3
+      People who need help
+    %ul#suggested-needs.loader-square.help-list.unstyled
+      -Need.unresolved.visible_to_user(current_user).random(5).each do |need|
+        =render('needs/list_item', :need => need)

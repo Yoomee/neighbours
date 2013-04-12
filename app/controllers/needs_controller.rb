@@ -10,6 +10,8 @@ class NeedsController < ApplicationController
       @user = User.find(params[:user_id])
       @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
+    elsif params[:need_category_id].present?
+      @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user).random(5)
     else
       @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").visible_to_user(current_user).order("created_at DESC") : Need.unresolved.order("created_at DESC")
     end

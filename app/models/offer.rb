@@ -2,18 +2,32 @@ class Offer < ActiveRecord::Base
   
   belongs_to :need
   belongs_to :user
+  belongs_to :category, :class_name => "NeedCategory"
+  belongs_to :sub_category, :class_name => "NeedCategory"
   
   after_create :create_post_for_need
   
   attr_accessor :post_for_need
   
-  validates :need, :user, :presence => true
-  validates :post_for_need, :presence => {:on => :create}
-  validates_uniqueness_of :user_id, :scope => :need_id, :allow_blank => true
+  validates :user, :presence => true
+  validates :category, :description, :presence => {:if => :general_offer?}
+  validates :post_for_need, :presence => {:on => :create, :unless => :general_offer?}
+  validates_uniqueness_of :user_id, :scope => :need_id, :allow_blank => true, :unless => :general_offer?
   validate :only_one_accepted_offer
+
+  scope :general_offers, where(:need_id => nil)
+  
+  def general_offer?
+    need.nil?
+  end
+  
+  def title
+    [category,sub_category].compact.map(&:to_s).join(': ')
+  end
   
   private
   def create_post_for_need
+    return true if post_for_need.blank?
     need.posts.create(:text => post_for_need, :user => user)
   end
   

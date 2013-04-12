@@ -26,7 +26,7 @@ class Ability
       cannot :index, User
       can [:create, :read, :search], Need 
       can :update, Need, :user_id => user.id
-      can [:create, :index], Offer
+      can [:create, :index, :thanks, :read], Offer
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end

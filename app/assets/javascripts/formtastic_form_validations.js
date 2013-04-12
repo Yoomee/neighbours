@@ -1,7 +1,7 @@
 var FormtasticFormValidations = {
 
   init: function() {
-    clientSideValidations.formBuilders["FormtasticBootstrap::FormBuilder"] = {
+    ClientSideValidations.formBuilders["FormtasticBootstrap::FormBuilder"] = {
       add: function (element, settings, message) {
         if (element.data('validate') !== false) {
           element.addClass('error').data('validate', false);

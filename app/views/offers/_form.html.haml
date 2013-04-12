@@ -1,0 +1,15 @@
+-content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      NeedCategorySelector.categories = #{NeedCategory.root.to_json(:methods => :sub_categories)};
+      NewOfferForm.init(#{logged_out? ? 0 : 1});
+    });
+.well
+  =semantic_form_for @offer, :validate => true, :class => 'need-offer-form' do |f|
+    =hidden_field_tag :return_to
+    =f.inputs do
+      =f.hidden_field :category_id, :value => @offer.category.try(:id), :id => 'category-id'
+      =f.hidden_field :sub_category_id, :value => @offer.sub_category.try(:id), :id => 'sub-category-id'
+      
+      =f.input :description, :label => "Describe how you can help", :input_html => { :class => "span5", :rows => "4" }, :required => false, :validate => {:presence => true}
+      =f.commit_button "Tell my neighbours", :button_html => { :class => "btn-primary" }

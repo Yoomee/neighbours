@@ -1,0 +1,35 @@
+-if @offer.accepted?
+  .row
+    .span12
+      -if logged_in_as?(@offer.user)
+        .alert.alert-success
+          ="Someone has accpeted your offer to help!"
+      -elsif logged_in_as?(@offer.accepted_offer.user)
+        .alert.alert-success
+          ="You have accepted #{@offer.user}'s offer to help."
+      -else
+        .alert
+          ="Someone has already accepted this offer."
+.row.mt-2
+  .span2
+    =link_to (can?(:read,@offer.user) ? @offer.user : '#'), :class => "user-thumbnail-large pull-left" do
+      =image_for_with_validation(@offer.user, "120x120#", :rel => 'tooltip', :title =>"Joined on #{@offer.user.created_at.strftime("%e %B %Y")}")
+      -if @offer.user.validated?
+        .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
+      %p=@offer.user
+  .span8
+    .request-body.mb2
+      %h1#offer-title
+        %small I can offer help with
+        %span=title @offer.title
+        %p.location-smallprint
+          %i.icon-map-marker
+          -if current_user.try(:validated?)
+            ="#{@offer.user.street_name}, #{@offer.created_at.strftime("%e %B %Y")}"
+          -else
+            ="#{@offer.created_at.strftime("%e %B %Y")}"
+            
+      -if current_user && current_user.validated?
+        =simple_format(@offer.description.capitalize)
+      -else
+        =@offer.category.description

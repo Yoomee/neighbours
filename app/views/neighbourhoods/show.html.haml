@@ -88,7 +88,7 @@
                     =need.category.description
                     
       -if current_user
-        =link_to "I'd like to offer some help", "/wireframes/offer", :class=>"btn call-to-action"
+        =link_to "I'd like to offer some help", new_offer_path, :class=>"btn call-to-action"
       -else              
         =link_to "I'd like to offer some help", '#sign-up-popup', :class=>"btn call-to-action", :"data-toggle"=>"modal"
       

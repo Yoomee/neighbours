@@ -1,0 +1,14 @@
+%li.list
+  .list-image
+    =link_to(need, :class => "pull-left") do
+      =image_for_with_validation(need.user, "60x50#")
+      %p.small-text=need.user
+  .list-text
+    %h3
+      =link_to need.title, need
+    %p
+      -if current_user.try(:validated?)
+        =need.description
+      -else
+        =need.category.description
+    =link_to("Help #{need.user}", need, :class=>"btn small-help-btn")
