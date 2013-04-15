@@ -5,11 +5,13 @@
       GeneralOfferForm.init(#{logged_out? ? 0 : 1});
     });
 .well
-  =semantic_form_for @general_offer, :validate => true, :class => 'need-offer-form' do |f|
+  =semantic_form_for @general_offer, :validate => true do |f|
     =hidden_field_tag :return_to
     =f.inputs do
       =f.hidden_field :category_id, :value => @general_offer.category.try(:id), :id => 'category-id'
       =f.hidden_field :sub_category_id, :value => @general_offer.sub_category.try(:id), :id => 'sub-category-id'
-      
+      -if @general_offer.errors[:category].present?
+        .control-group.error
+          %label.control-label Please select a category from above
       =f.input :description, :label => "Describe how you can help", :input_html => { :class => "span5", :rows => "4" }, :required => false, :validate => {:presence => true}
       =f.commit_button "Tell my neighbours", :button_html => { :class => "btn-primary" }
