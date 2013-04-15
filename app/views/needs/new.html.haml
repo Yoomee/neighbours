@@ -10,10 +10,12 @@
         -NeedCategory.root.each do |category|
           %li=link_to(category, '#', :class => "need-category help-tag btn#{@need.category_id == category.id ? ' btn-primary' : ''}", :data => {:category_id => category.id})
         
-    #need-sub-categories.tag-selector.tag-selector-row-2.clearfix.hide
+    #need-sub-categories{:class => "tag-selector tag-selector-row-2 clearfix#{@need.category.try(:sub_categories).present? ? '' : ' hide'}"}
       %span.tag-selector-arrow
       %h3.mb1 More specifically...
       %ul.help-tags.unstyled
+        -(@need.category.try(:sub_categories) || []).each do |category|
+          %li=link_to(category, '#', :class => "need-sub-category help-tag btn#{@need.sub_category_id == category.id ? ' btn-primary' : ''}", :data => {:sub_category_id => category.id})
 
 .row
   %hr

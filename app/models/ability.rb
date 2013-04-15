@@ -26,10 +26,13 @@ class Ability
       cannot :index, User
       can [:create, :read, :search], Need 
       can :update, Need, :user_id => user.id
-      can [:create, :index, :thanks, :read], Offer
+      can [:create, :index, :read], Offer
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end
+      can [:read, :create, :accept, :thanks], GeneralOffer
+      can [:update, :destroy], GeneralOffer, :user_id => user.id
+      cannot :accept, GeneralOffer, :user_id => user.id
       if user.is_community_champion?
         can :index, Post
       end

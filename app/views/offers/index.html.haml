@@ -16,7 +16,22 @@
               %h3=offer.need.title
               %p
                 =messages_badge(current_user.new_notification_count("my_offers", offer.need))
+-if @general_offers.present?
+  .row.mt1
+    .span8.offset2
+      %h1 My general offers
+      %ul.nav.nav-tabs.nav-stacked
+        -@general_offers.order("created_at DESC").each do |general_offer|
+          %li
+            =link_to(general_offer) do
+              .list-image
+                =image_for_with_validation(general_offer.user, "60x50#")
+                %p.small-text=general_offer.user
+              %h3=general_offer.title
+              %p
+                %span.request-message-text=truncate(general_offer.description, :length => 200)
+
 .row
   .span6.offset2                  
-    =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"    
+    =link_to "Find someone who needs your help", needs_path, :class=>"btn call-to-action"
 

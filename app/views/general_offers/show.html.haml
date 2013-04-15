@@ -18,6 +18,11 @@
             ="#{@general_offer.created_at.strftime("%e %B %Y")}"
             
       -if current_user && current_user.validated?
-        =simple_format(@general_offer.description.capitalize)
+        =simple_format(@general_offer.description)
       -else
         =@general_offer.category.description
+      .mt1
+        -if logged_in_as?(@general_offer.user)
+          =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
+        -else
+          =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')

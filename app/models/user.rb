@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
+  has_many :general_offers, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
 

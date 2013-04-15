@@ -114,8 +114,9 @@ window.Registration =
 
 window.NeedCategorySelector =
   selectCategory: (categoryId) ->
+    categoryId = parseInt(categoryId)
     $('input#category-id').val(categoryId)
-    $('input#sub-category-id').val('')    
+    $('input#sub-category-id').val('')
     cat = $.grep(NeedCategorySelector.categories, (e) ->
       e.id is categoryId
     )[0]
@@ -154,7 +155,6 @@ window.NeedCategorySelector =
       $('a.need-sub-category').removeClass('btn-primary')
       $(this).addClass('btn-primary')
       NeedCategorySelector.selectSubCategory($(this).data('subCategoryId'))
-    NeedCategorySelector.selectCategory($('input#category-id').val())
     
 window.NewNeedForm =
   force_submit: false

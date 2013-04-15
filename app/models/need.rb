@@ -10,8 +10,7 @@ class Need < ActiveRecord::Base
 
   validates :user, :presence => {:unless => :skip_user_validation?}
   validates :category, :presence => true
-  validates :description, :presence => true
-  validate :sub_category_if_available
+  validates :description, :presence => {:unless => :skip_description_validation?}
   validate :deadline_is_in_future
   
   default_scope where(:removed => false)
@@ -20,7 +19,7 @@ class Need < ActiveRecord::Base
   scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
 
-  boolean_accessor :skip_user_validation
+  boolean_accessor :skip_user_validation, :skip_description_validation
 
   delegate :lat, :lng, :street_name, :to => :user
   delegate :first_name, :to => :user, :prefix => true
@@ -77,6 +76,11 @@ class Need < ActiveRecord::Base
     end
     
   end
+
+  def description
+    return read_attribute(:description) if new_record?
+    read_attribute(:description).presence || category.description
+  end
   
   def has_accepted_offer?
     accepted_offer.present?
@@ -110,12 +114,6 @@ class Need < ActiveRecord::Base
   def deadline_is_in_future
     if new_record? && deadline.present? && (deadline < Date.today)
       errors.add(:deadline, "must be in the future")
-    end
-  end
-  
-  def sub_category_if_available
-    if category && !sub_category && !category.sub_categories.count.zero?
-      self.errors.add(:sub_category, "can't be blank")
     end
   end
 

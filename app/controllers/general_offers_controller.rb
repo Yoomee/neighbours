@@ -22,8 +22,25 @@ class GeneralOffersController < ApplicationController
     end
   end
   
+  def destroy
+    @general_offer.destroy
+    flash_notice(@general_offer)
+    redirect_to(offers_path)
+  end
+  
   def thanks
     
+  end
+
+  def accept
+    need_or_error = @general_offer.create_need_for_user(current_user)
+    if need_or_error.is_a?(Need)
+      UserMailer.accepted_offer(need_or_error.offers.first).deliver
+      redirect_to(need_or_error)
+    else
+      flash[:error] = need_or_error
+      redirect_to(@general_offer)
+    end
   end
   
 end

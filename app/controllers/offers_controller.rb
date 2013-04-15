@@ -4,6 +4,7 @@ class OffersController < ApplicationController
   def index
     @user = User.find_by_id(params[:user_id]) || current_user    
     @offers = @user.offers.group(:need_id)
+    @general_offers = @user.general_offers
   end
   
   def create

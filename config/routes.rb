@@ -63,6 +63,7 @@ Neighbours::Application.routes.draw do
   resources :general_offers, :except => [:index, :edit, :update] do
     member do
       get :thanks
+      post :accept
     end
   end
 
