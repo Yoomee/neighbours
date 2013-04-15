@@ -18,7 +18,7 @@
         %td=link_to(area.admin.full_name,area.admin) if area.admin
         %td
           -if !area.pre_registrations.empty?
-            =link_to("Email #{pluralize(area.pre_registrations.count, 'unregistered neighbour')}", email_neighbourhood_path(area))
+            =link_to("Email #{area.pre_registrations.count} unregistered", email_neighbourhood_path(area))
             &middot;
           =link_to("Edit", edit_neighbourhood_path(area))
           &middot;
