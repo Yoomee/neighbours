@@ -2,6 +2,7 @@ class Offer < ActiveRecord::Base
   
   belongs_to :need
   belongs_to :user
+  belongs_to :general_offer
   
   after_create :create_post_for_need
   
