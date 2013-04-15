@@ -1,9 +1,0 @@
-var offersHtml = '';
-<%if @offers.empty?%>
-  offersHtml = '<li><p>Looks like no-one is offering help in this category at the moment. Explain what you would like help with using the form on the right.</p></li>';
-<%else%>
-  <%@offers.each do |offer|%>
-    offersHtml = offersHtml + '<%=escape_javascript(render("offers/list_item", :offer => offer))%>';
-  <%end%>
-<%end%>
-$('#suggested-offers').html(offersHtml);

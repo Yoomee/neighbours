@@ -32,7 +32,7 @@ Neighbours::Application.routes.draw do
   
   resources :need_categories, :except => [:show] do
     resources :needs, :only => [:new, :index]
-    resources :offers, :only => [:index]
+    resources :general_offers, :only => [:index]
   end  
   
   resources :users, :only => []  do
@@ -53,10 +53,15 @@ Neighbours::Application.routes.draw do
 
   resource :champion, :only => :show
 
-  resources :offers, :only => [:index, :new, :create, :show] do
+  resources :offers, :only => [:index, :create] do
     member do
       get :accept
       get :reject
+    end
+  end
+
+  resources :general_offers, :except => [:index, :edit, :update] do
+    member do
       get :thanks
     end
   end

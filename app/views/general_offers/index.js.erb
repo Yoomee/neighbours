@@ -1,0 +1,9 @@
+var offersHtml = '';
+<%if @general_offers.empty?%>
+  offersHtml = '<li><p>Looks like no-one is offering help in this category at the moment. Explain what you would like help with using the form on the right.</p></li>';
+<%else%>
+  <%@general_offers.each do |general_offer|%>
+    offersHtml = offersHtml + '<%=escape_javascript(render("general_offers/list_item", :general_offer => general_offer))%>';
+  <%end%>
+<%end%>
+$('#suggested-general-offers').html(offersHtml);

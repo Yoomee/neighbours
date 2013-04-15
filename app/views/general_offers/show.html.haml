@@ -1,0 +1,23 @@
+.row.mt-2
+  .span2
+    =link_to (can?(:read, @general_offer.user) ? @general_offer.user : '#'), :class => "user-thumbnail-large pull-left" do
+      =image_for_with_validation(@general_offer.user, "120x120#", :rel => 'tooltip', :title =>"Joined on #{@general_offer.user.created_at.strftime("%e %B %Y")}")
+      -if @general_offer.user.validated?
+        .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
+      %p=@general_offer.user
+  .span8
+    .request-body.mb2
+      %h1#offer-title
+        %small I can offer help with
+        %span=title @general_offer.title
+        %p.location-smallprint
+          %i.icon-map-marker
+          -if current_user.try(:validated?)
+            ="#{@general_offer.user.street_name}, #{@general_offer.created_at.strftime("%e %B %Y")}"
+          -else
+            ="#{@general_offer.created_at.strftime("%e %B %Y")}"
+            
+      -if current_user && current_user.validated?
+        =simple_format(@general_offer.description.capitalize)
+      -else
+        =@general_offer.category.description

@@ -19,8 +19,8 @@
   %hr
   .span6
     %h2 People currently offering help    
-    %ul#suggested-offers.loader-square.help-list.unstyled
-      -Offer.general_offers.random(5).each do |offer|
-        =render('offers/list_item', :offer => offer)
+    %ul#suggested-general-offers.loader-square.help-list.unstyled
+      -GeneralOffer.random(5).each do |general_offer|
+        =render('general_offers/list_item', :general_offer => general_offer)
   .help-box.span6
     =render('form')
