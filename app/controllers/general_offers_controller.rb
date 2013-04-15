@@ -2,11 +2,11 @@ class GeneralOffersController < ApplicationController
   load_and_authorize_resource
   
   def index
+    @general_offers = GeneralOffer.visible_to_user(current_user)
     if params[:need_category_id].present?
-      @general_offers = GeneralOffer.where(:category_id => params[:need_category_id]).random(5)
-    else
-      @general_offers = GeneralOffer.random(5)
+      @general_offers = @general_offers.where(:category_id => params[:need_category_id])
     end
+    @general_offers = @general_offers.random(5)
   end
   
   def new

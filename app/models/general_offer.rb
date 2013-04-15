@@ -7,6 +7,20 @@ class GeneralOffer < ActiveRecord::Base
 
   validates :category, :description, :presence => true
 
+  class << self
+    
+    def visible_to_user(user)
+      if user.admin?
+        where("1 = 1")
+      elsif user.neighbourhood_id.present?
+        joins(:user).where(:users => {:neighbourhood_id => user.neighbourhood_id})
+      else
+        where("1 = 0")
+      end
+    end
+    
+  end
+
   def create_need_for_user(user_wanting_help)
     if user_wanting_help == self.user
       "You can't accept your own offer"
