@@ -11,6 +11,7 @@ class GeneralOffersController < ApplicationController
   
   def new
     @general_offer.category_id = params[:need_category_id]
+    @suggested_needs = Need.unresolved.visible_to_user(current_user).random(5)
   end
   
   def create

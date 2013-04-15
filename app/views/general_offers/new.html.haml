@@ -22,7 +22,11 @@
     %h3
       People who need help
     %ul#suggested-needs.loader-square.help-list.unstyled
-      -Need.unresolved.visible_to_user(current_user).random(5).each do |need|
-        =render('needs/list_item', :need => need)
+      -if @suggested_needs.empty?
+        %li
+          %p Looks like no-one in your neighbourhood is requesting help at the moment but describe how you can help, as someone might need your help in the future.
+      -else
+        -@suggested_needs.each do |need|
+          =render('needs/list_item', :need => need)
   .span6
     =render('form')

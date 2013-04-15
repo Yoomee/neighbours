@@ -20,9 +20,13 @@
 .row
   %hr
   .span6
-    %h2 People currently offering help    
+    %h2 People currently offering help
     %ul#suggested-general-offers.loader-square.help-list.unstyled
-      -GeneralOffer.random(5).each do |general_offer|
-        =render('general_offers/list_item', :general_offer => general_offer)
+      -if @suggested_general_offers.empty?
+        %li
+          %p Looks like no-one is offering help in your neighbourhood at the moment. Explain what you would like help with using the form on the right.
+      -else
+        -@suggested_general_offers.each do |general_offer|
+          =render('general_offers/list_item', :general_offer => general_offer)
   .help-box.span6
     =render('form')
