@@ -30,9 +30,14 @@ class Ability
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end
-      can [:read, :create, :accept, :thanks], GeneralOffer
+      can [:create, :thanks, :accept], GeneralOffer
+      can :read, GeneralOffer do |general_offer|
+        (general_offer.user_id == user.id) || general_offer.user.validated?
+      end
       can [:update, :destroy], GeneralOffer, :user_id => user.id
-      cannot :accept, GeneralOffer, :user_id => user.id
+      cannot :accept, GeneralOffer do |general_offer|
+        (general_offer.user_id == user.id) || !general_offer.user.validated?
+      end      
       if user.is_community_champion?
         can :index, Post
       end

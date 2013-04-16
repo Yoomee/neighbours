@@ -2,7 +2,7 @@ class GeneralOffersController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @general_offers = GeneralOffer.visible_to_user(current_user)
+    @general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)])
     if params[:need_category_id].present?
       @general_offers = @general_offers.where(:category_id => params[:need_category_id])
     end

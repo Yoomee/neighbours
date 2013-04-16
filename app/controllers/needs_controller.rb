@@ -33,7 +33,7 @@ class NeedsController < ApplicationController
       @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
     end
     @need.radius = Need.default_radius
-    @suggested_general_offers = GeneralOffer.visible_to_user(current_user).random(5)
+    @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(5)
   end
   
   def map

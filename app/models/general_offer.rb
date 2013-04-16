@@ -13,7 +13,7 @@ class GeneralOffer < ActiveRecord::Base
       if user.admin?
         where("1 = 1")
       elsif user.neighbourhood_id.present?
-        joins(:user).where(:users => {:neighbourhood_id => user.neighbourhood_id})
+        joins(:user).where(:users => {:neighbourhood_id => user.neighbourhood_id, :validated => true})
       else
         where("1 = 0")
       end
