@@ -49,10 +49,12 @@ class NeighbourhoodsController < ApplicationController
     if current_user
       needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
       @needs_json = needs.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      @users_json = @neighbourhood.users.with_lat_lng.without(needs.collect(&:id).compact).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
-    else
-      @needs_json = @users_json = []
+      if @neighbourhood
+        @users_json = @neighbourhood.users.with_lat_lng.without(needs.collect(&:id).compact).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
+      end
     end
+    @needs_json ||= []
+    @users_json ||= []
   end
   
   def create
