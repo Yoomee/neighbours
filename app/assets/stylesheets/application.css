@@ -1263,7 +1263,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .root_slug_about .intro-nav-link-about,
 .slug_help .intro-nav-link-help,
 .controller_home .intro-nav-link-home,
-.root_slug_news .intro-nav-link-latest
+.root_slug_news .intro-nav-link-latest,
+.root_slug_neighbourhood_help .intro-nav-link-help
  {
   color:#98cd41;
   line-height: 1;

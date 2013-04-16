@@ -1,7 +1,7 @@
 =form.inputs do
   -if current_user.is_neighbourhood_admin?
     =form.input :neighbourhood_id, :as => :hidden, :value => current_user.neighbourhood.id
-    =form.input :parent_id, :as => :hidden, :value => Page.find_by_slug(:news).id
+    =form.input :parent_id, :as => :hidden, :value => (@page.parent_id || Page.find_by_slug(:news).id)
   -else
     =parent_page_select(form)
     =form.input :neighbourhood

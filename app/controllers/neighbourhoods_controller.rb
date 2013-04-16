@@ -29,9 +29,9 @@ class NeighbourhoodsController < ApplicationController
 
   def help
     @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
-    @page = Page.find_by_slug(:help)
-    @page_children = @page.children
-    render "/pages/views/#{@page.view_name}" 
+    help_parent = Page.find_or_create_by_slug('neighbourhood_help', :title => "Neighbourhood help pages")
+    @page = Page.find_or_create_by_parent_id_and_neighbourhood_id(help_parent.id, @neighbourhood.id, :title => 'Help')
+    render "/pages/views/#{@page.view_name}"
   end
   
   def news
