@@ -97,9 +97,11 @@ window.NeedsMap =
         title:need.name,
         icon: 
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: "#0080FF",
-          fillOpacity: 0.3,
-          strokeOpacity: 0,            
+          fillColor: "#abd424",
+          strokeColor: "#67c621",
+          fillOpacity: 0.5,
+          strokeOpacity: 0,
+          strokeWeight: 1,
           scale: 20
       })
       if admin
@@ -108,7 +110,7 @@ window.NeedsMap =
           strokeOpacity: 0.8,
           strokeWeight: 1,
           fillColor: "#0080FF",
-          fillOpacity: 0.1,
+          fillOpacity: 0.5,
           map: NeedsMap.map,
           center: marker.position,
           radius: need.radius
@@ -128,8 +130,8 @@ window.NeedsMap =
         title:user.first_name,
         icon: 
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: 'red',
-          fillOpacity: 0.3,
+          fillColor: '#f8bb61',
+          fillOpacity: 0.8,
           strokeOpacity: 0,            
           scale: 20
       })
