@@ -46,7 +46,13 @@ class NeighbourhoodsController < ApplicationController
     @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
     @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     @unvalidated_map_needs = get_unvalidated_map_needs
-    @needs_json = []
+    if current_user
+      needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
+      @needs_json = needs.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
+      @users_json = @neighbourhood.users.with_lat_lng.without(needs.collect(&:id).compact).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
+    else
+      @needs_json = @users_json = []
+    end
   end
   
   def create

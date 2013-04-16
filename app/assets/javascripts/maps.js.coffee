@@ -83,7 +83,8 @@ window.NeedsMap =
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       streetViewControl: false,
       mapTypeControl: false,
-      zoom: 18
+      maxZoom: 15,      
+      zoom: 15
     }
     
     NeedsMap.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -91,10 +92,16 @@ window.NeedsMap =
 
     for need in NeedsMap.needs
       marker = new google.maps.Marker({
-          position: new google.maps.LatLng(need.lat, need.lng),
-          map: NeedsMap.map,
-          title:need.name
-      });
+        position: new google.maps.LatLng(need.lat, need.lng),
+        map: NeedsMap.map,
+        title:need.name,
+        icon: 
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "#0080FF",
+          fillOpacity: 0.3,
+          strokeOpacity: 0,            
+          scale: 20
+      })
       if admin
         new google.maps.Circle({
           strokeColor: "#0080FF",
@@ -108,8 +115,29 @@ window.NeedsMap =
         })
       marker.needId = need.id
       marker.contentString = "<div class='need-infowindow'><h3>#{need.title}</h3><p>#{need.street_name}</p><a href='/needs/#{need.id}'>View request &rarr;</a></div>"
+    
+      google.maps.event.addListener marker, 'click', ->
+        NeedsMap.infowindow.close()
+        NeedsMap.infowindow.setContent(this.contentString)
+        NeedsMap.infowindow.open(NeedsMap.map,this);
+
+    for user in NeedsMap.users
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(user.lat, user.lng),
+        map: NeedsMap.map,
+        title:user.first_name,
+        icon: 
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'red',
+          fillOpacity: 0.3,
+          strokeOpacity: 0,            
+          scale: 20
+      })
+      marker.userId = user.id
+      marker.contentString = "<div class='user-infowindow'><h3>#{user.first_name}</h3><p>#{user.street_name}</p></div>"
 
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()
         NeedsMap.infowindow.setContent(this.contentString)
         NeedsMap.infowindow.open(NeedsMap.map,this);
+

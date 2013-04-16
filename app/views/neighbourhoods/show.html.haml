@@ -6,6 +6,7 @@
     $(document).ready(function() {
       NeedSelect.init();
       NeedsMap.needs = #{@needs_json};
+      NeedsMap.users = #{@users_json};
       #{'NeedsMap.init();' if current_user}
       Needs.init();
     });
@@ -15,7 +16,6 @@
 -if current_user
   =render "validated_map"
 
-      
 -else current_user
   .container
   #home-intro-2
