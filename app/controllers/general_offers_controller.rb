@@ -11,7 +11,7 @@ class GeneralOffersController < ApplicationController
   
   def new
     @general_offer.category_id = params[:need_category_id]
-    @suggested_needs = Need.unresolved.visible_to_user(current_user).random(5)
+    get_suggested_needs
   end
   
   def create
@@ -19,6 +19,7 @@ class GeneralOffersController < ApplicationController
     if @general_offer.save
       redirect_to thanks_general_offer_path(@general_offer)
     else
+      get_suggested_needs
       render :action => 'new'
     end
   end
@@ -42,6 +43,11 @@ class GeneralOffersController < ApplicationController
       flash[:error] = need_or_error
       redirect_to(@general_offer)
     end
+  end
+
+  private
+  def get_suggested_needs
+    @suggested_needs = Need.unresolved.visible_to_user(current_user).random(5)
   end
   
 end

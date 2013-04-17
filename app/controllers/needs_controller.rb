@@ -33,7 +33,7 @@ class NeedsController < ApplicationController
       @need = Need.new(Need.find_by_id(params[:like]).try(:attributes))
     end
     @need.radius = Need.default_radius
-    @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(5)
+    get_suggest_general_offers
   end
   
   def map
@@ -63,6 +63,7 @@ class NeedsController < ApplicationController
       end
       redirect_to user_needs_path(current_user, url_options)
     else
+      get_suggest_general_offers
       render :action => 'new'
     end
   end
@@ -73,6 +74,10 @@ class NeedsController < ApplicationController
   end
   
   private
+  def get_suggest_general_offers
+    @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(5)
+  end
+  
   def redirect_if_logged_out
     if current_user.nil? && @need.valid_without_user?
       session[:new_need_attributes] = params[:need]
