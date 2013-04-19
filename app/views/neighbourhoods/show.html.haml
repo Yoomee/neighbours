@@ -41,24 +41,24 @@
     .span6
  
       %h2
-        Neighbours who've been helped
+        Neighbours offering help
       .help-list-wrapper
         %ul.help-list.unstyled#resolved
-          -@helped.each do |need|
+          -@general_offers.each do |general_offer|
             %li.list
               .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(need.user, "60x50#")
+                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                  =image_for_with_validation(general_offer.user, "60x50#")
                   %p.small-text
-                    =need.user
+                    =general_offer.user
               .list-text
                 %h3
-                  =link_to need.title, need
+                  =link_to_self(general_offer)
                 %p
                   -if current_user.try(:validated?)
-                    =need.description
+                    =general_offer.description
                   -else
-                    =need.category.description
+                    =general_offer.category.description
       
      
       -if current_user
