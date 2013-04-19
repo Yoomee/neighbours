@@ -45,7 +45,11 @@
       .help-list-wrapper
         -if @general_offers.empty?
           %p There's no one offering help at the moment.
-          %p=link_to("Offer some help to your neighbourhood", new_general_offer_path)
+          %p
+            -if logged_in?
+              =link_to("Offer some help to your neighbourhood", new_general_offer_path)
+            -else
+              =link_to("Offer some help to your neighbourhood", '#sign-up-popup', :"data-toggle" => 'modal')
         -else
           %ul.help-list.unstyled#resolved
             -@general_offers.each do |general_offer|
