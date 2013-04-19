@@ -39,26 +39,29 @@
 .container
   .row#needs-cycle
     .span6
- 
       %h2
         Neighbours offering help
       .help-list-wrapper
-        %ul.help-list.unstyled#resolved
-          -@general_offers.each do |general_offer|
-            %li.list
-              .list-image
-                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(general_offer.user, "60x50#")
-                  %p.small-text
-                    =general_offer.user
-              .list-text
-                %h3
-                  =link_to_self(general_offer)
-                %p
-                  -if current_user.try(:validated?)
-                    =general_offer.description
-                  -else
-                    =general_offer.category.description
+        -if @general_offers.empty?
+          %p There's no one offering help at the moment.
+          %p=link_to("Offer some help to your neighbourhood", new_general_offer_path)
+        -else
+          %ul.help-list.unstyled#resolved
+            -@general_offers.each do |general_offer|
+              %li.list
+                .list-image
+                  =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(general_offer.user, "60x50#")
+                    %p.small-text
+                      =general_offer.user
+                .list-text
+                  %h3
+                    =link_to_self(general_offer)
+                  %p
+                    -if current_user.try(:validated?)
+                      =general_offer.description
+                    -else
+                      =general_offer.category.description
       
      
       -if current_user
@@ -69,22 +72,25 @@
     .span6
       %h2 Neighbours who need help
       .help-list-wrapper
-        %ul.help-list.unstyled#unresolved
-          -@need_help.each do |need|
-            %li.list
-              .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(need.user, "60x50#")
-                  %p.small-text
-                    =need.user
-              .list-text
-                %h3
-                  =link_to need.title, need
-                %p
-                  -if current_user.try(:validated?)
-                    =need.description
-                  -else
-                    =need.category.description
+        -if @needs.empty?
+          %p There's no one requesting help at the moment.
+        -else
+          %ul.help-list.unstyled#unresolved
+            -@needs.each do |need|
+              %li.list
+                .list-image
+                  =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(need.user, "60x50#")
+                    %p.small-text
+                      =need.user
+                .list-text
+                  %h3
+                    =link_to need.title, need
+                  %p
+                    -if current_user.try(:validated?)
+                      =need.description
+                    -else
+                      =need.category.description
                     
       -if current_user
         =link_to "I'd like to offer some help", new_general_offer_path, :class=>"btn call-to-action"

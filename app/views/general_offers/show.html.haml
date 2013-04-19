@@ -1,3 +1,8 @@
+-if !@general_offer.user.validated?
+  .row
+    .span12
+      .alert.alert-error
+        ="#{first_name_or_your(@general_offer.user).capitalize} neighbours will be able to see this offer once #{first_name_or_your(@general_offer.user)} address has been validated."
 .row.mt-2
   .span2
     =link_to (can?(:read, @general_offer.user) ? @general_offer.user : '#'), :class => "user-thumbnail-large pull-left" do
@@ -12,17 +17,17 @@
         %span=title @general_offer.title
         %p.location-smallprint
           %i.icon-map-marker
-          -if current_user.try(:validated?)
+          -if logged_in_as?(@general_offer.user) || current_user.try(:validated?)
             ="#{@general_offer.user.street_name}, #{@general_offer.created_at.strftime("%e %B %Y")}"
           -else
             ="#{@general_offer.created_at.strftime("%e %B %Y")}"
             
-      -if current_user && current_user.validated?
+      -if logged_in_as?(@general_offer.user) || current_user.try(:validated?)
         =simple_format(@general_offer.description)
       -else
         =@general_offer.category.description
       .mt1
         -if logged_in_as?(@general_offer.user)
           =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
-        -else
+        -elsif @general_offer.user.validated?
           =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')

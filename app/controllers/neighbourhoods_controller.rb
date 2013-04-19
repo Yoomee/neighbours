@@ -13,14 +13,14 @@ class NeighbourhoodsController < ApplicationController
     if current_user
       @needs_json = Need.unresolved.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
       @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
-      @need_help = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
+      @needs = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
     else
       if @neighbourhood = Neighbourhood.find_by_id(params[:id])
         @email_share_params = "neighbourhood=#{@neighbourhood.id}"
         render :action => "coming_soon"
       else          
         @general_offers = get_at_least(20, GeneralOffer.order(:created_at).reverse_order)
-        @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+        @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
         @unvalidated_map_needs = get_unvalidated_map_needs
         @needs_json = []
       end
@@ -43,8 +43,8 @@ class NeighbourhoodsController < ApplicationController
 
   def show
     @neighbourhood = Neighbourhood.find_by_id(params[:id]) || current_user.try(:neighbourhood)
-    @general_offers = get_at_least(20, GeneralOffer.order(:created_at).reverse_order)
-    @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+    @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
+    @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     @unvalidated_map_needs = get_unvalidated_map_needs
     if current_user
       needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
