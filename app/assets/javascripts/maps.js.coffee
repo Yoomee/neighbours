@@ -83,7 +83,6 @@ window.NeedsMap =
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       streetViewControl: false,
       mapTypeControl: false,
-      maxZoom: 15,      
       zoom: 15
     }
     
