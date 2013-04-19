@@ -1652,3 +1652,6 @@ a.small-help-btn {
 #suggested-needs.loading {
   margin-top: 20px;
 }
+#pre-registrations-delete-form .center {
+  text-align: center;
+}

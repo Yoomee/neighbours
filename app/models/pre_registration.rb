@@ -6,6 +6,8 @@ class PreRegistration < ActiveRecord::Base
     
     before_save :geocode
     
+    scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
+    
     class << self
       def name_of_town(postcode)
         results = Geocoder.search("#{postcode}, UK")

@@ -6,6 +6,17 @@
     PreRegistrationMap.users = #{@pr_json};
     $(document).ready(function() {
       PreRegistrationMap.init();
+      $("#select-all-link").click(function(event) {
+        event.preventDefault();
+        var selectAll = true;
+        if ($(this).html() == 'Select all') {
+          $(this).html('Select none');
+        } else {
+          selectAll = false;
+          $(this).html('Select all');          
+        }
+        $("#pre-registrations-delete-form input[type='checkbox']").prop('checked', selectAll);
+      });
     });
 
 .row
@@ -17,3 +28,27 @@
       Download spreadsheet
 .row
   #map-canvas.span12{:style => "height:600px"}
+.row.mt-2
+  %h2.mb-2=pluralize(PreRegistration.count, 'Pre-registration')
+  =form_tag(destroy_all_pre_registrations_path, :method => :delete, :id => 'pre-registrations-delete-form') do
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th.center.span1=link_to('Select all', '#', :id => 'select-all-link')
+          %th Name
+          %th Email
+          %th Area      
+          %th Postcode
+          %th Date registered
+      %tbody
+        -@pre_registrations.each do |pre_registration|
+          %tr
+            %td.center=check_box_tag 'pre_registration_ids[]', pre_registration.id, false, :id => ''
+            %td=pre_registration.name
+            %td=pre_registration.email
+            %td=pre_registration.area
+            %td=pre_registration.postcode
+            %td=pre_registration.created_at.strftime("%d/%m/%Y")
+    =submit_tag('Delete selected pre-registrations', :class => 'btn btn-danger', :confirm => 'Are you sure you want to permanently delete all the selected pre-registrations?')
+  .pull-right
+    =will_paginate(@pre_registrations)
