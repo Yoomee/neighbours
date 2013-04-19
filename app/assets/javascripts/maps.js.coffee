@@ -121,7 +121,7 @@ window.NeedsMap =
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()
         NeedsMap.infowindow.setContent(this.contentString)
-        NeedsMap.infowindow.open(NeedsMap.map,this);
+        NeedsMap.infowindow.open(NeedsMap.map,this)
 
     for user in NeedsMap.users
       marker = new google.maps.Marker({
@@ -130,16 +130,36 @@ window.NeedsMap =
         title:user.first_name,
         icon: 
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: '#f8bb61',
-          fillOpacity: 0.8,
+          fillColor: 'gray',
+          fillOpacity: 0.6,
           strokeOpacity: 0,            
           scale: 20
       })
-      marker.userId = user.id
       marker.contentString = "<div class='user-infowindow'><h3>#{user.first_name}</h3><p>#{user.street_name}</p></div>"
 
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()
         NeedsMap.infowindow.setContent(this.contentString)
-        NeedsMap.infowindow.open(NeedsMap.map,this);
+        NeedsMap.infowindow.open(NeedsMap.map,this)
+        
+    for general_offer in NeedsMap.general_offers
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(general_offer.lat, general_offer.lng),
+        map: NeedsMap.map,
+        title: general_offer.title,
+        icon: 
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#f8bb61',
+          fillOpacity: 0.8,
+          strokeOpacity: 0,            
+          scale: 20
+      })
+      marker.generalOfferId = general_offer.id
+      marker.contentString = "<div class='user-infowindow'><h3>#{general_offer.title}</h3><p>#{general_offer.street_name}</p><a href='/general_offers/#{general_offer.id}'>View offer &rarr;</a></div>"
+
+      google.maps.event.addListener marker, 'click', ->
+        NeedsMap.infowindow.close()
+        NeedsMap.infowindow.setContent(this.contentString)
+        NeedsMap.infowindow.open(NeedsMap.map,this)
+    
 

@@ -7,6 +7,9 @@ class GeneralOffer < ActiveRecord::Base
 
   validates :category, :description, :presence => true
 
+  delegate :lat, :lng, :street_name, :to => :user
+  delegate :first_name, :to => :user, :prefix => true
+
   class << self
     
     def visible_to_user(user)
