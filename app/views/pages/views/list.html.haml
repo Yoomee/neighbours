@@ -4,18 +4,21 @@
     =raw(@page.text)
 .row
   .span12
-    -@page_children.latest.each do |page|
-      .row.mb-2
-        .span3.fade_in
-          =link_to(image_for(page, "220x160#"), page)
-        .span6
-          %h3
-            =link_to_self(page)
-            -if @page.slug == "blog"
-              \- 
-              =(page.publication_date || page.created_at).to_s(:date)
-          %p=truncate(strip_tags(page.text), :length => 220)
-          =link_to raw('&rarr; Read more'), page
+    -if @page_children.blank? && @neighbourhood.present?
+      %p="There's no news for the #{@neighbourhood} neighbourhood yet."
+    -else
+      -@page_children.latest.each do |page|
+        .row.mb-2
+          .span3.fade_in
+            =link_to(image_for(page, "220x160#"), page)
+          .span6
+            %h3
+              =link_to_self(page)
+              -if @page.slug == "blog"
+                \- 
+                =(page.publication_date || page.created_at).to_s(:date)
+            %p=truncate(strip_tags(page.text), :length => 220)
+            =link_to raw('&rarr; Read more'), page
     -if slug_is?('blog')
       .row.mb-2
         .span9
