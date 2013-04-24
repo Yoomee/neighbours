@@ -20,7 +20,7 @@
       .row.mb-2
         .span9
           =link_to("Let us know what you think",feedback_path)
-    -if can?(:new, Page)
+    -if can?(:new, Page.new)
       .row.mb-2
         .span2
           =link_to("+ Add a subpage", new_child_page_path(:parent_id => @page.id))
@@ -30,5 +30,5 @@
       =back_link
       =link_if_can("Edit page", [:edit, @page])
       =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
-      =link_if_can("New page", [:new, Page])
+      =link_if_can("New page", [:new, Page.new])
       =#link_if_can("Set order", [:order, Page])

@@ -6,8 +6,8 @@
         %h2.center
           =neighbourhood_snippet_text(:about_title, "Help people out around you. It feels good.")
           =edit_snippet_link(:about_title)              
-        %center
-          %p=simple_format(neighbourhood_snippet_text(:about_heading, "We'd like to join with you in making your neighbourhood a better place by helping people to help their neighbours because: we believe most people want to be helpful and we hope everyone and every neighbourhood  will be better off by doing so .So what is Neighbours Can Help? What's it all about?\n\nSo what is Neighbours Can Help? What's it all about?"))
+        .center
+          =simple_format(neighbourhood_snippet_text(:about_heading, "We'd like to join with you in making your neighbourhood a better place by helping people to help their neighbours because: we believe most people want to be helpful and we hope everyone and every neighbourhood  will be better off by doing so .So what is Neighbours Can Help? What's it all about?\n\nSo what is Neighbours Can Help? What's it all about?"))
           =edit_snippet_link(:about_heading)
          
 #comic-1.comic-strip
@@ -126,9 +126,8 @@
         =link_to "Get involved", "#sign-up-popup", :id=>"cta-2", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
       .span12.pencil-line
       .span8.offset2.center.bottom-paragraph
-        %p
-          =simple_format(neighbourhood_snippet_text(:about_footer, "And eventually, we would like to see this website used to meet the many hidden needs in every street within the UK.\n\n So if you agree with this long term ambition, please sign up and encourage others to do the same....and remember there's no long term commitment ; it's not neighbours MUST help or neighbours OUGHT TO help - it's neighbours CAN help.....and only if and when they want to. We just happen to believe they will.....\n\nThank you !\n\nJohn, David, Rose and Ange\n\nThe Neighbours Can Help Team"))
-          =edit_snippet_link(:about_footer)
+        =simple_format(neighbourhood_snippet_text(:about_footer, "And eventually, we would like to see this website used to meet the many hidden needs in every street within the UK.\n\n So if you agree with this long term ambition, please sign up and encourage others to do the same....and remember there's no long term commitment ; it's not neighbours MUST help or neighbours OUGHT TO help - it's neighbours CAN help.....and only if and when they want to. We just happen to believe they will.....\n\nThank you !\n\nJohn, David, Rose and Ange\n\nThe Neighbours Can Help Team"))
+        =edit_snippet_link(:about_footer)
 #big-cta
   .container
     .row

@@ -42,7 +42,7 @@ class Neighbourhood < ActiveRecord::Base
     if self.try("snippet_#{slug}")
       self.try("snippet_#{slug}")
     else
-      YmSnippets::Snippet.find_by_slug(slug)
+      YmSnippets::Snippet.find_by_slug(slug).to_s
     end
   end
 
