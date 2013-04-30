@@ -10,7 +10,7 @@ class GeneralOffersController < ApplicationController
   end
   
   def new
-    @general_offer.category_id = params[:need_category_id]
+    @general_offer.attributes = {:category_id => params[:need_category_id], :radius => GeneralOffer.default_radius}
     get_suggested_needs
   end
   
