@@ -63,6 +63,7 @@ class UsersController < ApplicationController
 
   def request_to_be_champion
     @user.update_attribute(:champion_request_at, Time.now)
+    UserMailer.community_champion_request(@user).deliver
     flash[:notice] = "You've asked to become a community champion. We'll get back to you soon"
     redirect_to @user
   end

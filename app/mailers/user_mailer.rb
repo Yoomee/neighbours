@@ -62,4 +62,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
   end
   
+  def community_champion_request(user)
+    @user = user
+    mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Community champion request")
+  end  
+  
 end
