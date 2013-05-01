@@ -87,17 +87,20 @@ window.Registration =
     currentType = $('#user_validate_by').val()
     if currentType.length
       Registration.saveValidateByType(currentType)
+    if $('.card-details-form .control-group.error').length
+      $('#card-modal').modal()
+    $('a.validate-by-link[data-validate-by="credit_card"]').live 'click', (event) ->
+      event.preventDefault()
+      $('#card-modal').modal()
     $('a.validate-by-link').live 'click', (event) ->
       event.preventDefault()
       Registration.toggleValidateByType($(this).data('validate-by'))
   removeValidateByType: () ->
-    $('.card-details-form, .organisation-form').hide()
+    $('.organisation-form').hide()
     $('a.validate-by-link').parent().removeClass('alert-info')
     $('#user_validate_by').val('')
   saveValidateByType: (type) ->
-    if type == "credit_card"
-      $('.card-details-form').show()
-    else if type == "organisation"
+    if type == "organisation"
       $('.organisation-form').show()
     $('a.validate-by-link').parent().removeClass('alert-info')
     $("a.validate-by-link[data-validate-by='#{type}']").parent().addClass('alert-info')
@@ -105,12 +108,11 @@ window.Registration =
   toggleValidateByType: (type) ->
     currentType = $('#user_validate_by').val()
     Registration.removeValidateByType()
-    if type == "credit_card"
+    if type == "credit_card"      
       $('#user_requested_validation_by_credit_card').val(1)
-      $('#card-modal').modal()
-    else
-      unless currentType == type
-        Registration.saveValidateByType(type)
+      Registration.saveValidateByType(type)
+    else if currentType != type
+      Registration.saveValidateByType(type)
 
 window.NeedCategorySelector =
   selectCategory: (categoryId) ->

@@ -27,6 +27,7 @@ gem 'geocoder'
 gem 'cocoon'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'activemerchant'
 
 ### Groups
 # Gems used only for assets and not required

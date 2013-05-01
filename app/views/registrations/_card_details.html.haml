@@ -1,6 +1,7 @@
-.card-details-form.hide
-  =form.inputs(:class => "form-horizontal") do
-    =form.input :card_type, :as => :select, :collection => User::CARD_TYPES, :label_method => :humanize, :required => false
-    =form.input :card_number, :required => false, :input_html => {:size => 16, :maxlength => 16, :class => "span4"}
-    =form.input :card_expiry_date, :label => "Expiry date (mm/yyyy)", :required => false, :input_html => {:size => 7, :maxlength => 7, :class => "span4"}
-    =form.input :card_security_code, :label => "Security code", :required => false, :input_html => {:size => 3, :maxlength => 3, :class => "span4"}
+.card-details-form
+  =form.semantic_fields_for(:credit_card_preauths, form.object.credit_card_preauths.select(&:new_record?).first) do |card_form|
+    =card_form.inputs(:class => "form-horizontal") do
+      =card_form.input :card_type, :as => :select, :collection => card_type_options, :required => false
+      =card_form.input :card_number, :required => false, :input_html => {:size => 16, :maxlength => 16, :class => "span4"}
+      =card_form.input :card_expiry_date, :label => "Expiry date (mm/yyyy)", :required => false, :input_html => {:size => 7, :maxlength => 7, :class => "span4"}
+      =card_form.input :card_security_code, :label => "Security code", :required => false, :input_html => {:size => 3, :maxlength => 3, :class => "span4"}

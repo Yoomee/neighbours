@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
 
   devise :confirmable
 
-  User::CARD_TYPES = %w{visa mastercard american_express}
   User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Academy"]
 
   has_many :needs, :dependent => :destroy
@@ -13,17 +12,20 @@ class User < ActiveRecord::Base
   has_many :general_offers, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
+  has_many :credit_card_preauths
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
-  attr_accessor :card_number, :card_security_code
+  accepts_nested_attributes_for :credit_card_preauths, :limit => 1
 
   before_create :generate_validation_code
   after_create :send_emails
-  before_save :set_card_digits, :set_neighbourhood
+  before_save :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
+  before_validation :setup_credit_card_preauth
+  before_create :validate_credit_card_address
 
   geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
@@ -31,13 +33,8 @@ class User < ActiveRecord::Base
 
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
-  validates :validate_by, :presence => true, :if => :validation_step?
+  validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
-  validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
-  validates :card_type, :inclusion => {:in => User::CARD_TYPES}, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
   validate :dob_or_undiclosed_age
   validate :over_16
@@ -73,22 +70,24 @@ class User < ActiveRecord::Base
     read_attribute(:city).presence || "Sheffield"
   end
 
+  # def credit_card_preauths_attributes_with_address_fields=(attrs)
+  #   attrs.keys.each do |key|
+  #     attrs[key]["house_number"] ||= self.house_number
+  #     attrs[key]["street_name"] ||= self.street_name
+  #     attrs[key]["city"] ||= self.city
+  #     attrs[key]["postcode"] ||= self.postcode
+  #   end
+  #   credit_card_preauths_attributes_without_address_fields(value)
+  # end
+  # alias_method_chain :credit_card_preauths_attributes, :address_fields
+
   # overwritten devise method: users don't need to confirm their email address, so everyone is confirmed
   def confirmed?
     true
   end
 
-  def credit_card_attributes
-    %w{card_type formatted_card_number card_expiry_date}
-  end
-
   def dob_or_undiclosed_age
     dob.present? || undisclosed_age?
-  end
-
-  def formatted_card_number
-    return nil if card_digits.blank?
-    ("**** " * 3) + card_digits.to_s
   end
 
   def has_address?
@@ -210,9 +209,28 @@ class User < ActiveRecord::Base
     errors.add(:dob, "You must be over 16 to register") unless dob.present? && dob < 16.years.ago.to_date
   end
 
-  def set_card_digits
-    unless card_number.blank?
-      self.card_digits = card_number.last(4)
+  def setup_credit_card_preauth
+    if validation_step? && validate_by == 'credit_card'
+      credit_card_preauths.build if credit_card_preauths.empty?
+    else
+      credit_card_preauths(true)
+    end
+  end
+
+  def validate_credit_card_address
+    return true if !validation_step? || validate_by != 'credit_card'
+    credit_card_preauth = credit_card_preauths.select(&:new_record?).first
+    attrs = attributes.slice('house_number', 'street_name', 'city', 'postcode')
+    attrs.merge!(credit_card_preauth.attributes)
+    attrs.merge!(:card_number => credit_card_preauth.card_number, 
+        :card_expiry_date => credit_card_preauth.card_expiry_date,
+        :card_security_code => credit_card_preauth.card_security_code
+    )
+    credit_card_preauths(true)
+    if new_credit_card_preauth = CreditCardPreauth.new(attrs)
+      self.validated = new_credit_card_preauth.preauth!
+    else
+      raise CreditCardPreauthFailedError
     end
   end
 
