@@ -1059,11 +1059,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 .card-details-form .control-group {
   margin-bottom: 10px;
 }
-.card-details-form .controls {
-  margin-left: 220px;
-}
-.card-details-form .control-label {
-  width: 200px;
+.card-details-form .card-details-month {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 0;
 }
 
 /*========== Admin users index ==========*/

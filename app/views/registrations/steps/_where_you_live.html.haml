@@ -3,7 +3,7 @@
   =neighbourhood
 =form.inputs(:class => "form-horizontal") do
   %label.control-label#address-label Address
-  =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "34", :class => "span1"}, :help => "Please enter your house number or house name."
+  =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "123", :class => "span1"}, :help => "Please enter your house number or house name."
   =form.input :street_name, :label => "Street name", :required => false, :input_html => {:placeholder => "Street name", :class => "span4"}, :help => "We will only show your address to people that want to help you."
   =form.input :city, :label => false, :required => false, :input_html => {:placeholder => "Town/city", :value => @user.city}
   =form.input :postcode, :label => false, :required => false, :input_html => {:placeholder => "Postcode", :class => "span2", :disabled => true}

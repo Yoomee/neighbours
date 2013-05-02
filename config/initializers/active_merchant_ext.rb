@@ -23,4 +23,15 @@ module ActiveMerchant #:nodoc:
     end
   end
 end
+
+module ActiveMerchant  
+  module Billing  
+    class CreditCard  
+      def persisted?  
+        false  
+      end  
+    end  
+  end  
+end
+
 ActiveMerchant::Billing::Base.mode = :test

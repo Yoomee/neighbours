@@ -22,33 +22,36 @@ class RegistrationsController < ApplicationController
     if params[:back]
       @user.previous_step!
     else
-      debugger
       if @user.valid?
         if @user.last_step?
-          begin
-            if @user.save
-              sign_in(@user)
-              if @user.validate_by == "post" && !@user.validated?
-                flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
-              end
-              if new_need_attrs = session.delete(:new_need_attributes)
-                @user.needs.create(new_need_attrs)
-                flash[:notice] = "Congratulations! You have added your first request. Once we've validated your account then neighbours can help you."
-              elsif session.delete(:redirect_to_needs)
-                flash[:notice] = "Congratulations! You've just registered. Once we've validated your account you'll be able to help your neighbours."
-              end
-              redirect_to(Page.find_by_slug(:what_next) || root_path) and return
-            else
-              flash[:error] = "Something's gone wrong - sorry. Please try again"
-              redirect_to(new_registration_path) and return
+          if @user.save
+            sign_in(@user)
+            if @user.validate_by == "post" && !@user.validated?
+              flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
             end
-          rescue CreditCardPreauthFailedError
-            @user.errors.add(:validate_by, "Unfortunately we couldn't verify your address from the card details you entered. Please enter some different card details or select an alternative option below.")
-            @user.credit_card_preauths.build
+            if new_need_attrs = session.delete(:new_need_attributes)
+              need = @user.needs.create(new_need_attrs)
+              flash[:notice] = "Congratulations! You have added your first request."
+              flash[:notice] += " Once we've validated your account then neighbours can help you." if !@user.validated?
+              redirect_to(need) and return
+            else
+              flash[:notice] = "Congratulations! You've just registered."
+              flash[:notice] += " Once we've validated your account you'll be able to help your neighbours." if !@user.validated?              
+              if session.delete(:redirect_to_needs)
+                redirect_to(needs_path) and return
+              elsif !@user.validated && what_next_page = Page.find_by_slug(:what_next)
+                flash.delete(:notice)
+                redirect_to(what_next_page) and return
+              else
+                redirect_to(root_path) and return
+              end
+            end
+          else
+            flash[:error] = "Something's gone wrong - sorry. Please try again"
+            redirect_to(new_registration_path) and return
           end
         else
           @user.next_step!
-          @user.credit_card_preauths.build if @user.validation_step?
         end
       else
         #@user not valid
