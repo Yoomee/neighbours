@@ -1,6 +1,7 @@
 class GeneralOffer < ActiveRecord::Base
 
   include HasShoutRadius
+  include Autopostable
 
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
@@ -32,6 +33,18 @@ class GeneralOffer < ActiveRecord::Base
     end
     alias_method_chain :visible_to_user, :validated_users
     
+  end
+  
+  def autopost_url
+    "#{Settings.site_url}/general-offers/#{id}"
+  end
+  
+  def autopost_text
+    if user.neighbourhood
+      "#{user} from #{user.neighbourhood} has offered to help with #{title}"
+    else
+      "#{user} has offered to help with #{title}"
+    end
   end
 
   def create_need_for_user(user_wanting_help)

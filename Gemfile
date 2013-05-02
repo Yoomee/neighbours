@@ -27,6 +27,8 @@ gem 'geocoder'
 gem 'cocoon'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'twitter'
+gem 'mogli'
 
 ### Groups
 # Gems used only for assets and not required
