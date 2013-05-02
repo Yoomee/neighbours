@@ -36,7 +36,7 @@ class GeneralOffer < ActiveRecord::Base
   end
   
   def autopost_url
-    "#{Settings.site_url}/general-offers/#{id}"
+    "#{Settings.site_url}/general_offers/#{id}"
   end
   
   def autopost_text
