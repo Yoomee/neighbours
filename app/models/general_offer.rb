@@ -1,5 +1,7 @@
 class GeneralOffer < ActiveRecord::Base
 
+  include HasShoutRadius
+
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
   belongs_to :sub_category, :class_name => "NeedCategory"
@@ -10,17 +12,25 @@ class GeneralOffer < ActiveRecord::Base
   delegate :lat, :lng, :street_name, :to => :user
   delegate :first_name, :to => :user, :prefix => true
 
+  define_index do
+    indexes description
+    has id, user_id, category_id, radius, created_at, updated_at
+    join user
+    has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
+    has "RADIANS(users.lng)", :as => :longitude, :type => :float
+    set_property :delta => true
+  end
+
   class << self
     
-    def visible_to_user(user)
+    def visible_to_user_with_validated_users(user)
       if user.try(:admin?)
-        where("1 = 1")
-      elsif user.try(:neighbourhood_id).present?
-        joins(:user).where(:users => {:neighbourhood_id => user.neighbourhood_id, :validated => true})
+        visible_to_user_without_validated_users(user)
       else
-        where("1 = 0")
+        visible_to_user_without_validated_users(user).joins(:user).select('general_offers.*, users.validated').where(:users => {:validated => true})
       end
     end
+    alias_method_chain :visible_to_user, :validated_users
     
   end
 

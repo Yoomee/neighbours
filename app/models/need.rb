@@ -1,5 +1,7 @@
 class Need < ActiveRecord::Base
 
+  include HasShoutRadius
+
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
   belongs_to :sub_category, :class_name => "NeedCategory"
@@ -26,55 +28,11 @@ class Need < ActiveRecord::Base
 
   define_index do
     indexes description
-    has user_id, category_id, deadline, radius, created_at, updated_at
+    has id, user_id, category_id, deadline, radius, created_at, updated_at
     join user
     has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
     set_property :delta => true
-  end
-  
-  class << self
-    
-    def default_radius
-      radius_options[2].last
-    end
-    
-    def maximum_radius
-      radius_options.last.last
-    end
-        
-    def radius_options(max_miles = nil)
-      max_miles ||= Need::RADIUS_OPTIONS.last.last
-      Need::RADIUS_OPTIONS.map do |name, miles|
-        [name, (miles * 1609.344).round]
-      end.select { |k,v| v <= (max_miles * 1609.344).round }
-    end
-  
-    def visible_from_location(lat,lng)
-      sphinx_search = search_for_ids({
-        :with => { "@geodist" => 0.0..Need.maximum_radius.to_f },
-        :geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)],
-        :per_page => 100000
-      })
-      need_ids = []
-      sphinx_search.results[:matches].each do |match|
-        if match[:attributes]["radius"].to_f > match[:attributes]["@geodist"].to_f
-          need_ids << match[:doc] 
-        end
-      end
-      where("needs.id IN (?)", need_ids)
-    end
-    
-    def visible_to_user(user)
-      if user.admin?
-        where("1 = 1")
-      elsif user.has_lat_lng?
-        visible_from_location(user.lat,user.lng)
-      else
-        where("1 = 0")
-      end
-    end
-    
   end
 
   def description
