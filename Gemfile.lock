@@ -133,6 +133,8 @@ GEM
     factory_girl_rails (3.4.0)
       factory_girl (~> 3.4.0)
       railties (>= 3.0.0)
+    faraday (0.8.6)
+      multipart-post (~> 1.1)
     fastthread (1.0.7)
     ffi (1.0.11)
     formtastic (2.0.2)
@@ -147,11 +149,15 @@ GEM
       guard (>= 1.1)
     haml (4.0.2)
       tilt
+    hashie (1.0.0)
     highline (1.6.13)
     hike (1.2.1)
     hpricot (0.8.6)
     html_truncator (0.3.0)
       nokogiri (~> 1.4)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.1)
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
@@ -180,7 +186,12 @@ GEM
     mime-types (1.19)
     money (5.1.1)
       i18n (~> 0.6.0)
+    mogli (0.0.29)
+      hashie (~> 1.0.0)
+      httparty (>= 0.4.3)
     multi_json (1.5.0)
+    multi_xml (0.5.3)
+    multipart-post (1.1.5)
     mysql2 (0.3.11)
     net-ssh (2.2.2)
     nokogiri (1.5.6)
@@ -274,6 +285,7 @@ GEM
       rubyzip
     shoulda-matchers (1.2.0)
       activesupport (>= 3.0.0)
+    simple_oauth (0.2.0)
     sprockets (2.0.4)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -289,6 +301,10 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    twitter (4.6.2)
+      faraday (~> 0.8, < 0.10)
+      multi_json (~> 1.0)
+      simple_oauth (~> 0.2)
     tzinfo (0.3.35)
     uglifier (1.2.5)
       execjs (>= 0.3.0)
@@ -386,6 +402,7 @@ DEPENDENCIES
   growl
   guard-rspec
   letter_opener
+  mogli
   mysql2
   passenger
   rails (= 3.1.0)
@@ -395,6 +412,7 @@ DEPENDENCIES
   sass-rails (~> 3.1.0)
   shoulda-matchers
   sqlite3
+  twitter
   uglifier
   whenever
   ym_cms (~> 0.3.3)
