@@ -933,6 +933,61 @@ a.yoomee-logo {
 	background: url(/assets/yoomee_logo.png) no-repeat top right;
 }
 
+.find-us-on {
+	float: right;
+	clear: both;
+	font-weight: bold;
+	margin: 10px 0;
+
+  
+}
+.find-us-on > li {
+  float: left;
+  margin: 0 0 0 10px;
+}
+
+.link-find-us {
+	color: #fff;
+  display:block;
+  padding: 10px 15px 10px 40px;
+  line-height: 1;
+  background:#7086bf  url(/assets/find-us-facebook.png ) no-repeat 10px center;
+  
+  
+  -moz-border-radius:20px;
+-webkit-border-radius:20px;
+border-radius:20px;
+  
+}
+.link-find-us-blogger {
+  background:#F1A83B url(/assets/find-us-blogger.png ) no-repeat 10px center;
+}
+.link-find-us-google {
+  background:#d92761 url(/assets/find-us-google.png ) no-repeat 10px center;
+}
+.find-title {
+  padding: 10px;
+  
+}
+.link-find-us:hover {
+  text-decoration: none;
+  color: #fff;
+  
+  opacity: 0.9;
+}
+
+
+.no-needs-offers {
+	padding-bottom: 60px;
+	background: url(/assets/no-needs-offers-arrow.png ) no-repeat bottom right;
+  
+}
+
+
+
+
+
+
 /*========== Control Panel==========*/
 #control-panel {
   height: 70px;
