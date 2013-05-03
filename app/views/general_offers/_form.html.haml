@@ -4,7 +4,8 @@
       NeedCategorySelector.categories = #{NeedCategory.root.to_json(:methods => :sub_categories)};
       GeneralOfferForm.init(#{logged_out? ? 0 : 1});
     });
-.well
+%h3 Or offer help to others:
+.well.mt-2    
   =semantic_form_for @general_offer, :validate => true do |f|
     =hidden_field_tag :return_to
     =f.inputs do
@@ -15,4 +16,4 @@
           %label.control-label Please select a category from above
       =f.input :description, :label => "Describe how you can help", :input_html => { :class => "span5", :rows => "4" }, :required => false, :validate => {:presence => true}
       =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => "Broadcast radius", :help => "People who live within this distance from you will hear about your offer", :input_html => {:class => "span5"}
-      =f.commit_button "Tell my neighbours", :button_html => { :class => "btn-primary" }
+      =f.commit_button "Tell my neighbours", :button_html => { :class => "btn" }

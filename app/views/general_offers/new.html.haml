@@ -1,4 +1,4 @@
-.row.mt-3
+.row
   .span12
     %h1 I'd like to offer some help
 .row
@@ -16,11 +16,11 @@
       %ul.help-tags.unstyled
         -(@general_offer.category.try(:sub_categories) || []).each do |category|
           %li=link_to(category, '#', :class => "need-sub-category help-tag btn#{@general_offer.sub_category_id == category.id ? ' btn-primary' : ''}", :data => {:sub_category_id => category.id})
-  
+                    
 .row
+  %hr
   .span6
-    %h3
-      People who need help
+    %h2 Offer these people help         
     %ul#suggested-needs.loader-square.help-list.unstyled
       -if @suggested_needs.empty?
         %li
