@@ -26,6 +26,7 @@ $(document).ready () ->
       )
   )
   $('.help-icon').tooltip()
+  $('.link-find-us').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
