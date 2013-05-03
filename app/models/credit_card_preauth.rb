@@ -38,17 +38,21 @@ class CreditCardPreauth < ActiveRecord::Base
         :login  => Settings.payment_sense.merchant_id,
         :password => Settings.payment_sense.password
       )
-      response = gateway.preauth(1, credit_card, :address => {}, :billing_address => billing_address, :order_id => self.id)
+      response = gateway.preauth(1, credit_card, :address => {}, :billing_address => billing_address, :order_id => ref)
       self.attributes = {:success => response.success?, :message => response.message}
       output_data = response.params["transaction_output_data"]
       update_attributes(output_data.slice(:address_numeric_check_result, :post_code_check_result, :cv2_check_result))
     end
   end
 
+  def ref
+    return nil if new_record?
+    "#{Rails.env.development? ? 'dev' : 'stag'}-#{id}"
+  end
+
 end
 
 CreditCardPreauth::ACCEPTED_CARDS = {
   "Visa" => "visa",
-  "Mastercard" => "master",
-  "Maestro" => "maestro"
+  "Mastercard" => "master"
 }
