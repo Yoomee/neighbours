@@ -1,6 +1,6 @@
 var needsHtml = '';
 <%if @needs.empty?%>
-  needsHtml = '<li><p>Looks like no-one is requesting help in this category at the moment but describe how you can help, as someone might need your help in the future.</p></li>';
+  needsHtml = '<li><p class="no-needs-offers">Looks like no-one is requesting help in this category at the moment but describe how you can help, as someone might need your help in the future.</p></li>';
 <%else%>
   <%@needs.each do |need|%>
     needsHtml = needsHtml + '<%=escape_javascript(render("needs/list_item", :need => need))%>';

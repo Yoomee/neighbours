@@ -4,7 +4,8 @@
       NeedCategorySelector.categories = #{NeedCategory.root.to_json(:methods => :sub_categories)};
       NewNeedForm.init(#{logged_out? ? 0 : 1});
     });
-.well
+%h3 Or ask for help elsewhere:
+.well.mt-2
   =semantic_form_for @need, :validate => true  do |f|
     =hidden_field_tag :return_to
     =f.inputs do
@@ -13,7 +14,7 @@
       -if @need.errors[:category].present?
         .control-group.error
           %label.control-label Please select a category from above
-      =f.input :description, :label => "If you can't find anyone offering help, post your request below", :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span5", :rows => "6" }, :required => false
+      =f.input :description, :label => "Post your request below", :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span5", :rows => "6" }, :required => false
       =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => "Broadcast radius", :help => "People who live within this distance from you will hear about your need", :input_html => {:class => "span5"}
       =f.input :need_to_know_by, :as => :radio, :collection => [["Any time","anytime"],["As soon as possible","asap"], ["A specific date", "date"]], :label => "I need to know by", :help => "When would you like to know if anybody can help you?"
       #need_deadline_input.control-group{:class => "#{@need.errors[:deadline].present? ? 'error' : ''}"}
@@ -22,4 +23,4 @@
           -if @need.errors[:deadline].present?
             %span.help-inline
               =@need.errors[:deadline].to_sentence
-      =f.commit_button "Send help request", :button_html => { :class => "btn-primary" }
+      =f.commit_button "Send help request", :button_html => { :class => "btn" }
