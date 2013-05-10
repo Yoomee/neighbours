@@ -44,6 +44,7 @@ class NeighbourhoodsController < ApplicationController
   def show
     @neighbourhood = Neighbourhood.find_by_id(params[:id]) || current_user.try(:neighbourhood)
     @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
+    @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order) if @general_offers.empty?
     @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     @unvalidated_map_needs = get_unvalidated_map_needs
     if current_user

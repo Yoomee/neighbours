@@ -40,34 +40,46 @@
 .container
   .row#needs-cycle
     .span6
-      %h2
-        Neighbours offering help
-      .help-list-wrapper
-        -if @general_offers.empty?
-          %p There's no one offering help at the moment.
-          %p
-            -if logged_in?
-              =link_to("Offer some help to your neighbourhood", new_general_offer_path)
-            -else
-              =link_to("Offer some help to your neighbourhood", '#sign-up-popup', :"data-toggle" => 'modal')
-        -else
+      -if @general_offers.empty?
+        %h2
+          Neighbours who've been helped
+        .help-list-wrapper
           %ul.help-list.unstyled#resolved
-            -@general_offers.each do |general_offer|
+            -@helped.each do |need|
               %li.list
                 .list-image
-                  =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                    =image_for_with_validation(general_offer.user, "60x50#")
+                  =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(need.user, "60x50#")
                     %p.small-text
-                      =general_offer.user
+                      =need.user
                 .list-text
                   %h3
-                    =link_to_self(general_offer)
+                    =link_to need.title, need
                   %p
                     -if current_user.try(:validated?)
-                      =general_offer.description
+                      =need.description
                     -else
-                      =general_offer.category.description
-      
+                      =need.category.description
+      -else
+        %h2
+          Neighbours offering help
+        %ul.help-list.unstyled#resolved
+          -@general_offers.each do |general_offer|
+            %li.list
+              .list-image
+                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                  =image_for_with_validation(general_offer.user, "60x50#")
+                  %p.small-text
+                    =general_offer.user
+              .list-text
+                %h3
+                  =link_to_self(general_offer)
+                %p
+                  -if current_user.try(:validated?)
+                    =general_offer.description
+                  -else
+                    =general_offer.category.description
+    
      
       -if current_user
         =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
