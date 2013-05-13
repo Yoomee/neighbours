@@ -1,9 +1,5 @@
 module ApplicationHelper
   
-  def neighbourhood
-    "Sheffield"
-  end
-  
   def show_control_panel?
     return false unless current_user
     !action_name.in?(%w{new map news about help}) && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?

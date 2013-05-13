@@ -49,6 +49,7 @@
       .tab-content.register-tab-content
         .register-tab-pane
           =form.hidden_field :current_step
+          =form.hidden_field :neighbourhood_id
           %div{:class => @user.current_step == 'who_you_are' ? '' : 'hide'}
             =render("registrations/steps/who_you_are", :form => form)
           %div{:class => @user.current_step == 'where_you_live' ? '' : 'hide'}

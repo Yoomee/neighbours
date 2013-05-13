@@ -5,7 +5,7 @@ class RegistrationsController < ApplicationController
       session[:redirect_to_needs] = true
     end
     if @pre_registration = PreRegistration.find_by_id(session.delete(:pre_registration_id))
-      @user = @pre_registration.create_user
+      @user = @pre_registration.build_user
       @user.current_step = params[:step]
     else
       #@user = params[:user].present? ? User.new(params[:user]) : User.new(:gender => "male")
