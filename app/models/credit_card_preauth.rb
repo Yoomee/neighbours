@@ -31,6 +31,16 @@ class CreditCardPreauth < ActiveRecord::Base
     @credit_card = card
   end
 
+  def deliver_failure_email
+    attrs = {
+      'Name' => name,
+      'Card number' => ('**** '*3 + card_digits),
+      'Address' => [address1, city, zip].join(", "),
+      'Reason for failure' => reason_for_failure
+    }
+    UserMailer.admin_message("Credit card failed validation", "Someone's credit card failed validation. Here are the details:", attrs).deliver
+  end
+
   def preauth!
     return false if new_record?
     if credit_card.try(:valid?)
@@ -43,6 +53,13 @@ class CreditCardPreauth < ActiveRecord::Base
       output_data = response.params["transaction_output_data"]
       update_attributes(output_data.slice(:address_numeric_check_result, :post_code_check_result, :cv2_check_result))
     end
+  end
+
+  def reason_for_failure
+    reasons = (address_numeric_check_result == "FAILED") ? ["wrong house number"] : []
+    reasons << "wrong postcode" if post_code_check_result == "FAILED"
+    reasons << "wrong cv2" if cv2_check_result == "FAILED"
+    reasons.to_sentence.capitalize
   end
 
   def ref

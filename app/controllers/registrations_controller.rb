@@ -55,6 +55,7 @@ class RegistrationsController < ApplicationController
         end
       else
         #@user not valid
+        @user.credit_card_preauth.try(:deliver_failure_email)
       end
     end
     render :action => "new"

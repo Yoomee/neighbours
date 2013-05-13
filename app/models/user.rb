@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
   after_validation :allow_non_unique_email_if_deleted
 
+  attr_accessor :credit_card_preauth
+
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
   validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
@@ -242,10 +244,10 @@ class User < ActiveRecord::Base
 
   def preauth_credit_card
     if validate_by == 'credit_card' && credit_card_valid? && agreed_conditions?
-      return true if @credit_card_preauth.present?
-      @credit_card_preauth = CreditCardPreauth.create_from_user(self)
-      @credit_card_preauth.preauth!
-      if @credit_card_preauth.success?
+      return true if credit_card_preauth.present?
+      self.credit_card_preauth = CreditCardPreauth.create_from_user(self)
+      credit_card_preauth.preauth!
+      if credit_card_preauth.success?
         self.validated = true
       else
         errors.add(:credit_card_details, "Unfortunately we couldn't verify your address from the card details you entered. Please check your card details or select an alternative validation option.")
