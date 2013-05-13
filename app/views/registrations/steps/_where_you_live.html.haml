@@ -1,6 +1,5 @@
 %p.mb-3
-  Next, we need to know where you live in
-  =neighbourhood
+  ="Next, we need to know where you live#{@user.neighbourhood ? " in #{@user.neighbourhood}." : "."}"
 =form.inputs(:class => "form-horizontal") do
   %label.control-label#address-label Address
   =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "123", :class => "span1"}, :help => "Please enter your house number or house name."

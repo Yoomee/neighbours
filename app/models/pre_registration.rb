@@ -17,6 +17,11 @@ class PreRegistration < ActiveRecord::Base
       end
     end
     
+    def city
+      return nil if postcode.nil?
+      @city ||= PreRegistration.name_of_town(postcode)
+    end
+    
     def coming_soon?
       neighbourhood && !neighbourhood.live?
     end
@@ -33,16 +38,10 @@ class PreRegistration < ActiveRecord::Base
       "#{postcode}, UK"
     end
     
-    def create_user
-      names = name.split(/\.?\s+/)
-      user = User.new
-      user.email= email
-      user.email_confirmation = email
-      user.first_name = names.first
-      user.last_name = names.last
-      user.postcode = postcode
-      user.city = PreRegistration.name_of_town(postcode)
-      user
+    def build_user
+      attrs = attributes.symbolize_keys.slice(:email, :postcode)
+      attrs.merge!(:email_confirmation => email, :full_name => name, :city => city, :neighbourhood => neighbourhood)
+      User.new(attrs)
     end
     
     def lat_lng
