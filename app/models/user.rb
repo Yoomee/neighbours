@@ -57,6 +57,28 @@ class User < ActiveRecord::Base
   scope :in_sheffield, not_deleted.where("postcode LIKE 'S%'")
   scope :not_in_sheffield, not_deleted.where("postcode NOT LIKE 'S%'")
 
+  define_index do
+    indexes first_name
+    has id
+    has "RADIANS(lat)", :as => :latitude,  :type => :float
+    has "RADIANS(lng)", :as => :longitude, :type => :float
+    set_property :delta => true
+  end
+  
+  class << self
+    
+    def within_radius(lat, lng, radius = Need::maximum_radius)
+      sphinx_search = search_for_ids({
+        :with => { "@geodist" => 0.0..radius.to_f },
+        :geo => [(lat.to_f*Math::PI/180), (lng.to_f*Math::PI/180)],
+        :per_page => 100000
+      })
+      ids = sphinx_search.results[:matches].collect { |res| res[:attributes]['id'] }
+      where("users.id IN (?)", ids)
+    end
+    
+  end
+
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?
   end
@@ -96,7 +118,7 @@ class User < ActiveRecord::Base
   end
   
   def has_lat_lng?
-    lat.present? && lng.present?
+    all_present?(:lat, :lng)
   end
   
   def is_neighbourhood_admin?
@@ -150,6 +172,10 @@ class User < ActiveRecord::Base
 
   def where_you_live_step?
     current_step == "where_you_live"
+  end
+  
+  def users_within_radius
+    User.within_radius(lat, lng, neighbourhood.max_radius)
   end
 
   private

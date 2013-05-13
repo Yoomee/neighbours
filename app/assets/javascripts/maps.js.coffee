@@ -78,8 +78,12 @@ window.PreRegistrationMap =
 window.NeedsMap =
 	init: (admin)->
     admin ||= false
+    if NeedsMap.center
+      center = new google.maps.LatLng(NeedsMap.center[0], NeedsMap.center[1])
+    else
+      center = new google.maps.LatLng(DEFAULT_LOCATION[0], DEFAULT_LOCATION[1])
     mapOptions = {
-      center: new google.maps.LatLng(user_lat,user_lng),
+      center: center,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       streetViewControl: false,
       mapTypeControl: false,

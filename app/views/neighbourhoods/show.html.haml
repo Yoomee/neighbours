@@ -1,10 +1,9 @@
 =google_maps_javascript_include_tag if current_user
 -content_for :head do
   :javascript
-    user_lat = #{current_user ? "#{current_user.lat}" : "DEFAULT_LOCATION[0]"}
-    user_lng = #{current_user ? "#{current_user.lng}" : "DEFAULT_LOCATION[1]"}
     $(document).ready(function() {
       NeedSelect.init();
+      NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
       NeedsMap.general_offers = #{@general_offers_json};
