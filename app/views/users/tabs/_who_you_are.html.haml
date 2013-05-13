@@ -3,6 +3,7 @@
   -if current_user.admin?
     =form.input :first_name, :required => false, :input_html => {:placeholder => "e.g. John"}
     =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}
+    =form.input :email, :required => false, :input_html => {:placeholder => "e.g. johnsmith@email.com"}
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
     %label.control-label Date of Birth
     .controls
