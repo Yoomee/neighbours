@@ -50,7 +50,7 @@ class NeighbourhoodsController < ApplicationController
     if current_user.try(:has_lat_lng?)
       needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
       @needs_json = needs.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      @users_json = current_user.users_within_radius.to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
+      @users_json = User.visible_to_user(current_user).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
     end
     @general_offers_json = @general_offers.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
     @needs_json ||= []

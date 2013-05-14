@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
   
   class << self
     
+    def visible_to_user(user)
+      validated.within_radius(user.lat, user.lng, user.try(:neighbourhood).try(:max_radius))
+    end
+    
     def within_radius(lat, lng, radius = nil)
       radius ||= Need::maximum_radius
       sphinx_search = search_for_ids({
@@ -168,10 +172,6 @@ class User < ActiveRecord::Base
 
   def where_you_live_step?
     current_step == "where_you_live"
-  end
-  
-  def users_within_radius
-    User.within_radius(lat, lng, neighbourhood.try(:max_radius))
   end
 
   private
