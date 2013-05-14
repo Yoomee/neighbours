@@ -67,7 +67,8 @@ class User < ActiveRecord::Base
   
   class << self
     
-    def within_radius(lat, lng, radius = Need::maximum_radius)
+    def within_radius(lat, lng, radius = nil)
+      radius ||= Need::maximum_radius
       sphinx_search = search_for_ids({
         :with => { "@geodist" => 0.0..radius.to_f },
         :geo => [(lat.to_f*Math::PI/180), (lng.to_f*Math::PI/180)],
@@ -175,7 +176,7 @@ class User < ActiveRecord::Base
   end
   
   def users_within_radius
-    User.within_radius(lat, lng, neighbourhood.max_radius)
+    User.within_radius(lat, lng, neighbourhood.try(:max_radius))
   end
 
   private
