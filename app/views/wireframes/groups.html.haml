@@ -1,0 +1,23 @@
+.container.mb-2
+  .row
+    .span2
+      =image_tag('groups-logo.png', :class=>'groups-logo mb-2')
+    .span10
+      %h1.page-title.mb-0.mt-2
+        Groups
+      %h2.lead
+        Share with the important groups in your life
+.container
+  .row
+    .span7
+      %h3 What are groups?
+      %p
+        Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui.
+      =link_to "#group-new-modal", :class=>"btn call-to-action", :id=>"create-group-cta", :"data-toggle"=>"modal" do
+        %i.icon-plus
+        Create a Group
+    .span5
+      .well.center
+        Examples of existing groups here.
+=render ('/wireframes/group_new_modal')
+        

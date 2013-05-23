@@ -1,0 +1,25 @@
+=render('/wireframes/group_header')
+.container
+  .row
+    .span12
+      %ul.nav.nav-tabs.group-nav-tabs
+        %li
+          =link_to "/wireframes/group_show" do
+            %i.icon-comment
+            Posts
+        %li
+          =link_to "/wireframes/group_show_members" do
+            %i.icon-group
+            Members (23)
+        %li
+          =link_to "/wireframes/group_show_photos" do
+            %i.icon-camera
+            Photos (5)
+          
+        %li.active
+          =link_to "/wireframes/group_show_messages" do
+            %i.icon-envelope
+            Private messages
+
+    .span12.private-messages-holding
+
