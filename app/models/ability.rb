@@ -9,7 +9,7 @@ class Ability
     can [:show, :create], PreRegistration
     can :create, Enquiry
     can :show, Page, :draft => false
-    can [:show, :create], Need
+    can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
     can :index, Group
     
@@ -25,20 +25,23 @@ class Ability
       can [:update, :destroy], Post, :user_id => user.id
       can :manage, User, :id => user.id     
       cannot :index, User
-      can [:create, :read, :search], Need 
+      can [:read, :search], Need
       can :update, Need, :user_id => user.id
       can [:create, :index, :read], Offer
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end
-      can [:create, :thanks, :accept], GeneralOffer
-      can :read, GeneralOffer do |general_offer|
-        (general_offer.user_id == user.id) || general_offer.user.validated?
+      unless user.group_user?
+        can :create, Need
+        can [:create, :thanks, :accept], GeneralOffer
+        can :read, GeneralOffer do |general_offer|
+          (general_offer.user_id == user.id) || general_offer.user.validated?
+        end
+        can [:update, :destroy], GeneralOffer, :user_id => user.id
+        cannot :accept, GeneralOffer do |general_offer|
+          (general_offer.user_id == user.id) || !general_offer.user.validated?
+        end
       end
-      can [:update, :destroy], GeneralOffer, :user_id => user.id
-      cannot :accept, GeneralOffer do |general_offer|
-        (general_offer.user_id == user.id) || !general_offer.user.validated?
-      end      
       if user.is_community_champion?
         can :index, Post
       end

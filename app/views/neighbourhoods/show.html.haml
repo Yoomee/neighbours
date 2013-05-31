@@ -81,7 +81,9 @@
                     =general_offer.category.description
     
      
-      -if current_user
+      -if current_user.try(:group_user?)
+        =link_to "I'd like some help", '#group-user-sign-up', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
+      -elsif current_user
         =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
       -else              
         =link_to "I'd like some help", '#sign-up-popup', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
@@ -109,7 +111,9 @@
                     -else
                       =need.category.description
                     
-      -if current_user
+      -if current_user.try(:group_user?)
+        =link_to "I'd like to offer some help", '#group-user-sign-up', :class=>"btn call-to-action", :"data-toggle"=>"modal"
+      -elsif current_user
         =link_to "I'd like to offer some help", new_general_offer_path, :class=>"btn call-to-action"
       -else              
         =link_to "I'd like to offer some help", '#sign-up-popup', :class=>"btn call-to-action", :"data-toggle"=>"modal"
