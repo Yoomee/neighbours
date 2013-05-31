@@ -1,0 +1,54 @@
+-content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      $("#why-age-modal-button").click(function() {
+        var undisclosed_age = $('#undisclosed_age_check_box').is(':checked');
+        $('#user_undisclosed_age').val(undisclosed_age);
+        if( undisclosed_age) {
+          $('#age-select-controls').addClass('hide');
+          $('#undisclosed-age-text').removeClass('hide');
+        } else {
+          $('#age-select-controls').removeClass('hide');
+          $('#undisclosed-age-text').addClass('hide');
+        }
+      });
+    });
+    
+.row
+  .span10.offset1
+    .well.center 
+      %h3
+        First we need to know who you are
+      %p
+        Please fill out the fields below and then you can start creating your group.
+.row
+  .span10.offset1
+    =semantic_form_for(@user, :url => group_registrations_path, :method => :post)  do |form|
+      .register-tab-content
+        .register-tab-pane
+          =form.inputs(:class => "form-horizontal") do
+            =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
+            =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
+            .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
+              %label.control-label Date of Birth
+              .controls#age-select-controls{:class => "#{@user.undisclosed_age? ? "hide" : "show"}"}
+                =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year)}, :class => "input-medium"
+                =form.hidden_field :undisclosed_age
+                %span.help-inline=@user.errors[:dob].try(:first)
+                %i.icon.icon-question-sign.help-icon{:title => "Please enter your date of birth. We need to make sure you are a responsible adult"}
+                %p=link_to "Why are we asking for this?", "#why-age", :'data-toggle' => "modal"
+              .controls#undisclosed-age-text{:class => "#{@user.undisclosed_age? ? "show" : "hide" }"}
+                You've chosen not to tell us your age
+                %br
+                =link_to "Change your mind....", "#why-age", :'data-toggle' => "modal"
+            =form.input :gender, :as => :radio, :collection => [["Male","male"], ["Female","female"]]
+            =form.input :email, :label => "Email address", :required => false, :help => "Enter the email address you would like to use for logging in again. We promise not share this with others.", :input_html => {:placeholder => "e.g. john@email.com"}
+            =form.input :email_confirmation, :label => "Confirm email address", :required => false, :help => "Type your email address again so that we can check there are no typos", :input_html => {:placeholder => "e.g. john@email.com"}
+            =form.input :password, :required => false, :help => "Choose a password that would you like to use to login"
+            =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => "Type the password again so that we can make sure you haven't made a mistake"
+            -else
+              =form.input :encrypted_password, :as => :hidden
+        .form-actions
+          =form.submit("Register", :class => "btn btn-primary")
+
+=render "modals/why_age"

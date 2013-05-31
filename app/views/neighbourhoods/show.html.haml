@@ -13,7 +13,7 @@
 
 -title "My Neighbourhood"
 
--if current_user
+-if current_user && !current_user.group_user?
   =render "validated_map"
 -else
   .container
@@ -31,7 +31,7 @@
           =link_to_slug('Find out more', :about, :class=>"illustration-link")  
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
           =link_to "Get involved", "#sign-up-popup", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
-          =link_to "Create a group", "/wireframes/groups", :class=>"home-cta-groups"
+          =link_to "Create a group", groups_path, :class=>"home-cta-groups"
 
 .container
   .home-help-links

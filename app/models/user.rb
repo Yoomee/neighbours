@@ -120,6 +120,10 @@ class User < ActiveRecord::Base
     ("**** " * 3) + card_digits.to_s
   end
 
+  def group_user?
+    role == 'group_user'
+  end
+
   def has_address?
     all_present?(:house_number, :street_name, :city, :postcode)
   end

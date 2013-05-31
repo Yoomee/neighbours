@@ -16,13 +16,13 @@
           -if @neighbourhood   
             %li=link_to "Home", neighbourhood_path(@neighbourhood), :class=>"intro-nav-link-home intro-nav-link"     
             %li=link_to('About', neighbourhood_about_path(@neighbourhood), :class=>"intro-nav-link-about intro-nav-link")
-            %li=link_to('Groups', "/wireframes/groups", :class=>"intro-nav-link-groups intro-nav-link")
+            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
             %li=link_to('News', neighbourhood_news_path(@neighbourhood), :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to("Help", neighbourhood_help_path(@neighbourhood), :class=> "intro-nav-link-help intro-nav-link")
           -else
             %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"               
             %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
-            %li=link_to('Groups', "/wireframes/groups", :class=>"intro-nav-link-groups intro-nav-link")
+            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
             %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")          
           

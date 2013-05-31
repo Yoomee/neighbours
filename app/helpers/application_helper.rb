@@ -1,7 +1,7 @@
 module ApplicationHelper
   
   def show_control_panel?
-    return false unless current_user
+    return false if current_user.nil? || current_user.group_user?
     !action_name.in?(%w{new map news about help}) && controller_name.in?(%w{needs neighbourhoods offers}) && @enquiry.nil?
   end
   

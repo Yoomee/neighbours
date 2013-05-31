@@ -84,6 +84,9 @@ Neighbours::Application.routes.draw do
     end
   end
   
+  get 'groups/registrations/new' => 'group_registrations#new', :as => 'new_group_registration'
+  post 'groups/registrations' => 'group_registrations#create', :as => 'group_registrations'
+  
   resources :neighbourhoods do
     member do
       get "email" => "neighbourhoods#new_email"
