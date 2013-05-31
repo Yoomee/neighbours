@@ -59,7 +59,7 @@ class Ability
         user.is_neighbourhood_admin?
       end
       can [:read, :create], Group
-      can [:update, :destroy], Group do |g|
+      can [:update], Group do |g|
         g.user_id == user.id
       end
     end
