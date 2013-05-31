@@ -78,6 +78,12 @@ Neighbours::Application.routes.draw do
     resources :posts, :only => :index
   end
   
+  resources :groups do
+    collection do
+      get :about
+    end
+  end
+  
   resources :neighbourhoods do
     member do
       get "email" => "neighbourhoods#new_email"

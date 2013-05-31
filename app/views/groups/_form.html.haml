@@ -1,0 +1,7 @@
+=semantic_form_for(@group) do |form|
+  =form.inputs do
+    =form.input :name, :label => 'Group name', :input_html => {:class => 'span6'}, :required => false
+    =form.input :description, :label => 'Group bio', :required => false, :input_html => {:class => 'span6', :rows => 4}
+    =form.input :image, :label => 'Photo', :as => :image
+  =form.buttons do
+    =form.commit_button 'Create group', :button_html => {:class => 'btn btn-primary btn-large'}

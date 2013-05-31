@@ -1,0 +1,27 @@
+.container
+=render('groups/header')
+.container
+  .row.mb-2.mt-3
+    .span7
+      %h1.page-title.mb-3.mt-0
+        =@group.name
+      =simple_format(@group.description)
+    .span5
+      =image_for(@group, '370x250#')
+.container
+  .row
+    .span12
+      =render('groups/nav')
+  .row
+    .span7
+      %h2.mb-2
+        Posts
+      =render("posts/remote_form", :post => current_user.posts.build(:target => @group))
+      =render("posts/posts", :posts => @posts)
+    .span4.offset1.groups-tags-list
+      %h4.mb-2 Tags
+      %ul.unstyled
+        -Tag.for_post_target(@group).most_used.each do |tag|
+          %li
+            =link_to(tag) do
+              %span.label.tag-label=tag

@@ -11,6 +11,7 @@ class Ability
     can :show, Page, :draft => false
     can [:show, :create], Need
     can [:show, :area, :about, :news, :help], Neighbourhood
+    can :about, Group
     
     if user.try(:admin?)
       can :manage, :all
@@ -56,7 +57,11 @@ class Ability
       end
       can :new, Page do
         user.is_neighbourhood_admin?
-      end  
+      end
+      can [:read, :create], Group
+      can [:update, :destroy], Group do |g|
+        g.user_id == user.id
+      end
     end
     
   end
