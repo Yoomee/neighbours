@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = current_user.groups.build(params[:group])
+    @group = current_user.owned_groups.build(params[:group])
     if @group.save
       flash_notice(@group)
       redirect_to @group

@@ -82,6 +82,9 @@ Neighbours::Application.routes.draw do
     collection do
       get :about
     end
+    member do
+      get :members
+    end
   end
   
   resources :neighbourhoods do

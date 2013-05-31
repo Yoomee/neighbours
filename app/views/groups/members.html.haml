@@ -1,0 +1,20 @@
+.container
+=render('groups/header')
+.container
+  .row.mb-2
+    .span12
+      %h2.pull-left
+        Group Members
+      =link_to "+ Invite members", "#", :class => "btn pull-right"
+  .row
+    .span12
+      %ul.group-members-list.help-list.unstyled
+        -@group.members.each do |user|
+          %li.list
+            .list-image
+              =link_to(user, :class => 'pull-left') do
+                =image_for_with_validation(user, "60x50#")
+              %p.small-text=user
+            .list-text
+              %h3=link_to_self(user)
+              %p=user.city

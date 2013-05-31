@@ -1,16 +1,11 @@
-=render('/wireframes/all_groups_strip')
+.container
+=render('groups/header')
 .container
   .row.mb-2.mt-3
     .span12
       %h1.page-title.mb-3.mt-0
         My groups
       .row
-        =link_to "/wireframes/group_show", :class => "span3 group-tile" do
-          .inner.clearfix
-            .group-tile-image-wrap
-              =image_tag "group-image.jpg"
-            %h4  
-              Derbyshire Walking Group
         -current_user.groups.each do |group|
           =link_to(group, :class => "span3 group-tile") do
             .inner.clearfix
@@ -26,10 +21,8 @@
               Add a new group
 
 
-
       %h1.page-title.mb-3.mt-0
-        Popular groups nearby
-        
+        Popular groups nearby        
       .row
         =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
           .inner.clearfix
@@ -48,8 +41,4 @@
             .group-tile-image-wrap
               =image_tag "group-image-4.jpg"
             %h4  
-              Walkley photographers                            
-        
-        
-        
-=render ('/wireframes/group_new_modal')
+              Walkley photographers

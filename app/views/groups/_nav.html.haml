@@ -1,12 +1,12 @@
 %ul.nav.nav-tabs.group-nav-tabs.mb-3
-  %li.active
-    =link_to "/wireframes/group_show" do
+  %li{:class => "#{'active' if action_name.show?}"}
+    =link_to(@group) do
       %i.icon-comment
       Posts
-  %li
-    =link_to "/wireframes/group_show_members" do
+  %li{:class => "#{'active' if action_name.members?}"}
+    =link_to(members_group_path(@group)) do
       %i.icon-group
-      Members (23)
+      ="Members (#{@group.members.count})"
   %li
     =link_to "/wireframes/group_show_photos" do
       %i.icon-camera
