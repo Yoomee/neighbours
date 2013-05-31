@@ -11,7 +11,7 @@ class Ability
     can :show, Page, :draft => false
     can [:show, :create], Need
     can [:show, :area, :about, :news, :help], Neighbourhood
-    can :about, Group
+    can :index, Group
     
     if user.try(:admin?)
       can :manage, :all

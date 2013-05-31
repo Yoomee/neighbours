@@ -2,9 +2,6 @@ class GroupsController < ApplicationController
 
   load_and_authorize_resource
 
-  def about    
-  end
-
   def create
     @group = current_user.owned_groups.build(params[:group])
     if @group.save
@@ -25,6 +22,9 @@ class GroupsController < ApplicationController
   end
 
   def index
+    if current_user.nil? || current_user.groups.empty?
+      render :action => 'about'
+    end
   end
 
   def show

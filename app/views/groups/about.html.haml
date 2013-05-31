@@ -13,10 +13,9 @@
       %h3 What are groups?
       %p
         Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui.
-      =link_to "#group-new-modal", :class=>"btn call-to-action", :id=>"create-group-cta", :"data-toggle"=>"modal" do
+      =link_to(new_group_path, :class => "btn call-to-action", :id => "create-group-cta") do
         %i.icon-plus
         Create a Group
     .span5
       .well.center
         Examples of existing groups here.
-=render ('/wireframes/group_new_modal')
