@@ -5,7 +5,7 @@
     .span12
       %h2.pull-left
         Group Members
-      =link_to "+ Invite members", "#", :class => "btn pull-right"
+      =link_to("+ Invite members", new_group_group_invitation_path(@group), :class => "btn pull-right")
   .row
     .span12
       %ul.group-members-list.help-list.unstyled

@@ -65,6 +65,7 @@ class Ability
       can [:update], Group do |g|
         g.user_id == user.id
       end
+      can [:new, :create], GroupInvitation
     end
     
   end
