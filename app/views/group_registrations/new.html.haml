@@ -36,7 +36,7 @@
                 =form.hidden_field :undisclosed_age
                 %span.help-inline=@user.errors[:dob].try(:first)
                 %i.icon.icon-question-sign.help-icon{:title => "Please enter your date of birth. We need to make sure you are a responsible adult"}
-                %p=link_to "Why are we asking for this?", "#why-age", :'data-toggle' => "modal"
+                %p.mt-1.mb-0=link_to "Why are we asking for this?", "#why-age", :'data-toggle' => "modal"
               .controls#undisclosed-age-text{:class => "#{@user.undisclosed_age? ? "show" : "hide" }"}
                 You've chosen not to tell us your age
                 %br
@@ -46,8 +46,6 @@
             =form.input :email_confirmation, :label => "Confirm email address", :required => false, :help => "Type your email address again so that we can check there are no typos", :input_html => {:placeholder => "e.g. john@email.com"}
             =form.input :password, :required => false, :help => "Choose a password that would you like to use to login"
             =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => "Type the password again so that we can make sure you haven't made a mistake"
-            -else
-              =form.input :encrypted_password, :as => :hidden
         .form-actions
           =form.submit("Register", :class => "btn btn-primary")
 

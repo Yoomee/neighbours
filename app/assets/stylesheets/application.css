@@ -789,22 +789,23 @@ span.tab-number {
 }
 li.active span.tab-number {
 	background: #619a5f;
-
 }
 .register-tab-content {
   border: 1px solid #ccc;
   border-top: none;
   margin-bottom: 20px;
 }
-body.controller_group_registrations .register-tab-content {
-  border: 1px solid #ccc;
-}
 .register-tab-content .form-actions {
 	margin: 0;
 }
 .register-tab-pane {
   padding: 60px 40px 20px;
-
+}
+body.controller_group_registrations .register-tab-content {
+  border: 1px solid #ccc;
+}
+body.controller_group_registrations .register-tab-pane {
+  padding-top: 40px;
 }
 .register-btn-next, .register-btn-back {
   float: right;
