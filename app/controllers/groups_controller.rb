@@ -27,6 +27,12 @@ class GroupsController < ApplicationController
     end
   end
 
+  def join
+    @group.add_member!(current_user)
+    flash[:notice] = 'You are now a member of this group, welcome!'
+    redirect_to @group
+  end
+
   def show
     @posts = @group.posts.page(params[:page])
   end

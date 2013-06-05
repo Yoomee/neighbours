@@ -16,8 +16,11 @@
         %h1.page-title.mb-3.mt-0
           =@group.name
         =simple_format(@group.description)
+        -if !@group.has_member?(current_user)
+          =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2', :method => 'post')
       .span5
         =image_for(@group, '370x250#')
-    .row
-      .span12
-        =render('groups/nav')
+    -if @group.has_member?(current_user)
+      .row
+        .span12
+          =render('groups/nav')

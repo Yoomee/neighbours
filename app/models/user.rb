@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   has_many :flags, :dependent => :destroy
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
   has_many :owned_groups, :class_name => 'Group'
-  has_and_belongs_to_many :groups
+  has_and_belongs_to_many :groups, :uniq => true
+  has_many :group_invitations
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"

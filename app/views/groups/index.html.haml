@@ -19,8 +19,20 @@
               %i.icon-plus
             %h4  
               Add a new group
-
-
+  -if current_user.group_invitations.present?
+    .row.mb-2.mt-3
+      .span12
+        %h1.page-title.mb-3.mt-0
+          Invitations
+        .row
+          -current_user.group_invitations.includes(:group).each do |invitation|
+            =link_to(invitation.group, :class => "span3 group-tile") do
+              .inner.clearfix
+                .group-tile-image-wrap
+                  =image_for(invitation.group, '190x130#')
+                %h4=invitation.group
+  .row.mb-2.mt-3
+    .span12
       %h1.page-title.mb-3.mt-0
         Popular groups nearby        
       .row

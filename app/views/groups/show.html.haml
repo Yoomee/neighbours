@@ -1,22 +1,23 @@
 .container
 =render('groups/header')
-.container
-  .row
-    .span7
-      %h2.mb-2
-        Posts
-      =render("posts/remote_form", :post => current_user.posts.build(:target => @group))
-      =render("posts/posts", :posts => @posts)
-    -if (tags = Tag.for_post_target(@group).most_used).length > 1
-      .span4.offset1.groups-tags-list
-        %h4.mb-2 Tags
-        %ul.unstyled
-          -tags.each do |tag|
-            %li
-              =link_to(tag) do
-                %span.label.tag-label=tag
-  .row.mt-2
-    .span12
-      =options_panel do
-        =link_if_can("Edit group", [:edit, @group])
-        =link_if_can("Delete group", [:destroy, @group], :confirm => "Are you sure?")
+-if @group.has_member?(current_user)
+  .container
+    .row
+      .span7
+        %h2.mb-2
+          Posts
+        =render("posts/remote_form", :post => current_user.posts.build(:target => @group))
+        =render("posts/posts", :posts => @posts)
+      -if (tags = Tag.for_post_target(@group).most_used).length > 1
+        .span4.offset1.groups-tags-list
+          %h4.mb-2 Tags
+          %ul.unstyled
+            -tags.each do |tag|
+              %li
+                =link_to(tag) do
+                  %span.label.tag-label=tag
+    .row.mt-2
+      .span12
+        =options_panel do
+          =link_if_can("Edit group", [:edit, @group])
+          =link_if_can("Delete group", [:destroy, @group], :confirm => "Are you sure?")

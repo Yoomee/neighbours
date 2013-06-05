@@ -61,7 +61,7 @@ class Ability
       can :new, Page do
         user.is_neighbourhood_admin?
       end
-      can [:read, :create, :members], Group
+      can [:read, :create, :members, :join], Group
       can [:update], Group do |g|
         g.user_id == user.id
       end
