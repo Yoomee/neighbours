@@ -84,10 +84,10 @@ Neighbours::Application.routes.draw do
     end
     resources :group_invitations, :path => 'invitations', :only => [:new, :create]
   end
-  resources :group_invitations, :only => :show
-  
-  get 'groups/registrations/new' => 'group_registrations#new', :as => 'new_group_registration'
-  post 'groups/registrations' => 'group_registrations#create', :as => 'group_registrations'
+  resources :group_invitations, :only => :show do
+    resources :group_registrations, :path => 'registrations', :only => :new
+  end
+  resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
   
   resources :neighbourhoods do
     member do

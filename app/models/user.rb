@@ -22,10 +22,14 @@ class User < ActiveRecord::Base
   belongs_to :neighbourhood
 
   attr_accessor :card_number, :card_security_code
+  
+  # accessors below are used in group_registrations#create
+  attr_accessor :group_invitation_id
+  boolean_accessor :seen_group_invitation_email_warning
 
   before_create :generate_validation_code
   after_create :send_emails
-  after_create :get_group_invitations_with_email
+  after_create :update_group_invitations_with_email
   before_save :set_card_digits, :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -50,6 +54,7 @@ class User < ActiveRecord::Base
   validates :email_confirmation, :presence => {:if => :who_you_are_step?}
   validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
   validates :validation_code, :uniqueness => true
+  validate :group_invitation_email_matches, :on => :create
 
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
   scope :not_deleted, where(:is_deleted => false)
@@ -252,8 +257,18 @@ class User < ActiveRecord::Base
     false
   end
 
-  def get_group_invitations_with_email
+  def update_group_invitations_with_email
     GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
+  end
+
+  def group_invitation_email_matches
+    return true if errors[:email].present? || seen_group_invitation_email_warning?
+    if invitation = GroupInvitation.find_by_id(group_invitation_id)
+      if invitation.group.private? && email != invitation.email
+        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message.")
+        self.seen_group_invitation_email_warning = true
+      end
+    end
   end
 
 end

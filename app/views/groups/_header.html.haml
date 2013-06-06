@@ -18,7 +18,7 @@
         =simple_format(@group.description)
         -if !@group.has_member?(current_user)
           -if @group_invitation && @group_invitation.user.nil?
-            =link_to("Join this group", new_group_registration_path(:return_to => join_group_path(@group)), :class => 'btn btn-large btn-primary mt-2')
+            =link_to("Join this group", new_group_invitation_group_registration_path(@group_invitation), :class => 'btn btn-large btn-primary mt-2')
           -else
             =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2')
       .span5
