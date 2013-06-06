@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
 
   before_create :generate_validation_code
   after_create :send_emails
+  after_create :get_group_invitations_with_email
   before_save :set_card_digits, :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -249,6 +250,10 @@ class User < ActiveRecord::Base
   protected
   def confirmation_required?
     false
+  end
+
+  def get_group_invitations_with_email
+    GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
   end
 
 end
