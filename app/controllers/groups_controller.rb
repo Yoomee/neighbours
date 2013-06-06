@@ -28,9 +28,12 @@ class GroupsController < ApplicationController
   end
 
   def join
-    @group.add_member!(current_user)
-    flash[:notice] = 'You are now a member of this group, welcome!'
-    redirect_to @group
+    if @group.add_member!(current_user)
+      flash[:notice] = 'You are now a member of this group, welcome!'
+      redirect_to @group
+    else
+      raise CanCan::AccessDenied
+    end
   end
 
   def show

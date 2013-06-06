@@ -11,7 +11,9 @@ class Ability
     can :show, Page, :draft => false
     can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
-    can :read, Group
+    can [:read], Group do |group|
+      !group.private? || group.has_member?(user) || group.invitations.exists?(:user_id => user.try(:id))
+    end
     can :read, GroupInvitation
     
     if user.try(:admin?)
@@ -62,7 +64,10 @@ class Ability
       can :new, Page do
         user.is_neighbourhood_admin?
       end
-      can [:create, :members, :join], Group
+      can [:create, :join], Group
+      can [:members], Group do |group|
+        group.has_member?(user)
+      end
       can [:update], Group do |g|
         g.user_id == user.id
       end

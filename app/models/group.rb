@@ -16,8 +16,11 @@ class Group < ActiveRecord::Base
   validate :valid_invitation_emails
 
   def add_member!(user)
-    user.group_invitations.where(:group_id => id).destroy_all
-    members << user unless user.groups.exists?(id)
+    invitations = user.group_invitations.where(:group_id => id)
+    if !private? || invitations.present?
+      invitations.destroy_all
+      members << user unless user.groups.exists?(id)
+    end
   end
 
   def has_member?(user)

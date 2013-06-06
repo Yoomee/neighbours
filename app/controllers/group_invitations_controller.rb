@@ -19,8 +19,17 @@ class GroupInvitationsController < ApplicationController
   end
 
   def show
-    @group = @group_invitation.group
-    render :template => 'groups/show'
+    if allowed_to_view?(@group_invitation)
+      @group = @group_invitation.group
+      render :template => 'groups/show'
+    else
+      raise CanCan::AccessDenied
+    end
+  end
+
+  private
+  def allowed_to_view?(invitation)
+    invitation.ref == params[:ref] || signed_in?(invitation.user)
   end
 
 end

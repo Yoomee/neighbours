@@ -2,7 +2,7 @@
 
 <%=@group_invitation.inviter.first_name%> has invited you to join the group '<%=@group_invitation.group%>' on <%=Settings.site_name%>.
 
-<%=group_invitation_url(@group_invitation)%>
+<%=group_invitation_url(@group_invitation, :ref => @group_invitation.ref)%>
 
 Thanks,
 
