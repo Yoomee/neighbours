@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   after_validation :allow_non_unique_email_if_deleted
 
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
-  validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
+  validates :postcode, :postcode => true, :presence => {:if => :new_record?}, :allow_blank => true
   validates :validate_by, :presence => true, :if => :validation_step?
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
   validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
