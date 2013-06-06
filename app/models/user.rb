@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   before_create :generate_validation_code
   after_create :send_emails
-  after_create :update_group_invitations_with_email
+  after_create :update_existing_group_invitations
   before_save :set_card_digits, :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -257,7 +257,7 @@ class User < ActiveRecord::Base
     false
   end
 
-  def update_group_invitations_with_email
+  def update_existing_group_invitations
     GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
   end
 
@@ -265,7 +265,7 @@ class User < ActiveRecord::Base
     return true if errors[:email].present? || seen_group_invitation_email_warning?
     if invitation = GroupInvitation.find_by_id(group_invitation_id)
       if invitation.group.private? && email != invitation.email
-        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message.")
+        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message and continue.")
         self.seen_group_invitation_email_warning = true
       end
     end
