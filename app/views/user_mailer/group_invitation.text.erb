@@ -1,0 +1,10 @@
+<%=@user ? "Dear #{@user.first_name}," : "Hi,"%>
+
+<%=@group_invitation.inviter.first_name%> has invited you to join the group '<%=@group_invitation.group%>' on <%=Settings.site_name%>.
+
+<%=group_invitation_url(@group_invitation)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>

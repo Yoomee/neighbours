@@ -9,7 +9,7 @@ class GroupRegistrationsController < ApplicationController
     if @user.save
       sign_in(@user)
       flash[:notice] = 'Thanks for registering!'
-      redirect_to new_group_path
+      return_or_redirect_to new_group_path
     else
       render :action => 'new'
     end

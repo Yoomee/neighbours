@@ -21,6 +21,7 @@ class Group < ActiveRecord::Base
   end
 
   def has_member?(user)
+    return false if user.nil?
     user.groups.exists?(id)
   end
 

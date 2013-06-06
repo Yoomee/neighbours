@@ -80,11 +80,11 @@ Neighbours::Application.routes.draw do
   
   resources :groups do
     member do
-      get :members
-      post :join
+      get :members, :join
     end
     resources :group_invitations, :path => 'invitations', :only => [:new, :create]
   end
+  resources :group_invitations, :only => :show
   
   get 'groups/registrations/new' => 'group_registrations#new', :as => 'new_group_registration'
   post 'groups/registrations' => 'group_registrations#create', :as => 'group_registrations'

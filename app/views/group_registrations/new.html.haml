@@ -24,6 +24,7 @@
 .row
   .span10.offset1
     =semantic_form_for(@user, :url => group_registrations_path, :method => :post)  do |form|
+      =hidden_field_tag :return_to, params[:return_to]
       .register-tab-content
         .register-tab-pane
           =form.inputs(:class => "form-horizontal") do

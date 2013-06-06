@@ -18,4 +18,9 @@ class GroupInvitationsController < ApplicationController
   def new
   end
 
+  def show
+    @group = @group_invitation.group
+    render :template => 'groups/show'
+  end
+
 end
