@@ -37,13 +37,13 @@ class Group < ActiveRecord::Base
     return true if invitation_emails.blank?
     existing_invitations = invitations.where(['email IN (?)', invitation_emails.split(",").collect(&:strip)])
     existing_invitations.each {|i| i.send(:send_email)}    
-    new_emails = (invitation_emails.split(",").collect(&:strip) - existing_invitations.collect(&:email)).compact
+    new_emails = (invitation_emails.split(",").collect(&:strip) - existing_invitations.collect(&:email)).reject(&:blank?).uniq
     new_emails.each {|e| invitations.create(:email => e.strip, :inviter_id => inviter_id || user_id)}
   end
   
   def valid_invitation_emails
     return true if invitation_emails.blank?
-    unless invitation_emails.split(",").compact.all? {|e| e.strip.valid_email?}
+    unless invitation_emails.split(",").reject(&:blank?).uniq.all? {|e| e.strip.valid_email?}
       errors.add(:invitation_emails, 'make sure emails are valid and separated by commas')
     end
   end
