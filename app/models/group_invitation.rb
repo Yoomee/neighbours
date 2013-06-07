@@ -16,7 +16,7 @@ class GroupInvitation < ActiveRecord::Base
   end
   
   def email
-    read_attribute(:email).presence || user.email
+    read_attribute(:email).presence || user.try(:email)
   end
   
   private

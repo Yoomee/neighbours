@@ -71,7 +71,9 @@ class Ability
       can [:update], Group do |g|
         g.user_id == user.id
       end
-      can [:new, :create], GroupInvitation
+      can [:new, :create], GroupInvitation do |invitation|
+        invitation.group.try(:user_id) == user.id || (invitation.group && !invitation.group.private? && invitation.group.has_member?(user))
+      end
     end
     
   end
