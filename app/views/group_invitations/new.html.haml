@@ -1,8 +1,9 @@
--content_for(:head) do
-  :coffeescript
-    $ ->
-      emails = #{User.select('email').collect(&:email)}
-      MultipleTypeahead.init('#group_invitation_emails_s', emails)
+-if false
+  -content_for(:head) do
+    :coffeescript
+      $ ->
+        emails = #{User.select('email').collect(&:email)}
+        MultipleTypeahead.init('#group_invitation_emails_s', emails)
 .row
   .span8
     %h1.page-title=@group
