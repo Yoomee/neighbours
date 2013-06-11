@@ -1,0 +1,42 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function(){
+      YmCore.scrollTo('.message#' + '#{@last_message.id}');
+      $('#more-messages-btn').click(function(){
+        $(this).html('Loading...');
+      });
+    });
+
+.messages-wrap.span10.offset1
+  .messages-header
+    %h2.messages-title
+      =@message_thread.users.without(current_user).collect(&:to_s).to_sentence
+  .all-messages-strip
+    =link_to messages_path, :class=>'all-messages-link' do
+      %i.icon-arrow-left
+      All messages
+  .message-show
+    -if @messages.next_page
+      =link_to 'Show older messages', message_thread_path(@message_thread, :page => @messages.next_page), :remote => true, :class => 'btn', :id => 'more-messages-btn'
+    .message-inner
+      =render 'message_threads/messages', :messages => @messages
+  - users_without_messaging = @message_thread.users - Message.valid_recipients_for_user(current_user)
+  - users_without_messaging.delete(current_user) if !current_user.no_private_messaging?
+  -if current_user.has_private_messaging? && @message_thread.users_with_messaging.count > 1
+    .reply-box
+      .reply-box-inner
+        .reply-form
+          =semantic_form_for(@message || Message.new(:thread => @message_thread)) do |form|
+            =form.input :text, :label => false, :title => 'Reply', :input_html => {:rows => 6, :placeholder => 'Write a reply...', :class => 'reply-field', :autofocus => true }
+            =form.input :message_thread_id, :as => :hidden
+            =form.commit_button 'Reply', :button_html => {:class => 'btn btn-primary message-reply-btn', :'data-loading-text' => 'Sending...'}
+  -else
+    .clearfix
+    .alert
+      You can't reply at the moment because
+      -if current_user.has_private_messaging?
+        =@message_thread.users_without_messaging.without(current_user).collect(&:first_name).to_sentence
+        =@message_thread.users_without_messaging.without(current_user).count == 1 ? 'has' : 'have'
+      -else
+        you have
+      disabled private messaging.

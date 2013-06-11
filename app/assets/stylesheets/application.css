@@ -11,6 +11,7 @@
  *= require redactor
  *= require ym_cms
  *= require ym_posts
+ *= require ym_messages
  *= require chosen
  *= require_self
  *= require mobile
@@ -1383,24 +1384,29 @@ a.intro-nav-link-security {
   padding: 1px 11px;
   font-size: 13px;
   right: 0px;
-  font-weight: bold;
-  
+  font-weight: bold;  
   z-index: 30;
-
-
-     -moz-border-radius-bottomleft:5px;
-     -moz-border-radius-bottomright:5px;
-     -webkit-border-bottom-right-radius:5px;
-     -webkit-border-bottom-left-radius:5px;
-     border-bottom-right-radius:5px;
-     border-bottom-left-radius:5px;
-     
-     -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
-     box-shadow:1px 1px 2px rgba(0,0,0,0.2);
-
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  border-bottom-right-radius:5px;
+  border-bottom-left-radius:5px;
+  -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
+  box-shadow:1px 1px 2px rgba(0,0,0,0.2);
 }
 .help-link:hover {
   color: #fff;
+}
+.messages-help-link {
+  right: 110px;
+  background: #b35860;
+}
+.messages-help-link span.badge {
+  background-color: white;
+  color: #b35860;
+  padding-left: 6px;
+  padding-right: 6px;  
 }
 .cta-intro {
   float: right;
@@ -1877,4 +1883,14 @@ border-radius:5px;
   border:none;
   vertical-align:middle;
   padding:0px;
+}
+
+/*=============  Private messages ===================*/
+
+.messages-header {
+  background-color: #eee;
+  color: #000;  
+}
+h2.messages-title {
+  color: #000;  
 }
