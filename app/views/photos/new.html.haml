@@ -1,0 +1,8 @@
+.row
+  .span6.offset3
+    %h1.page-title Select an image to upload
+    =semantic_form_for(@photo, :url => group_photos_path(@group)) do |form|
+      =form.inputs do
+        =form.input :image, :as => :image, :label => false, :input_html => {:class => 'mb-0'}
+      =form.buttons do
+        =form.commit_button 'Upload photo', :button_html => {:class => 'btn btn-primary btn-large'}

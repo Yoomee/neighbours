@@ -7,10 +7,11 @@
     =link_to(members_group_path(@group)) do
       %i.icon-group
       ="Members (#{@group.members.count})"
-  %li
-    =link_to "/wireframes/group_show_photos" do
+  %li{:class => "#{'active' if controller_name.photos?}"}
+    =link_to(group_photos_path(@group)) do
       %i.icon-camera
-      Photos (5)
+      Photos
+      =" (#{@group.photos.count})" if @group.photos.count > 0
     
   %li
     =link_to "/wireframes/group_show_messages" do

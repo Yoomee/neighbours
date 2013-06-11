@@ -1844,11 +1844,37 @@ border-radius:5px;
 .group-tile-new i {
   margin:40px 65px;
   float: left;
-
   font-size: 60px;
 }
-
 .group-tile-new:hover {
   background: #d8f2f3;
   color: #000;
+}
+
+/*=============  Photo modal ===================*/
+
+#photo-modal {
+  margin-left:-320px;
+  width: 640px;
+}
+#photo-modal .modal-header {
+  border: none;
+}
+#photo-modal .modal-body {
+  width:580px;
+  min-height:420px;
+  max-height: 80%;
+  overflow-y: visible;
+  padding: 0px 30px 30px;
+  margin-top: 10px;
+}
+#photo-modal table {
+  height:420px;
+  margin:0px;
+}
+#photo-modal table td {
+  text-align:center;
+  border:none;
+  vertical-align:middle;
+  padding:0px;
 }

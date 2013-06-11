@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   has_many :posts, :as => :target, :dependent => :destroy
   has_and_belongs_to_many :members, :class_name => 'User', :uniq => true
   has_many :invitations, :class_name => 'GroupInvitation', :dependent => :destroy
+  has_many :photos, :dependent => :destroy
   
   after_create :add_owner_to_members
   after_save :create_invitations

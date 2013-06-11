@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :owned_groups, :class_name => 'Group'
   has_and_belongs_to_many :groups, :uniq => true
   has_many :group_invitations, :dependent => :destroy
+  has_many :photos, :dependent => :nullify
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
