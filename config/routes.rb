@@ -79,6 +79,9 @@ Neighbours::Application.routes.draw do
   end
   
   resources :groups do
+    collection do
+      get 'all'
+    end
     member do
       get :members, :join
     end

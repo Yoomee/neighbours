@@ -2,6 +2,12 @@ class GroupsController < ApplicationController
 
   load_and_authorize_resource
 
+  def all
+    @groups = Group.public
+    @popular_groups = Group.public.first(3)
+    render :index
+  end
+
   def create
     @group = current_user.owned_groups.build(params[:group])
     if @group.save
