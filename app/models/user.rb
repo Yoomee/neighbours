@@ -252,6 +252,12 @@ class User < ActiveRecord::Base
     errors.add(:dob, "You must be over 16 to register") unless dob.present? && dob < 16.years.ago.to_date
   end
 
+  def set_card_digits
+    unless card_number.blank?
+      self.card_digits = card_number.last(4)
+    end
+  end
+
   def credit_card_valid?
     credit_card.name = full_name
     card_valid = credit_card.valid?
