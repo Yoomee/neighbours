@@ -12,15 +12,15 @@ class NeighbourhoodsController < ApplicationController
   def area
     if current_user
       @needs_json = Need.unresolved.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      @helped = get_at_least(20, Need.resolved.visible_to_user(current_user).order(:created_at).reverse_order)
-      @need_help = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
+      @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
+      @needs = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
     else
       if @neighbourhood = Neighbourhood.find_by_id(params[:id])
         @email_share_params = "neighbourhood=#{@neighbourhood.id}"
         render :action => "coming_soon"
       else          
-        @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
-        @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+        @general_offers = get_at_least(20, GeneralOffer.order(:created_at).reverse_order)
+        @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
         @unvalidated_map_needs = get_unvalidated_map_needs
         @needs_json = []
       end
@@ -43,16 +43,16 @@ class NeighbourhoodsController < ApplicationController
 
   def show
     @neighbourhood = Neighbourhood.find_by_id(params[:id]) || current_user.try(:neighbourhood)
-    @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order)
-    @need_help = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
+    @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
+    @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order) if @general_offers.empty?
+    @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
     @unvalidated_map_needs = get_unvalidated_map_needs
-    if current_user
+    if current_user.try(:has_lat_lng?)
       needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
       @needs_json = needs.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      if @neighbourhood
-        @users_json = @neighbourhood.users.with_lat_lng.without(needs.collect(&:user_id).compact).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
-      end
+      @users_json = User.visible_to_user(current_user).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
     end
+    @general_offers_json = @general_offers.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
     @needs_json ||= []
     @users_json ||= []
   end

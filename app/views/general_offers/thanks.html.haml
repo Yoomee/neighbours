@@ -1,7 +1,10 @@
 .span8.offset2
   .well.center
     %h2="Thanks for offering to help #{current_user.first_name}"
-    %p We'll let you know when anyone responds to your help request.
+    %p
+      -if !current_user.validated?
+        Your neighbours will be able to see this offer once your address has been validated.
+      We'll let you know when anyone responds to your offer.
     =link_to "/", :class=>"btn" do
       %i.icon-home
       Go to my neighbourhood

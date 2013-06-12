@@ -1,7 +1,7 @@
 module NeedHelper
 
   def need_radius_options
-    logged_in? ? current_user.radius_options : Need.radius_options(Neighbourhood::DEFAULT_MAX_RADIUS)
+    logged_in? ? current_user.radius_options : Need.radius_options(Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES)
   end
   
   def show_deadline(need)

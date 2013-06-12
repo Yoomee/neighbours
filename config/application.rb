@@ -37,7 +37,7 @@ module Neighbours
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :card_number, :card_expiry_date, :card_security_code, :card_type]
+    config.filter_parameters += [:password, :credit_card_attributes]
 
     # Enable the asset pipeline
     config.assets.enabled = true

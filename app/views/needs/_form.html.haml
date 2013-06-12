@@ -5,7 +5,7 @@
       NewNeedForm.init(#{logged_out? ? 0 : 1});
     });
 
-%h3 Or ask for help here:
+%h3 Or ask for help elsewhere:
 .well.mt-2
   =semantic_form_for @need, :validate => true  do |f|
     =hidden_field_tag :return_to

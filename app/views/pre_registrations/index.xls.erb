@@ -11,6 +11,7 @@
         <Cell><Data ss:Type="String">Email</Data></Cell>
         <Cell><Data ss:Type="String">Area</Data></Cell>
         <Cell><Data ss:Type="String">Postcode</Data></Cell>
+        <Cell><Data ss:Type="String">Date registered</Data></Cell>        
       </Row>
     <% @pre_registrations.each do |pr| %>
       <Row>
@@ -18,6 +19,7 @@
         <Cell><Data ss:Type="String"><%= pr.email%></Data></Cell>
         <Cell><Data ss:Type="String"><%= pr.area%></Data></Cell>
         <Cell><Data ss:Type="String"><%= pr.postcode%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= pr.created_at.strftime("%d/%m/%Y")%></Data></Cell>
       </Row>
     <% end %>
     </Table>

@@ -1,12 +1,12 @@
 =google_maps_javascript_include_tag if current_user
 -content_for :head do
   :javascript
-    user_lat = #{current_user ? "#{current_user.lat}" : "DEFAULT_LOCATION[0]"}
-    user_lng = #{current_user ? "#{current_user.lng}" : "DEFAULT_LOCATION[1]"}
     $(document).ready(function() {
       NeedSelect.init();
+      NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
+      NeedsMap.general_offers = #{@general_offers_json};
       #{'NeedsMap.init();' if current_user}
       Needs.init();
     });
@@ -39,27 +39,46 @@
 .container
   .row#needs-cycle
     .span6
- 
-      %h2
-        Neighbours who've been helped
-      .help-list-wrapper
+      -if @general_offers.empty?
+        %h2
+          Neighbours who've been helped
+        .help-list-wrapper
+          %ul.help-list.unstyled#resolved
+            -@helped.each do |need|
+              %li.list
+                .list-image
+                  =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(need.user, "60x50#")
+                    %p.small-text
+                      =need.user
+                .list-text
+                  %h3
+                    =link_to need.title, need
+                  %p
+                    -if current_user.try(:validated?)
+                      =need.description
+                    -else
+                      =need.category.description
+      -else
+        %h2
+          Neighbours offering help
         %ul.help-list.unstyled#resolved
-          -@helped.each do |need|
+          -@general_offers.each do |general_offer|
             %li.list
               .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(need.user, "60x50#")
+                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                  =image_for_with_validation(general_offer.user, "60x50#")
                   %p.small-text
-                    =need.user
+                    =general_offer.user
               .list-text
                 %h3
-                  =link_to need.title, need
+                  =link_to_self(general_offer)
                 %p
                   -if current_user.try(:validated?)
-                    =need.description
+                    =general_offer.description
                   -else
-                    =need.category.description
-      
+                    =general_offer.category.description
+    
      
       -if current_user
         =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
@@ -69,22 +88,25 @@
     .span6
       %h2 Neighbours who need help
       .help-list-wrapper
-        %ul.help-list.unstyled#unresolved
-          -@need_help.each do |need|
-            %li.list
-              .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(need.user, "60x50#")
-                  %p.small-text
-                    =need.user
-              .list-text
-                %h3
-                  =link_to need.title, need
-                %p
-                  -if current_user.try(:validated?)
-                    =need.description
-                  -else
-                    =need.category.description
+        -if @needs.empty?
+          %p There's no one requesting help at the moment.
+        -else
+          %ul.help-list.unstyled#unresolved
+            -@needs.each do |need|
+              %li.list
+                .list-image
+                  =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(need.user, "60x50#")
+                    %p.small-text
+                      =need.user
+                .list-text
+                  %h3
+                    =link_to need.title, need
+                  %p
+                    -if current_user.try(:validated?)
+                      =need.description
+                    -else
+                      =need.category.description
                     
       -if current_user
         =link_to "I'd like to offer some help", new_general_offer_path, :class=>"btn call-to-action"

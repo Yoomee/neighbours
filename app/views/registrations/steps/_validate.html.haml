@@ -6,63 +6,54 @@
 
 =form.hidden_field :validate_by
 =form.hidden_field :requested_validation_by_credit_card
--if true
-  .well
-    %strong Safety and security
-    %p
-      Your safety is important to us. We make sure that everybody on
-      %em
-        Neighbours Can Help
-      proves their identify to us. You can't use all the facilities on the website until your address is validated. How would you like to do this?
-  .validate-your-account
-    %h2.mb2.mt2
-      Prove your identity
-    -if @user.errors[:validate_by].present?
-      .control-group.error.mb-2
-        %p.help-inline
-          Please click on one of the options below
-    %ul.thumbnails
-      %li.thumbnail
-        =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "credit_card"} do
-          %i.icon-credit-card
-          %h3 Instantly by credit card
-          %p
-            By entering your credit card details we can check who you are without taking any money from you. We promise not to charge your card and not to keep your details afterwards.
-        #card-modal.modal.fade.hide
-          .modal-header
-            %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
-            %h3 Coming soon...
-          .modal-body
-            %p Validation by credit card will be available shortly.
-            %p In the meantime, please choose one of the other options.
-          .modal-footer
-            =link_to "OK", "#", :class => "btn btn-primary", :'data-dismiss' => 'modal'
-        =#render("card_details", :form => form)
+.well
+  %strong Safety and security
+  %p
+    Your safety is important to us. We make sure that everybody on
+    %em
+      Neighbours Can Help
+    proves their identify to us. You can't use all the facilities on the website until your address is validated. How would you like to do this?
+.validate-your-account
+  %h2.mb2.mt2
+    Prove your identity
+  -if @user.errors[:validate_by].present?
+    .control-group.error.mb-2
+      %p.help-inline
+        =@user.errors[:validate_by].to_sentence
+  %ul.thumbnails
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "credit_card"} do
+        %i.icon-credit-card
+        %h3 Instantly by credit card
+        %p
+          By entering your credit card details we can check who you are without taking any money from you. We promise not to charge your card and not to keep your details afterwards.
+      #card-modal.modal.fade.hide
+        .modal-header
+          %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+          %h3 Please enter your credit card details
+        .modal-body
+          =render("card_details", :form => form)
+        .modal-footer
+          =link_to "OK", "#", :class => "btn btn-primary", :'data-dismiss' => 'modal'
 
-      %li.thumbnail
-        =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "post"} do
-          %i.icon-envelope
-          %h3 Slowly by post
-          %p
-            If you don't want to use a credit card, then we can send you a letter with a unique passcode that you enter to prove that you live at the address.
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "post"} do
+        %i.icon-envelope
+        %h3 Slowly by post
+        %p
+          If you don't want to use a credit card, then we can send you a letter with a unique passcode that you enter to prove that you live at the address.
 
-      %li.thumbnail
-        =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "organisation"} do
-          %i.icon-group
-          %h3 With a local organisation
-          %p
-            We work with a number of your local organisations. If you would like them to tell us that you are who you say you are then select this option.
-        .organisation-form.hide
-          =form.inputs() do
-            =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
+    %li.thumbnail
+      =link_to "#", :class => "validate-by-link", :data => {:"validate-by" => "organisation"} do
+        %i.icon-group
+        %h3 With a local organisation
+        %p
+          We work with a number of your local organisations. If you would like them to tell us that you are who you say you are then select this option.
+      .organisation-form.hide
+        =form.inputs() do
+          =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
 
-    =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
-
--else
-  .well
-    %strong Sorry - not available yet
-    %p Unfortunately, you do not appear to live in the Sheffield postcode area. Neigbourbours Can Help will be rolling out to different areas later this year. We will let you as soon as it's available in your area.
-
+  =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
 
 
 =render('modals/conditions_popup')

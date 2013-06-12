@@ -1,6 +1,6 @@
 class PreRegistrationsController < ApplicationController  
     
-  load_and_authorize_resource :only => :create
+  load_and_authorize_resource
   
   def create
     if @pre_registration.save
@@ -24,13 +24,20 @@ class PreRegistrationsController < ApplicationController
     end
   end
   
+  def destroy_all
+    PreRegistration.destroy_all(['id IN (?)', params[:pre_registration_ids]])
+    flash[:notice] = "Deleted #{params[:pre_registration_ids].compact.uniq.count} pre-registrations"
+    redirect_to map_pre_registrations_path
+  end
+  
   def show
     @pr = PreRegistration.find(params[:id])
     @email_share_params = "pr=#{@pr.id}"
   end
 
   def map
-    @pr_json = PreRegistration.all.select{|pr| pr.lat_lng.present?}.to_json(:methods => [:lat_lng])
+    @pre_registrations = PreRegistration.order(:created_at).paginate(:page => params[:page], :per_page => 50)
+    @pr_json = PreRegistration.with_lat_lng.to_json(:methods => [:lat_lng])
   end
   
   def index

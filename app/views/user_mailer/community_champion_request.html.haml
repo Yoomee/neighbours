@@ -1,0 +1,17 @@
+!!!
+%html
+  %body
+    %p Hi site admin,
+    %p
+      =link_to(@user, user_url(@user))
+      has requested to be a community champion.
+    %p
+      =link_to("View all champion requests", users_url(:anchor => 'champion_requests'))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    
+    

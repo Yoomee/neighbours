@@ -15,6 +15,7 @@ Neighbours::Application.routes.draw do
   resources :pre_registrations do
     collection do
       get :map
+      delete :destroy_all
     end
   end
   get "pr/:id" => "pre_registrations#show"
