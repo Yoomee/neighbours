@@ -6,7 +6,7 @@
       %h1.page-title.mb-3.mt-0
         My groups
       .row
-        -current_user.groups.each do |group|
+        -@groups.each do |group|
           =link_to(group, :class => "span3 group-tile") do
             .inner.clearfix
               .group-tile-image-wrap
@@ -36,21 +36,9 @@
       %h1.page-title.mb-3.mt-0
         Popular groups nearby        
       .row
-        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
-          .inner.clearfix
-            .group-tile-image-wrap
-              =image_tag "group-image-2.jpg"
-            %h4  
-              Maltby chess players      
-        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
-          .inner.clearfix
-            .group-tile-image-wrap
-              =image_tag "group-image-3.jpg"
-            %h4  
-              Chesterfield cheese group  
-        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
-          .inner.clearfix
-            .group-tile-image-wrap
-              =image_tag "group-image-4.jpg"
-            %h4  
-              Walkley photographers
+        -@popular_groups.each do |group|
+          =link_to(group, :class => "span3 group-tile") do
+            .inner.clearfix
+              .group-tile-image-wrap
+                =image_for(group, '190x130#')
+              %h4=group.name

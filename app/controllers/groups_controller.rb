@@ -28,9 +28,13 @@ class GroupsController < ApplicationController
   end
 
   def index
-    if current_user.nil? || current_user.groups.empty?
+    if current_user.nil?
       render :action => 'about'
+    else
+      @groups =  current_user.groups
+      @popular_groups = Group.public.first(3)
     end
+
   end
 
   def join
