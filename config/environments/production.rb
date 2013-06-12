@@ -73,7 +73,6 @@ Neighbours::Application.configure do
     :authentication => :login,
     :user_name      => 'info@yoomeedigital.com',
     :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r'
-    :enable_starttls_auto => false
   }
   
 end
