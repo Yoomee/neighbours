@@ -17,6 +17,8 @@ class Group < ActiveRecord::Base
   validates_property :format, :of => :image, :in => [:jpeg, :jpg, :png, :gif], :case_sensitive => false, :message => "must be an image"
   validate :valid_invitation_emails
 
+  scope :public, where(:private => false)
+
   def add_member!(user)
     invitations = user.group_invitations.where(:group_id => id)
     if !private? || invitations.present?
