@@ -1,0 +1,18 @@
+.row
+  .span6.offset3
+    %form
+      %h1.page-title Enter your group details
+      %label Group name
+      %input.span6.input-large{:type => "text"}/
+      %label Group bio
+      %textarea.span6.group-bio-textarea
+      %label Photo
+      =link_to "#", :class=>"btn" do
+        %i.icon-camera
+        Upload photo
+      %label.mt-2 Invite members to this group?
+      %input.span6.input-medium{:type => "text"}/
+      %label Location
+      %input.span6.input-medium{:type => "text"}/
+    .form-actions
+      =link_to "Create group", "/wireframes/group_show", :class=>"btn btn-primary btn-large"

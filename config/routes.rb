@@ -78,6 +78,18 @@ Neighbours::Application.routes.draw do
     resources :posts, :only => :index
   end
   
+  resources :groups do
+    member do
+      get :members, :join
+    end
+    resources :group_invitations, :path => 'invitations', :only => [:new, :create]
+    resources :photos, :only => [:new, :create, :index, :show]
+  end
+  resources :group_invitations, :only => :show do
+    resources :group_registrations, :path => 'registrations', :only => :new
+  end
+  resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
+  
   resources :neighbourhoods do
     member do
       get "email" => "neighbourhoods#new_email"

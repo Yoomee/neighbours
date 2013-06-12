@@ -1,0 +1,37 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $('#message-switch-btn').click(function(){
+        $(this).html('Loading...');
+      });
+      $('#more-message-threads-btn').click(function(){
+        $(this).html('Loading...');
+      });
+    });
+    
+.row
+  .messages-wrap.span10.offset1
+    .messages-header
+      %h2.messages-title
+        Private messages
+      =link_to new_message_path, :class => 'btn btn-primary', :id => 'new-message-btn' do
+        %i.icon-plus
+        New message   
+    .messages-list-wrap
+      -if @message_threads.empty?
+        %span.no-messages
+          %p.mt-1 You have no messages.
+      -else
+        %ul.messages-list.unstyled
+          =render 'message_threads/message_threads', :message_threads => @message_threads
+          
+        -if @message_threads.next_page
+          =link_to 'Show more', message_threads_path(:page => @message_threads.next_page), :remote => true, :class => 'btn', :id => 'more-message-threads-btn'
+.row.message-switch
+  .span10.offset1
+    %p#message-switch-text.pull-left
+      =switch_text(current_user).html_safe
+    =link_to('#message-settings-modal', :class => 'btn message-toggle-btn', :data => {:toggle => 'modal'}) do
+      %i.icon-cog
+      Message settings
+  =render('messages/settings_modal')

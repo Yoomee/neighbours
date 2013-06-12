@@ -30,6 +30,15 @@ $(document).ready () ->
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
+  PhotoModal.init()
+
+window.PhotoModal =
+  init: ->
+    $('#photo-modal').on 'show', ->
+      PhotoModal.loaderHtml = $(this).children('.modal-body').html()
+    $('#photo-modal').on 'hidden', ->
+      $(this).children('.modal-body').html(PhotoModal.loaderHtml)
+      $(this).removeData('modal')
 
 window.IntroPageNav =
   init: ->

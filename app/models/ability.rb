@@ -9,8 +9,12 @@ class Ability
     can [:show, :create], PreRegistration
     can :create, Enquiry
     can :show, Page, :draft => false
-    can [:show, :create], Need
+    can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
+    can [:read], Group do |group|
+      !group.private? || group.has_member?(user) || group.invitations.exists?(:user_id => user.try(:id))
+    end
+    can :read, GroupInvitation
     
     if user.try(:admin?)
       can :manage, :all
@@ -18,26 +22,37 @@ class Ability
       # admin ability
     elsif user
       # user ability
+      can :show, MessageThread do |thread|
+        thread.users.exists?(:id => user.id)
+      end
+      can :index, MessageThread
+      can :create, Message do |message| 
+        (message.thread.try(:users) || []).none?(&:no_private_messaging?)
+      end
+      can :new, Message
       can [:create], Flag
       can [:create], Comment
       can [:show, :create], Post
       can [:update, :destroy], Post, :user_id => user.id
       can :manage, User, :id => user.id     
       cannot :index, User
-      can [:create, :read, :search], Need 
+      can [:read, :search], Need
       can :update, Need, :user_id => user.id
       can [:create, :index, :read], Offer
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end
-      can [:create, :thanks, :accept], GeneralOffer
-      can :read, GeneralOffer do |general_offer|
-        (general_offer.user_id == user.id) || general_offer.user.validated?
+      unless user.group_user?
+        can :create, Need
+        can [:create, :thanks, :accept], GeneralOffer
+        can :read, GeneralOffer do |general_offer|
+          (general_offer.user_id == user.id) || general_offer.user.validated?
+        end
+        can [:update, :destroy], GeneralOffer, :user_id => user.id
+        cannot :accept, GeneralOffer do |general_offer|
+          (general_offer.user_id == user.id) || !general_offer.user.validated?
+        end
       end
-      can [:update, :destroy], GeneralOffer, :user_id => user.id
-      cannot :accept, GeneralOffer do |general_offer|
-        (general_offer.user_id == user.id) || !general_offer.user.validated?
-      end      
       if user.is_community_champion?
         can :index, Post
       end
@@ -56,7 +71,20 @@ class Ability
       end
       can :new, Page do
         user.is_neighbourhood_admin?
-      end  
+      end
+      can [:create, :join], Group
+      can [:members], Group do |group|
+        group.has_member?(user)
+      end
+      can [:update], Group do |g|
+        g.user_id == user.id
+      end
+      can [:new, :create], GroupInvitation do |invitation|
+        invitation.group.try(:user_id) == user.id || (invitation.group && !invitation.group.private? && invitation.group.has_member?(user))
+      end
+      can [:new, :create, :read], Photo do |photo|
+        photo.group.has_member?(user)
+      end
     end
     
   end
