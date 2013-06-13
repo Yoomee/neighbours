@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
   end
 
   def address
-    ["#{house_number} #{street_name}".strip, city, postcode].compact.join(', ')
+    ["#{house_number} #{street_name}".strip, city, postcode].reject(&:blank?).join(', ')
   end
 
   def address_with_country
