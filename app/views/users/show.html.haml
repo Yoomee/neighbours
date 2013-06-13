@@ -57,6 +57,14 @@
             %span Nothing entered yet.
             .action-link
               =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
+      
+      %h4.mb-1 Groups        
+      -@user.groups.each do |group|
+        =link_to(group, :class => "profile span3 group-tile") do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_for(group, '190x130#')
+            %h4=group.name  
 
 .row.mt-2
   .span8

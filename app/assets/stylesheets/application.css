@@ -1844,6 +1844,12 @@ border-radius:5px;
   background: #d8f2f3;
   color: #000;
 }
+.profile.span3.group-tile{
+  margin-left:0;
+  margin-right:20px;
+  /*margin-top: 2px;*/
+
+}
 
 /*=============  Photo modal ===================*/
 
