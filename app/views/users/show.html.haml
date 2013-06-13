@@ -2,14 +2,17 @@
   .span3
     .row
       .span3
-        -if @user.image
-          =image_for(@user, "220x")
-        -else
-          =image_for(@user, "220x")
-          .italic
-            %span Upload your own picture.
-            .action-link
-              =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+        .user-thumbnail-large      
+          -if @user.image
+            =image_for(@user, "220x")
+          -else
+            =image_for(@user, "220x")
+            .italic
+              %span Upload your own picture.
+              .action-link
+                =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+          -if @user.validated?
+            .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
   .span9
     %h1.mb-1=title(@user)
     %h3.mb-1

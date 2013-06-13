@@ -1074,10 +1074,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   position: relative;
   display: block;
 }
-
 .user-thumbnail-large img{
   float:left;
-
 }
 .user-thumbnail-large:hover {
   text-decoration: none;
@@ -1098,6 +1096,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   width: 25px;
   height: 30px;
   background: url(/assets/validated-icon.png) no-repeat;
+}
+body.controller_users.action_show .user-thumbnail-large .validated-icon {
+  right: 5px;
 }
 .list-image .validated-icon {
   right: -8px;
