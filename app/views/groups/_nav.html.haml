@@ -1,0 +1,14 @@
+%ul.nav.nav-tabs.group-nav-tabs.mb-3
+  %li{:class => "#{'active' if action_name.show?}"}
+    =link_to(@group) do
+      %i.icon-comment
+      Posts
+  %li{:class => "#{'active' if action_name.members?}"}
+    =link_to(members_group_path(@group)) do
+      %i.icon-group
+      ="Members (#{@group.members.count})"
+  %li{:class => "#{'active' if controller_name.photos?}"}
+    =link_to(group_photos_path(@group)) do
+      %i.icon-camera
+      Photos
+      =" (#{@group.photos.count})" if @group.photos.count > 0

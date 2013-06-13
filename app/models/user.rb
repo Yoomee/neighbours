@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
 
   devise :confirmable
 
-  User::CARD_TYPES = %w{visa mastercard american_express}
   User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Academy"]
 
   has_many :needs, :dependent => :destroy
@@ -13,15 +12,27 @@ class User < ActiveRecord::Base
   has_many :general_offers, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
+  has_many :owned_groups, :class_name => 'Group'
+  has_and_belongs_to_many :groups, :uniq => true
+  has_many :group_invitations, :dependent => :destroy
+  has_many :photos, :dependent => :nullify
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
+  before_create :generate_validation_code
+  after_create :send_emails
+  before_save :set_neighbourhood
   attr_accessor :card_number, :card_security_code
+  
+  # accessors below are used in group_registrations#create
+  attr_accessor :group_invitation_id
+  boolean_accessor :seen_group_invitation_email_warning
 
   before_create :generate_validation_code
   after_create :send_emails
+  after_create :update_existing_group_invitations
   before_save :set_card_digits, :set_neighbourhood
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
 
@@ -29,15 +40,12 @@ class User < ActiveRecord::Base
   after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
   after_validation :allow_non_unique_email_if_deleted
 
+  attr_accessor :credit_card_preauth
+
   validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
   validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
-  validates :validate_by, :presence => true, :if => :validation_step?
+  validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
   validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
-  validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
-  validates :card_type, :inclusion => {:in => User::CARD_TYPES}, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-  validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
   validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
   validate :dob_or_undiclosed_age
   validate :over_16
@@ -46,6 +54,8 @@ class User < ActiveRecord::Base
   validates :email_confirmation, :presence => {:if => :who_you_are_step?}
   validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
   validates :validation_code, :uniqueness => true
+  validate :preauth_credit_card, :if => :validation_step?
+  validate :group_invitation_email_matches, :on => :create
 
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
   scope :not_deleted, where(:is_deleted => false)
@@ -100,13 +110,18 @@ class User < ActiveRecord::Base
     read_attribute(:city).presence || "Sheffield"
   end
 
+  def credit_card
+    @credit_card ||= ActiveMerchant::Billing::CreditCard.new
+  end
+    
+  def credit_card_attributes=(attrs)  
+    attrs.reject!{|a| a.blank?}
+    @credit_card = ActiveMerchant::Billing::CreditCard.new(attrs)  
+  end
+
   # overwritten devise method: users don't need to confirm their email address, so everyone is confirmed
   def confirmed?
     true
-  end
-
-  def credit_card_attributes
-    %w{card_type formatted_card_number card_expiry_date}
   end
 
   def dob_or_undiclosed_age
@@ -116,6 +131,10 @@ class User < ActiveRecord::Base
   def formatted_card_number
     return nil if card_digits.blank?
     ("**** " * 3) + card_digits.to_s
+  end
+
+  def group_user?
+    role == 'group_user'
   end
 
   def has_address?
@@ -209,11 +228,7 @@ class User < ActiveRecord::Base
   end
   
   def send_emails
-    if validate_by == "post"
-      UserMailer.new_registration_with_post_validation(self).deliver
-    elsif validate_by == "organisation"
-      UserMailer.new_registration_with_organisation_validation(self).deliver
-    end
+    UserMailer.new_registration(self).deliver
     UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
   end
 
@@ -243,9 +258,47 @@ class User < ActiveRecord::Base
     end
   end
 
+  def credit_card_valid?
+    credit_card.name = full_name
+    card_valid = credit_card.valid?
+    if !credit_card.brand.in?(CreditCardPreauth::ACCEPTED_CARDS.values)
+      credit_card.errors.add(:brand, "please select an accepted card type")
+      card_valid = false
+    end
+    errors.add(:credit_card, "card details are invalid") if !card_valid
+    card_valid
+  end
+
+  def preauth_credit_card
+    if validate_by == 'credit_card' && credit_card_valid? && agreed_conditions?
+      return true if credit_card_preauth.present?
+      self.credit_card_preauth = CreditCardPreauth.create_from_user(self)
+      credit_card_preauth.preauth!
+      if credit_card_preauth.success?
+        self.validated = true
+      else
+        errors.add(:credit_card_details, "Unfortunately we couldn't verify your address from the card details you entered. Please check your card details or select an alternative validation option.")
+      end
+    end
+  end
+
   protected
   def confirmation_required?
     false
+  end
+
+  def update_existing_group_invitations
+    GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
+  end
+
+  def group_invitation_email_matches
+    return true if errors[:email].present? || seen_group_invitation_email_warning?
+    if invitation = GroupInvitation.find_by_id(group_invitation_id)
+      if invitation.group.private? && email != invitation.email
+        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message and continue.")
+        self.seen_group_invitation_email_warning = true
+      end
+    end
   end
 
 end

@@ -1,2 +1,9 @@
-site_url: http://localhost:3000
+site_url: http://ymlocal.com:3000
 facebook_app_id: 448703455184821
+twitter:
+  consumer_key: dtr1ewqEc8ScGG5M0S3SBA
+  consumer_secret: 7ZlCXK7RRNH7dpdJCICQZNim2nFQHfg41GOpNwTM60
+  site_oauth_token: 190558659-iwamjBwoBvu1Jpz7927vLNTMZeP1HYzr7gMosXcw # Post as @gbrunei
+  site_oauth_secret: o3WGbYdqdewITLPqjVgGDk6RHT4cQpXFGyjHOFg9I0
+facebook:
+  site_page_access_token: CAAGcBuUjgxYBAJix4YRpF3d5kr8vwmvAAkjr2JGDGpIuH6xMIz4HmXXohdt0EaBDeTICtE6vGKPR7pqnEoxxXOoMZCADHZAu31h353yuuMb4r7TpQJ7LOXWXIeMHGEb8yf3fX77kVFFaOlCrA3V0WqA4BDyYjJh84PLxJl8mYiTtJjhLcc # Post as Yoomee Test

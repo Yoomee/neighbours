@@ -4,6 +4,7 @@
       NeedCategorySelector.categories = #{NeedCategory.root.to_json(:methods => :sub_categories)};
       NewNeedForm.init(#{logged_out? ? 0 : 1});
     });
+
 %h3 Or ask for help elsewhere:
 .well.mt-2
   =semantic_form_for @need, :validate => true  do |f|

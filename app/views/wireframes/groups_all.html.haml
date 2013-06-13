@@ -1,0 +1,51 @@
+=render('/wireframes/all_groups_strip')
+.container
+  .row.mb-2.mt-3
+    .span12
+      %h1.page-title.mb-3.mt-0
+        My groups
+      .row
+        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_tag "group-image.jpg"
+            %h4  
+              Derbyshire Walking Group
+              
+        =link_to "#group-new-modal", :class=>"span3 group-tile group-tile-new", :"data-toggle"=>"modal" do
+          .inner.clearfix
+            .group-tile-image-wrap
+              %i.icon-plus
+            %h4  
+              Add a new group
+
+
+
+      %h1.page-title.mb-3.mt-0
+        Popular groups nearby
+        
+      .row
+        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_tag "group-image-2.jpg"
+            %h4  
+              Maltby chess players      
+        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_tag "group-image-3.jpg"
+            %h4  
+              Chesterfield cheese group  
+        =link_to "/wireframes/group_show", :class=>"span3 group-tile" do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_tag "group-image-4.jpg"
+            %h4  
+              Walkley photographers                            
+        
+        
+        
+=render ('/wireframes/group_new_modal')        
+ 
+

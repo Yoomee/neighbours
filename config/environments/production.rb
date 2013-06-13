@@ -68,12 +68,11 @@ Neighbours::Application.configure do
   # config.action_mailer.default_url_options = { :host => 'unseenamsterdam.com' }
 
   config.action_mailer.smtp_settings = {
-    :address        => 'mail.studentbabble.com',
-    :domain         => 'mail.studentbabble.com',
+    :address        => 'mail.yoomeedigital.com',
+    :domain         => 'mail.yoomeedigital.com',
     :authentication => :login,
-    :user_name      => 'info@studentbabble.com',
-    :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r',
-    :enable_starttls_auto => false
+    :user_name      => 'info@yoomeedigital.com',
+    :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r'
   }
   
 end
