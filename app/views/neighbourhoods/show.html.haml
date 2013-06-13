@@ -62,22 +62,23 @@
       -else
         %h2
           Neighbours offering help
-        %ul.help-list.unstyled#resolved
-          -@general_offers.each do |general_offer|
-            %li.list
-              .list-image
-                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
-                  =image_for_with_validation(general_offer.user, "60x50#")
-                  %p.small-text
-                    =general_offer.user
-              .list-text
-                %h3
-                  =link_to_self(general_offer)
-                %p
-                  -if current_user.try(:validated?)
-                    =general_offer.description
-                  -else
-                    =general_offer.category.description
+        .help-list-wrapper          
+          %ul.help-list.unstyled#resolved
+            -@general_offers.each do |general_offer|
+              %li.list
+                .list-image
+                  =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                    =image_for_with_validation(general_offer.user, "60x50#")
+                    %p.small-text
+                      =general_offer.user
+                .list-text
+                  %h3
+                    =link_to_self(general_offer)
+                  %p
+                    -if current_user.try(:validated?)
+                      =general_offer.description
+                    -else
+                      =general_offer.category.description
     
      
       -if current_user
