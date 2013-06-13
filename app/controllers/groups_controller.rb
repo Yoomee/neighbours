@@ -37,6 +37,10 @@ class GroupsController < ApplicationController
 
   end
 
+  def members
+    @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
+  end
+
   def join
     if @group.add_member!(current_user)
       flash[:notice] = 'You are now a member of this group, welcome!'
