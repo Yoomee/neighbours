@@ -1,14 +1,18 @@
 class Neighbourhood < ActiveRecord::Base
-  
-  validates :name, :presence => true
-  validates :postcode_prefix, :uniqueness => true, :presence => true
-  validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
 
   has_many :posts, :as => :target
   belongs_to :admin, :class_name => "User"
   has_many :users
   has_many :pages
   has_permalinks
+
+  geocoded_by :postcode_with_country, :latitude => :lat, :longitude => :lng
+  
+  validates :name, :presence => true
+  validates :postcode_prefix, :uniqueness => true, :presence => true
+  validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+
+  after_validation :geocode, :if => :postcode_prefix_changed?
 
   class << self
     
@@ -33,9 +37,7 @@ class Neighbourhood < ActiveRecord::Base
   end
   
   def lat_lng
-    results = Geocoder.search("#{postcode_prefix}, UK")
-    geometry = results.first.data['geometry']
-    [geometry['location']['lat'],geometry['location']['lng']]
+    [lat, lng]
   end
 
   def snippet_text(slug, default_text = nil)
@@ -52,6 +54,10 @@ class Neighbourhood < ActiveRecord::Base
 
   def max_radius_in_miles
     (max_radius.to_i / 1609.344).round(2).to_s.chomp(".0")
+  end
+
+  def postcode_with_country
+    "#{postcode_prefix}, UK"
   end
 
   def pre_registrations
