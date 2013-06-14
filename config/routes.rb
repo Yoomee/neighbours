@@ -1,6 +1,6 @@
 Neighbours::Application.routes.draw do
 
-  root :to => 'neighbourhoods#show'
+  root :to => 'home#index'
 
   match 'feedback' => 'enquiries#new', :id => 'feedback'
   match 'other-neighbourhoods' => 'enquiries#new', :id => 'other_neighbourhood', :as => "other_neighbourhood"
@@ -86,7 +86,7 @@ Neighbours::Application.routes.draw do
   end
   
   get "neighbourhood" => "neighbourhoods#show"
-  get "area/:id" => "neighbourhoods#area"
+  get "area/:id" => "neighbourhoods#show"
   get "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
   match "neighbourhoods/:neighbourhood/snippets" => "neighbourhoods#snippets", :as => 'neighbourhood_snippets'
   get "neighbourhoods/:neighbourhood/about" => "neighbourhoods#about", :as => 'neighbourhood_about'

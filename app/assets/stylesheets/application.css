@@ -668,9 +668,6 @@ border-bottom-color: #b08193;
   border-bottom-color: rgba(0, 0, 0, 0.246094);
   border-left-color: rgba(0, 0, 0, 0.0976563);
 }
-body#home.logged_in .call-to-action {
-  margin-top: 0;
-}
 
 /*========== Logged out home ==========*/
 

@@ -1,26 +1,41 @@
+-if current_user
+  =google_maps_javascript_include_tag
+  -title "My Neighbourhood"
+  
 -content_for :head do
   :javascript
     $(document).ready(function() {
       NeedSelect.init();
+      NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
+      NeedsMap.needs = #{@needs_json};
+      NeedsMap.users = #{@users_json};
+      NeedsMap.general_offers = #{@general_offers_json};
+      #{'NeedsMap.init();' if current_user}
+      Needs.init();
     });
-.container
-#home-intro-2
+
+-if current_user
+  =render "neighbourhoods/validated_map"
+-else
   .container
-    .row
-      .span12.home-intro-inner
-        .home-intro-text
-          %h2.home-welcome.home-intro-text
-            -if current_user
-              ="Hi #{current_user}, welcome to Neighbours Can Help"
-            -else
-              Welcome to Neighbours Can Help
-          %h3.home-where.home-intro-text ..where neighbours are helping each other
-        =link_to_slug('Find out more', :about, :class=>"illustration-link")  
-        =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
-        =link_to "Get involved", "#pre-register", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
-
+  #home-intro-2
+    .container
+      .row
+        .span12.home-intro-inner
+          .home-intro-text
+            %h2.home-welcome.home-intro-text
+              -if current_user
+                ="Hi #{current_user}, welcome to Neighbours Can Help"
+              -else
+                Welcome to Neighbours Can Help
+            %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
+          =link_to_slug('Find out more', :about, :class=>"illustration-link")  
+          =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
+          =link_to "Get involved", "#pre-register", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
 
 .container
-  .row
-    .span8.offset2
-      %h3.center I can't find 'Neighbours who've been helped' and 'Neighbours who need help'- have you put it anywhere Andy?
+  .home-help-links
+    =link_to "Please help us improve our services to the community by answering these 6 simple questions", "http://www.surveymonkey.com/s/VGLT22G", :target => "_blank", :class=>"home-help-link", :target => :blank
+
+.container
+  =render('neighbourhoods/cycled_columns')
