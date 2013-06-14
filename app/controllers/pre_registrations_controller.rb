@@ -1,26 +1,20 @@
 class PreRegistrationsController < ApplicationController  
-    
-  load_and_authorize_resource
   
   def create
-    if @pre_registration.save
-      session[:email]=@pre_registration.email
-      if @pre_registration.coming_soon?
-        @redirect_url = "/area/#{@pre_registration.neighbourhood.id}-#{@pre_registration.neighbourhood.name.parameterize}"
-        UserMailer.preregister_thank_you(@pre_registration).deliver
-      elsif @pre_registration.live?
-        if User.find_by_email(@pre_registration.email.downcase).present?
-          flash[:notice] = "An account with this email address already exits. Sign in here."
-          @redirect_url = "/login"
-        else
-          session[:pre_registration_id] = @pre_registration.id
-          @redirect_url = "/registrations/new"
-        end
+    @pre_register_user = User.new(params[:user].merge(:role => 'pre_registration'))
+    if @pre_register_user.save
+      if @pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live? 
+        session[:pre_register_user_id] = @pre_register_user.id
+        render :js => "window.location = '#{new_registration_path}'"
       else
-        @redirect_url = "/pr/#{@pre_registration.id}"
-        UserMailer.preregister_thank_you(@pre_registration).deliver    
-        UserMailer.admin_message("A new pre-registration", "Yippee! There has been a new pre-registration on the website.", @pre_registration.attributes).deliver
-      end  
+        UserMailer.pre_register_thank_you(@pre_register_user).deliver
+        UserMailer.admin_message("A new pre-registration", "Yippee! There has been a new pre-registration on the website.", @pre_register_user.attributes).deliver
+        if @pre_register_user.neighbourhood
+          render :js => "window.location = '#{neighbourhood_path(@pre_register_user.neighbourhood)}'"
+        else          
+          render :js => "window.location = '#{pre_registration_path(@pre_register_user)}'"
+        end
+      end
     end
   end
   
@@ -31,8 +25,8 @@ class PreRegistrationsController < ApplicationController
   end
   
   def show
-    @pr = PreRegistration.find(params[:id])
-    @email_share_params = "pr=#{@pr.id}"
+    @pre_register_user = User.find(params[:id])
+    @email_share_params = "pr=#{@pre_register_user.id}"
   end
 
   def map

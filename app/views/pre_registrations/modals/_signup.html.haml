@@ -4,7 +4,7 @@
   %h3
     Get involved
 .modal-body
-  =semantic_form_for(@pre_registration || PreRegistration.new, :remote => true) do |form|
+  =semantic_form_for(@pre_register_user || User.new, :url => pre_registrations_path, :remote => true) do |form|
     .preregister-form
       %p.popup-intro
         =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
@@ -14,7 +14,7 @@
             =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
           .control-group
             .controls
-              =form.input :name, :input_html => { :class=>'span4', :placeholder => "Name"}
+              =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
           .control-group
             .controls
               =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}

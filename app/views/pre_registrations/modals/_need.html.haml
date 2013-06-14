@@ -1,4 +1,4 @@
-=semantic_form_for(@need ||= Need.new) do |f|
+=semantic_form_for(@need ||= Need.new, :remote => true) do |f|
   .modal-header
     %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
     %h3 What would you like help with?

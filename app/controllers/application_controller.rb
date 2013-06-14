@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include YmUsers::ApplicationController
 
-  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood
+  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :clear_pre_register_user_id
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
     if !%w{registrations need sessions pages}.include?(controller_name) || (controller_name == :pages && action_name == :neighbourhood_safety)
       session[:new_need_attributes] = nil
     end
+  end
+
+  def clear_pre_register_user_id
+    session.delete(:pre_register_user_id)
   end
   
   def set_neighbourhood

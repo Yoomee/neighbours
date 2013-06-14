@@ -1,5 +1,1 @@
-<%if @redirect_url.present?%>
-window.location = '<%=@redirect_url%>';
-<%else%>
 $('#pre-register-signup').html('<%=escape_javascript(render("pre_registrations/modals/signup"))%>');
-<%end%>	
