@@ -30,7 +30,10 @@ $(document).ready () ->
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
-
+  NewNeedForm.showHideDeadline()
+  $('#need_need_to_know_by_input input[type="radio"]').change ->
+    NewNeedForm.showHideDeadline()
+  
 window.IntroPageNav =
   init: ->
     $(window).scroll ->
@@ -160,10 +163,7 @@ window.NeedCategorySelector =
 window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
-    NewNeedForm.showHideDeadline()
     NeedCategorySelector.init('general_offers')
-    $('#need_need_to_know_by_input input[type="radio"]').change ->
-      NewNeedForm.showHideDeadline()
     if logged_in == 0
       $('#register-modal-login-link, #register-modal-register-link').click (event) ->
         event.preventDefault()

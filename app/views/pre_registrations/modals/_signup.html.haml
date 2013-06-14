@@ -1,15 +1,14 @@
-=semantic_form_for(@pre_registration || PreRegistration.new, :remote => true) do |form|
-  .modal-header
-
-    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
-      ×
-    %h3
-      Get involved
-  .modal-body
+.modal-header
+  %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+    ×
+  %h3
+    Get involved
+.modal-body
+  =semantic_form_for(@pre_registration || PreRegistration.new, :remote => true) do |form|
     .preregister-form
       %p.popup-intro
         =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
-      
+    
         %form.form-horizontal
           .control-group              
             =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
@@ -21,5 +20,7 @@
               =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
           .control-group
             .controls
-              =form.commit_button "Go", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
+              =form.commit_button "Signup", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
               =link_to "Already registered?", "/login", :class=>"already-registered-link"
+.modal-footer
+  =link_to "Back", "#pre-register", :class=>"btn pull-left", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
