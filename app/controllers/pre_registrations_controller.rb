@@ -35,7 +35,7 @@ class PreRegistrationsController < ApplicationController
 
   def map
     @pre_registered_users = User.where(:role => 'pre_registration').order(:created_at).paginate(:page => params[:page], :per_page => 50)
-    @pr_json = User.where(:role => 'pre_registration').with_lat_lng.to_json(:methods => [:lat_lng])
+    @pr_json = User.where(:role => 'pre_registration').with_lat_lng.to_json(:methods => [:lat_lng, :full_name])
   end
   
   def index
@@ -44,7 +44,7 @@ class PreRegistrationsController < ApplicationController
         redirect_to map_pre_registrations_path
       end
       format.xls do
-        @pre_registrations = PreRegistration.all
+        @pre_registered_users = User.where(:role => 'pre_registration')
       end
     end
   end
