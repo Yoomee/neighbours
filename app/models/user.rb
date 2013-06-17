@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
+  accepts_nested_attributes_for :needs, :general_offers
+
   attr_accessor :card_number, :card_security_code
 
   before_create :generate_validation_code

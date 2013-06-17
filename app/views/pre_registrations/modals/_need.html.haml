@@ -1,19 +1,24 @@
-=semantic_form_for(@need ||= Need.new, :remote => true) do |f|
-  .modal-header
-    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
-    %h3 What would you like help with?
-  .modal-body
-    =f.inputs do
-      =f.input :category, :value => @need.category.try(:id), :label => false, :prompt => 'Select a category', :input_html => {:class => 'span6'}
-      =f.input :description, :label => false, :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span6", :rows => "2", :placeholder => 'Describe what you need help with'}, :required => false
-      =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => false, :prompt => "Select the broadcast radius", :help => "People who live within this distance from you will hear about your need", :input_html => {:class => "span6"}
-      =f.input :need_to_know_by, :as => :radio, :collection => [["Any time","anytime"],["As soon as possible","asap"], ["A specific date", "date"]], :label => "I need to know by", :help => "When would you like to know if anybody can help you?"
-      #need_deadline_input.control-group{:class => "#{@need.errors[:deadline].present? ? 'error' : ''}"}
-        .controls
-          =f.date_select :deadline, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year), :end_year => (Time.now.year + 1)}, :class => "input-small"
-          -if @need.errors[:deadline].present?
-            %span.help-inline
-              =@need.errors[:deadline].to_sentence
-  .modal-footer  
-    =link_to "Back", "#pre-register", :class=>"btn pull-left", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
-    =f.commit_button "Send help request", :button_html => { :class => "btn btn-primary pull-right" }
+:coffeescript
+  $ ->
+    NewNeedForm.initShowHideDeadline()
+-need = form.object.needs.first || form.object.needs.build
+#pre-register-need-fields{:class => "#{need.errors.empty? ? 'hide' : ''}"}
+  =form.semantic_fields_for(:needs, need, :remote => true) do |f|
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+      %h3 What would you like help with?
+    .modal-body
+      =f.inputs do
+        =f.input :category, :value => need.category.try(:id), :label => false, :prompt => 'Select a category', :input_html => {:class => 'span6'}
+        =f.input :description, :label => false, :help => "Describe what you need help with. Be sure to include when you need the help and how flexible you can be.", :input_html => { :class => "span6", :rows => "2", :placeholder => 'Describe what you need help with'}, :required => false
+        =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => false, :prompt => "Select the broadcast radius", :help => "People who live within this distance from you will hear about your need", :input_html => {:class => "span6"}
+        =f.input :need_to_know_by, :as => :radio, :collection => [["Any time","anytime"],["As soon as possible","asap"], ["A specific date", "date"]], :label => "I need to know by", :help => "When would you like to know if anybody can help you?", :wrapper_html => {:id => 'need_need_to_know_by_input'}
+        #need_deadline_input.control-group{:class => "#{need.errors[:deadline].present? ? 'error' : ''}"}
+          .controls
+            =f.date_select :deadline, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year), :end_year => (Time.now.year + 1)}, :class => "input-small"
+            -if need.errors[:deadline].present?
+              %span.help-inline
+                =need.errors[:deadline].to_sentence
+    .modal-footer  
+      =link_to "Back", "#pre-register", :class=>"btn pull-left", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
+      =f.commit_button "Send help request", :button_html => { :class => "btn btn-primary pull-right" }

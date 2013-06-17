@@ -1,26 +1,30 @@
-.modal-header
-  %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
-    ×
-  %h3
-    Get involved
-.modal-body
-  =semantic_form_for(@pre_register_user || User.new, :url => pre_registrations_path, :remote => true) do |form|
-    .preregister-form
-      %p.popup-intro
-        =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
-    
-        %form.form-horizontal
-          .control-group              
-            =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
-          .control-group
-            .controls
-              =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
-          .control-group
-            .controls
-              =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
-          .control-group
-            .controls
-              =form.commit_button "Signup", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
-              =link_to "Already registered?", "/login", :class=>"already-registered-link"
-.modal-footer
-  =link_to "Back", "#pre-register", :class=>"btn pull-left", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
+=semantic_form_for(@pre_register_user ||= User.new, :url => pre_registrations_path, :remote => true) do |form|
+  =form.hidden_field :pre_register_need_or_offer, :id => 'pre_register_need_or_offer'
+  =render("pre_registrations/modals/need", :form => form)
+  =render("pre_registrations/modals/general_offer", :form => form)
+  #pre-register-signup-fields{:class => "#{@pre_register_user.pre_register_need_or_offer_valid? ? '' : 'hide'}"}
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+        ×
+      %h3
+        Get involved
+    .modal-body
+      .preregister-form
+        %p.popup-intro
+          =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
+  
+          %form.form-horizontal
+            .control-group              
+              =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
+            .control-group
+              .controls
+                =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
+            .control-group
+              .controls
+                =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
+            .control-group
+              .controls
+                =form.commit_button "Signup", :button_html => {:data => {}, :class => "btn btn-primary btn-large", :id => "new-pre-registration-form-submit"}
+                =link_to "Already registered?", "/login", :class=>"already-registered-link"
+    .modal-footer
+      =link_to "Back", "#pre-register", :class=>"btn pull-left pre-register-back-link"
