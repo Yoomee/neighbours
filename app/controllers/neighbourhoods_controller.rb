@@ -74,10 +74,10 @@ class NeighbourhoodsController < ApplicationController
     if params[:subject].blank? || params[:email_body].blank?
       render :action => 'new_email'
     else
-      @neighbourhood.pre_registrations.each do |pre_registration|
-        PreRegistrationMailer.delay.custom_email(pre_registration, params[:subject], params[:email_body])
+      @neighbourhood.users.where(:role => 'pre_registration').each do |pre_registered_user|
+        UserMailer.delay.custom_email(pre_registered_user, params[:subject], params[:email_body])
       end
-      flash[:notice] = "Sent #{@neighbourhood.pre_registrations.count} emails"
+      flash[:notice] = "Sent #{@neighbourhood.users.where(:role => 'pre_registration').count} emails"
       redirect_to neighbourhoods_path
     end
   end

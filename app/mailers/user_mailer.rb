@@ -6,6 +6,12 @@ class UserMailer < ActionMailer::Base
   default :from => "site@neighbourscanhelp.org.uk",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
 
+  def custom_email(user, subject, content)
+    @user = user
+    @content = content
+    mail(:to => user.email, :subject => "[Neighbours Can Help] #{subject}")
+  end
+
   def new_flag(flag)
     @flag = flag
     @need = @flag.resource

@@ -60,10 +60,6 @@ class Neighbourhood < ActiveRecord::Base
     "#{postcode_prefix}, UK"
   end
 
-  def pre_registrations
-    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix}%")
-  end
-
   def status
     live? ? "Live" : "Coming soon"
   end

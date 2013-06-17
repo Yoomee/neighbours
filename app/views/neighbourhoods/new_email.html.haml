@@ -3,7 +3,7 @@
   
 %p
   Enter the content of the email below and click send. An email will be sent to all
-  ="#{@neighbourhood.pre_registrations.count} people in #{@neighbourhood}."
+  ="#{@neighbourhood.users.where(:role => 'pre_registration').count} people in #{@neighbourhood}."
   
 =form_tag(email_neighbourhood_path(@neighbourhood)) do
   %div{:class => "control-group#{request.post? && params[:subject].blank? ? ' error' : ''}"}
