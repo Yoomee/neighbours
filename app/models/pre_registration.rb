@@ -4,6 +4,7 @@ class PreRegistration < ActiveRecord::Base
     validates :email, :email => true
     validates :postcode, :postcode => true
     
+    before_validation :insert_space_into_postcode_if_needed
     before_save :geocode
     
     scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
@@ -61,6 +62,18 @@ class PreRegistration < ActiveRecord::Base
         address_components = results.first.data['address_components']
         town_component = address_components.select{|component| component['types'].include?('postal_town')}.first
         self.area = town_component.try(:[],'short_name')
+      end
+    end
+    
+    def insert_space_into_postcode_if_needed
+      if postcode.present? && postcode.strip.split.size == 1
+        (postcode.strip.length - 1).times do |num|
+          postcode_with_space = postcode.dup.insert(num + 1, ' ')
+          if postcode_with_space.upcase =~ PostcodeValidator::POSTCODE_FORMAT
+            self.postcode = postcode_with_space
+            break
+          end
+        end
       end
     end
     
