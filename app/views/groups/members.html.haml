@@ -21,6 +21,7 @@
               -if @group.owner == user
                 %span.label Group owner
               %p.user-city=user.city
-              =link_to(new_message_path(user), :class => "send-message")  do
-                %i.icon-envelope
-                Send message
+              -if user != current_user
+                =link_to(new_user_message_path(user), :class => "send-message")  do
+                  %i.icon-envelope
+                  Send message
