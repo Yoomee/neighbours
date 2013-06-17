@@ -1,6 +1,13 @@
-.card-details-form.hide
-  =form.inputs(:class => "form-horizontal") do
-    =form.input :card_type, :as => :select, :collection => User::CARD_TYPES, :label_method => :humanize, :required => false
-    =form.input :card_number, :required => false, :input_html => {:size => 16, :maxlength => 16, :class => "span4"}
-    =form.input :card_expiry_date, :label => "Expiry date (mm/yyyy)", :required => false, :input_html => {:size => 7, :maxlength => 7, :class => "span4"}
-    =form.input :card_security_code, :label => "Security code", :required => false, :input_html => {:size => 3, :maxlength => 3, :class => "span4"}
+.card-details-form
+  -if @user.errors[:credit_card_details].present?
+    .control-group.error.mb-2
+      %p.help-inline
+        =@user.errors[:credit_card_details].to_sentence
+  =form.semantic_fields_for(:credit_card) do |card_form|
+    =card_form.inputs(:class => "form-horizontal") do
+      =card_form.input :brand, :label => "Card type", :as => :select, :collection => CreditCardPreauth::ACCEPTED_CARDS, :prompt => 'Please select...', :required => false
+      =card_form.input :number, :label => 'Card number', :required => false, :input_html => {:class => 'span4', :size => 16, :maxlength => 16}
+      =card_form.input :month, :as => :select, :collection => (1..12), :include_blank => false, :required => false, :input_html => {:class => 'input-mini'}, :wrapper_html => {:class => 'card-details-month'}, :label => "Expiry date"
+      =card_form.input :year, :as => :select, :collection => (Date.today.year..Date.today.year+10), :input_html => {:class => 'input-small'}, :label => false, :required => false, :include_blank => false
+      .clearfix
+      =card_form.input :verification_value, :label => "CVV2", :required => false, :input_html => {:class => 'input-mini'}      

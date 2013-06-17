@@ -1,6 +1,7 @@
 class Need < ActiveRecord::Base
 
   include HasShoutRadius
+  include Autopostable
 
   belongs_to :user
   belongs_to :category, :class_name => "NeedCategory"
@@ -66,6 +67,18 @@ class Need < ActiveRecord::Base
 
   def title
     [category,sub_category].compact.map(&:to_s).join(': ')
+  end
+  
+  def autopost_url
+    "#{Settings.site_url}/needs/#{id}"
+  end
+  
+  def autopost_text
+    if user.neighbourhood
+      "#{user} from #{user.neighbourhood} needs help with #{title}"
+    else
+      "#{user} needs help with #{title}"
+    end
   end
 
   private

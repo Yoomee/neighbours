@@ -30,7 +30,7 @@ class NeighbourhoodsController < ApplicationController
   def help
     @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
     help_parent = Page.find_or_create_by_slug('neighbourhood_help', :title => "Neighbourhood help pages")
-    @page = Page.find_or_create_by_parent_id_and_neighbourhood_id(help_parent.id, @neighbourhood.id, :title => 'Help')
+    @page = Page.find_or_create_by_parent_id_and_neighbourhood_id(help_parent.id, @neighbourhood.id, :title => 'Help', :text => Page.find_by_slug('help').text)
     render "/pages/views/#{@page.view_name}"
   end
   

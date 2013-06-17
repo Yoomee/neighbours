@@ -35,13 +35,7 @@
               %dd=user.phone.presence || '-'
               %dt= user.validated? ? 'Validated by' : 'Requested validation by'
               %dd=user.validate_by.try(:humanize).presence || '-'
-              %dt Clicked on credit card validation?
-              %dd=user.requested_validation_by_credit_card? ? 'Yes' : 'No'
-              -if user.validate_by == "credit_card"
-                -user.credit_card_attributes.each do |attr_name|
-                  %dt=attr_name.sub(/^formatted_/, '').humanize
-                  %dd=user.send(attr_name).try(:humanize).presence || '-'
-              -elsif user.validate_by == "organisation"
+              -if user.validate_by == "organisation"
                 %dt Organisation name
                 %dd=user.organisation_name.presence || '-'
               -if user.validated?

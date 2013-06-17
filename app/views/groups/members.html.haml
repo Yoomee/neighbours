@@ -10,7 +10,7 @@
   .row
     .span12
       %ul.group-members-list.help-list.unstyled
-        -@group.members.each do |user|
+        -@members.each do |user|
           %li.list
             .list-image
               =link_to(user, :class => 'pull-left') do
@@ -18,4 +18,9 @@
               %p.small-text=user
             .list-text
               %h3=link_to_self(user)
-              %p=user.city
+              -if @group.owner == user
+                %span.label Group owner
+              %p.user-city=user.city
+              =link_to(new_message_path(user), :class => "send-message")  do
+                %i.icon-envelope
+                Send message

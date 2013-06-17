@@ -1,0 +1,7 @@
+# if changing nested values, all the nested production values under that heading will be replaced, so copy them all from production.yml and then change the ones you need to
+# e.g. 
+# setting_name:
+#   value_one: same_as_production
+#   value_two: different_for_staging
+
+site_url: http://neighbours.yoomee.com
