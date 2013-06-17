@@ -966,7 +966,7 @@ a.yoomee-logo {
   background:#7086bf  url(/assets/find-us-facebook.png ) no-repeat 10px center;
   
   
-  -moz-border-radius:20px;
+-moz-border-radius:20px;
 -webkit-border-radius:20px;
 border-radius:20px;
   
@@ -974,8 +974,9 @@ border-radius:20px;
 .link-find-us-blogger {
   background:#F1A83B url(/assets/find-us-blogger.png ) no-repeat 10px center;
 }
-.link-find-us-google {
-  background:#d92761 url(/assets/find-us-google.png ) no-repeat 10px center;
+
+.link-find-us-twitter{
+  background:#00ACED url(/assets/find-us-twitter.png ) no-repeat 10px center;
 }
 .find-title {
   padding: 10px;
