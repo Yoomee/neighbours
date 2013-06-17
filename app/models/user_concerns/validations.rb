@@ -7,7 +7,7 @@ module UserConcerns::Validations
     base.validates_confirmation_of :email, :on => :create, :message => "these don't match", :unless => :pre_registration?
     base.validates_confirmation_of :password, :on => :create, :message => "these didn't match"
 
-    base.validates :email_confirmation, :presence => true, :if => :who_you_are_step?
+    base.validates :email_confirmation, :on => :create, :presence => true, :if => :who_you_are_step?
     base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}    
     
     base.validates :house_number, :street_name, :city, :presence => true, :if => :where_you_live_step?
@@ -26,7 +26,7 @@ module UserConcerns::Validations
   end  
   
   def who_you_are_step?
-    new_record? && !pre_registration? && current_step == "who_you_are"
+    !pre_registration? && current_step == "who_you_are"
   end
 
   def where_you_live_step?

@@ -8,6 +8,7 @@ class RegistrationsController < ApplicationController
     if params[:redirect_to_needs]
       session[:redirect_to_needs] = true
     end
+    @user.current_step = @user.steps.first
   end
 
   def create

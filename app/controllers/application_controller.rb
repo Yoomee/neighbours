@@ -7,6 +7,17 @@ class ApplicationController < ActionController::Base
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
+  def after_sign_in_path_for(user)
+    if user.role_is?('pre_registration')
+      sign_out(user)      
+      session[:pre_register_user_id] = user.id
+      flash.delete(:notice)
+      new_registration_path
+    else
+      params.delete(:next) || super
+    end
+  end
+
   private
   def authenticate
     return true unless STAGING

@@ -124,6 +124,10 @@ class User < ActiveRecord::Base
     Need.radius_options((neighbourhood.try(:max_radius_in_miles) || Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES).to_f)
   end
 
+  def current_step
+    @current_step
+  end
+
   def steps
     %w{who_you_are where_you_live validate}
   end

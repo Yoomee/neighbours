@@ -30,7 +30,7 @@ module UserConcerns::PreRegistration
   end
   
   def generate_password
-    self.password = SecureRandom.hex(8)
+    self.password ||= SecureRandom.hex(8)
   end
   
 end
