@@ -21,7 +21,8 @@ module UserConcerns::Validations
     base.validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
     base.validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
     
-    base.after_validation :allow_non_unique_email_if_deleted      
+    base.before_validation :insert_space_into_postcode_if_needed
+    base.after_validation :allow_non_unique_email_if_deleted
   end  
   
   def who_you_are_step?
@@ -75,6 +76,18 @@ module UserConcerns::Validations
   
   def dob_or_undiclosed_age
     dob.present? || undisclosed_age?
+  end  
+  
+  def insert_space_into_postcode_if_needed
+    if postcode.present? && postcode.strip.split.size == 1
+      (postcode.strip.length - 1).times do |num|
+        postcode_with_space = postcode.dup.insert(num + 1, ' ')
+        if postcode_with_space.upcase =~ PostcodeValidator::POSTCODE_FORMAT
+          self.postcode = postcode_with_space
+          break
+        end
+      end
+    end
   end  
   
   def over_16
