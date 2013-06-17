@@ -10,6 +10,9 @@
             %span Upload your own picture.
             .action-link
               =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+          =link_to(new_message_path(user), :class => "btn mt-1")  do
+            %i.icon-envelope
+            &nbsp; Send message    
   .span9
     %h1.mb-1=title(@user)
     %h3.mb-1
@@ -58,7 +61,7 @@
             .action-link
               =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
       
-      %h4.mb-1 ÏGroups        
+      %h4.mb-1 Groups        
       -@user.groups.each do |group|
         =link_to(group, :class => "profile span3 group-tile") do
           .inner.clearfix

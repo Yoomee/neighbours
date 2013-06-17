@@ -20,4 +20,7 @@
               %h3=link_to_self(user)
               -if @group.owner == user
                 %span.label Group owner
-              %p=user.city
+              %p.user-city=user.city
+              =link_to(new_message_path(user), :class => "send-message")  do
+                %i.icon-envelope
+                Send message

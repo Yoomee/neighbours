@@ -1786,6 +1786,28 @@ img.groups-logo-header {
   border: none;
   padding: 0;
 }
+
+.group-members-list .list-text{
+  padding-left: 90px;
+}
+
+.group-members-list .label, h3{
+  display:inline;
+}
+
+.group-members-list .label{
+  margin-left:2px;
+}
+
+.group-members-list p.user-city{
+  margin-bottom:0;
+}
+
+.group-members-list a.send-message{
+  font-size:0.8em;
+}
+
+
 .private-messages-holding {
   background: url(/assets/group-show-messages.png ) no-repeat center;
   height: 300px;
