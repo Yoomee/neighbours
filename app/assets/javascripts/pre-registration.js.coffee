@@ -11,12 +11,16 @@ window.PreRegistration =
       PreRegistration.showSignupModal('signup')
     $('.modal').on 'click', 'a.pre-register-back-link', (event) ->
       event.preventDefault()
+      $('#ready_for_pre_register_signup').val('0')
       $('.modal.in').modal('hide')    
       $('#pre-register').modal('show')
   showSignupModal: (type) ->
-    need_or_offer = type.replace('-', '_')
-    need_or_offer = '' if type == 'signup'
-    $('input#pre_register_need_or_offer').val(need_or_offer)
+    if type == 'signup'
+      $('#ready_for_pre_register_signup').val('1')
+      $('input#pre_register_need_or_offer').val('')
+    else
+      $('#ready_for_pre_register_signup').val('0')      
+      $('input#pre_register_need_or_offer').val(type.replace('-', '_'))
     $('#pre-register-signup form').children().hide()
     $("#pre-register-#{type}-fields").show()
     $('.modal.in').modal('hide')

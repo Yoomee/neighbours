@@ -5,6 +5,7 @@ module UserConcerns::PreRegistration
     base.before_validation :clean_up_needs_and_general_offers, :on => :create    
     base.validates :full_name, :presence => true
     base.send(:attr_accessor, :pre_register_need_or_offer)
+    base.send(:boolean_accessor, :ready_for_pre_register_signup)
   end
   
   def pre_registration?
@@ -13,12 +14,10 @@ module UserConcerns::PreRegistration
   
   def pre_register_need_or_offer_valid?
     return true if pre_register_need_or_offer.blank?
-    if pre_register_need_or_offer == 'need'
-      if new_need = needs.first
-        new_need.user = self
-        new_need.valid?
-      end
-    elsif new_general_offer = general_offers.first
+    if pre_register_need_or_offer == 'need' && new_need = needs.first
+      new_need.user = self
+      new_need.valid?
+    elsif pre_register_need_or_offer == 'general_offer' && new_general_offer = general_offers.first
       new_general_offer.user = self
       new_general_offer.valid?
     end

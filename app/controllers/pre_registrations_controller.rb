@@ -2,7 +2,11 @@ class PreRegistrationsController < ApplicationController
   
   def create
     @pre_register_user = User.new(params[:user].merge(:role => 'pre_registration'))
-    if @pre_register_user.pre_register_need_or_offer_valid? && @pre_register_user.save
+    if !@pre_register_user.pre_register_need_or_offer_valid?
+      @pre_register_user.ready_for_pre_register_signup = false
+    elsif !@pre_register_user.ready_for_pre_register_signup?
+      @pre_register_user.ready_for_pre_register_signup = true
+    elsif @pre_register_user.save
       if @pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live? 
         session[:pre_register_user_id] = @pre_register_user.id
         render :js => "window.location = '#{new_registration_path}'"

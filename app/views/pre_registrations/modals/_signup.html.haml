@@ -1,5 +1,6 @@
 =semantic_form_for(@pre_register_user ||= User.new, :url => pre_registrations_path, :remote => true) do |form|
   =form.hidden_field :pre_register_need_or_offer, :id => 'pre_register_need_or_offer'
+  =form.hidden_field :ready_for_pre_register_signup, :id => 'ready_for_pre_register_signup'
   =render("pre_registrations/modals/need", :form => form)
   =render("pre_registrations/modals/general_offer", :form => form)
   #pre-register-signup-fields{:class => "#{@pre_register_user.pre_register_need_or_offer_valid? ? '' : 'hide'}"}
