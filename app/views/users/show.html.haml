@@ -58,7 +58,7 @@
             .action-link
               =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
       
-      %h4.mb-1 Groups        
+      %h4.mb-1 ÏGroups        
       -@user.groups.each do |group|
         =link_to(group, :class => "profile span3 group-tile") do
           .inner.clearfix
