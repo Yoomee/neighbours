@@ -23,8 +23,8 @@ class PreRegistrationsController < ApplicationController
   end
   
   def destroy_all
-    PreRegistration.destroy_all(['id IN (?)', params[:pre_registration_ids]])
-    flash[:notice] = "Deleted #{params[:pre_registration_ids].compact.uniq.count} pre-registrations"
+    User.where(:role => 'pre_registration').destroy_all(['id IN (?)', params[:user_ids]])
+    flash[:notice] = "Deleted #{params[:user_ids].compact.uniq.count} pre-registered users"
     redirect_to map_pre_registrations_path
   end
   
@@ -34,8 +34,8 @@ class PreRegistrationsController < ApplicationController
   end
 
   def map
-    @pre_registrations = PreRegistration.order(:created_at).paginate(:page => params[:page], :per_page => 50)
-    @pr_json = PreRegistration.with_lat_lng.to_json(:methods => [:lat_lng])
+    @pre_registered_users = User.where(:role => 'pre_registration').order(:created_at).paginate(:page => params[:page], :per_page => 50)
+    @pr_json = User.where(:role => 'pre_registration').with_lat_lng.to_json(:methods => [:lat_lng])
   end
   
   def index

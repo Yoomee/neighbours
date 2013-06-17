@@ -108,6 +108,10 @@ class User < ActiveRecord::Base
     neighbourhoods_as_admin.count > 0
   end
 
+  def lat_lng
+    lat.present? && lng.present? ? [lat,lng] : nil
+  end
+
   def new_notification_count(context, need = nil)
     if need
       need.notifications.where(:context => context, :user_id => id, :read => false).count
