@@ -52,12 +52,7 @@ class UserMailer < ActionMailer::Base
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] #{subject}")   
   end
   
-  def new_registration_with_post_validation(user)
-    @user = user
-    mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
-  end
-  
-  def new_registration_with_organisation_validation(user)
+  def new_registration(user)
     @user = user
     mail(:to => @user.email, :subject => "[Neighbours Can Help] Thank you for registering")
   end
@@ -66,5 +61,11 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Community champion request")
   end  
+  
+  def group_invitation(group_invitation)
+    @group_invitation = group_invitation
+    @user = @group_invitation.user
+    mail(:to => group_invitation.email, :subject => "[Neighbours Can Help] Join #{group_invitation.group}")
+  end
   
 end

@@ -1,0 +1,463 @@
+=render('/wireframes/group_header')
+.container
+  .row
+    .span12
+      %ul.nav.nav-tabs.group-nav-tabs.mb-3
+        %li.active
+          =link_to "/wireframes/group_show" do
+            %i.icon-comment
+            Posts
+        %li
+          =link_to "/wireframes/group_show_members" do
+            %i.icon-group
+            Members (23)
+        %li
+          =link_to "/wireframes/group_show_photos" do
+            %i.icon-camera
+            Photos (5)
+          
+        %li
+          =link_to "/wireframes/group_show_messages" do
+            %i.icon-envelope
+            Private messages
+
+    .span7
+      %h2.mb-2
+        Posts
+      %form#new_post.post_form.formtastic.post.expanded{"accept-charset" => "UTF-8", :action => "/posts.js", "data-remote" => "true", :enctype => "multipart/form-data", :method => "post", :novalidate => "novalidate"}
+        %div{:style => "margin:0;padding:0;display:inline"}
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+        %fieldset.inputs
+          #post_target_type_input.hidden.control-group.optional
+            .controls
+              %input#post_target_type{:name => "post[target_type]", :type => "hidden"}/
+          #post_target_id_input.hidden.control-group.optional
+            .controls
+              %input#post_target_id{:name => "post[target_id]", :type => "hidden"}/
+          .fake-textarea
+            #post_text_input.text.control-group.optional
+              .controls
+                %textarea#post_text{:name => "post[text]", :placeholder => "Post something", :rows => "3"}
+            #post_tag_list_input.post_tag_list_input.string.control-group.optional.stringish
+              %label.control-label{:for => "post_tag_list"}
+                %i.icon.icon-tag
+              .controls
+                %input#post_tag_list{"data-autocomplete" => "/tags/autocomplete_tag_name", "data-delimiter" => ", ", :name => "post[tag_list]", :placeholder => "Tags", :type => "text", :value => ""}/
+        .mt-1
+          #post_retained_image_input.hidden.control-group.optional
+            .controls
+              %input#post_retained_image{:name => "post[retained_image]", :type => "hidden"}/
+          #post_image_input.collapse.file.control-group.optional
+            .controls
+              %input#post_image{:name => "post[image]", :type => "file"}/
+          #post_video_url_input.collapse.url.control-group.optional.stringish
+            .controls
+              %input#post_video_url{:maxlength => "255", :name => "post[video_url]", :placeholder => "URL from YouTube or Vimeo", :type => "url"}/
+          #post_retained_file_input.hidden.control-group.optional
+            .controls
+              %input#post_retained_file{:name => "post[retained_file]", :type => "hidden"}/
+          #post_file_input.collapse.file.control-group.optional
+            .controls
+              %input#post_file{:name => "post[file]", :type => "file"}/
+          %a.btn.btn-small{"data-parent" => ".post_form", "data-target" => "#post_image_input", "data-toggle" => "collapse", :href => "#"} Add a photo
+          %a.btn.btn-small{"data-parent" => ".post_form", "data-target" => "#post_video_url_input", "data-toggle" => "collapse", :href => "#"} Add a video
+          %a.btn.btn-small{"data-parent" => ".post_form", "data-target" => "#post_file_input", "data-toggle" => "collapse", :href => "#"} Add a file
+          %input.pull-right.btn-primary.btn.commit.create{"data-loading-text" => "Posting...", :name => "commit", :type => "submit", :value => "Post"}/
+      .posts.loader-long
+        #post64.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/14"}
+                %img{:alt => "David", :src => "/media/W1siZiIsIjIwMTIvMDgvMjEvMTJfMDRfNDNfMTI0X0RDX0F1Z18xMl9tdWdzaG90LmpwZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d"}/
+              .pull-left
+                %a{:href => "/users/14"} David
+                %i.icon-chevron-right
+                %a{:href => "/needs/74"} Weather
+                %br/
+                %span.small-info-text
+                  about 1 month
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/64", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                hi I can help with this, give me a ring on my mobile
+                = succeed "David" do
+                  %br/
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "64"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post63.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/15"}
+                %img{:alt => "Rose", :src => "/media/W1siZiIsIjIwMTIvMDcvMTAvMTNfMTNfMTRfMTM2X1Byb2ZpbGVfcGljNC5qcGciXSxbInAiLCJ0aHVtYiIsIjMyeDMyIyJdXQ"}/
+              .pull-left
+                %a{:href => "/users/15"} Rose
+                %i.icon-chevron-right
+                %a{:href => "/needs/82"} Gardening
+                %br/
+                %span.small-info-text
+                  about 1 month
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/63", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                I can help
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "63"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post62.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/14"}
+                %img{:alt => "David", :src => "/media/W1siZiIsIjIwMTIvMDgvMjEvMTJfMDRfNDNfMTI0X0RDX0F1Z18xMl9tdWdzaG90LmpwZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d"}/
+              .pull-left
+                %a{:href => "/users/14"} David
+                %i.icon-chevron-right
+                %a{:href => "/needs/93"} Clubs and Societies: Sports Clubs
+                %br/
+                %span.small-info-text
+                  2 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/62", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p I am sure that the 'scouts hut' on Botanical Road does some judo and others...as our neighbours son Tom goes there. But I don't know what age groups this is for. You might call in and check their notice boards
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "62"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post61.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/43"}
+                %img{:alt => "John", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+              .pull-left
+                %a{:href => "/users/43"} John
+                %i.icon-chevron-right
+                %a{:href => "/needs/90"} Swap
+                %br/
+                %span.small-info-text
+                  3 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/61", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p Exactly how big is it/ Can you give me the measurements please
+          .comments
+            .comment-list
+              .comment
+                %a.comment-image{"data-original-title" => "Wigfull Road", :href => "/users/15", :rel => "tooltip"}
+                  %img{:alt => "Rose", :src => "/media/W1siZiIsIjIwMTIvMDcvMTAvMTNfMTNfMTRfMTM2X1Byb2ZpbGVfcGljNC5qcGciXSxbInAiLCJ0aHVtYiIsIjMyeDMyIyJdXQ"}/
+                .comment-text
+                  %b Rose
+                  It's round approx 1 metre by 1.5 metres
+                  .small-info-text
+                    3 months ago
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "61"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post60.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/15"}
+                %img{:alt => "Rose", :src => "/media/W1siZiIsIjIwMTIvMDcvMTAvMTNfMTNfMTRfMTM2X1Byb2ZpbGVfcGljNC5qcGciXSxbInAiLCJ0aHVtYiIsIjMyeDMyIyJdXQ"}/
+              .pull-left
+                %a{:href => "/users/15"} Rose
+                %i.icon-chevron-right
+                %a{:href => "/needs/89"} House and DIY: Tiling
+                %br/
+                %span.small-info-text
+                  3 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/60", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p I use Alan he comes round this area every Tuesday morning. His number is 0114 222 2222, he's not the cheapest but he does a really good job.
+          .comments
+            .comment-list
+              .comment
+                %a.comment-image{"data-original-title" => "Wigfull Road", :href => "/users/64", :rel => "tooltip"}
+                  %img{:alt => "Susan", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+                .comment-text
+                  %b Susan
+                  Great thanks Rose, I'll ring Alan and if he can't come round this week Dave has given me another number, thank you.
+                  .small-info-text
+                    3 months ago
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "60"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post59.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/14"}
+                %img{:alt => "David", :src => "/media/W1siZiIsIjIwMTIvMDgvMjEvMTJfMDRfNDNfMTI0X0RDX0F1Z18xMl9tdWdzaG90LmpwZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d"}/
+              .pull-left
+                %a{:href => "/users/14"} David
+                %i.icon-chevron-right
+                %a{:href => "/needs/89"} House and DIY: Tiling
+                %br/
+                %span.small-info-text
+                  3 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/59", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                Hi Susan,
+                = succeed "Several" do
+                  %br/
+                on this road, including us, have used "every pane a pleasure" cleaners for several years.
+                = succeed "contact" do
+                  %br/
+                Tony on 07939 011636
+                = succeed "regards" do
+                  %br/
+                = succeed "David" do
+                  %br/
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "59"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post56.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/69"}
+                %img{:alt => "ge...", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+              .pull-left
+                %a{:href => "/users/69"} geraldine
+                %br/
+                %span.small-info-text
+                  4 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/56", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                Kate,
+                = succeed "My" do
+                  %br/
+                Huband will be home about 6pm and I am sure that he will help. Give me a ring if you styill need it
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "56"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post54.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/14"}
+                %img{:alt => "David", :src => "/media/W1siZiIsIjIwMTIvMDgvMjEvMTJfMDRfNDNfMTI0X0RDX0F1Z18xMl9tdWdzaG90LmpwZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d"}/
+              .pull-left
+                %a{:href => "/users/14"} David
+                %br/
+                %span.small-info-text
+                  4 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/54", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                Hi Kate,
+                = succeed "I" do
+                  %br/
+                could do this this evening about 6.30pm
+                = succeed "David" do
+                  %br/
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "54"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post53.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/43"}
+                %img{:alt => "John", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+              .pull-left
+                %a{:href => "/users/43"} John
+                %i.icon-chevron-right
+                %a{:href => "/needs/65"} Cleaning
+                %br/
+                %span.small-info-text
+                  4 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/53", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p
+                Hi Ashlyn
+                = succeed "Not" do
+                  %br/
+                used these, but they look pretty good - good testimonials too...
+                = succeed "John" do
+                  %br/
+          .comments
+            .comment-list
+              .comment
+                %a.comment-image{"data-original-title" => "Main Road", :href => "/users/43", :rel => "tooltip"}
+                  %img{:alt => "John", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+                .comment-text
+                  %b John
+                  Sorry, forgot to include the link
+                  http://www.timeforyou.co.uk/Home-Cleaning/Chesterfield
+                  .small-info-text
+                    4 months ago
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "53"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        #post52.post.mb-2
+          .well.post-content.mb-0
+            .post_user.pull-left.clear.border-bottom.mb-1
+              %a.pull-left{:href => "/users/64"}
+                %img{:alt => "Susan", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzJ4MzIjIl1d/user.png"}/
+              .pull-left
+                %a{:href => "/users/64"} Susan
+                %i.icon-chevron-right
+                %a{:href => "/needs/68"} Car
+                %br/
+                %span.small-info-text
+                  4 months
+                  ago
+              %a.pull-right{"data-confirm" => "Are you sure?", "data-method" => "delete", "data-remote" => "true", :href => "/posts/52", :rel => "nofollow"}
+                %i.icon-trash
+            .post_content.clear
+              %p You must never de-ice your car with hot water - the sudden temperature change will damage your windows. You'll have to get it replaced I'm afriad, it's very dangerous and illegal when cracked
+          .comments
+            .comment-list
+            .comment-form
+              %img.comment-image{:alt => "Rich", :src => "/media/W1siZmYiLCIvVXNlcnMvcmljaHdlbGxzL1JhaWxzL25laWdoYm91cnMvcHVibGljL2RyYWdvbmZseS9kZWZhdWx0cy91c2VyLnBuZyJdLFsicCIsInRodW1iIiwiMzB4MzAjIl1d/user.png"}/
+              %form#new_comment.loader-long.formtastic.comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post", :novalidate => "novalidate"}
+                %div{:style => "margin:0;padding:0;display:inline"}
+                  %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                  %input{:name => "authenticity_token", :type => "hidden", :value => "q6hERZXQsIVVI8lxSZKX8B8DO7y/7zGieDjL+0+imyg="}/
+                %input#comment_post_id{:name => "comment[post_id]", :type => "hidden", :value => "52"}/
+                %fieldset.inputs
+                  #comment_text_input.text.control-group.required
+                    .controls
+                      %textarea.autogrow-short{:id => "", :name => "comment[text]", :placeholder => "Write a comment...", :rows => "1", :style => "height: 23px; "}
+                %input.btn-primary.btn-mini.pull-right.mt-1.btn.commit.create{:name => "commit", :type => "submit", :value => "Post"}/
+        .pagination{:remote => "true"}
+          %ul
+            %li.prev.previous_page.disabled
+              %a{"data-remote" => "true", :href => "#"} ← Previous
+            %li.active
+              %a{"data-remote" => "true", :href => "/posts?page=1", :rel => "start"} 1
+            %li
+              %a{"data-remote" => "true", :href => "/posts?page=2", :rel => "next"} 2
+            %li
+              %a{"data-remote" => "true", :href => "/posts?page=3"} 3
+            %li.next.next_page
+              %a{"data-remote" => "true", :href => "/posts?page=2", :rel => "next"} Next →
+    .span4.offset1.groups-tags-list
+      %h4.mb-2 Tags
+      %ul.unstyled
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} Sheffield
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} Walking
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} The peaks
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} Sheffield
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} Walking
+        %li
+          %a.tag{:href => "/tags/new"}
+            %span.label.tag-label{:method => "to_s"} The peaks            
+

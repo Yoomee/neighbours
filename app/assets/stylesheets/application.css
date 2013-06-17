@@ -11,6 +11,7 @@
  *= require redactor
  *= require ym_cms
  *= require ym_posts
+ *= require ym_messages
  *= require chosen
  *= require_self
  *= require mobile
@@ -58,7 +59,8 @@
      -moz-transition: .2s ease-in;
      transition: .2s ease-in;
 }
-.intro-circle-icon {
+.intro-circle-icon,
+.home-cta-groups  {
      -webkit-transition: .1s ease-in;
      -moz-transition: .1s ease-in;
      transition: .1s ease-in;
@@ -456,6 +458,23 @@ a.home-cta-get-involved {
   right: 120px;
   background: #73bca8;
 }
+.home-cta-groups {
+  color: #777;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 350px;
+  background: #fff;
+  background: rgba(255,255,255,0.7);  
+  padding: 10px 20px;
+  
+  border-radius:40px;
+  right: 150px;
+}
+.home-cta-groups:hover {
+  text-decoration: none;
+  color: #000;
+  background: #fff;
+}
 .illustration-link {
   display: block;
   text-indent: -9000em;
@@ -771,7 +790,6 @@ span.tab-number {
 }
 li.active span.tab-number {
 	background: #619a5f;
-
 }
 .register-tab-content {
   border: 1px solid #ccc;
@@ -783,7 +801,12 @@ li.active span.tab-number {
 }
 .register-tab-pane {
   padding: 60px 40px 20px;
-
+}
+body.controller_group_registrations .register-tab-content {
+  border: 1px solid #ccc;
+}
+body.controller_group_registrations .register-tab-pane {
+  padding-top: 40px;
 }
 .register-btn-next, .register-btn-back {
   float: right;
@@ -1312,7 +1335,7 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
  
 }
 .header-intro li.active a,
@@ -1327,7 +1350,7 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
 
 }
 .intro-nav-link-login {
-	margin:  0 10px 0 33px;
+	margin:  0 10px 0 26px;
 
 }
 .header-intro-fixed .intro-nav-link {
@@ -1362,24 +1385,29 @@ a.intro-nav-link-security {
   padding: 1px 11px;
   font-size: 13px;
   right: 0px;
-  font-weight: bold;
-  
+  font-weight: bold;  
   z-index: 30;
-
-
-     -moz-border-radius-bottomleft:5px;
-     -moz-border-radius-bottomright:5px;
-     -webkit-border-bottom-right-radius:5px;
-     -webkit-border-bottom-left-radius:5px;
-     border-bottom-right-radius:5px;
-     border-bottom-left-radius:5px;
-     
-     -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
-     box-shadow:1px 1px 2px rgba(0,0,0,0.2);
-
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  border-bottom-right-radius:5px;
+  border-bottom-left-radius:5px;
+  -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
+  box-shadow:1px 1px 2px rgba(0,0,0,0.2);
 }
 .help-link:hover {
   color: #fff;
+}
+.messages-help-link {
+  right: 110px;
+  background: #b35860;
+}
+.messages-help-link span.badge {
+  background-color: white;
+  color: #b35860;
+  padding-left: 6px;
+  padding-right: 6px;  
 }
 .cta-intro {
   float: right;
@@ -1396,7 +1424,7 @@ a.intro-nav-link-security {
 }
 .header-intro .cta-intro {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
 }
 .cta-intro:hover {
   text-decoration: none;
@@ -1710,4 +1738,160 @@ a.small-help-btn {
 }
 #pre-registrations-delete-form .center {
   text-align: center;
+}
+
+/*=============  group stuff ===================*/
+#group-new-modal .new-message-form {
+  margin: 20px 100px;
+}
+#group-new-modal label {
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size:18px;
+  text-indent: 5px;
+  line-height: 1.2;
+}
+#group-new-modal label span.smallprint {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  float: left;
+  clear: left;
+} 
+.group-bio-textarea {
+	min-height: 100px;  
+}
+
+.all-groups-strip {
+	border-bottom: 2px solid #88d6dc;
+	padding-bottom: 15px;
+	float: left;
+	width: 100%;
+	margin: 0px 0 0;
+  
+}
+
+img.groups-logo-header {
+	float: left;
+	width: 50px;
+	margin: 0 20px 0 0;
+  
+}
+
+.groups-title {
+	line-height: 40px;
+  
+}
+
+.groups-title small {
+  margin-left: 10px;
+  text-decoration: underline;
+}
+.group-nav-tabs a {
+  font-weight: bold;
+}
+
+.group-members-list li.list {
+  width: 33.3%;
+  float: left;
+  clear: none;
+  border: none;
+  padding: 0;
+}
+.private-messages-holding {
+  background: url(/assets/group-show-messages.png ) no-repeat center;
+  height: 300px;
+}
+.groups-tags-list .tag-label {
+	padding: 8px 10px;
+	font-size: 16px;
+	float: left;
+	clear: both;
+	margin: 0 0 5px;
+	background: #89d6dd;
+  
+}
+
+.group-tile {
+  display: block;
+  background: #f5f5f5;
+  margin-bottom: 20px;
+  border: 2px solid #f2f2f2;
+  height: 200px;
+  
+  -moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px;
+  
+}
+.group-tile h4 {
+  color: #000;
+}
+.group-tile-image-wrap {
+  height: 120px;
+  position: relative;
+}
+.group-tile img {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.group-tile .inner {
+  padding: 15px;
+}
+.group-tile-new {
+  background: #fff;
+  color: #8bd7dd;
+  border: 2px dashed #8bd7dd;
+}
+.group-tile-new h4 {
+
+  text-align: center;
+}
+.group-tile-new i {
+  margin:40px 65px;
+  float: left;
+  font-size: 60px;
+}
+.group-tile-new:hover {
+  background: #d8f2f3;
+  color: #000;
+}
+
+/*=============  Photo modal ===================*/
+
+#photo-modal {
+  margin-left:-320px;
+  width: 640px;
+}
+#photo-modal .modal-header {
+  border: none;
+}
+#photo-modal .modal-body {
+  width:580px;
+  min-height:420px;
+  max-height: 80%;
+  overflow-y: visible;
+  padding: 0px 30px 30px;
+  margin-top: 10px;
+}
+#photo-modal table {
+  height:420px;
+  margin:0px;
+}
+#photo-modal table td {
+  text-align:center;
+  border:none;
+  vertical-align:middle;
+  padding:0px;
+}
+
+/*=============  Private messages ===================*/
+
+.messages-header {
+  background-color: #eee;
+  color: #000;  
+}
+h2.messages-title {
+  color: #000;  
 }

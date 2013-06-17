@@ -13,7 +13,7 @@
 
 -title "My Neighbourhood"
 
--if current_user
+-if current_user && !current_user.group_user?
   =render "validated_map"
 -else
   .container
@@ -27,10 +27,11 @@
                 ="Hi #{current_user}, welcome to Neighbours Can Help"
               -else
                 Welcome to Neighbours Can Help
-            %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
+            %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each others")
           =link_to_slug('Find out more', :about, :class=>"illustration-link")  
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
           =link_to "Get involved", "#sign-up-popup", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
+          =link_to "Create a group", groups_path, :class=>"home-cta-groups"
 
 .container
   .home-help-links
@@ -81,7 +82,9 @@
                       =general_offer.category.description
     
      
-      -if current_user
+      -if current_user.try(:group_user?)
+        =link_to "I'd like some help", '#group-user-sign-up', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
+      -elsif current_user
         =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
       -else              
         =link_to "I'd like some help", '#sign-up-popup', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
@@ -109,7 +112,9 @@
                     -else
                       =need.category.description
                     
-      -if current_user
+      -if current_user.try(:group_user?)
+        =link_to "I'd like to offer some help", '#group-user-sign-up', :class=>"btn call-to-action", :"data-toggle"=>"modal"
+      -elsif current_user
         =link_to "I'd like to offer some help", new_general_offer_path, :class=>"btn call-to-action"
       -else              
         =link_to "I'd like to offer some help", '#sign-up-popup', :class=>"btn call-to-action", :"data-toggle"=>"modal"

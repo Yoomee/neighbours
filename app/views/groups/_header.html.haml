@@ -1,0 +1,29 @@
+.container
+.all-groups-strip
+  .container
+    .row
+      .span12.groups-header
+        =link_to(groups_path) do
+          =image_tag('groups-logo.png', :class=>'groups-logo-header')
+          %h4.groups-title
+            Groups
+            %small
+              =link_to 'View all groups', all_groups_path
+-if @group
+  .container
+    .row.mb-2.mt-3
+      .span7
+        %h1.page-title.mb-3.mt-0
+          =@group.name
+        =simple_format(@group.description)
+        -if !@group.has_member?(current_user)
+          -if @group_invitation && @group_invitation.user.nil?
+            =link_to("Join this group", new_group_invitation_group_registration_path(@group_invitation), :class => 'btn btn-large btn-primary mt-2')
+          -else
+            =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2')
+      .span5
+        =image_for(@group, '370x250#')
+    -if @group.has_member?(current_user)
+      .row
+        .span12
+          =render('groups/nav')
