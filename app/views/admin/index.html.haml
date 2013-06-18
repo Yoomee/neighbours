@@ -55,10 +55,11 @@
     .span4
       .well
         %h2
-          %i.icon-envelope-alt
+          %i.icon-question
           Enquiries
         %ul.unstyled
           %li=link_to "View enquiries", enquiries_path
+  .row
     .span4
       .well
         %h2
@@ -67,3 +68,10 @@
         %ul.unstyled
           %li=link_to "Preregistrations map", map_pre_registrations_path
           %li=link_to "Edit/view neighbourhood areas", neighbourhoods_path
+    .span4
+      .well
+        %h2
+          %i.icon-envelope-alt
+          Messages
+        %ul.unstyled
+          %li=link_to "View all messages", all_message_threads_path
