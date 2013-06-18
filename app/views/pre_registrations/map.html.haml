@@ -29,7 +29,7 @@
 .row
   #map-canvas.span12{:style => "height:600px"}
 .row.mt-2
-  %h2.mb-2=pluralize(PreRegistration.count, 'Pre-registration')
+  %h2.mb-2=pluralize(User.where(:role => 'pre_registration').count, 'Pre-registered user')
   =form_tag(destroy_all_pre_registrations_path, :method => :delete, :id => 'pre-registrations-delete-form') do
     %table.table.table-bordered
       %thead
@@ -37,18 +37,24 @@
           %th.center.span1=link_to('Select all', '#', :id => 'select-all-link')
           %th Name
           %th Email
-          %th Area      
+          %th Area
           %th Postcode
+          %th Offers or requests
           %th Date registered
       %tbody
-        -@pre_registrations.each do |pre_registration|
+        -@pre_registered_users.each do |user|
           %tr
-            %td.center=check_box_tag 'pre_registration_ids[]', pre_registration.id, false, :id => ''
-            %td=pre_registration.name
-            %td=pre_registration.email
-            %td=pre_registration.area
-            %td=pre_registration.postcode
-            %td=pre_registration.created_at.strftime("%d/%m/%Y")
-    =submit_tag('Delete selected pre-registrations', :class => 'btn btn-danger', :confirm => 'Are you sure you want to permanently delete all the selected pre-registrations?')
+            %td.center=check_box_tag 'user_ids[]', user.id, false, :id => ''
+            %td=link_to(user.full_name, user)
+            %td=user.email
+            %td=user.neighbourhood ? link_to_self(user.neighbourhood) : user.city
+            %td=user.postcode
+            %td
+              -if user.needs.present?
+                =link_to('1 request', user.needs.first)
+              -elsif user.general_offers.present?
+                =link_to('1 offer', user.general_offers.first)
+            %td=user.created_at.strftime("%d/%m/%Y")
+    =submit_tag('Delete selected pre-registered users', :class => 'btn btn-danger', :confirm => 'Are you sure you want to permanently delete all the selected pre-registered users?')
   .pull-right
-    =will_paginate(@pre_registrations)
+    =will_paginate(@pre_registered_users)

@@ -6,6 +6,12 @@ class UserMailer < ActionMailer::Base
   default :from => "site@neighbourscanhelp.org.uk",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
 
+  def custom_email(user, subject, content)
+    @user = user
+    @content = content
+    mail(:to => user.email, :subject => "[Neighbours Can Help] #{subject}")
+  end
+
   def new_flag(flag)
     @flag = flag
     @need = @flag.resource
@@ -41,9 +47,9 @@ class UserMailer < ActionMailer::Base
      mail(:from => from, :to => to, :subject => "Your personal invite to Neighbours Can Help")
   end
   
-  def preregister_thank_you(pre_registration)
-    @pre_registration = pre_registration
-    mail(:to => @pre_registration.email, :subject => "[Neighbours Can Help] Thank you for pre-registering")
+  def pre_register_thank_you(pre_register_user)
+    @pre_register_user = pre_register_user
+    mail(:to => @pre_register_user.email, :subject => "[Neighbours Can Help] Thank you for pre-registering")
   end
   
   def admin_message(subject, message, hash)

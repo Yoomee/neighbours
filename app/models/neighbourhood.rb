@@ -1,14 +1,18 @@
 class Neighbourhood < ActiveRecord::Base
-  
-  validates :name, :presence => true
-  validates :postcode_prefix, :uniqueness => true, :presence => true
-  validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
 
   has_many :posts, :as => :target
   belongs_to :admin, :class_name => "User"
   has_many :users
   has_many :pages
   has_permalinks
+
+  geocoded_by :postcode_with_country, :latitude => :lat, :longitude => :lng
+  
+  validates :name, :presence => true
+  validates :postcode_prefix, :uniqueness => true, :presence => true
+  validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+
+  after_validation :geocode, :if => :postcode_prefix_changed?
 
   class << self
     
@@ -33,9 +37,7 @@ class Neighbourhood < ActiveRecord::Base
   end
   
   def lat_lng
-    results = Geocoder.search("#{postcode_prefix}, UK")
-    geometry = results.first.data['geometry']
-    [geometry['location']['lat'],geometry['location']['lng']]
+    [lat, lng]
   end
 
   def snippet_text(slug, default_text = nil)
@@ -54,14 +56,30 @@ class Neighbourhood < ActiveRecord::Base
     (max_radius.to_i / 1609.344).round(2).to_s.chomp(".0")
   end
 
-  def pre_registrations
-    PreRegistration.where("postcode LIKE ?", "#{postcode_prefix}%")
+  def postcode_with_country
+    "#{postcode_prefix}, UK"
   end
 
   def status
     live? ? "Live" : "Coming soon"
   end
   
+  def welcome_email_text
+    Neighbourhood::WELCOME_EMAIL_TEXT.sub('[NAME]', name)
+  end
+  
 end
 
 Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES = 5
+Neighbourhood::WELCOME_EMAIL_TEXT = <<-TEXT
+We have launched in [NAME]!
+
+You can now offer and receive help from your neighbours. Use the link below to finish registration and become a full member:
+
+<REGISTER_URL>
+
+Thanks,
+
+The #{Settings.site_name} team
+#{Settings.site_url}
+TEXT

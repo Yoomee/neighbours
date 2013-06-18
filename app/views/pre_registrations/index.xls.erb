@@ -7,19 +7,21 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
         <Cell><Data ss:Type="String">Name</Data></Cell>
         <Cell><Data ss:Type="String">Email</Data></Cell>
         <Cell><Data ss:Type="String">Area</Data></Cell>
         <Cell><Data ss:Type="String">Postcode</Data></Cell>
-        <Cell><Data ss:Type="String">Date registered</Data></Cell>        
+        <Cell><Data ss:Type="String">Date registered</Data></Cell>
       </Row>
-    <% @pre_registrations.each do |pr| %>
+    <% @pre_registered_users.each do |user| %>
       <Row>
-        <Cell><Data ss:Type="String"><%= pr.name%></Data></Cell>
-        <Cell><Data ss:Type="String"><%= pr.email%></Data></Cell>
-        <Cell><Data ss:Type="String"><%= pr.area%></Data></Cell>
-        <Cell><Data ss:Type="String"><%= pr.postcode%></Data></Cell>
-        <Cell><Data ss:Type="String"><%= pr.created_at.strftime("%d/%m/%Y")%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= user.id%></Data></Cell>        
+        <Cell><Data ss:Type="String"><%= user.full_name%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= user.email%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= user.neighbourhood || user.city%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= user.postcode%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= user.created_at.strftime("%d/%m/%Y")%></Data></Cell>
       </Row>
     <% end %>
     </Table>

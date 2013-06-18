@@ -66,7 +66,7 @@
               %i.icon-exclamation-sign
               =" #{@need.user} is a new user"
               %p
-                They will not see your offer of help until we have validated their account.
+                They will not be able to respond to your offer of help until we have validated their account.
         .span
           -if current_user && @need.offers.exists?(:user_id => current_user.id)
             %p.mb3
@@ -88,7 +88,7 @@
                 .row
                   =neighbourhood_snippet_text(:need_cannot_use, "Here is some text explaining why this page be cannot be used. This will be edited by John.")
                 .row
-                  =link_to "Get involved", "#sign-up-popup", :id=>"cta-3", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
+                  =link_to "Get involved", "#pre-register", :id=>"cta-3", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
               
       %ul.unstyled.need-posts
         =render(:partial => "needs/post", :collection => @need.posts_viewable_by(current_user).order("created_at DESC"))

@@ -30,7 +30,9 @@ $(document).ready () ->
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
-
+  NewNeedForm.initShowHideDeadline()
+  PreRegistration.init()
+  
 window.IntroPageNav =
   init: ->
     $(window).scroll ->
@@ -162,10 +164,7 @@ window.NeedCategorySelector =
 window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
-    NewNeedForm.showHideDeadline()
     NeedCategorySelector.init('general_offers')
-    $('#need_need_to_know_by_input input[type="radio"]').change ->
-      NewNeedForm.showHideDeadline()
     if logged_in == 0
       $('#register-modal-login-link, #register-modal-register-link').click (event) ->
         event.preventDefault()
@@ -176,8 +175,12 @@ window.NewNeedForm =
         $('#register-popup').modal('show')        
       $('form#new_need').submit () ->
         NewNeedForm.force_submit
+  initShowHideDeadline: ->
+    NewNeedForm.showHideDeadline()
+    $('#need_need_to_know_by_input input[type="radio"]').change (event) ->
+      NewNeedForm.showHideDeadline()
   showHideDeadline: ->
-    if $('input[name="need[need_to_know_by]"]:checked').val() == "date"
+    if $('#need_need_to_know_by_input input[type="radio"]:checked').val() == "date"
       $('#need_deadline_input').css('visibility','visible')
     else
       $('#need_deadline_input select').val(null)

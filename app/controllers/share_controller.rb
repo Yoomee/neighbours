@@ -4,7 +4,7 @@ class ShareController < ApplicationController
     if params[:neighbourhood]
       @neighbourhood = Neighbourhood.find(params[:neighbourhood])
       @area = @neighbourhood.name 
-      @link = "http://#{request.host}/area/#{@neighbourhood.id}-#{@neighbourhood.name.parameterize}"
+      @link = "#{Settings.site_url}/area/#{@neighbourhood.id}-#{@neighbourhood.name.parameterize}"
     end
     if params[:pr]
       @pr = PreRegistration.find(params[:pr]) 

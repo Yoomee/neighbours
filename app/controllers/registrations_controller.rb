@@ -1,20 +1,18 @@
 class RegistrationsController < ApplicationController
 
+  skip_before_filter :clear_pre_register_user_id
+
+  before_filter :get_user
+
   def new
     if params[:redirect_to_needs]
       session[:redirect_to_needs] = true
     end
-    if @pre_registration = PreRegistration.find_by_id(session.delete(:pre_registration_id))
-      @user = @pre_registration.build_user
-      @user.current_step = params[:step]
-    else
-      #@user = params[:user].present? ? User.new(params[:user]) : User.new(:gender => "male")
-      redirect_to root_path
-    end
+    @user.current_step = @user.steps.first
   end
 
   def create
-    @user = User.new(params[:user])
+    @user.attributes = params[:user].merge(:role => nil)
     if params[:user][:encrypted_password].present?
       @user.password = 'ignore-this'
       @user.encrypted_password = params[:user][:encrypted_password]
@@ -25,6 +23,7 @@ class RegistrationsController < ApplicationController
       if @user.valid?
         if @user.last_step?
           if @user.save
+            send_emails
             sign_in(@user)
             if @user.validate_by == "post" && !@user.validated?
               flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
@@ -59,6 +58,22 @@ class RegistrationsController < ApplicationController
       end
     end
     render :action => "new"
+  end
+
+  private
+  def get_user
+    unless @user = User.find_by_id(session[:pre_register_user_id])
+      raise CanCan::AccessDenied
+    end
+  end
+
+  def send_emails
+    if @user.validate_by == "post"
+      UserMailer.new_registration_with_post_validation(@user).deliver
+    elsif @user.validate_by == "organisation"
+      UserMailer.new_registration_with_organisation_validation(@user).deliver
+    end
+    UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", @user.attributes).deliver
   end
 
 end
