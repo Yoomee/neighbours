@@ -3,20 +3,9 @@ class ApplicationController < ActionController::Base
 
   include YmUsers::ApplicationController
 
-  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :clear_pre_register_user_id
+  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :clear_pre_register_user_id, :sign_out_pre_registered_user
 
   AUTH_USERS = { "neighbour" => "maltby123" }
-
-  def after_sign_in_path_for(user)
-    if user.role_is?('pre_registration')
-      sign_out(user)      
-      session[:pre_register_user_id] = user.id
-      flash.delete(:notice)
-      new_registration_path
-    else
-      params.delete(:next) || super
-    end
-  end
 
   private
   def authenticate
@@ -40,6 +29,14 @@ class ApplicationController < ActionController::Base
     if current_user.try(:neighbourhood)
       @neighbourhood = current_user.neighbourhood
     end
+  end
+
+  def sign_out_pre_registered_user
+    return true unless current_user.try(:role_is?, 'pre_registration')
+    session[:pre_register_user_id] = current_user.id
+    sign_out(current_user)    
+    flash.delete(:notice)
+    redirect_to new_registration_path
   end
 
 end
