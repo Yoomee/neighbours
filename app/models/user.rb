@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include UserConcerns::Validations
 
   devise :confirmable
+  devise :token_authenticatable
 
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
   attr_accessor :card_number, :card_security_code
 
   before_create :generate_validation_code
-  before_save :set_card_digits, :set_neighbourhood
+  before_save :set_card_digits, :set_neighbourhood, :ensure_authentication_token
   after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   after_validation :geocode, :if => :address_changed?
 
@@ -64,6 +65,10 @@ class User < ActiveRecord::Base
       where("users.id IN (?)", ids)
     end
     
+  end
+  
+  def after_token_authentication
+    self.update_attribute(:authentication_token, nil)
   end
 
   def address_changed?
