@@ -9,24 +9,6 @@ class NeighbourhoodsController < ApplicationController
     @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
   end
 
-  def area
-    if current_user
-      @needs_json = Need.unresolved.with_lat_lng.visible_to_user(current_user).to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
-      @needs = get_at_least(20,Need.unresolved.visible_to_user(current_user).where("needs.user_id != ?", current_user.id).order(:created_at).reverse_order)
-    else
-      if @neighbourhood = Neighbourhood.find_by_id(params[:id])
-        @email_share_params = "neighbourhood=#{@neighbourhood.id}"
-        render :action => "coming_soon"
-      else          
-        @general_offers = get_at_least(20, GeneralOffer.order(:created_at).reverse_order)
-        @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
-        @unvalidated_map_needs = get_unvalidated_map_needs
-        @needs_json = []
-      end
-    end
-  end
-
   def help
     @neighbourhood = Neighbourhood.find_by_id(params[:neighbourhood]) || current_user.try(:neighbourhood)
     help_parent = Page.find_or_create_by_slug('neighbourhood_help', :title => "Neighbourhood help pages")
@@ -42,19 +24,17 @@ class NeighbourhoodsController < ApplicationController
   end
 
   def show
-    @neighbourhood = Neighbourhood.find_by_id(params[:id]) || current_user.try(:neighbourhood)
-    @general_offers = get_at_least(20, GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order)
-    @helped = get_at_least(20, Need.resolved.order(:created_at).reverse_order) if @general_offers.empty?
-    @needs = get_at_least(20, Need.unresolved.order(:created_at).reverse_order)
-    @unvalidated_map_needs = get_unvalidated_map_needs
+    @neighbourhood = Neighbourhood.find_by_id(params[:id])
+    @email_share_params = "neighbourhood=#{@neighbourhood.id}"    
     if current_user.try(:has_lat_lng?)
+      @users_json = User.visible_to_user(current_user).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])      
       needs = Need.unresolved.with_lat_lng.visible_to_user(current_user)
       @needs_json = needs.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-      @users_json = User.visible_to_user(current_user).to_json(:only => [:id, :lat, :lng, :street_name, :first_name])
+      general_offers = GeneralOffer.visible_to_user(current_user).order(:created_at).reverse_order
+      @general_offers_json = general_offers.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
+    else
+      render :action => 'coming_soon'
     end
-    @general_offers_json = @general_offers.to_json(:only => [:id], :methods => [:lat, :lng, :street_name, :title, :user_first_name])
-    @needs_json ||= []
-    @users_json ||= []
   end
   
   def create
@@ -87,17 +67,21 @@ class NeighbourhoodsController < ApplicationController
   end
   
   def new_email
-    
+    if @neighbourhood.live?
+      params[:subject] = "We have launched in #{@neighbourhood.name}"
+      params[:email_body] = @neighbourhood.welcome_email_text
+    end
   end
   
   def create_email
     if params[:subject].blank? || params[:email_body].blank?
       render :action => 'new_email'
     else
-      @neighbourhood.pre_registrations.each do |pre_registration|
-        PreRegistrationMailer.delay.custom_email(pre_registration, params[:subject], params[:email_body])
+      @neighbourhood.users.where(:role => 'pre_registration').each do |pre_registered_user|
+        email_body = params[:email_body].gsub('<REGISTER_URL>', root_url(:auth_token => pre_registered_user.authentication_token))
+        UserMailer.delay.custom_email(pre_registered_user, params[:subject], email_body)
       end
-      flash[:notice] = "Sent #{@neighbourhood.pre_registrations.count} emails"
+      flash[:notice] = "Sent #{@neighbourhood.users.where(:role => 'pre_registration').count} emails"
       redirect_to neighbourhoods_path
     end
   end
@@ -109,30 +93,6 @@ class NeighbourhoodsController < ApplicationController
       flash[:error] = "Sorry. Something's gone wrong. Please try again."
     end
     redirect_to neighbourhoods_path
-  end
-
-  private
-  def get_at_least(num, needs_sent)
-    needs = needs_sent.dup
-    needs.pop if needs.size.odd? && needs.size > num
-    count = 0
-    all_needs = needs
-    (num - needs.size).times do |i|
-      all_needs << needs[count] if needs[count]
-      count = (count >= (needs.size - 1)) ? 0 : count + 1
-    end
-    all_needs
-  end
-
-  def get_unvalidated_map_needs
-    unresolved_needs = Need.unresolved.order(:created_at).reverse_order.limit(2).collect {|n| ["/needs/#{n.id}", "#{n.user.to_s} needs help with", n.category]}
-    resolved_needs = Need.resolved.order(:created_at).reverse_order.limit(2).collect {|n| ["/needs/#{n.id}", "#{n.accepted_offer.user.to_s} helped #{n.user.to_s}", n.category]}
-    snippet_needs = [
-      [snippet_text(:unvalidated_map_need_1_url), snippet_text(:unvalidated_map_need_1_user), snippet_text(:unvalidated_map_need_1_text)],
-      [snippet_text(:unvalidated_map_need_2_url), snippet_text(:unvalidated_map_need_2_user), snippet_text(:unvalidated_map_need_2_text)],
-      [snippet_text(:unvalidated_map_need_3_url), snippet_text(:unvalidated_map_need_3_user), snippet_text(:unvalidated_map_need_3_text)]
-    ]
-    [snippet_needs[0], snippet_needs[1], snippet_needs[2], unresolved_needs[0], resolved_needs[0], unresolved_needs[1], resolved_needs[1]]
   end
 
 end

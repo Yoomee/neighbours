@@ -1,0 +1,14 @@
+-general_offer = form.object.general_offers.first || form.object.general_offers.build
+#pre-register-general-offer-fields{:class => "#{general_offer.errors.empty? ? 'hide' : ''}"}
+  =form.semantic_fields_for(:general_offers, general_offer, :remote => true) do |f|
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+      %h3 What can you offer help with?
+    .modal-body
+      =f.inputs do
+        =f.input :category, :value => general_offer.category.try(:id), :label => false, :prompt => 'Select a category', :input_html => {:class => 'span6'}
+        =f.input :description, :label => false, :input_html => { :class => "span6", :rows => "2", :placeholder => "Describe how you can help"}, :required => false
+        =f.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => false, :prompt => "Select a broadcast radius", :help => "People who live within this distance from you will hear about your offer", :input_html => {:class => "span6"}
+    .modal-footer
+      =link_to "Back", "#pre-register", :class=>"btn pull-left", :"data-toggle"=>"modal", :"data-dismiss"=>"modal"
+      =f.commit_button "Next", :button_html => { :class => "btn btn-primary pull-right" }

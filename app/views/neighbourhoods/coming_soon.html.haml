@@ -18,48 +18,23 @@
 #header-intro-placeholder
 
 .container
-
   .row
     .preregister-header.mt-2.mb-2.span8.offset2
       %h2.your-location-title
         %i.icon-map-marker
         =@neighbourhood
-
-
   .row
     #map-canvas.span8.offset2{:style => "height:150px"}
-    
-  
   .row
     .preregister-header.mb-2.span8.offset2
-
       %h3
         We are launching soon in
         =@neighbourhood
-        
       %p.mt-2
         =neighbourhood_snippet_text(:coming_soon_intro, "Here is some text that will be edited by John. This is the text shown at the top of all the coming soon areas. It will explain what it happening and what you can do next.")
     .preregister-share.span8.offset2.mb-2
       .well
         =render("share_buttons")
-    -if false    
-      .preregister-i-can-help-with.span8.offset2
-        .well
-          %h3.mb-1
-            I can help in my area with
-          =select_tag(:need_category, options_for_select([["Please select...", nil]] + NeedCategory.select_options.map{|nc| [nc.to_s,nc.id]}), :id => "preregister-help-select")  
-          .i-might-need-help-with
-            %h3.mt-2
-              In the future I might need help with...
-            %ul.unstyled.i-might-need-help-with-list.mt-1
-              %li=link_to "Computer stuff", "#", :class=>"need-help-button"
-              %li=link_to "Shopping", "#", :class=>"need-help-button"
-              %li=link_to "DIY", "#", :class=>"need-help-button"
-              %li=link_to "Childcare", "#", :class=>"need-help-button"
-              %li=link_to "Health", "#", :class=>"need-help-button"
-              %li=link_to "Gardening", "#", :class=>"need-help-button"
-        .clearfix    
-                                      
     .preregister-feedback.span8.offset2
       %h3
         Give us feedback

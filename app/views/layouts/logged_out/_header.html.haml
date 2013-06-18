@@ -5,26 +5,20 @@
     .row
       .span12   
         %h1.logo-intro
-          -if @neighbourhood   
-            =link_to "Neighbours Can Help", neighbourhood_path(@neighbourhood), :class=>"logo-intro-link"
-          -else
-            =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
-          
-        =link_to "Join now", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
-        
-        %ul.nav.nav-intro.unstyled                
-          -if @neighbourhood   
-            %li=link_to "Home", neighbourhood_path(@neighbourhood), :class=>"intro-nav-link-home intro-nav-link"     
+          =link_to "Neighbours Can Help", root_path, :class=>"logo-intro-link"
+        =link_to "Join now", "#pre-register", :class=>"cta-intro", :"data-toggle"=>"modal"
+        %ul.nav.nav-intro.unstyled
+          %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"
+          -if @neighbourhood
             %li=link_to('About', neighbourhood_about_path(@neighbourhood), :class=>"intro-nav-link-about intro-nav-link")
             %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
             %li=link_to('News', neighbourhood_news_path(@neighbourhood), :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to("Help", neighbourhood_help_path(@neighbourhood), :class=> "intro-nav-link-help intro-nav-link")
           -else
-            %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"               
             %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
             %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
             %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
-            %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")          
+            %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")
           
           %li=link_to "Login", "/login", :class=>"intro-nav-link-login intro-nav-link"
     =link_to_slug(:safety_tips, :class=>"help-link") do

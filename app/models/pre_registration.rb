@@ -10,12 +10,34 @@ class PreRegistration < ActiveRecord::Base
     scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
     
     class << self
+      
       def name_of_town(postcode)
         results = Geocoder.search("#{postcode}, UK")
         address_components = results.first.data['address_components']
         town_component = address_components.select{|component| component['types'].include?('postal_town')}.first
         town_component.try(:[],'short_name')        
       end
+      
+      def create_users
+        existing_user_emails = User.where('email IN (?)', PreRegistration.all.collect(&:email)).collect(&:email)
+        where('email NOT IN (?)', existing_user_emails).each(&:create_user)
+      end
+      
+    end
+    
+    def create_user
+      return true if User.exists?(:email => email)
+      user = User.new(
+        :role => 'pre_registration',
+        :full_name => name,
+        :email => email,
+        :postcode => postcode,
+        :city => area,
+        :lat => lat,
+        :lng => lng
+      )
+      user.last_name ||= '_BLANK_'
+      user.save
     end
     
     def city

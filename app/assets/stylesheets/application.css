@@ -650,7 +650,6 @@ a.home-cta-get-involved {
   padding: 2px 0;
   width: 100%;
   text-align: center;
-
 }
 .list-image a:hover {
   text-decoration: none;
@@ -676,9 +675,6 @@ a.home-cta-get-involved {
   border-right-color: rgba(0, 0, 0, 0.0976563);
   border-bottom-color: rgba(0, 0, 0, 0.246094);
   border-left-color: rgba(0, 0, 0, 0.0976563);
-}
-body#home.logged_in .call-to-action {
-  margin-top: 0;
 }
 
 /*========== Logged out home ==========*/
@@ -1087,10 +1083,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   position: relative;
   display: block;
 }
-
 .user-thumbnail-large img{
   float:left;
-
 }
 .user-thumbnail-large:hover {
   text-decoration: none;
@@ -1111,6 +1105,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
   width: 25px;
   height: 30px;
   background: url(/assets/validated-icon.png) no-repeat;
+}
+body.controller_users.action_show .user-thumbnail-large .validated-icon {
+  right: 5px;
 }
 .list-image .validated-icon {
   right: -8px;
@@ -1572,7 +1569,9 @@ a.cta-small {
   margin-top: 30px;
   margin-bottom: 20px;
 }
+
 /*========== preregister modal form ==========*/
+
 .preregister-form .control-label {
   float: left;
   display: block;
@@ -1589,9 +1588,19 @@ a.cta-small {
  margin: 10px 20px; 
  font-size: 14px;
 }
-
+.modal-body .call-to-action {
+  width: 60%;
+}
+.modal-footer .cta-intro {
+  margin-top: 0;
+}
+.modal-body #need_need_to_know_by_input.radio .help-icon {
+  right: inherit;
+  left: 160px;
+}
 
 /*========== preregistering pages ==========*/
+
 .your-location-title {
   font-size: 36px;
 }

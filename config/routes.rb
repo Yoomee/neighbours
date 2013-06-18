@@ -1,24 +1,23 @@
 Neighbours::Application.routes.draw do
 
-  root :to => 'neighbourhoods#show'
+  root :to => 'home#index'
 
   match 'feedback' => 'enquiries#new', :id => 'feedback'
   match 'other-neighbourhoods' => 'enquiries#new', :id => 'other_neighbourhood', :as => "other_neighbourhood"
   get 'about' => 'neighbourhoods#about'
 
-  resources :registrations, :only => [:new]
+  resources :registrations, :only => :new
   match "registrations(/:step)" => "registrations#create", :via => [:post, :put], :as => 'registrations'
   match "registrations/who_you_are" => "registrations#new", :step => "who_you_are", :as => "who_you_are_registration", :via => :get
   match "registrations/where_you_live" => "registrations#new", :step => "where_you_live", :as => "where_you_live_registration", :via => :get
   match "registrations/validate" => "registrations#new", :step => "validate", :as => "validate_registration"
  
-  resources :pre_registrations do
+  resources :pre_registrations, :path => 'pr' do
     collection do
       get :map
       delete :destroy_all
     end
   end
-  get "pr/:id" => "pre_registrations#show"
   
   get "share/email_form" => "share#email_form"
   match "share/send_email"
@@ -100,8 +99,8 @@ Neighbours::Application.routes.draw do
     end
   end
   
-  get "neighbourhood" => "neighbourhoods#show"
-  get "area/:id" => "neighbourhoods#area"
+  get "neighbourhood" => "home#index"
+  get "area/:id" => "neighbourhoods#show"
   get "neighbourhoods/:neighbourhood/posts" => "posts#index", :as => 'neighbourhood_posts'
   match "neighbourhoods/:neighbourhood/snippets" => "neighbourhoods#snippets", :as => 'neighbourhood_snippets'
   get "neighbourhoods/:neighbourhood/about" => "neighbourhoods#about", :as => 'neighbourhood_about'
