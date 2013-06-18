@@ -67,7 +67,10 @@ class NeighbourhoodsController < ApplicationController
   end
   
   def new_email
-    
+    if @neighbourhood.live?
+      params[:subject] = "We have launched in #{@neighbourhood.name}"
+      params[:email_body] = @neighbourhood.welcome_email_text
+    end
   end
   
   def create_email
@@ -75,7 +78,8 @@ class NeighbourhoodsController < ApplicationController
       render :action => 'new_email'
     else
       @neighbourhood.users.where(:role => 'pre_registration').each do |pre_registered_user|
-        UserMailer.delay.custom_email(pre_registered_user, params[:subject], params[:email_body])
+        email_body = params[:email_body].gsub('<REGISTER_URL>', root_url(:auth_token => pre_registered_user.authentication_token))
+        UserMailer.delay.custom_email(pre_registered_user, params[:subject], email_body)
       end
       flash[:notice] = "Sent #{@neighbourhood.users.where(:role => 'pre_registration').count} emails"
       redirect_to neighbourhoods_path

@@ -11,11 +11,14 @@
     =text_field_tag 'subject', params[:subject]
     -if request.post? && params[:subject].blank?
       %span.help-inline Can't be blank
-  %p.lead='Dear <User>'
+  %p.lead='Dear <USER>'
   %div{:class => "control-group#{request.post? && params[:email_body].blank? ? ' error' : ''}"}
     =text_area_tag 'email_body', params[:email_body], :placeholder => 'Enter the email content here', :class => 'span12', :rows => 10
     -if request.post? && params[:email_body].blank?
       %span.help-inline Can't be blank
+  -if @neighbourhood.live?
+    %p="* <USER> will be replaced with the user's name."
+    %p.mb-2="* <REGISTER_URL> will be replaced with the user-specific registration url."    
   %button.btn{:type => 'submit'} Send emails
     
 =options_panel do

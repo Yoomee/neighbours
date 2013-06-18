@@ -64,6 +64,22 @@ class Neighbourhood < ActiveRecord::Base
     live? ? "Live" : "Coming soon"
   end
   
+  def welcome_email_text
+    Neighbourhood::WELCOME_EMAIL_TEXT.sub('[NAME]', name)
+  end
+  
 end
 
 Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES = 5
+Neighbourhood::WELCOME_EMAIL_TEXT = <<-TEXT
+We have launched in [NAME]!
+
+You can now offer and receive help from your neighbours. Use the link below to finish registration and become a full member:
+
+<REGISTER_URL>
+
+Thanks,
+
+The #{Settings.site_name} team
+#{Settings.site_url}
+TEXT
