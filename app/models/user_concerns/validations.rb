@@ -14,11 +14,6 @@ module UserConcerns::Validations
 
     base.validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
     base.validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
-    base.validates :card_type, :card_number, :card_expiry_date, :card_security_code, :presence => true, :if => :validation_step_with_credit_card?
-    base.validates :card_type, :inclusion => {:in => User::CARD_TYPES}, :allow_blank => true, :if => :validation_step_with_credit_card?
-    base.validates :card_number, :length => {:is => 16}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-    base.validates :card_security_code, :length => {:is => 3}, :numericality => true, :allow_blank => true, :if => :validation_step_with_credit_card?
-    base.validates :card_expiry_date, :format => {:with => /\d{2}\/\d{4}/}, :allow_blank => true, :if => :validation_step_with_credit_card?
     base.validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
 
     base.validate :preauth_credit_card, :if => :validation_step?
