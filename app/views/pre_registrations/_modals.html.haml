@@ -1,0 +1,22 @@
+-if @pre_registration && !@pre_registration.valid?
+  =#content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $('#pre-register').modal('show');
+    });        
+      
+#pre-register.modal.hide
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      How would you like to get involved?
+  .modal-body
+    .center
+      =link_to "I'd like some help", '#', :class => "btn call-to-action primary", :id => 'pre-register-need-link'
+      =link_to "I'd like to offer some help", '#', :class => "btn call-to-action", :id => 'pre-register-general-offer-link'
+  .modal-footer
+    =link_to "Just sign me up", '#', :class => "btn pull-right", :id => 'pre-register-signup-link'
+    
+#pre-register-signup.modal.hide
+  =render("pre_registrations/modals/signup")

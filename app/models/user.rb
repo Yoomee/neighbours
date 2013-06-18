@@ -1,11 +1,15 @@
 class User < ActiveRecord::Base
 
+  User::CARD_TYPES = %w{visa mastercard american_express}
+  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Academy"]
+
   include YmUsers::User
   include YmCore::Multistep
+  include UserConcerns::PreRegistration
+  include UserConcerns::Validations
 
   devise :confirmable
-
-  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Academy"]
+  devise :token_authenticatable
 
   has_many :needs, :dependent => :destroy
   has_many :offers, :dependent => :destroy
@@ -21,41 +25,19 @@ class User < ActiveRecord::Base
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
-  before_create :generate_validation_code
-  after_create :send_emails
-  before_save :set_neighbourhood
-  attr_accessor :card_number, :card_security_code
-  
+  accepts_nested_attributes_for :needs, :general_offers
+
+  attr_accessor :credit_card_preauth
+
   # accessors below are used in group_registrations#create
   attr_accessor :group_invitation_id
   boolean_accessor :seen_group_invitation_email_warning
 
   before_create :generate_validation_code
-  after_create :send_emails
+  before_save :set_neighbourhood, :ensure_authentication_token
+  after_validation :geocode, :if => :address_changed?
+  
   after_create :update_existing_group_invitations
-  before_save :set_card_digits, :set_neighbourhood
-  after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
-
-  geocoded_by :address_with_country, :latitude => :lat, :longitude => :lng
-  after_validation :geocode,  :if => lambda{ |obj| obj.address_changed? }
-  after_validation :allow_non_unique_email_if_deleted
-
-  attr_accessor :credit_card_preauth
-
-  validates :house_number, :street_name, :city, :presence => {:if => :where_you_live_step?}
-  validates :postcode, :postcode => {:if => :where_you_live_step?}, :allow_blank => true
-  validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
-  validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
-  validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
-  validate :dob_or_undiclosed_age
-  validate :over_16
-  validates_confirmation_of :email, :on => :create, :message => "these don't match"
-  validates_confirmation_of :password, :on => :create, :message => "these didn't match"
-  validates :email_confirmation, :presence => {:if => :who_you_are_step?}
-  validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
-  validates :validation_code, :uniqueness => true
-  validate :preauth_credit_card, :if => :validation_step?
-  validate :group_invitation_email_matches, :on => :create
 
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
   scope :not_deleted, where(:is_deleted => false)
@@ -93,6 +75,10 @@ class User < ActiveRecord::Base
     end
     
   end
+  
+  def after_token_authentication
+    self.update_attribute(:authentication_token, nil)
+  end
 
   def address_changed?
     house_number_changed? || street_name_changed? || postcode_changed?
@@ -124,15 +110,6 @@ class User < ActiveRecord::Base
     true
   end
 
-  def dob_or_undiclosed_age
-    dob.present? || undisclosed_age?
-  end
-
-  def formatted_card_number
-    return nil if card_digits.blank?
-    ("**** " * 3) + card_digits.to_s
-  end
-
   def group_user?
     role == 'group_user'
   end
@@ -149,6 +126,10 @@ class User < ActiveRecord::Base
     neighbourhoods_as_admin.count > 0
   end
 
+  def lat_lng
+    lat.present? && lng.present? ? [lat,lng] : nil
+  end
+
   def new_notification_count(context, need = nil)
     if need
       need.notifications.where(:context => context, :user_id => id, :read => false).count
@@ -159,6 +140,10 @@ class User < ActiveRecord::Base
 
   def radius_options
     Need.radius_options((neighbourhood.try(:max_radius_in_miles) || Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES).to_f)
+  end
+
+  def current_step
+    @current_step
   end
 
   def steps
@@ -174,70 +159,11 @@ class User < ActiveRecord::Base
     "#{code[0..3]} #{code[4..7]}".strip
   end
 
-  def validation_step?
-    current_step == "validate"
-  end
-
-  def validation_step_with_credit_card?
-    validation_step? && validate_by == "credit_card"
-  end
-
-  def validation_step_with_organisation?
-    validation_step? && validate_by == "organisation"
-  end
-
   def wall_posts
     Post.where(["target_type = 'User' AND target_id = ?", id])
   end
 
-  def who_you_are_step?
-    new_record? && current_step == "who_you_are"
-  end
-
-  def where_you_live_step?
-    current_step == "where_you_live"
-  end
-
   private
-  def add_errors_to_confirmation_fields
-    return true if !who_you_are_step?
-    [:email, :password].each do |attr_name|
-      if errors[attr_name].any? {|m| m.match(/match/)}
-        errors.add("#{attr_name}_confirmation", errors[attr_name].detect {|m| m.match(/match/)})
-      end
-    end
-  end
-
-  def add_password_errors_for_who_you_are_step
-    return true if !who_you_are_step?
-    if errors.present?
-      errors.add(:password, "enter a password") unless errors[:password].present?
-      errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
-    end
-  end
-  
-  def allow_non_unique_email_if_deleted
-    return true if errors.messages.blank? || (email_errors_messages = errors.messages.delete(:email)).blank?
-    non_unique_message = I18n.t("activerecord.errors.models.user.attributes.email.taken")
-    if email_errors_messages.delete(non_unique_message) && User.exists?(:email => email, :is_deleted => false)
-      email_errors_messages << non_unique_message
-    end
-    email_errors_messages.each do |message|
-      self.errors.add(:email,message)
-    end
-  end
-  
-  def send_emails
-    UserMailer.new_registration(self).deliver
-    UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
-  end
-
-  def set_neighbourhood
-    unless neighbourhood
-      self.neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
-    end
-  end
-
   def generate_validation_code
     return true if validation_code.present?
     unique_code = nil
@@ -247,38 +173,24 @@ class User < ActiveRecord::Base
     self.validation_code = unique_code
   end
 
-  def over_16
-    return true if undisclosed_age? || admin?
-    errors.add(:dob, "You must be over 16 to register") unless dob.present? && dob < 16.years.ago.to_date
-  end
-
-  def set_card_digits
-    unless card_number.blank?
-      self.card_digits = card_number.last(4)
+  def geocode
+    results = Geocoder.search(address_with_country)
+    geometry = results.first.data['geometry']
+    self.lat = geometry['location']['lat']
+    self.lng = geometry['location']['lng']
+    return true if read_attribute(:city).present?
+    if neighbourhood
+      self.city = neighbourhood.name
+    else
+      address_components = results.first.data['address_components']
+      town_component = address_components.select{|component| component['types'].include?('postal_town')}.first
+      self.city = town_component.try(:[],'short_name')
     end
   end
 
-  def credit_card_valid?
-    credit_card.name = full_name
-    card_valid = credit_card.valid?
-    if !credit_card.brand.in?(CreditCardPreauth::ACCEPTED_CARDS.values)
-      credit_card.errors.add(:brand, "please select an accepted card type")
-      card_valid = false
-    end
-    errors.add(:credit_card, "card details are invalid") if !card_valid
-    card_valid
-  end
-
-  def preauth_credit_card
-    if validate_by == 'credit_card' && credit_card_valid? && agreed_conditions?
-      return true if credit_card_preauth.present?
-      self.credit_card_preauth = CreditCardPreauth.create_from_user(self)
-      credit_card_preauth.preauth!
-      if credit_card_preauth.success?
-        self.validated = true
-      else
-        errors.add(:credit_card_details, "Unfortunately we couldn't verify your address from the card details you entered. Please check your card details or select an alternative validation option.")
-      end
+  def set_neighbourhood
+    unless neighbourhood
+      self.neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
     end
   end
 
