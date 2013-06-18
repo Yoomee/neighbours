@@ -19,7 +19,9 @@ class PreRegistration < ActiveRecord::Base
       
       def convert_all_to_users
         existing_user_emails = User.where('email IN (?)', PreRegistration.all.collect(&:email)).collect(&:email)
-        where('email NOT IN (?)', existing_user_emails).each(&:convert_to_user!)
+        suspended_delta do
+          where('email NOT IN (?)', existing_user_emails).each(&:convert_to_user!)
+        end
       end
       
     end
