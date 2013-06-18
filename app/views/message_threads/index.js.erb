@@ -1,0 +1,10 @@
+$('.messages-list').append('<%=escape_javascript(render('message_threads/message_threads', :message_threads => @message_threads))%>').removeClass('loading');
+
+<%if @message_threads.next_page%>
+  $('#more-message-threads-btn').replaceWith('<%=escape_javascript(link_to "Show more", message_threads_path(:page => @message_threads.next_page), :remote => true, :class => "btn", :id => "more-message-threads-btn")%>'); 
+  $('#more-message-threads-btn').click(function(){
+    $(this).html("Loading...");
+  });
+<%else%>
+  $('#more-message-threads-btn').hide();
+<%end%>

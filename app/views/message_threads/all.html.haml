@@ -1,0 +1,14 @@
+.row
+  .messages-wrap.span10.offset1
+    .messages-header
+      %h2.messages-title
+        All private messages
+    .messages-list-wrap
+      -if @message_threads.empty?
+        %span.no-messages
+          %p.mt-1 There are no messages.
+      -else
+        %ul.messages-list.unstyled
+          =render 'message_threads/message_threads', :message_threads => @message_threads
+        -if @message_threads.next_page
+          =link_to 'Show more', all_message_threads_path(:page => @message_threads.next_page), :remote => true, :class => 'btn', :id => 'more-message-threads-btn'
