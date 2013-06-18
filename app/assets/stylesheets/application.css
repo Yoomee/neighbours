@@ -1007,16 +1007,20 @@ border-radius:20px;
   padding: 20px 0px;
   background: #f5f5f5;
 }
+#control-panel a h3,
+#control-panel a p {
+  margin-left: 30px;
+}
 #big-home-icon, #big-home-icon i {
-	font-size: 40px;
-	line-height: 40px;
+	font-size: 30px;
+	line-height: 30px;
 	color: #fff;
 }
 #big-home-icon {
 	float: left;
-	margin: 0px 0 0 30px;
+	margin: 0px 10px 0 20px;
 	background: #b4c773;
-	padding:  13px 15px;
+	padding:  10px 12px;
 	border-radius:50px;
 }
 /*========== My requests page ==========*/

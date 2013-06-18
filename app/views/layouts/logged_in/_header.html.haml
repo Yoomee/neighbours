@@ -72,10 +72,9 @@
     .row
       #control-panel.span12
         .row
-          .span2.offset1
+          .span3
             =link_to root_path, :id=>"big-home-icon" do
-              %i.icon-home
-          .span3    
+              %i.icon-home          
             %h3.control-panel-title
               Account status
             %p.control-panel-subtitle
@@ -97,9 +96,14 @@
               %h3.control-panel-title
                 My offers
               %p.control-panel-subtitle
-                -if controller_name.needs? && action_name.show?
+                -if controller_name.offers? && action_name.show?
                   =header_messages_badge(0)
                 -else
-                  =header_messages_badge(current_user.new_notification_count("my_offers"))    
-
+                  =header_messages_badge(current_user.new_notification_count("my_offers"))
+          .span3
+            =link_to groups_path, :class=>"control-panel-link" do
+              %h3.control-panel-title
+                My groups
+              %p.control-panel-subtitle
+                =header_messages_badge(current_user.unread_message_count)
           
