@@ -4,6 +4,7 @@ module UserConcerns::PreRegistration
     base.before_validation :generate_password, :if => :pre_registration?
     base.before_validation :clean_up_needs_and_general_offers, :on => :create    
     base.validates :full_name, :presence => true
+    base.validate :has_last_name, :if => :new_record?
     base.send(:attr_accessor, :pre_register_need_or_offer)
     base.send(:boolean_accessor, :ready_for_pre_register_signup)
   end
@@ -31,6 +32,12 @@ module UserConcerns::PreRegistration
   
   def generate_password
     self.password ||= SecureRandom.hex(8)
+  end
+  
+  def has_last_name
+    unless last_name.present? || errors[:full_name].present?
+      errors.add(:full_name, 'please provide your full name')
+    end
   end
   
 end
