@@ -17,18 +17,16 @@ class PreRegistration < ActiveRecord::Base
         town_component.try(:[],'short_name')        
       end
       
-      def convert_all_to_users
+      def create_users
         existing_user_emails = User.where('email IN (?)', PreRegistration.all.collect(&:email)).collect(&:email)
-        suspended_delta do
-          where('email NOT IN (?)', existing_user_emails).each(&:convert_to_user!)
-        end
+        where('email NOT IN (?)', existing_user_emails).each(&:create_user)
       end
       
     end
     
-    def convert_to_user!
+    def create_user
       return true if User.exists?(:email => email)
-      User.create(
+      user = User.new(
         :role => 'pre_registration',
         :full_name => name,
         :email => email,
@@ -37,6 +35,8 @@ class PreRegistration < ActiveRecord::Base
         :lat => lat,
         :lng => lng
       )
+      user.last_name ||= '_BLANK_'
+      user.save
     end
     
     def city

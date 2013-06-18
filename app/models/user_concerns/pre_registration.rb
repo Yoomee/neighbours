@@ -24,6 +24,10 @@ module UserConcerns::PreRegistration
     end
   end
   
+  def full_name
+    "#{first_name} #{last_name.try(:sub, /^_BLANK_$/, '')}".strip
+  end
+  
   private  
   def clean_up_needs_and_general_offers
     general_offers(true) unless pre_register_need_or_offer == 'general_offer'
