@@ -18,6 +18,7 @@ class Group < ActiveRecord::Base
   validate :valid_invitation_emails
 
   scope :not_private, where(:private => false)
+  scope :most_members, joins(:members).group('groups.id').select('groups.*, COUNT(users.id) AS member_count').order('member_count DESC')
 
   def add_member!(user)
     invitations = user.group_invitations.where(:group_id => id)
