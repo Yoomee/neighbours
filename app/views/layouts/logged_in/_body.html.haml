@@ -1,4 +1,4 @@
--body_tag do  
+-body_tag(:class => "#{show_control_panel? ? 'with-control-panel' : ''}") do
   .main-wrapper
     =render("layouts/logged_in/header")
     =yield_with_bootstrap(yield)

@@ -1225,16 +1225,12 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   background: #fff url(/assets/nav-strip.png) repeat-x bottom;
   padding-bottom: 0px;
   margin: 0 0 40px;
-  
   -webkit-box-shadow:0 1px 8px rgba(0,0,0,0.1);
   box-shadow:0 1px 8px rgba(0,0,0,0.1);
-  
-  
   z-index: 100;
   height: 120px;
 }
-
-.controller_neighbourhoods.action_show  .header-intro, .controller_needs .header-intro, .controller_offers .header-intro   {
+body.with-control-panel .header-intro {
   margin-bottom: 0;
 }
 .header-intro-inner {
@@ -1335,7 +1331,10 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
 .controller_home .intro-nav-link-home,
 .root_slug_news .intro-nav-link-latest,
 .root_slug_neighbourhood_help .intro-nav-link-help,
-.controller_groups .intro-nav-link-groups
+.controller_groups .intro-nav-link-groups,
+.controller_photos .intro-nav-link-groups,
+.controller_messages .intro-nav-link-groups,
+.controller_message_threads .intro-nav-link-groups
  {
   color:#98cd41;
   line-height: 1;

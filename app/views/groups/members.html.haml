@@ -1,27 +1,25 @@
-.container
 =render('groups/header')
-.container
-  .row.mb-2
-    .span12
-      %h2.pull-left
-        Group Members
-      -if can?(:new, @group.invitations.build)
-        =link_to("+ Invite members", new_group_group_invitation_path(@group), :class => "btn pull-right")
-  .row
-    .span12
-      %ul.group-members-list.help-list.unstyled
-        -@members.each do |user|
-          %li.list
-            .list-image
-              =link_to(user, :class => 'pull-left') do
-                =image_for_with_validation(user, "60x50#")
-              %p.small-text=user
-            .list-text
-              %h3=link_to_self(user)
-              -if @group.owner == user
-                %span.label Group owner
-              %p.user-city=user.city
-              -if user != current_user
-                =link_to(new_user_message_path(user), :class => "send-message")  do
-                  %i.icon-envelope
-                  Send message
+.row.mb-2
+  .span12
+    %h2.pull-left
+      Group Members
+    -if can?(:new, @group.invitations.build)
+      =link_to("+ Invite members", new_group_group_invitation_path(@group), :class => "btn pull-right")
+.row
+  .span12
+    %ul.group-members-list.help-list.unstyled
+      -@members.each do |user|
+        %li.list
+          .list-image
+            =link_to(user, :class => 'pull-left') do
+              =image_for_with_validation(user, "60x50#")
+            %p.small-text=user
+          .list-text
+            %h3=link_to_self(user)
+            -if @group.owner == user
+              %span.label Group owner
+            %p.user-city=user.city
+            -if user != current_user
+              =link_to(new_user_message_path(user), :class => "send-message")  do
+                %i.icon-envelope
+                Send message
