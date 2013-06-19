@@ -1,9 +1,15 @@
 .row
   .span12
-    %h1=@page.title
+    %h1
+      -if @neighbourhood && current_page?(neighbourhood_news_path(@neighbourhood))
+        Community Noticeboard
+      -elsif @page == Page.find_by_slug(:news)
+        At the HQ
+      -else
+        =@page.title
     =raw(@page.text)
-.row
-  .span12
+.row.mb-2
+  .span9
     -if @page_children.blank? && @neighbourhood.present?
       %p="There's no news for the #{@neighbourhood} neighbourhood yet."
     -else
@@ -19,14 +25,22 @@
                 =(page.publication_date || page.created_at).to_s(:date)
             %p=truncate(strip_tags(page.text), :length => 220)
             =link_to raw('&rarr; Read more'), page
-    -if slug_is?('blog')
-      .row.mb-2
-        .span9
-          =link_to("Let us know what you think",feedback_path)
-    -if can?(:new, Page.new)
-      .row.mb-2
-        .span2
-          =link_to("+ Add a subpage", new_child_page_path(:parent_id => @page.id))
+  .span3
+    %h3.mb-2
+      -if @neighbourhood && current_page?(neighbourhood_news_path(@neighbourhood))
+        =link_to_slug('At the HQ', :news)
+      -elsif @neighbourhood
+        =link_to 'Community Noticeboard', neighbourhood_news_path(@neighbourhood)
+    =twitter_widget('NeighbrsCanHelp', '347263947990241280')
+
+-if slug_is?('blog')
+  .row.mb-2
+    .span9
+      =link_to("Let us know what you think",feedback_path)
+-if can?(:new, Page.new)
+  .row.mb-2
+    .span2
+      =link_to("+ Add a subpage", new_child_page_path(:parent_id => @page.id))
 .row
   .span8
     =options_panel do
