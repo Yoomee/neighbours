@@ -1,2 +1,6 @@
 site_url: http://localhost:3000
 facebook_app_id: 448703455184821
+twitter:
+  consumer_key: dtr1ewqEc8ScGG5M0S3SBA
+  consumer_secret: 7ZlCXK7RRNH7dpdJCICQZNim2nFQHfg41GOpNwTM60
+  bearer_token: AAAAAAAAAAAAAAAAAAAAAIGONQAAAAAAjy8QmcegLa1avvwJWvcPImUrsQY%3DrBDRqWhXHnpulTZdJZmtbH2lZ52PhCQU6m8lN3sI4P4
