@@ -56,11 +56,12 @@
             %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")          
             %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")
-    =link_to(messages_path, :class => "help-link messages-help-link") do
-      %icon.icon-envelope
-      Messages
-      -if unread_message_count > 0
-        %span.badge=unread_message_count
+    -if controller_name.groups?
+      =link_to(messages_path, :class => "help-link messages-help-link") do
+        %icon.icon-envelope
+        Messages
+        -if unread_message_count > 0
+          %span.badge=unread_message_count
     =link_to_slug(:safety_tips, :class=>"help-link") do
       %icon.icon-question-sign
       Stay safe
