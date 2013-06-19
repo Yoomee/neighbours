@@ -13,7 +13,7 @@ gem 'whenever', :require => false
 
 ### Yoomee gems
 gem 'ym_core',          "~> 0.1.62" #, :path => "~/Rails/Gems/ym_core"
-gem 'ym_cms',           "~> 0.3.3"  #, :path => "~/Rails/Gems/ym_cms"
+gem 'ym_cms',           "~> 0.3.11" #, :path => "~/Rails/Gems/ym_cms"
 gem 'ym_users',         "~> 0.1.27"    #, :path => "~/Rails/Gems/ym_users"
 gem 'ym_posts',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_posts"
 gem 'ym_search',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_search"
