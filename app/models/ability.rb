@@ -75,7 +75,7 @@ class Ability
       can [:members], Group do |group|
         group.has_member?(user)
       end
-      can [:update], Group do |g|
+      can [:update, :delete], Group do |g|
         g.user_id == user.id
       end
       can [:new, :create], GroupInvitation do |invitation|

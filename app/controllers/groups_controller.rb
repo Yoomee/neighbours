@@ -18,6 +18,12 @@ class GroupsController < ApplicationController
     end
   end
 
+  def delete
+    @group.update_attribute(:deleted_at, Time.now)
+    flash[:notice] = "Your group has been deleted"
+    redirect_to groups_path
+  end
+
   def destroy
     @group.destroy
     flash_notice(@group)
@@ -28,7 +34,7 @@ class GroupsController < ApplicationController
   end
 
   def index
-    if current_user.nil?
+    if current_user.nil? || current_user.groups.empty?
       render :action => 'about'
     else
       @groups =  current_user.groups
