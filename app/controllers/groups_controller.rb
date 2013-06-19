@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
   end
 
   def index
-    if current_user.nil?
+    if current_user.nil? || current_user.groups.empty?
       render :action => 'about'
     else
       @groups =  current_user.groups
