@@ -7,3 +7,9 @@ twitter:
   site_oauth_secret: o3WGbYdqdewITLPqjVgGDk6RHT4cQpXFGyjHOFg9I0
 facebook:
   site_page_access_token: CAAGcBuUjgxYBAJix4YRpF3d5kr8vwmvAAkjr2JGDGpIuH6xMIz4HmXXohdt0EaBDeTICtE6vGKPR7pqnEoxxXOoMZCADHZAu31h353yuuMb4r7TpQJ7LOXWXIeMHGEb8yf3fX77kVFFaOlCrA3V0WqA4BDyYjJh84PLxJl8mYiTtJjhLcc # Post as Yoomee Test
+payment_sense:
+  merchant_id: NEIGHB-3298248
+  password: T46Q8G4J9F
+  # production details below
+  # merchant_id: NEIGHB-9012216
+  # password: s2V1c2VQxf
