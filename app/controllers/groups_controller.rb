@@ -3,8 +3,8 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
 
   def all
-    @groups = Group.public
-    @popular_groups = Group.public.first(3)
+    @groups = Group.not_private
+    @popular_groups = Group.not_private.first(3)
     render :index
   end
 
@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
       render :action => 'about'
     else
       @groups =  current_user.groups
-      @popular_groups = Group.public.first(3)
+      @popular_groups = Group.not_private.first(3)
     end
 
   end
