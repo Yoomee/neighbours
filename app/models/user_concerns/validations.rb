@@ -4,10 +4,10 @@ module UserConcerns::Validations
     base.validates :postcode, :postcode => true, :presence => true
     base.validates :validation_code, :uniqueness => true    
     base.validate :dob_or_undiclosed_age, :over_16, :unless => :pre_registration?
-    base.validates_confirmation_of :email, :on => :create, :message => "these don't match", :unless => :pre_registration?
-    base.validates_confirmation_of :password, :on => :create, :message => "these didn't match"
+    base.validates_confirmation_of :email, :message => "these don't match", :unless => :pre_registration?
+    base.validates_confirmation_of :password, :message => "these don't match", :unless => :pre_registration?
 
-    base.validates :email_confirmation, :on => :create, :presence => true, :if => :who_you_are_step?
+    base.validates :email_confirmation, :presence => true, :if => :who_you_are_step?
     base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}    
     
     base.validates :house_number, :street_name, :city, :presence => true, :if => :where_you_live_step?
