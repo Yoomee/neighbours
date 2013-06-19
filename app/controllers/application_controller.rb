@@ -33,10 +33,17 @@ class ApplicationController < ActionController::Base
 
   def sign_out_pre_registered_user
     return true unless current_user.try(:role_is?, 'pre_registration')
-    session[:pre_register_user_id] = current_user.id
-    sign_out(current_user)    
-    flash.delete(:notice)
-    redirect_to new_registration_path
+    user = current_user
+    sign_out(current_user)
+    if user.neighbourhood.try(:live?)
+      session[:pre_register_user_id] = user.id
+      flash.delete(:notice)
+      redirect_to new_registration_path
+    elsif user.neighbourhood
+      redirect_to user.neighbourhood
+    else
+      redirect_to pre_registration_path(user)
+    end
   end
 
 end

@@ -77,6 +77,8 @@ Neighbours::Application.routes.draw do
     resources :posts, :only => :index
   end
   
+  get '/r/:auth_token' => 'home#index', :as => 'auth_token'
+  
   resources :neighbourhoods do
     member do
       get "email" => "neighbourhoods#new_email"
