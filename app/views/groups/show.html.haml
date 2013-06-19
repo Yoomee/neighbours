@@ -14,8 +14,9 @@
             %li
               =link_to(tag) do
                 %span.label.tag-label=tag
-  .row.mt-2
-    .span12
-      =options_panel do
-        =link_if_can("Edit group", [:edit, @group])
-        =link_if_can("Delete group", [:destroy, @group], :confirm => "Are you sure?")
+.row.mt-2
+  .span12
+    =options_panel do
+      =link_if_can("Edit group", [:edit, @group])
+      =link_if_can("Delete group", [:delete, @group], :confirm => "Are you sure?", :method => :delete)
+      =link_if_can("Destroy group", [:destroy, @group], :confirm => "Are you sure?", :method => :delete)

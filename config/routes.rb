@@ -79,10 +79,11 @@ Neighbours::Application.routes.draw do
   
   resources :groups do
     collection do
-      get 'all'
+      get :all
     end
     member do
       get :members, :join
+      delete :delete
     end
     resources :group_invitations, :path => 'invitations', :only => [:new, :create]
     resources :photos, :only => [:new, :create, :index, :show]

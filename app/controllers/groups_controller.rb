@@ -18,6 +18,12 @@ class GroupsController < ApplicationController
     end
   end
 
+  def delete
+    @group.update_attribute(:deleted_at, Time.now)
+    flash[:notice] = "Your group has been deleted"
+    redirect_to groups_path
+  end
+
   def destroy
     @group.destroy
     flash_notice(@group)

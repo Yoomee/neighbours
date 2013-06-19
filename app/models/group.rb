@@ -17,6 +17,8 @@ class Group < ActiveRecord::Base
   validates_property :format, :of => :image, :in => [:jpeg, :jpg, :png, :gif], :case_sensitive => false, :message => "must be an image"
   validate :valid_invitation_emails
 
+  default_scope where(:deleted_at => nil)
+
   scope :not_private, where(:private => false)
   scope :most_members, joins(:members).group('groups.id').select('groups.*, COUNT(users.id) AS member_count').order('member_count DESC')
 
