@@ -91,6 +91,8 @@ Neighbours::Application.routes.draw do
     resources :group_registrations, :path => 'registrations', :only => :new
   end
   resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
+
+  get '/r/:auth_token' => 'home#index', :as => 'auth_token'
   
   resources :neighbourhoods do
     member do
