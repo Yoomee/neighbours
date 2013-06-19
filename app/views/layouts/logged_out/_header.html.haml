@@ -23,9 +23,10 @@
             %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")          
             %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")          
-          
-          %li=link_to "Login", "/login", :class=>"intro-nav-link-login intro-nav-link"
-    =link_to_slug(:safety_tips, :class=>"help-link") do
+    =link_to_slug(:safety_tips, :class=>"help-link safety-help-link-logged-out") do
       %icon.icon-question-sign
       Stay safe
+    =link_to(sign_in_path, :class=>"help-link login-help-link") do
+      %icon.icon-user
+      Login
           
