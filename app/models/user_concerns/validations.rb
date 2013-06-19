@@ -87,6 +87,16 @@ module UserConcerns::Validations
     dob.present? || undisclosed_age?
   end  
   
+  def group_invitation_email_matches
+    return true if errors[:email].present? || seen_group_invitation_email_warning?
+    if invitation = GroupInvitation.find_by_id(group_invitation_id)
+      if invitation.group.private? && email != invitation.email
+        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message and continue.")
+        self.seen_group_invitation_email_warning = true
+      end
+    end
+  end
+  
   def insert_space_into_postcode_if_needed
     if postcode.present? && postcode.strip.split.size == 1
       (postcode.strip.length - 1).times do |num|

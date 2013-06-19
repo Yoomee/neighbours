@@ -203,14 +203,4 @@ class User < ActiveRecord::Base
     GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
   end
 
-  def group_invitation_email_matches
-    return true if errors[:email].present? || seen_group_invitation_email_warning?
-    if invitation = GroupInvitation.find_by_id(group_invitation_id)
-      if invitation.group.private? && email != invitation.email
-        errors.add(:email, "In order to join the group #{invitation.group}, you will need to sign up with the same email address that the invitation was sent to. Click 'Register' again to ignore this message and continue.")
-        self.seen_group_invitation_email_warning = true
-      end
-    end
-  end
-
 end
