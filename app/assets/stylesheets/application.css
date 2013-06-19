@@ -1334,7 +1334,8 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
 .slug_help .intro-nav-link-help,
 .controller_home .intro-nav-link-home,
 .root_slug_news .intro-nav-link-latest,
-.root_slug_neighbourhood_help .intro-nav-link-help
+.root_slug_neighbourhood_help .intro-nav-link-help,
+.controller_groups .intro-nav-link-groups
  {
   color:#98cd41;
   line-height: 1;
