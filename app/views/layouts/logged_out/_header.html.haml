@@ -5,28 +5,18 @@
     .row
       .span12   
         %h1.logo-intro
-          -if @neighbourhood   
-            =link_to "Neighbours Can Help", neighbourhood_path(@neighbourhood), :class=>"logo-intro-link"
-          -else
-            =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
-          
+          =link_to "Neighbours Can Help", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"logo-intro-link"
         =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
-        
         %ul.nav.nav-intro.unstyled                
-          -if @neighbourhood   
-            %li=link_to "Home", neighbourhood_path(@neighbourhood), :class=>"intro-nav-link-home intro-nav-link"     
-            %li=link_to('About', neighbourhood_about_path(@neighbourhood), :class=>"intro-nav-link-about intro-nav-link")          
-            %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
-            %li=link_to("Help", neighbourhood_help_path(@neighbourhood), :class=> "intro-nav-link-help intro-nav-link")
-          -else
-            %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"               
-            %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")          
-            %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
-            %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")          
+          %li=link_to("Home", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"intro-nav-link intro-nav-link-home")
+          %li=link_to('About us', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
+          %li=link_to_slug('News', :news, :class=>"intro-nav-link intro-nav-link-latest")
+          %li=link_to("Help", @neighbourhood ? neighbourhood_help_path(@neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
+
     =link_to_slug(:safety_tips, :class=>"help-link safety-help-link-logged-out") do
       %icon.icon-question-sign
       Stay safe
     =link_to(sign_in_path, :class=>"help-link login-help-link") do
       %icon.icon-user
       Login
-          
+=yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
