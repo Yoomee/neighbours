@@ -69,7 +69,7 @@ class RegistrationsController < ApplicationController
 
   def send_emails
     UserMailer.new_registration(@user).deliver
-    UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", self.attributes).deliver
+    UserMailer.admin_message("A new user has just registered on the site", "You will be delighted to know that a new user has just registered on the site.\n\nHere are all the gory details:", @user.attributes).deliver
   end
 
 end
