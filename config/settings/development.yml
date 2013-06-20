@@ -5,6 +5,7 @@ twitter:
   consumer_secret: 7ZlCXK7RRNH7dpdJCICQZNim2nFQHfg41GOpNwTM60
   site_oauth_token: 190558659-iwamjBwoBvu1Jpz7927vLNTMZeP1HYzr7gMosXcw # Post as @gbrunei
   site_oauth_secret: o3WGbYdqdewITLPqjVgGDk6RHT4cQpXFGyjHOFg9I0
+  bearer_token: AAAAAAAAAAAAAAAAAAAAAIGONQAAAAAAjy8QmcegLa1avvwJWvcPImUrsQY%3DrBDRqWhXHnpulTZdJZmtbH2lZ52PhCQU6m8lN3sI4P4  
 facebook:
   site_page_access_token: CAAGcBuUjgxYBAJix4YRpF3d5kr8vwmvAAkjr2JGDGpIuH6xMIz4HmXXohdt0EaBDeTICtE6vGKPR7pqnEoxxXOoMZCADHZAu31h353yuuMb4r7TpQJ7LOXWXIeMHGEb8yf3fX77kVFFaOlCrA3V0WqA4BDyYjJh84PLxJl8mYiTtJjhLcc # Post as Yoomee Test
 payment_sense:

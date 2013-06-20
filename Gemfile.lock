@@ -324,13 +324,13 @@ GEM
     will_paginate (3.0.4)
     xpath (0.1.4)
       nokogiri (~> 1.3)
-    ym_cms (0.3.3)
+    ym_cms (0.3.11)
       rack-cache
       rails (~> 3.1.0)
       ym_core (~> 0.1.8)
       ym_permalinks (~> 0.1)
       ym_videos (~> 0.1)
-    ym_core (0.1.61)
+    ym_core (0.1.62)
       bootstrap-will_paginate (~> 0.0.6)
       dragonfly (~> 0.9.10)
       formtastic (~> 2.0.2)
@@ -357,7 +357,7 @@ GEM
       rails (~> 3.1.0)
       ym_core (~> 0.1)
       ym_users (~> 0.1)
-    ym_permalinks (0.1.2)
+    ym_permalinks (0.1.5)
       rails (~> 3.1.0)
       stringex (~> 1.3.2)
       ym_core (~> 0.1)
@@ -424,8 +424,8 @@ DEPENDENCIES
   twitter
   uglifier
   whenever
-  ym_cms (~> 0.3.3)
-  ym_core (~> 0.1.61)
+  ym_cms (~> 0.3.11)
+  ym_core (~> 0.1.62)
   ym_enquiries (~> 0.1)
   ym_messages (~> 0.0.12)
   ym_notifications (~> 0.1)

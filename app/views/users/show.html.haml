@@ -3,7 +3,7 @@
     .row
       .span3
         .user-thumbnail-large
-          =image_for(@user, "220x")
+          =image_for_with_validation(@user, "220x")
           -if @user.validated?
             .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
         %p=link_to(@user.image ? "Edit" : "Upload your own picture", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)

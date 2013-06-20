@@ -1,0 +1,12 @@
+=content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      YmCms.Page.Form.init();  
+    });
+      
+=semantic_form_for(@page, :multipart => true) do |form|
+  =tabs('details', 'slideshow', :form => form)
+
+  =form.buttons do
+    =form.commit_button "Save"
+    =#link_to("Cancel", page.new_record? ? pages_path : page, :class => "btn")

@@ -16,7 +16,23 @@
         IntroPageNav.init();
       });
     =google_analytics_js
-  -if current_user.nil?
-    =render('layouts/logged_out/body')
-  -else
-    =render('layouts/logged_in/body')
+    
+    -body_tag(:class => "#{show_control_panel? ? 'with-control-panel' : ''}") do  
+      .main-wrapper
+        -if current_user
+          =render("layouts/logged_in/header")
+        -else
+          =render("layouts/logged_out/header")
+        =yield_with_bootstrap(yield)
+        .push
+      -if current_user.nil?
+        =render('modals/register_popup')
+      -elsif params[:modal]=="address_prompt"
+        =render('modals/address_prompt')
+      -elsif params[:modal]=="validation_prompt"
+        =render('modals/validation_prompt')
+      -elsif params[:modal]=="new_need_not_validated"
+        =render('modals/new_need_not_validated')
+      .footer-wrapper
+        =render("layouts/footer")
+      =render ('modals/preregister_popup')

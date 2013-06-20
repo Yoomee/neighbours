@@ -1,4 +1,5 @@
 #top
+#header-intro-placeholder
 #header-intro.header-intro        
   .container.header-intro-inner
     .row
@@ -7,7 +8,6 @@
           =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
           -if STAGING
             %span.badge.badge-warning Staging
-       
         -if current_user
           #logged-in-user-button.btn-group
             =link_to(current_user, :class => 'btn') do
@@ -49,12 +49,12 @@
           -if (neighbourhood = current_user.neighbourhood)
             %li=link_to('About', neighbourhood_about_path(neighbourhood), :class=>"intro-nav-link-about intro-nav-link")
             %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
-            %li=link_to('Latest news', neighbourhood_news_path(neighbourhood), :class=>"intro-nav-link-latest intro-nav-link")
+            %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to("Help", neighbourhood_help_path(neighbourhood), :class=> "intro-nav-link-help intro-nav-link")
           -else
             %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
-            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")          
-            %li=link_to_slug('Latest news', :news, :class=>"intro-nav-link-latest intro-nav-link")
+            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
+            %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
             %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")
             
     =link_to_slug(:safety_tips, :class=>"help-link") do
