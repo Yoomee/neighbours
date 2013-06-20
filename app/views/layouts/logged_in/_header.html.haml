@@ -7,7 +7,8 @@
         %h1.logo-intro
           =link_to "Neighbours Can Help", "/", :class=>"logo-intro-link"
           -if STAGING
-            %span.badge.badge-warning Staging
+            .staging-badge
+              %span.badge.badge-warning Staging
         -if current_user
           #logged-in-user-button.btn-group
             =link_to(current_user, :class => 'btn') do
