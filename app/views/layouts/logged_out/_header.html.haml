@@ -10,13 +10,14 @@
         %ul.nav.nav-intro.unstyled                
           %li=link_to("Home", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"intro-nav-link intro-nav-link-home")
           %li=link_to('About us', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
+          %li.dropdown#get-involved-nav
+            =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
+            %ul.dropdown-menu
+              -Page.find_by_slug(:get_involved).children.each do |child|
+                %li=link_to_self(child)
           %li=link_to_slug('News', :news, :class=>"intro-nav-link intro-nav-link-latest")
           %li=link_to("Help", @neighbourhood ? neighbourhood_help_path(@neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
 
-    =link_to_slug(:safety_tips, :class=>"help-link safety-help-link-logged-out") do
-      %icon.icon-question-sign
-      Stay safe
-    =link_to(sign_in_path, :class=>"help-link login-help-link") do
-      %icon.icon-user
-      Login
+    =link_to_slug('Stay safe', :safety_tips, :class=>"help-link safety-help-link-logged-out", :icon => 'question-sign')
+    =link_to(t(:login), sign_in_path, :class=>"help-link login-help-link", :icon => 'user')
 =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?

@@ -1313,7 +1313,6 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   text-align: center;
   font-weight: bold;
   font-size: 20px;
- 
 }
 .header-intro li.active a,
 .root_slug_about .intro-nav-link-about,
@@ -1328,7 +1327,27 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
 }
 .intro-nav-link-login {
 	margin:  0 10px 0 33px;
-
+}
+#get-involved-nav a.intro-nav-link {
+  padding-bottom:8px;
+}
+#get-involved-nav > ul.dropdown-menu {
+  left:-41px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#get-involved-nav:hover > ul.dropdown-menu{
+  display: block;
+}
+#get-involved-nav > ul.dropdown-menu > li{
+  margin: 0px;
+  float:none;
+  font-size:16px;
+  text-align:center;
+}
+#get-involved-nav > ul.dropdown-menu > li a:hover{
+  background:#98cd41;
 }
 .header-intro-fixed .intro-nav-link {
 	font-size: 16px;
