@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def assign_champion
     was_validated = @user.validated
     if @user.update_attributes(params[:user])
-      message = was_validated ? "#{@user} has been assigned a community champion" : (@user.community_champion ? "#{@user} has been validated and assigned a community champion" : "#{@user} has been validated")
+      message = was_validated ? "#{@user} has been assigned a neighbourhood champion" : (@user.community_champion ? "#{@user} has been validated and assigned a neighbourhood champion" : "#{@user} has been validated")
       flash[:notice] = message
     else
       flash[:error] = "Something has gone wrong.  Please try again"
@@ -44,13 +44,13 @@ class UsersController < ApplicationController
     if @user.is_community_champion?
       if @user.update_attributes(:is_community_champion => false)
         User.where(:community_champion_id => @user.id).update_all(:community_champion_id => nil)
-        flash[:notice] = "#{@user} is no longer a community champion"
+        flash[:notice] = "#{@user} is no longer a neighbourhood champion"
       else
         flash[:error] = "Something has gone wrong.  Please try again"
       end
     else
       if @user.update_attributes(:is_community_champion => true, :champion_request_at => nil)
-        flash[:notice] = "#{@user} has been made a community champion"
+        flash[:notice] = "#{@user} has been made a neighbourhood champion"
       else
         flash[:error] = "Something has gone wrong.  Please try again"
       end
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   def request_to_be_champion
     @user.update_attribute(:champion_request_at, Time.now)
     UserMailer.community_champion_request(@user).deliver
-    flash[:notice] = "You've asked to become a community champion. We'll get back to you soon"
+    flash[:notice] = "You've asked to become a neighbourhood champion. We'll get back to you soon"
     redirect_to @user
   end
 

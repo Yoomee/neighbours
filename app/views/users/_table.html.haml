@@ -39,11 +39,11 @@
                 %dt Organisation name
                 %dd=user.organisation_name.presence || '-'
               -if user.validated?
-                %dt Community champion?
+                %dt Neighbourhood champion?
                 %dd=user.is_community_champion? ? 'Yes' : 'No'
                 %dt Requested to be a champion?
                 %dd=user.champion_request_at.present? ? 'Yes' : 'No'
-                %dt Assigned community champion
+                %dt Assigned neighbourhood champion
                 %dd=user.community_champion.try(:full_name) || '-'
           .modal-footer
             =link_to "#{user.is_deleted? ? 'Un-delete user' : 'Delete user'}", toggle_is_deleted_user_path(user), :class => 'btn btn-danger pull-left', :method => :put, :confirm => "Are you sure?"

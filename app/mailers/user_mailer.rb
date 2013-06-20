@@ -65,7 +65,7 @@ class UserMailer < ActionMailer::Base
   
   def community_champion_request(user)
     @user = user
-    mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Community champion request")
+    mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Neighbourhood champion request")
   end  
   
   def group_invitation(group_invitation)
