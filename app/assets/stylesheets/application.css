@@ -1323,7 +1323,6 @@ body.controller_home.logged_out .header-intro {
   display: block;
   text-align: center;
   font-weight: bold;
-/*  font-size: 18px;*/
   font-size: 20px;
 }
 .header-intro li.active a,
@@ -1342,7 +1341,6 @@ body.controller_home.logged_out .header-intro {
 
 }
 .intro-nav-link-login {
-/*  margin:  0 10px 0 26px;*/
 	margin:  0 10px 0 33px;
 }
 #get-involved-nav a.intro-nav-link {
@@ -1418,9 +1416,6 @@ a.intro-nav-link-security {
 .messages-help-link {
   right: 110px;
   background: #b35860;
-}
-.login-help-link {
-  right
 }
 .login-help-link {
   right: 0px;
