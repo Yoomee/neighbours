@@ -91,6 +91,7 @@ Neighbours::Application.routes.draw do
   resources :group_invitations, :only => :show do
     resources :group_registrations, :path => 'registrations', :only => :new
   end
+  get 'group_invitations/:id/:ref' => 'group_invitations#show', :as => 'group_invitation_ref'
   resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
 
   get '/r/:auth_token' => 'home#index', :as => 'auth_token'

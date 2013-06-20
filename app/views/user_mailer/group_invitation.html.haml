@@ -9,7 +9,7 @@
       %strong=@group_invitation.group
       ="on #{Settings.site_name}."
     %p
-      =link_to("View the group", group_invitation_url(@group_invitation, :ref => @group_invitation.ref))
+      =link_to("View the group", group_invitation_ref_url(@group_invitation, :ref => @group_invitation.ref))
     %p
       Thanks,
     %p
