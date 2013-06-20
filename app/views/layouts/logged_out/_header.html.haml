@@ -6,7 +6,7 @@
       .span12   
         %h1.logo-intro
           =link_to "Neighbours Can Help", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"logo-intro-link"
-        =link_to "Join now", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+        =link_to "Join now", "#pre-register", :class=>"cta-intro", :"data-toggle"=>"modal"
         %ul.nav.nav-intro.unstyled                
           %li=link_to("Home", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"intro-nav-link intro-nav-link-home")
           %li=link_to('About us', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
