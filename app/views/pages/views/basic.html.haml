@@ -1,7 +1,11 @@
 .span8
   %h3=(@page.publication_date || @page.created_at).to_s(:date) if @page.parent && @page.parent.slug == "blog"
   %h1=@page.title
-  -if @page.image
+  -if @page.slideshow
+    .row
+      .span8.center
+        =render 'slideshows/slideshow', :slideshow => @page.slideshow
+  -elsif @page.image
     .row
       .span8
         =image_for(@page, "620x")
