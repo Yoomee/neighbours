@@ -6,12 +6,12 @@
       .span12   
         %h1.logo-intro
           =link_to "Neighbours Can Help", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"logo-intro-link"
-        =link_to "Get involved", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
+        =link_to "Join now", "#sign-up-popup", :class=>"cta-intro", :"data-toggle"=>"modal"
         %ul.nav.nav-intro.unstyled                
           %li=link_to("Home", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"intro-nav-link intro-nav-link-home")
           %li=link_to('About us', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
           %li.dropdown#get-involved-nav
-            =link_to_slug('Join now', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
+            =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
             -if get_involved_page = Page.find_by_slug(:get_involved)
               %ul.dropdown-menu
                 -get_involved_page.children.each do |child|
