@@ -5,7 +5,7 @@
       %h2.mb-2
         Posts
       =render("posts/remote_form", :post => current_user.posts.build(:target => @group))
-      =render("posts/posts", :posts => @posts)
+      =render("posts/posts", :posts => @group.posts.page(params[:page]))
     -if (tags = Tag.for_post_target(@group).most_used).length > 1
       .span4.offset1.groups-tags-list
         %h4.mb-2 Tags
