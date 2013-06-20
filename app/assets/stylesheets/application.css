@@ -1239,6 +1239,7 @@ body.controller_home.logged_out .header-intro {
 }
 .header-intro-inner ul.nav {
   width: 489px;
+  float: left;
 }
 .logo-intro {
   display: block;
