@@ -1352,7 +1352,8 @@ body.controller_home.logged_out .header-intro {
 .controller_groups .intro-nav-link-groups,
 .controller_photos .intro-nav-link-groups,
 .controller_messages .intro-nav-link-groups,
-.controller_message_threads .intro-nav-link-groups
+.controller_message_threads .intro-nav-link-groups,
+.root_slug_get_involved .intro-nav-link-get-involved
  {
   color:#98cd41;
   line-height: 1;
