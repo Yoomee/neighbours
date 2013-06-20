@@ -2,8 +2,9 @@ class GroupInvitationsController < ApplicationController
 
   include ActionView::Helpers::TextHelper
 
-  load_resource :group
-  load_and_authorize_resource :through => :group, :through_association => :invitations
+  load_resource :group, :except => 'show'
+  load_and_authorize_resource :through => :group, :through_association => :invitations, :except => 'show'
+  load_and_authorize_resource :group_invitation, :only => 'show'
 
   def create
     @group.invitations(true) # removes blank invitation built by cancan, which brakes group validation
