@@ -17,49 +17,27 @@
               %span.caret
             %ul.dropdown-menu.pull-right
               -if can?(:index, :admin)
-                %li
-                  =link_to(admin_path) do
-                    %icon.icon-cogs
-                    Admin
-              %li
-                =link_to(current_user) do
-                  %icon.icon-user
-                  View profile  
+                %li=link_to('Admin', admin_path, :icon => 'cogs')
+              %li=link_to('View profile', current_user, :icon => 'user')
               %li.divider
               -if current_user.is_community_champion? || current_user.is_admin?
-                %li
-                  =link_to(neighbourhood_posts_path(:neighbourhood => "sheffield")) do
-                    %icon.icon-comments-alt
-                    Discussion forum  
+                %li=link_to('Discussion forum', neighbourhood_posts_path(:neighbourhood => "sheffield"), :icon => 'comments-alt')
                 %li.divider
-              %li
-                =link_to(edit_user_path(current_user)) do
-                  %icon.icon-cog
-                  Edit profile
-              %li
-                =link_to(change_password_path) do
-                  %icon.icon-key
-                  Change password
-              %li
-                =link_to(sign_out_path, :method => :delete) do
-                  %icon.icon-signout
-                  =t(:logout)  
+              %li=link_to('Edit profile', edit_user_path(current_user), :icon => 'cog') 
+              %li=link_to('Change password', change_password_path, :icon => 'key')
+              %li=link_to(t(:logout), sign_out_path, :method => :delete, :icon => 'signout')
         %ul.nav.nav-intro.unstyled                
           %li=link_to "Home", root_path, :class=>"intro-nav-link-home intro-nav-link"     
-          -if (neighbourhood = current_user.neighbourhood)
-            %li=link_to('About', neighbourhood_about_path(neighbourhood), :class=>"intro-nav-link-about intro-nav-link")
-            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
-            %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
-            %li=link_to("Help", neighbourhood_help_path(neighbourhood), :class=> "intro-nav-link-help intro-nav-link")
-          -else
-            %li=link_to_slug('About', :about, :class=>"intro-nav-link-about intro-nav-link")
-            %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
-            %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
-            %li=link_to_slug("Help", :help, :class=> "intro-nav-link-help intro-nav-link")
-            
-    =link_to_slug(:safety_tips, :class=>"help-link") do
-      %icon.icon-question-sign
-      Stay safe
+          -neighbourhood = current_user.neighbourhood
+          %li=link_to('About us', neighbourhood ? neighbourhood_about_path(neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link-about intro-nav-link")
+          %li.dropdown#get-involved-nav
+            =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
+            %ul.dropdown-menu
+              -Page.find_by_slug(:get_involved).children.each do |child|
+                %li=link_to_self(child)
+          %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
+          %li=link_to("Help", neighbourhood ? neighbourhood_help_path(@neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
+    =link_to_slug('Stay safe', :safety_tips, :class=>"help-link", :icon => 'question-sign')
 
 =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?
       
