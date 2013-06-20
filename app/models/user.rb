@@ -35,9 +35,9 @@ class User < ActiveRecord::Base
 
   before_create :generate_validation_code
   before_save :set_neighbourhood, :ensure_authentication_token
-  after_validation :geocode, :if => :address_changed?
-  
+  after_validation :geocode, :if => :address_changed?  
   after_create :update_existing_group_invitations
+  before_update :change_email_if_deleted
 
   scope :with_lat_lng, where("lat IS NOT NULL AND lng IS NOT NULL")
   scope :not_deleted, where(:is_deleted => false)
@@ -164,6 +164,11 @@ class User < ActiveRecord::Base
   end
 
   private
+  def change_email_if_deleted
+    return true if !is_deleted? || email.starts_with?("deleted-#{id}-")
+    self.email = "deleted-#{id}-#{email}"
+  end
+  
   def generate_validation_code
     return true if validation_code.present?
     unique_code = nil
@@ -194,13 +199,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  protected
-  def confirmation_required?
-    false
-  end
-
   def update_existing_group_invitations
     GroupInvitation.where(['user_id IS NULL AND email = ?', email]).update_all(:user_id => id)
+  end
+
+  protected  
+  def confirmation_required?
+    false
   end
 
 end

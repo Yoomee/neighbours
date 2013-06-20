@@ -20,7 +20,7 @@ module UserConcerns::Validations
     base.validate :preauth_credit_card, :if => :validation_step?
     
     base.before_validation :insert_space_into_postcode_if_needed
-    base.after_validation :allow_non_unique_email_if_deleted, :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
+    base.after_validation :add_errors_to_confirmation_fields, :add_password_errors_for_who_you_are_step
   end  
   
   def who_you_are_step?
@@ -58,17 +58,6 @@ module UserConcerns::Validations
     if errors.present?
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
-    end
-  end
-  
-  def allow_non_unique_email_if_deleted
-    return true if errors.messages.blank? || (email_errors_messages = errors.messages.delete(:email)).blank?
-    non_unique_message = I18n.t("activerecord.errors.models.user.attributes.email.taken")
-    if email_errors_messages.delete(non_unique_message) && User.exists?(:email => email, :is_deleted => false)
-      email_errors_messages << non_unique_message
-    end
-    email_errors_messages.each do |message|
-      self.errors.add(:email,message)
     end
   end
   
