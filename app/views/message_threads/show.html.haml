@@ -12,7 +12,7 @@
     %h2.messages-title
       =@message_thread.users.without(current_user).collect(&:to_s).to_sentence
   .all-messages-strip
-    =link_to URI(request.referer).path == all_message_threads_path ? all_message_threads_path : messages_path, :class=>'all-messages-link' do
+    =link_to (request.referer.present? && URI(request.referer).path == all_message_threads_path) ? all_message_threads_path : messages_path, :class=>'all-messages-link' do
       %i.icon-arrow-left
       All messages
   .message-show
