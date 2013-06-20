@@ -1245,7 +1245,15 @@ body.controller_home.logged_out .header-intro {
   display: block;
   float: left;
   margin: 0;
-  
+  position: relative;
+}
+.logo-intro .staging-badge {
+  position: absolute;
+  top: 10px;
+  right: -52px;
+}
+.header-intro-fixed .logo-intro .staging-badge {
+  right: 30px;  
 }
 .logo-intro-link {
   background: url(/assets/logo-intro.png) no-repeat 0 0;
