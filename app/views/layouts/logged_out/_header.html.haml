@@ -9,7 +9,8 @@
         =link_to "Join now", "#pre-register", :class=>"cta-intro", :"data-toggle"=>"modal"
         %ul.nav.nav-intro.unstyled                
           %li=link_to("Home", @neighbourhood ? neighbourhood_path(@neighbourhood) : root_path, :class=>"intro-nav-link intro-nav-link-home")
-          %li=link_to('About us', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
+          %li=link_to('About', @neighbourhood ? neighbourhood_about_path(@neighbourhood) : Page.find_by_slug(:about), :class=>"intro-nav-link intro-nav-link-about")
+          %li=link_to('Groups', groups_path, :class=>"intro-nav-link-groups intro-nav-link")
           %li.dropdown#get-involved-nav
             =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
             -if get_involved_page = Page.find_by_slug(:get_involved)
