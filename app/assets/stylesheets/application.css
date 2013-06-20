@@ -1237,6 +1237,9 @@ body.controller_home.logged_out .header-intro {
 .header-intro-inner {
   position: relative;
 }
+.header-intro-inner ul.nav {
+  width: 489px;
+}
 .logo-intro {
   display: block;
   float: left;
@@ -1255,7 +1258,13 @@ body.controller_home.logged_out .header-intro {
 
 #logged-in-user-button {
   float: right;
-  margin: 36px 0 0 35px;
+  margin: 36px 0 0 30px;
+}
+#logged-in-user-button .btn {
+  max-width: 125px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;  
 }
 
 @-webkit-keyframes nav_reset {
