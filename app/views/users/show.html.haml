@@ -4,9 +4,7 @@
       .span3
         .user-thumbnail-large      
           -if @user.image
-            =image_for(@user, "220x")
-          -else
-            =image_for(@user, "220x")
+            =image_for_with_validation(@user, "220x")
             .italic
               %span Upload your own picture.
               .action-link

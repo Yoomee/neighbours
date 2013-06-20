@@ -22,6 +22,7 @@ class Ability
       can [:create], Comment
       can [:show, :create], Post
       can [:update, :destroy], Post, :user_id => user.id
+      can :read, User
       can :manage, User, :id => user.id     
       cannot :index, User
       can [:create, :read, :search], Need 
