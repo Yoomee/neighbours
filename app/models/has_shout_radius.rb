@@ -2,6 +2,8 @@ module HasShoutRadius
 
   def self.included(base)
     base.send(:extend, ClassMethods)
+    base.has_one :neighbourhood, :through => :user
+    base.scope :from_live_neighbourhood, base.joins(:neighbourhood).where('neighbourhoods.live = 1')
   end
 
   module ClassMethods
@@ -38,9 +40,9 @@ module HasShoutRadius
     
     def visible_to_user(user)
       if user.try(:admin?)
-        where("1 = 1")
+        from_live_neighbourhood
       elsif user.try(:has_lat_lng?)
-        visible_from_location(user.lat, user.lng)
+        from_live_neighbourhood.visible_from_location(user.lat, user.lng)
       else
         where("1 = 0")
       end

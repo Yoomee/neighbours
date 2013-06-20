@@ -57,7 +57,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @posts = @group.posts.page(params[:page])
   end
 
   def update
