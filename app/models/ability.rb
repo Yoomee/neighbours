@@ -11,7 +11,7 @@ class Ability
     can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
     can [:read], Group do |group|
-      !group.private? || group.has_member?(user) || group.invitations.exists?(:user_id => user.try(:id))
+      !group.private? || group.has_member?(user) || (user && group.invitations.exists?(:user_id => user.id))
     end
     can :read, GroupInvitation
     
