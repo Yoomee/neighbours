@@ -15,5 +15,6 @@
       ="The #{Settings.site_name} team"
       %br
       =Settings.site_url
-    
-    
+    %p
+      Turn these notifications off by updating your
+      =link_to 'profile.', edit_user_url(@user, :anchor => 'notifications')
