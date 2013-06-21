@@ -20,10 +20,8 @@
       =link_to 'Show older messages', message_thread_path(@message_thread, :page => @messages.next_page), :remote => true, :class => 'btn', :id => 'more-messages-btn'
     .message-inner
       =render 'message_threads/messages', :messages => @messages.reverse
-  - users_without_messaging = @message_thread.users - Message.valid_recipients_for_user(current_user)
-  - users_without_messaging.delete(current_user) if !current_user.no_private_messaging?
-  -if @message_thread.users.include?(current_user)     
-    -if current_user.has_private_messaging? && @message_thread.users_with_messaging.count > 1
+  -if @message_thread.users.include?(current_user)
+    -if current_user.has_private_messaging? && (@message_thread.users.without(current_user) - Message.valid_recipients_for_user(current_user)).empty?
       .reply-box
         .reply-box-inner
           .reply-form

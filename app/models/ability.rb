@@ -25,10 +25,10 @@ class Ability
         thread.users.exists?(:id => user.id)
       end
       can :index, MessageThread
-      can :create, Message do |message| 
-        (message.thread.try(:users) || []).none?(&:no_private_messaging?)
+      can :new, Message      
+      can :create, Message do |message|
+        message.thread && (message.thread.users - [user] - Message.valid_recipients_for_user(user)).empty?
       end
-      can :new, Message
       can [:create], Flag
       can [:create], Comment
       can [:show, :create], Post
