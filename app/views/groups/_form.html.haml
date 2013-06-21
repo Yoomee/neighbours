@@ -4,10 +4,11 @@
       %label.radio
         =form.radio_button :private, false
         %strong Public
+        =" - anyone can join"
       %label.radio
         =form.radio_button :private, true
         %strong Private
-        =" - Only invited members can access"
+        =" - only invited members can access"
     =form.input :name, :label => 'Group name', :input_html => {:class => 'span6'}, :required => false
     =form.input :description, :label => 'Group bio', :required => false, :input_html => {:class => 'span6', :rows => 4}
     =form.input :image, :label => 'Photo', :as => :image
