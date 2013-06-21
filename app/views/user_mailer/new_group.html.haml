@@ -1,0 +1,16 @@
+!!!
+%html
+  %body
+    %p Hi site admin,
+    %p
+      =link_to(@group.owner, user_url(@group.owner))
+      has created a 
+      =link_to('new group.', group_url(@group))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    
+    
