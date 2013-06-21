@@ -22,18 +22,21 @@ class UserMailer < ActionMailer::Base
     @comment = comment
     @need = @comment.post.target
     @user = @comment.user == @comment.post.user ? @need.user : @comment.post.user
+    return true if @user.no_notifications?
     mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@comment.user}")
   end
   
   def new_offer(offer)
     @offer = offer
     @user = @offer.need.user
+    return true if @user.no_notifications?
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has offered to help you")
   end
   
   def accepted_offer(offer)
     @offer = offer
     @user = @offer.user
+    return true if @user.no_notifications?
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.need.user} has accepted your offer of help")
   end
     
@@ -73,5 +76,5 @@ class UserMailer < ActionMailer::Base
     @user = @group_invitation.user
     mail(:to => group_invitation.email, :subject => "[Neighbours Can Help] Join #{group_invitation.group}")
   end
-  
+
 end
