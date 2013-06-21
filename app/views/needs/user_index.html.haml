@@ -27,5 +27,8 @@
         You haven't asked for any help yet.
       .row
         .span6
-          =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"      
+          -if current_user.try(:group_user?)
+            =link_to "I'd like some help", '#', :class=>"btn call-to-action primary group-user-registration-link", :data => {:return_to => new_need_path}
+          -else
+            =link_to "Add a request for help", new_need_path, :class=>"btn call-to-action primary"
 

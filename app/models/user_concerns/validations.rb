@@ -4,7 +4,7 @@ module UserConcerns::Validations
     base.validates :postcode, :postcode => true, :presence => true
     base.validates :validation_code, :uniqueness => true    
     base.validate :dob_or_undiclosed_age, :over_16, :unless => :pre_registration?
-    base.validates_confirmation_of :email, :message => "these don't match", :unless => :pre_registration?
+    base.validates_confirmation_of :email, :message => "these don't match", :if => :who_you_are_step?
     base.validates_confirmation_of :password, :message => "these don't match", :unless => :pre_registration?
     base.validate :group_invitation_email_matches, :on => :create
 

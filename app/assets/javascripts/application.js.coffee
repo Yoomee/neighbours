@@ -33,6 +33,16 @@ $(document).ready () ->
   NewNeedForm.initShowHideDeadline()
   PreRegistration.init()
   PhotoModal.init()
+  GroupUserRegistration.init()
+
+window.GroupUserRegistration =
+  init: ->
+    $('a.group-user-registration-link').click (event) ->
+      event.preventDefault()
+      nextLink = $('#group-user-registration').find('a.group-user-registration-next')
+      if nextLink.length
+        nextLink.attr('href', "#{nextLink.attr('href')}?return_to=#{$(this).data('return-to')}")
+      $('#group-user-registration').modal('show')
 
 window.PhotoModal =
   init: ->

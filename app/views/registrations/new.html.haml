@@ -48,6 +48,7 @@
     =semantic_form_for(@user, :url => registrations_path, :method => :post, :html => {:class => "loading-text-disabled"})  do |form|
       .tab-content.register-tab-content
         .register-tab-pane
+          =hidden_field_tag :return_to, params[:return_to]
           =form.hidden_field :current_step
           =form.hidden_field :neighbourhood_id
           %div{:class => @user.current_step == 'who_you_are' ? '' : 'hide'}

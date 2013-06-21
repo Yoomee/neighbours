@@ -5,10 +5,7 @@ class RegistrationsController < ApplicationController
   before_filter :get_user
 
   def new
-    if params[:redirect_to_needs]
-      session[:redirect_to_needs] = true
-    end
-    @user.current_step = @user.steps.first
+    @user.current_step = @user.group_user? ? @user.steps[1] : @user.steps[0]
   end
 
   def create
@@ -22,8 +19,9 @@ class RegistrationsController < ApplicationController
     else
       if @user.valid?
         if @user.last_step?
+          pre_register_user = (@user.role_was == 'pre_registration')
           if @user.save
-            send_emails
+            send_emails if pre_register_user
             sign_in(@user)
             if @user.validate_by == "post" && !@user.validated?
               flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
@@ -36,8 +34,8 @@ class RegistrationsController < ApplicationController
             else
               flash[:notice] = "Congratulations! You've just registered."
               flash[:notice] += " Once we've validated your account you'll be able to help your neighbours." if !@user.validated?              
-              if session.delete(:redirect_to_needs)
-                redirect_to(needs_path) and return
+              if params[:return_to].present?
+                redirect_to(params[:return_to]) and return
               elsif !@user.validated && what_next_page = Page.find_by_slug(:what_next)
                 flash.delete(:notice)
                 redirect_to(what_next_page) and return
@@ -62,7 +60,8 @@ class RegistrationsController < ApplicationController
 
   private
   def get_user
-    unless @user = User.find_by_id(session[:pre_register_user_id])
+    @user = current_user.try(:group_user?) ? current_user : User.find_by_id(session[:pre_register_user_id])
+    if @user.try(:neighbourhood).nil?
       raise CanCan::AccessDenied
     end
   end
