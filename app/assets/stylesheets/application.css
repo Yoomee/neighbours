@@ -1317,7 +1317,9 @@ body.controller_home.logged_out .header-intro {
   background-position: 0 -100px;
   height: 50px;
   margin: 7px;
-}.header-intro-fixed .cta-intro {
+  width: 230px;
+}
+.header-intro-fixed .cta-intro {
   margin-top: 13px;
 }
 .header-intro-fixed .nav {
