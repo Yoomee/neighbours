@@ -1,5 +1,5 @@
 =semantic_form_for(@user, { :multipart => true }) do |form|
-  =tabs('who_you_are', 'where_you_live', :form => form)
+  =tabs('who_you_are', 'where_you_live', 'notifications', :form => form)
   =form.buttons do
     =form.commit_button "Save", :button_html => {:class => 'btn-primary'}
     
