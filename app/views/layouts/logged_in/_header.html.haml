@@ -39,7 +39,7 @@
                 -get_involved_page.children.each do |child|
                   %li=link_to_self(child)
           %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
-          %li=link_to("Help", neighbourhood ? neighbourhood_help_path(@neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
+          %li=link_to("Help", neighbourhood ? neighbourhood_help_path(neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
     =link_to_slug('Stay safe', :safety_tips, :class=>"help-link", :icon => 'question-sign')
 
 =yield_with_bootstrap(render_flash, :container_class => "container flash_container") if flash.present?

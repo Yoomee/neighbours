@@ -49,16 +49,23 @@
           =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
       %p
         %h4 Phone number
-        -unless @user.phone.blank?
+        -if @user.phone.present?
           =@user.phone
-          .action-link
-            =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
         -else
           .italic
             %span Nothing entered yet.
-            .action-link
-              =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
-      
+        .action-link
+          =link_to("Edit", edit_user_path(@user, :anchor => "where_you_live")) if can?(:edit, @user)
+      %p
+        %h4 Notifications
+        You do
+        ='not' if @user.no_notifications?
+        receive emails when people reply to your wants and offers of help.
+        %br
+        %br
+        =switch_text(@user).html_safe.sub('You can change these settings using the button.', '')
+        .action-link
+          =link_to("Edit", edit_user_path(@user, :anchor => "notifications")) if can?(:edit, @user)
       %h4.mb-1 Groups        
       -@user.groups.each do |group|
         =link_to(group, :class => "profile span3 group-tile") do

@@ -1972,3 +1972,12 @@ border-radius:5px;
 h2.messages-title {
   color: #000;  
 }
+
+/*=============  User notifications edit ===================*/
+.user-notifications .control-label {
+  width: 270px;
+}
+.user-notifications .controls {
+  margin-left: 310px;
+}
+
