@@ -46,7 +46,7 @@
     -elsif current_user
       =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
     -else              
-      =link_to "I'd like some help", '#pre-register-signup', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
+      =link_to "I'd like some help", '#', :class=>"btn call-to-action primary pre-register-need-link"
 
   .span6
     %h2 Neighbours who need help
@@ -76,4 +76,4 @@
     -elsif current_user
       =link_to "I'd like to offer some help", new_general_offer_path, :class=>"btn call-to-action"
     -else              
-      =link_to "I'd like to offer some help", '#pre-register-signup', :class=>"btn call-to-action", :"data-toggle"=>"modal"
+      =link_to "I'd like to offer some help", '#', :class=>"btn call-to-action pre-register-general-offer-link"

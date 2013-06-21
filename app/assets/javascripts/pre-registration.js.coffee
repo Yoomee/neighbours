@@ -14,6 +14,14 @@ window.PreRegistration =
       $('#ready_for_pre_register_signup').val('0')
       $('.modal.in').modal('hide')    
       $('#pre-register').modal('show')
+    $('.pre-register-need-link').click (event) ->
+      event.preventDefault()
+      $('#pre-register').modal('show')
+      PreRegistration.showSignupModal('need')
+    $('.pre-register-general-offer-link').click (event) ->
+      event.preventDefault()
+      $('#pre-register').modal('show')
+      PreRegistration.showSignupModal('general-offer')
   showSignupModal: (type) ->
     if type == 'signup'
       $('#ready_for_pre_register_signup').val('1')

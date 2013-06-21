@@ -35,4 +35,7 @@
         =render('modals/new_need_not_validated')
       .footer-wrapper
         =render("layouts/footer")
-      =render ('pre_registrations/modals')
+      -if current_user.nil?
+        =render ('pre_registrations/modals')
+      -elsif current_user.role_is?(:group_user)
+        =render ('modals/group_user_sign_up')
