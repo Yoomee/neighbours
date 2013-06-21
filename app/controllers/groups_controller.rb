@@ -38,13 +38,9 @@ class GroupsController < ApplicationController
       render :action => 'about'
     else
       @groups =  current_user.groups
-      @popular_groups = Group.not_private.first(3)
+      @popular_groups = Group.not_private.most_members.first(3)
     end
 
-  end
-
-  def members
-    @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
   end
 
   def join
@@ -54,6 +50,14 @@ class GroupsController < ApplicationController
     else
       raise CanCan::AccessDenied
     end
+
+  def members
+    @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
+  end
+  end
+
+  def popular
+    @popular_groups = Group.not_private.most_members.paginate(:page => params[:page])
   end
 
   def show

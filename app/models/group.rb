@@ -7,6 +7,7 @@ class Group < ActiveRecord::Base
   has_many :photos, :dependent => :destroy
   
   after_create :add_owner_to_members
+  after_create :email_admins
   after_save :create_invitations
   
   image_accessor :image
@@ -59,7 +60,11 @@ class Group < ActiveRecord::Base
     new_emails = invitation_emails - existing_invitations.collect(&:email)
     new_emails.each {|e| invitations.create(:email => e.strip, :inviter_id => inviter_id || user_id)}
   end
-  
+
+  def email_admins
+    UserMailer.new_group(self).deliver
+  end
+
   def valid_invitation_emails
     return true if invitation_emails.empty?
     unless invitation_emails.all?(&:valid_email?)
