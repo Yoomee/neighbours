@@ -12,21 +12,14 @@
     .span12
       %h2 What are groups?
       %p
-        Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui.
+        =snippet_text(:about_groups, 'Share with the important groups in your life.')
+        =edit_snippet_link(:about_groups)
   .row
     .span7
       =link_to(current_user ? new_group_path : new_group_registration_path(:return_to => new_group_path), :class => "btn call-to-action", :id => "create-group-cta") do
         %i.icon-plus
         Create a Group
-  -if (popular_groups = Group.not_private.most_members.limit(4)).length > 0
-    .row
-      .span12.mt-2
-        %h3 Popular groups
-    .row
-      -popular_groups.each do |group|
-        .span3.mt-1
-          =link_to(group, :class => "group-tile") do
-            .inner.clearfix
-              .group-tile-image-wrap
-                =image_for(group, '190x130#')
-              %h4=group.name
+  .row
+    .span7
+      =link_to(popular_groups_path, :class => "btn call-to-action primary") do
+        Join a Group

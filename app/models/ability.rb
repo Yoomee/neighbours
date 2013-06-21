@@ -10,7 +10,7 @@ class Ability
     can :show, Page, :draft => false
     can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
-    can [:read], Group do |group|
+    can [:read, :popular], Group do |group|
       !group.private? || group.has_member?(user) || (user && group.invitations.exists?(:user_id => user.id))
     end
     can :read, GroupInvitation

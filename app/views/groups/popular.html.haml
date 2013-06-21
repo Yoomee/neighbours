@@ -1,0 +1,13 @@
+.container.mb-2
+  .row
+    .span2
+      =image_tag('groups-logo.png', :class=>'groups-logo mb-2')
+    .span10
+      %h1.page-title.mb-0.mt-2
+        Popular Groups
+.container
+  .row
+    =render @popular_groups
+  .row
+    .span8
+      =will_paginate @popular_groups
