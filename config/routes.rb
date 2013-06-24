@@ -79,8 +79,7 @@ Neighbours::Application.routes.draw do
   
   resources :groups do
     collection do
-      get :all
-      get :popular
+      get :list, :popular
     end
     member do
       get :members, :join
