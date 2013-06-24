@@ -2,12 +2,6 @@ class GroupsController < ApplicationController
 
   load_and_authorize_resource
 
-  def all
-    @groups = Group.not_private
-    @popular_groups = Group.not_private.first(3)
-    render :index
-  end
-
   def create
     @group = current_user.owned_groups.build(params[:group])
     if @group.save
@@ -52,8 +46,11 @@ class GroupsController < ApplicationController
     end
   end
 
-  def members
+  def list
+    @groups = Group.order(:name).paginate(:page => params[:page])
+  end
 
+  def members
     @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
   end
 

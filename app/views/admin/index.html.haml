@@ -9,7 +9,7 @@
     .span4
       .well
         %h2
-          %i.icon-group
+          %i.icon-user
           Users
         %ul.unstyled
           %li=link_to "Manage users", users_path
@@ -18,7 +18,7 @@
     .span4
       .well
         %h2
-          %i.icon-group
+          %i.icon-user
           Users
         %ul.unstyled
           %li=link_to "Manage users", users_path
@@ -67,7 +67,6 @@
           CMS
         %ul.unstyled
           %li=link_to "View all pages", pages_path
-          %li=link_to "New page", new_page_path
     .span4
       .well
         %h2
@@ -83,3 +82,13 @@
           Messages
         %ul.unstyled
           %li=link_to "View all messages", all_message_threads_path
+          %li=link_to "New page", new_page_path
+  .row
+    .span4
+      .well
+        %h2
+          %i.icon-group
+          Groups
+        %ul.unstyled
+          %li=link_to "View all groups", list_groups_path
+          %li=link_to "New group", new_group_path
