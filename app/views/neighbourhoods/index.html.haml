@@ -8,6 +8,7 @@
       %th Postcode
       %th Status
       %th Admin
+      %th Users
       %th Actions
   %tbody
     -@neighbourhoods.each do |area|
@@ -17,9 +18,15 @@
         %td=area.status
         %td=link_to(area.admin.full_name,area.admin) if area.admin
         %td
-          -if !area.users.where(:role => 'pre_registration').empty?
-            =link_to("Email #{area.users.where(:role => 'pre_registration').count} unregistered", email_neighbourhood_path(area))
-            &middot;
+          %p.mb-0
+            -if !area.users.where(:role => 'pre_registration').empty?
+              ="#{area.users.where(:role => 'pre_registration').count} pre-registered".html_safe
+              ="(#{link_to("Send emails", email_neighbourhood_path(area, 'pre_registration'))})".html_safe
+              ="<br />".html_safe if !area.users.where(:role => 'group_user').empty?
+            -if !area.users.where(:role => 'group_user').empty?
+              =pluralize(area.users.where(:role => 'group_user').count, 'group user')
+              ="(#{link_to("Send emails", email_neighbourhood_path(area, 'group_user'))})".html_safe
+        %td
           =link_to("Edit", edit_neighbourhood_path(area))
           &middot;
           =link_to("Delete", area, :confirm => 'Are you sure?', :method => :delete)

@@ -95,14 +95,12 @@ Neighbours::Application.routes.draw do
   get 'group_invitations/:id/:ref' => 'group_invitations#show', :as => 'group_invitation_ref'
   resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
 
-  get '/r/:auth_token' => 'home#index', :as => 'auth_token'
+  get '/r/:auth_token' => 'registrations#new', :as => 'auth_token'
   
-  resources :neighbourhoods do
-    member do
-      get "email" => "neighbourhoods#new_email"
-      post "email" => "neighbourhoods#create_email"
-    end
-  end
+  resources :neighbourhoods
+  
+  get "neighbourhoods/:neighbourhood_id/emails/:role/new" => "neighbourhood_emails#new", :as => 'email_neighbourhood'
+  post "neighbourhoods/:neighbourhood_id/emails/:role" => "neighbourhood_emails#create", :as => 'create_email_neighbourhood'
   
   get "neighbourhood" => "home#index"
   get "area/:id" => "neighbourhoods#show"
