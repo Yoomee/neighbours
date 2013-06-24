@@ -1,16 +1,9 @@
--if false
-  -content_for(:head) do
-    :coffeescript
-      $ ->
-        emails = #{User.select('email').collect(&:email)}
-        MultipleTypeahead.init('#group_invitation_emails_s', emails)
 .row
   .span8
     %h1.page-title=@group
     %p.lead Invite members to join this group.
-    %p
-      Enter email addresses separated by commas. Registered users will autocomplete but you can enter email addresses of neighbours that haven't registered to the site yet.
+
     =semantic_form_for(@group, :url => group_group_invitations_path(@group), :method => :post) do |form|
       =form.inputs do
-        =form.input :invitation_emails_s, :label => 'Enter email addresses', :input_html => {:autocomplete => 'off', :class => 'span8'}
+        =form.input :invitation_emails_s, :label => 'Enter email addresses separated by commas', :input_html => {:class => 'span8'}
         =form.commit_button 'Invite members', :button_html => {:class => 'btn btn-primary'}
