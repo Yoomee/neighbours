@@ -332,7 +332,7 @@ GEM
       ym_core (~> 0.1.8)
       ym_permalinks (~> 0.1)
       ym_videos (~> 0.1)
-    ym_core (0.1.64)
+    ym_core (0.1.65)
       bootstrap-will_paginate (~> 0.0.6)
       dragonfly (~> 0.9.10)
       formtastic (~> 2.0.2)
@@ -427,7 +427,7 @@ DEPENDENCIES
   uglifier
   whenever
   ym_cms (~> 0.3.12)
-  ym_core (~> 0.1.64)
+  ym_core (~> 0.1.65)
   ym_enquiries (~> 0.1)
   ym_messages (~> 0.0.15)
   ym_notifications (~> 0.1)
