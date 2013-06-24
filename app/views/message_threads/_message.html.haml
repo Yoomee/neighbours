@@ -1,0 +1,13 @@
+.message{:id => message_on_date.id}
+  .row
+    .span1
+      =link_to message_on_date.user, :class=>'message-user-photo' do
+        =image_for(message_on_date.user, '60x60#')
+    .span8
+      %h3.message-user-name.mt-0
+        =link_to message_on_date.user, message_on_date.user
+      .message-body
+        =simple_format(message_on_date.text)
+    .span1
+      %span.message-time
+        =time(message_on_date)
