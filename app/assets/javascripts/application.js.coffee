@@ -40,8 +40,7 @@ window.FlagLinks =
   init: ->
     $('#group-posts').on 'click', 'a.flag-link', (event) ->
       event.preventDefault()
-      $('#flag_resource_type').val($(this).data('resource-type'))
-      $('#flag_resource_id').val($(this).data('resource-id'))
+      $('#flag_resource_id').val($(this).data('post-id'))
       $('#inappropriate').modal('show')
 
 window.GroupUserRegistration =

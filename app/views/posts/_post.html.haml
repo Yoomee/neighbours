@@ -12,7 +12,7 @@
           =time_ago_in_words(post.created_at)
           ago
       -if current_user
-        =link_to('#', :class => 'flag-link pull-right', :title => 'Report this post as inappropriate', :rel => 'tooltip', :data => {:resource_type => 'Post', :resource_id => post.id}) do
+        =link_to('#', :class => 'flag-link pull-right', :title => 'Report this post as inappropriate', :rel => 'tooltip', :data => {:post_id => post.id}) do
           %i.icon-warning-sign
       =link_if_can post, :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'pull-right mr-1' do
         %i.icon-trash

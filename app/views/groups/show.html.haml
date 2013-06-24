@@ -22,4 +22,4 @@
       =link_if_can("Destroy group", [:destroy, @group], :confirm => "Are you sure?", :method => :delete)
       
 #inappropriate.modal.hide.fade
-  =render("flags/modal_form", :flag => Flag.new)
+  =render("flags/modal_form", :flag => Flag.new(:resource_type => 'Post'))
