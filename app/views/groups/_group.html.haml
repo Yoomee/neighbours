@@ -2,4 +2,8 @@
   .inner.clearfix
     .group-tile-image-wrap
       =image_for(group, '190x130#')
-    %h4=group.name
+    %h4
+      =group.name
+      -if current_user.try(:is_admin?)
+        %span.pull-right.label{ :class => group.private? ? 'label-important' : 'label-success' }
+          =group.private? ? 'Private' : 'Public'

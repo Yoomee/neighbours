@@ -1,11 +1,11 @@
 %h2.mb-2
-  =title("Email everyone in #{@neighbourhood}")
+  =title("Email #{params[:role].humanize.downcase.sub('user', '')} users in #{@neighbourhood}")
   
 %p
   Enter the content of the email below and click send. An email will be sent to all
   ="#{@neighbourhood.users.where(:role => 'pre_registration').count} people in #{@neighbourhood}."
   
-=form_tag(email_neighbourhood_path(@neighbourhood)) do
+=form_tag(create_email_neighbourhood_path(@neighbourhood, params[:role])) do
   %div{:class => "control-group#{request.post? && params[:subject].blank? ? ' error' : ''}"}
     %label.control-label Subject
     =text_field_tag 'subject', params[:subject]
