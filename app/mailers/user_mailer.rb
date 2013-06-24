@@ -14,7 +14,6 @@ class UserMailer < ActionMailer::Base
 
   def new_flag(flag)
     @flag = flag
-    @need = @flag.resource
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
   end
           

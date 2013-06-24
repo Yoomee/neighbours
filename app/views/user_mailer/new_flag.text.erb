@@ -1,6 +1,6 @@
 Hi site admin,
 
-Someone has reported <%=@need.user.full_name%>'s request as inappropriate: <%=need_url(@need)%>
+Someone has reported <%=@flag.resource_name%> as inappropriate: <%=polymorphic_url(@flag.resource)%>
 
 View all inappropriate content here: <%=flags_url%>
 

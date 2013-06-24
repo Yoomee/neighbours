@@ -4,7 +4,7 @@
     %p Hi site admin,
     %p
       Someone has reported
-      =link_to("#{@need.user.full_name}'s request", need_url(@need))
+      =link_to(@flag.resource_name, polymorphic_url(@flag.resource))
       as inappropriate.
     %p
       =link_to("View all inappropriate content", flags_url)
