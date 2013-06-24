@@ -32,9 +32,8 @@ class GroupsController < ApplicationController
       render :action => 'about'
     else
       @groups =  current_user.groups
-      @popular_groups = Group.without(@groups).not_private.most_members.paginate(:page => params[:page], :per_page => 8)
+      @popular_groups = Group.closest_to(current_user, :page => params[:page], :per_page => 8, :without => {:id => @groups.collect(&:id)})
     end
-
   end
 
   def join
@@ -52,6 +51,10 @@ class GroupsController < ApplicationController
 
   def members
     @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
+  end
+
+  def new
+    @group.location = current_user.city.presence || current_user.postcode
   end
 
   def popular
