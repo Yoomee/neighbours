@@ -10,7 +10,8 @@ class FlagsController < ApplicationController
     else
       flash[:error] = "There was a problem, this content has not been flagged as innapropriate."
     end
-    return_or_redirect_to(@flag.resource || root_path)
+    url = @flag.resource_type == 'Post' ? @flag.resource.target : @flag.resource
+    return_or_redirect_to(url || root_path)
   end
   
   def index

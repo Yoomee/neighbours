@@ -1,6 +1,6 @@
 =render('groups/header')
 -if @group.has_member?(current_user)
-  .row
+  .row#group-posts
     .span7
       %h2.mb-2
         Posts
@@ -20,3 +20,6 @@
       =link_if_can("Edit group", [:edit, @group])
       =link_if_can("Delete group", [:delete, @group], :confirm => "Are you sure?", :method => :delete)
       =link_if_can("Destroy group", [:destroy, @group], :confirm => "Are you sure?", :method => :delete)
+      
+#inappropriate.modal.hide.fade
+  =render("flags/modal_form", :flag => Flag.new)
