@@ -64,8 +64,8 @@ window.IntroPageNav =
 
 window.Needs =
   init: ->
-    Needs.startCycle "#resolved", 3000
-    setTimeout "Needs.startCycle('#unresolved', 3000);", 1500
+    Needs.startCycle "#resolved", 7000
+    setTimeout "Needs.startCycle('#unresolved', 7000);", 3500
     $("#resolved,#unresolved").hover ->
       accessor = $(this).attr("id")
       if accessor is "resolved"
@@ -75,7 +75,7 @@ window.Needs =
     , ->
       accessor = $(this).attr("id")
       Needs.cycle "\##{accessor}"
-      Needs.startCycle "\##{accessor}", 3000
+      Needs.startCycle "\##{accessor}", 7000
 
   startCycle: (accessor, interval) ->
     if accessor is "#resolved"
