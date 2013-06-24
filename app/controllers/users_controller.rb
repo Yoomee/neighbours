@@ -24,6 +24,22 @@ class UsersController < ApplicationController
     @community_champions = User.not_deleted.community_champions
     @not_in_sheffield = User.not_in_sheffield
     @deleted_users = User.deleted
+    
+    respond_to do |format|
+      format.html {}
+      format.xls do
+        @sheets = [
+          [ "All", @users ],
+          [ "Unvalidated", @unvalidated_users ],
+          [ "Validated", @validated_users ],
+          [ "Champion requests", @community_champion_requests ],
+          [ "Champions", @community_champions ],
+          [ "Not in Sheffield", @not_in_sheffield ],
+          [ "Deleted", @deleted_users ],
+        ]
+        headers["Content-Disposition"] = "attachment; filename=\"Users #{Date.today.strftime('%d-%m-%Y')}.xls\"" 
+      end
+    end
   end
 
   def map
