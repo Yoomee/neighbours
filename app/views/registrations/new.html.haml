@@ -14,12 +14,12 @@
       });
     });
 
--if @pre_registration    
+-if logged_out?
   .row
     .span10.offset1.well.center
       %h3
         Congratulations
-        =@pre_registration.neighbourhood.name
+        =@user.neighbourhood.name
         is now live!
       %p
         =neighbourhood_snippet_text(:congrats_live, "Please enter your details below so that you can start helping neighbours.")
