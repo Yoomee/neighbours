@@ -1,36 +1,43 @@
--title("Users")
+.row
+  .span8
+    %h1=title "Users"
+  .span4
+    =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right') do
+      %i.icon-download-alt
+      Download spreadsheet
+.row
+  .span12
+    %ul.nav.nav-tabs
+      %li.active
+        =link_to '#unvalidated', :'data-toggle' => 'tab' do
+          Unvalidated
+      %li
+        =link_to '#validated', :'data-toggle' => 'tab' do
+          Validated
+      %li
+        =link_to '#champion_requests', :'data-toggle' => 'tab' do
+          Champion requests
+      %li
+        =link_to '#champions', :'data-toggle' => 'tab' do
+          Champions
+      %li
+        =link_to '#not-in-sheffield', :'data-toggle' => 'tab' do
+          Not in Sheffield
+      %li
+        =link_to '#deleted', :'data-toggle' => 'tab' do
+          Deleted
 
-%ul.nav.nav-tabs
-  %li.active
-    =link_to '#unvalidated', :'data-toggle' => 'tab' do
-      Unvalidated
-  %li
-    =link_to '#validated', :'data-toggle' => 'tab' do
-      Validated
-  %li
-    =link_to '#champion_requests', :'data-toggle' => 'tab' do
-      Champion requests
-  %li
-    =link_to '#champions', :'data-toggle' => 'tab' do
-      Champions
-  %li
-    =link_to '#not-in-sheffield', :'data-toggle' => 'tab' do
-      Not in Sheffield
-  %li
-    =link_to '#deleted', :'data-toggle' => 'tab' do
-      Deleted
-
-.tab-content
-  #unvalidated.tab-pane.fade.in.active
-    =render('table', :users => @unvalidated_users, :tab => "unvalidated")
-  #validated.tab-pane.fade.in
-    =render('table', :users => @validated_users, :tab => "validated")
-  #champion_requests.tab-pane.fade.in
-    =render('table', :users => @community_champion_requests, :tab => "champion_requests")
-  #champions.tab-pane.fade.in
-    =render('table', :users => @community_champions, :tab => "champions")
-  #not-in-sheffield.tab-pane.fade.in
-    =render('table', :users => @not_in_sheffield, :tab => "not_in_sheffield")
-  #deleted.tab-pane.fade.in
-    =render('table', :users => @deleted_users, :tab => "deleted")
-#choose-community-champion.modal.hide.fade
+    .tab-content
+      #unvalidated.tab-pane.fade.in.active
+        =render('table', :users => @unvalidated_users, :tab => "unvalidated")
+      #validated.tab-pane.fade.in
+        =render('table', :users => @validated_users, :tab => "validated")
+      #champion_requests.tab-pane.fade.in
+        =render('table', :users => @community_champion_requests, :tab => "champion_requests")
+      #champions.tab-pane.fade.in
+        =render('table', :users => @community_champions, :tab => "champions")
+      #not-in-sheffield.tab-pane.fade.in
+        =render('table', :users => @not_in_sheffield, :tab => "not_in_sheffield")
+      #deleted.tab-pane.fade.in
+        =render('table', :users => @deleted_users, :tab => "deleted")
+    #choose-community-champion.modal.hide.fade

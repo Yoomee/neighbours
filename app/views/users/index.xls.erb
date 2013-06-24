@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="ta1"/>
+    <Style ss:ID="ce1">
+      <NumberFormat ss:Format="Short Date"/>
+    </Style>
+  </Styles>
+  <%@sheets.each do |name, users|%>
+    <Worksheet ss:Name="<%=name%>">
+      <Table ss:StyleID="ta1">
+        <Row>
+          <Cell><Data ss:Type="String">ID</Data></Cell>
+          <Cell><Data ss:Type="String">First name</Data></Cell>
+          <Cell><Data ss:Type="String">Last name</Data></Cell>
+          <Cell><Data ss:Type="String">Gender</Data></Cell>
+          <Cell><Data ss:Type="String">Date of birth</Data></Cell>
+          <Cell><Data ss:Type="String">Email</Data></Cell>
+          <Cell><Data ss:Type="String">Phone number</Data></Cell>
+          <Cell><Data ss:Type="String">Area</Data></Cell>
+          <Cell><Data ss:Type="String">Address</Data></Cell>
+          <Cell><Data ss:Type="String">Postcode</Data></Cell>
+          <Cell><Data ss:Type="String">Role</Data></Cell>
+          <Cell><Data ss:Type="String">Validated</Data></Cell>
+          <Cell><Data ss:Type="String">Validation method</Data></Cell>
+          <Cell><Data ss:Type="String">Validating organisation</Data></Cell>
+          <Cell><Data ss:Type="String">Neighbourhood champion</Data></Cell>
+          <Cell><Data ss:Type="String">Requested to be a champion</Data></Cell>
+          <Cell><Data ss:Type="String">Assigned neighbourhood champion</Data></Cell>
+          <Cell><Data ss:Type="String">Date registered</Data></Cell>
+        </Row>
+      <% users.each do |user| %>
+        <Row>
+          <Cell><Data ss:Type="String"><%= user.id%></Data></Cell>        
+          <Cell><Data ss:Type="String"><%= user.first_name%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.last_name%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.gender%></Data></Cell>
+          <% if user.dob.present? %>
+          <Cell ss:StyleID="ce1"><Data ss:Type="DateTime"><%=user.dob.to_s%>T00:00:00.000</Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"></Data></Cell>
+          <% end %>
+          <Cell><Data ss:Type="String"><%= user.email%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.phone%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.neighbourhood || user.city%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.address%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.postcode%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.role.try(:humanize)%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.validated? ? 'Yes' : 'No'%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.validate_by.try(:humanize)%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.organisation_name%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.is_community_champion? ? 'Yes' : 'No'%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.champion_request_at.present? ? 'Yes' : 'No'%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.community_champion.try(:full_name)%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.created_at.strftime("%d/%m/%Y")%></Data></Cell>
+        </Row>
+      <% end %>
+      </Table>
+    </Worksheet>
+  <% end %>
+</Workbook>
