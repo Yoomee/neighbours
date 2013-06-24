@@ -50,10 +50,11 @@ class GroupsController < ApplicationController
     else
       raise CanCan::AccessDenied
     end
+  end
 
   def members
+
     @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
-  end
   end
 
   def popular
