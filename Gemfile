@@ -20,7 +20,7 @@ gem 'ym_search',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_search"
 gem 'ym_notifications', "~> 0.1"    #, :path => "~/Rails/Gems/ym_notifications"
 gem 'ym_enquiries',     "~> 0.1"    #, :path => "~/Rails/Gems/ym_enquiries"
 gem 'ym_snippets',      "~> 0.1.1"  #, :path => "~/Rails/Gems/ym_snippets"
-gem 'ym_messages',      "~> 0.0.16" #, :path => "~/Rails/Gems/ym_messages"
+gem 'ym_messages',      "~> 0.0.18" #, :path => "~/Rails/Gems/ym_messages"
 
 gem 'client_side_validations'
 gem 'client_side_validations-formtastic'

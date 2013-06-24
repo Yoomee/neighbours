@@ -1,0 +1,9 @@
+-messages.group_by{|m| m.created_at.to_date}.each do |date, messages| 
+  .row
+    .span10
+      .date-divider
+        .date-divider-line
+        %span.message-date
+          =date.strftime("%d %b")
+      -messages.each do |message_on_date|
+        =render 'message_threads/message', :message_on_date => message_on_date
