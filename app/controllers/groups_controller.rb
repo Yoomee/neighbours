@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
       render :action => 'about'
     else
       @groups =  current_user.groups
-      @popular_groups = Group.not_private.most_members.first(3)
+      @popular_groups = Group.without(@groups).not_private.most_members.paginate(:page => params[:page], :per_page => 8)
     end
 
   end
@@ -55,7 +55,7 @@ class GroupsController < ApplicationController
   end
 
   def popular
-    @popular_groups = Group.not_private.most_members.paginate(:page => params[:page])
+    @popular_groups = Group.not_private.most_members.paginate(:page => params[:page], :per_page => 16)
   end
 
   def show

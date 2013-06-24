@@ -22,6 +22,11 @@
 .row.mb-2.mt-3
   .span12
     %h1.page-title.mb-3.mt-0
-      Popular groups nearby        
-    .row
+      Popular groups nearby
+    .row          
       =render @popular_groups
+    -if @popular_groups.next_page
+      .row
+        .span12
+          .pull-right
+            =will_paginate(@popular_groups)

@@ -1,5 +1,7 @@
 class Group < ActiveRecord::Base
 
+  include YmCore::Model
+
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   has_many :posts, :as => :target, :dependent => :destroy
   has_and_belongs_to_many :members, :class_name => 'User', :uniq => true
