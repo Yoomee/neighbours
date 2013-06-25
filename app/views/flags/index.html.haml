@@ -18,12 +18,14 @@
         %tr
           %td.span4
             .list-image
-              =link_to flag.resource do
+              =link_to flag.resource_url do
                 =image_for_with_validation(flag.resource.user, "60x50#")
               %p.small-text=flag.resource.user
-            =link_to_self(flag.resource)
-            %p=truncate(strip_tags(flag.resource.description), :length => 100)
+            =link_to(flag.resource_name, flag.resource_url)
+            %p=truncate(strip_tags(flag.resource_description), :length => 100)
           %td.span4=flag.text
           %td.span2=link_to(flag.user.full_name, flag.user)
           %td=flag.created_at.to_s(:date_and_time)
           %td=link_to("x", resolve_flag_path(flag), :method => :put)
+          
+  =will_paginate(@flags)
