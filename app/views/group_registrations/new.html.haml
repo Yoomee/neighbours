@@ -1,26 +1,10 @@
--content_for(:head) do
-  :javascript
-    $(document).ready(function() {
-      $("#why-age-modal-button").click(function() {
-        var undisclosed_age = $('#undisclosed_age_check_box').is(':checked');
-        $('#user_undisclosed_age').val(undisclosed_age);
-        if( undisclosed_age) {
-          $('#age-select-controls').addClass('hide');
-          $('#undisclosed-age-text').removeClass('hide');
-        } else {
-          $('#age-select-controls').removeClass('hide');
-          $('#undisclosed-age-text').addClass('hide');
-        }
-      });
-    });
-    
 .row
   .span10.offset1
     .well.center 
       %h3
         First we need to know who you are
       %p
-        Please fill out the fields below and then you can start creating your group.
+        Please fill out the fields below.
 .row
   .span10.offset1
     =semantic_form_for(@user, :url => group_registrations_path, :method => :post)  do |form|
@@ -29,7 +13,7 @@
       =form.hidden_field :seen_group_invitation_email_warning
       .register-tab-content
         .register-tab-pane
-          =render 'group_registrations/group_user_form'
+          =render 'group_registrations/group_user_form', :form => form
         .form-actions
           =form.submit("Register", :class => "btn btn-primary")
 

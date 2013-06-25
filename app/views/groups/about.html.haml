@@ -16,9 +16,15 @@
         =edit_snippet_link(:about_groups)
   .row
     .span7
-      =link_to(new_group_path, :class => "btn call-to-action", :id => "create-group-cta") do
-        %i.icon-plus
-        Create a Group
+      -if current_user
+        =link_to(new_group_path, :class => "btn call-to-action", :id => "create-group-cta") do
+          %i.icon-plus
+          Create a Group
+      -else
+        =render 'modals/group_log_in_or_join', :return_to => new_group_path, :group_join_path => new_group_path
+        =link_to('#group-log-in-or-join', :'data-toggle' => 'modal', :class => "btn call-to-action", :id => "create-group-cta") do
+          %i.icon-plus
+          Create a Group
   .row
     .span7
       =link_to(popular_groups_path, :class => "btn call-to-action primary") do

@@ -1,3 +1,19 @@
+-content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      $("#why-age-modal-button").click(function() {
+        var undisclosed_age = $('#undisclosed_age_check_box').is(':checked');
+        $('#user_undisclosed_age').val(undisclosed_age);
+        if( undisclosed_age) {
+          $('#age-select-controls').addClass('hide');
+          $('#undisclosed-age-text').removeClass('hide');
+        } else {
+          $('#age-select-controls').removeClass('hide');
+          $('#undisclosed-age-text').addClass('hide');
+        }
+      });
+    });
+
 =form.inputs(:class => "form-horizontal") do
   =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
