@@ -1981,3 +1981,8 @@ h2.messages-title {
   margin-left: 310px;
 }
 
+/*============= Group Registration ================*/
+
+body.controller_groups form .register-tab-pane {
+  padding-top: 40px;
+}
