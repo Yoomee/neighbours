@@ -31,3 +31,12 @@
           =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
         -elsif @general_offer.user.validated?
           =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')
+.row
+  .span12
+    =options_panel do
+      -if current_user
+        =link_to("#inappropriate", :data => {:toggle => "modal"}) do
+          %i.icon-warning-sign
+          Report this page as inappropriate
+        #inappropriate.modal.hide.fade
+          =render("flags/modal_form", :flag => @general_offer.flags.build)

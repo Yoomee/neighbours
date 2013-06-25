@@ -2,26 +2,28 @@
   %i.icon-warning-sign
   =title("Inappropriate content")
 
-%table.table.table-bordered.table-striped
-  %thead
-    %tr
-      %th.span4 Request
-      %th.span4 Report message
-      %th.span2 Reported by
-      %th Time
-      %th
-  %tbody
-    -@flags.each do |flag|
+-if @flags.empty?
+  %p No content has been flagged as inappropriate.
+-else
+  %table.table.table-bordered.table-striped
+    %thead
       %tr
-        %td.span4
-          .list-image
-            =link_to flag.resource do
-              =image_for_with_validation(flag.resource.user, "60x50#")
-            %p.small-text=flag.resource.user
-          =link_to_self(flag.resource)
-          %p=truncate(strip_tags(flag.resource.description), :length => 100)
-        %td.span4=flag.text
-        %td.span2=link_to(flag.user.full_name, flag.user)
-        %td=flag.created_at.to_s(:date_and_time)
-        %td=link_to("x", resolve_flag_path(flag), :method => :put)
-        
+        %th.span4 Content
+        %th.span4 Report message
+        %th.span2 Reported by
+        %th Time
+        %th
+    %tbody
+      -@flags.each do |flag|
+        %tr
+          %td.span4
+            .list-image
+              =link_to flag.resource do
+                =image_for_with_validation(flag.resource.user, "60x50#")
+              %p.small-text=flag.resource.user
+            =link_to_self(flag.resource)
+            %p=truncate(strip_tags(flag.resource.description), :length => 100)
+          %td.span4=flag.text
+          %td.span2=link_to(flag.user.full_name, flag.user)
+          %td=flag.created_at.to_s(:date_and_time)
+          %td=link_to("x", resolve_flag_path(flag), :method => :put)

@@ -34,6 +34,14 @@ $(document).ready () ->
   PreRegistration.init()
   PhotoModal.init()
   GroupUserRegistration.init()
+  FlagLinks.init()
+
+window.FlagLinks =
+  init: ->
+    $('#group-posts').on 'click', 'a.flag-link', (event) ->
+      event.preventDefault()
+      $('#flag_resource_id').val($(this).data('post-id'))
+      $('#inappropriate').modal('show')
 
 window.GroupUserRegistration =
   init: ->

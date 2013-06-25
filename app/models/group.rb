@@ -8,22 +8,46 @@ class Group < ActiveRecord::Base
   has_many :invitations, :class_name => 'GroupInvitation', :dependent => :destroy
   has_many :photos, :dependent => :destroy
   
-  after_create :add_owner_to_members
-  after_create :email_admins
-  after_save :create_invitations
-  
   image_accessor :image
   attr_writer :invitation_emails
   attr_accessor :inviter_id
   
-  validates :name, :description, :owner, :presence => true
+  validates :name, :description, :owner, :location, :lat, :lng, :presence => true
   validates_property :format, :of => :image, :in => [:jpeg, :jpg, :png, :gif], :case_sensitive => false, :message => "must be an image"
-  validate :valid_invitation_emails
+  validate :valid_invitation_emails, :geocodable_location
+
+  geocoded_by :location_with_country, :latitude => :lat, :longitude => :lng
+
+  before_validation :geocode, :if => :location_changed?
+  after_create :add_owner_to_members
+  after_create :email_admins
+  after_save :create_invitations
 
   default_scope where(:deleted_at => nil)
 
   scope :not_private, where(:private => false)
   scope :most_members, joins(:members).group('groups.id').select('groups.*, COUNT(users.id) AS member_count').order('member_count DESC')
+
+  define_index do
+    indexes name
+    has id
+    has "RADIANS(lat)", :as => :latitude,  :type => :float
+    has "RADIANS(lng)", :as => :longitude, :type => :float
+    where "private = 0"
+    where "deleted_at IS NULL"    
+    set_property :delta => true
+  end
+
+  class << self
+    
+    def closest_to(*args)
+      options = args.extract_options!
+      puts options.inspect
+      lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
+      search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
+    end
+    
+  end
 
   def add_member!(user)
     invitations = user.group_invitations.where(:group_id => id)
@@ -50,6 +74,10 @@ class Group < ActiveRecord::Base
     invitation_emails.join(", ")
   end
 
+  def location_with_country
+    "#{location}, UK"
+  end
+
   private
   def add_owner_to_members
     self.members << owner
@@ -65,6 +93,12 @@ class Group < ActiveRecord::Base
 
   def email_admins
     UserMailer.new_group(self).deliver
+  end
+  
+  def geocodable_location
+    unless all_present?(:lat, :lng)
+      self.errors.add(:location, "couldn't find location")
+    end
   end
 
   def valid_invitation_emails

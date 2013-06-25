@@ -7,6 +7,7 @@ class GeneralOffer < ActiveRecord::Base
   belongs_to :category, :class_name => "NeedCategory"
   belongs_to :sub_category, :class_name => "NeedCategory"
   has_many :offers
+  has_many :flags, :as => :resource, :dependent => :destroy
 
   validates :category, :description, :presence => true
 
