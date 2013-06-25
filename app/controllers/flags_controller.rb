@@ -8,14 +8,13 @@ class FlagsController < ApplicationController
       flash[:notice] = "Thank you for flagging this content as inappropriate. We have been notified and will take a look as soon as possible."
       UserMailer.new_flag(@flag).deliver
     else
-      flash[:error] = "There was a problem, this content has not been flagged as innapropriate."
+      flash[:error] = "There was a problem, this content has not been flagged as inappropriate."
     end
-    url = @flag.resource_type == 'Post' ? @flag.resource.target : @flag.resource
-    return_or_redirect_to(url || root_path)
+    return_or_redirect_to(@flag.resource_url || root_path)
   end
   
   def index
-    @flags = Flag.where('resolved_at IS NULL')
+    @flags = Flag.where('resolved_at IS NULL').page(params[:page])
   end
   
   def resolve

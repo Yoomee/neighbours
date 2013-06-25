@@ -1,11 +1,22 @@
 class Flag < ActiveRecord::Base
   
   include YmCore::Model
+  include Rails.application.routes.url_helpers
   
   belongs_to :user
   belongs_to :resource, :polymorphic => true
   
   validates_presence_of :user
+
+  self.per_page = 10
+
+  def resource_description
+    if resource.respond_to?(:description)
+      resource.description
+    elsif resource.respond_to?(:text)
+      resource.text
+    end
+  end
 
   def resource_name
     case resource_type
@@ -20,6 +31,12 @@ class Flag < ActiveRecord::Base
     else
       resource.to_s
     end
+  end
+  
+  def resource_url
+    return nil if resource.nil?
+    url_options = ActionMailer::Base.default_url_options
+    resource_type == 'Post' ? group_post_url(resource.target, resource, url_options) : polymorphic_url(resource, url_options)
   end
   
 end

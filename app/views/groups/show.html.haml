@@ -1,3 +1,10 @@
+-if params[:post_id].present?
+  =content_for(:head) do
+    :coffeescript
+      $ ->
+        headerHeight = $('.header-intro-fixed').height() || 0
+        YmCore.scrollTo('#post#{params[:post_id]}', {offset: headerHeight + 20})
+      
 =render('groups/header')
 -if @group.has_member?(current_user)
   .row#group-posts
