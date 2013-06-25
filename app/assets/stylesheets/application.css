@@ -791,6 +791,7 @@ li.active span.tab-number {
 }
 body.controller_group_registrations .register-tab-content {
   border: 1px solid #ccc;
+  border-top: none;
 }
 body.controller_group_registrations .register-tab-pane {
   padding-top: 40px;

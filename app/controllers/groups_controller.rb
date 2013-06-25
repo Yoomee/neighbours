@@ -54,7 +54,13 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @group.location = current_user.city.presence || current_user.postcode
+    if current_user
+      @group = Group.new
+      @group.location = current_user.city.presence || current_user.postcode
+    else
+      @user = User.new(:group_invitation_id => params[:group_invitation_id], :in_group_and_user_creation => true)
+      @user.owned_groups.build
+    end
   end
 
   def popular

@@ -13,6 +13,7 @@ class Ability
     can [:read, :popular], Group do |group|
       !group.private? || group.has_member?(user) || (user && group.invitations.exists?(:user_id => user.id))
     end
+    can :create, Group
     can :read, GroupInvitation
     
     if user.try(:admin?)
