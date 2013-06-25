@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
     if user == post.user && post.target_type == "Need"
       # Notify user their request has been commented on
       notifications.create(:user => post.target.user, :context => "my_requests")
-    else
+    elsif post.target_type == 'Need'
       # Notify user their offer has been commented on
       notifications.create(:user => post.user, :context => "my_offers")
     end
