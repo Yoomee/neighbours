@@ -1,7 +1,7 @@
-.control-group.mt-3.mb-2
+.control-group.mb-2
   %label.radio
     =form.radio_button :private, false
-    %strong Public
+    %strong Open
     =" - anyone can join"
   %label.radio
     =form.radio_button :private, true
@@ -9,7 +9,7 @@
     =" - only invited members can access"
 =form.input :name, :label => 'Group name', :input_html => {:class => 'span6'}, :required => false
 =form.input :description, :label => 'Group bio', :required => false, :input_html => {:class => 'span6', :rows => 4}
-=form.input :location, :required => false, :input_html => {:class => 'span6', :placeholder => 'e.g. Maltby, Sheffield'}
+=form.input :location, :required => false, :input_html => {:class => 'span6', :placeholder => 'e.g. Crookes, Sheffield'}
 =form.input :image, :label => 'Photo', :as => :image, :input_html => {:class => 'mb-1'}, :wrapper_html => {:class => 'mb-2'}
 .clearfix
 =form.input :invitation_emails_s, :label => 'Invite members to this group?', :placeholder => 'Email addresses separated by a comma'

@@ -3,12 +3,9 @@
     %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
       ×
     %h3
-      Log in or join...
+      Have you already got an account?
   .modal-body
-    .center
-      =link_to 'Log in', sign_in_path(:return_to => return_to), :class => 'btn btn-large btn-primary mr-2'
-      or
-      =link_to 'Join', group_join_path, :class => 'btn btn-large btn-primary ml-2'
-
+    %p="If you already have an account then #{link_to('log in here', sign_in_path(:return_to => return_to))}.".html_safe
+    %p Otherwise click 'Next' to continue.
   .modal-footer
-    =link_to "Close", '#', :class => "cta-intro", :"data-dismiss" => 'modal'
+    =link_to "Next", group_join_path, :class => "cta-intro"
