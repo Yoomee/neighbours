@@ -1,0 +1,14 @@
+#group-log-in-or-join.modal.hide
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      Log in or join...
+  .modal-body
+    .center
+      =link_to 'Log in', sign_in_path(:return_to => return_to), :class => 'btn btn-large btn-primary mr-2'
+      or
+      =link_to 'Join', group_join_path, :class => 'btn btn-large btn-primary ml-2'
+
+  .modal-footer
+    =link_to "Close", '#', :class => "cta-intro", :"data-dismiss" => 'modal'
