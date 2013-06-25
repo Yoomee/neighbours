@@ -1,3 +1,4 @@
+=render "modals/why_age"
 =semantic_form_for(@user, :url => group_registrations_path, :method => :post, :html => {:class => 'loading-text-disabled'}) do |form|
   %ul.nav.nav-tabs.nav-tabs-register
     =li_with_active(@user.current_group_step_group?) do
