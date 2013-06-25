@@ -16,7 +16,7 @@
         =edit_snippet_link(:about_groups)
   .row
     .span7
-      =link_to(current_user ? new_group_path : new_group_registration_path(:return_to => new_group_path), :class => "btn call-to-action", :id => "create-group-cta") do
+      =link_to(new_group_path, :class => "btn call-to-action", :id => "create-group-cta") do
         %i.icon-plus
         Create a Group
   .row

@@ -12,8 +12,8 @@ class GroupRegistrationsController < ApplicationController
         @user.owned_groups.each {|g| g.owner = @user}
         if @user.owned_groups.first.valid?
           @user.current_group_step = 'you'
-          render :template => 'groups/new'
         end
+        render :template => 'groups/new'
       elsif @user.current_group_step_you?
         if params[:back]
           @user.current_group_step = 'group'
