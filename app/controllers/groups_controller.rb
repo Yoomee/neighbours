@@ -54,6 +54,15 @@ class GroupsController < ApplicationController
     @members = [@group.owner] + @group.members.without(@group.owner).order('first_name')
   end
 
+  def new
+    if current_user
+      @group = Group.new
+    else
+      @user = User.new(:group_invitation_id => params[:group_invitation_id], :in_group_and_user_creation => true)
+      @user.owned_groups.build
+    end
+  end
+
   def popular
     @popular_groups = Group.not_private.most_members.paginate(:page => params[:page], :per_page => 16)
   end

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   include YmUsers::User
   include YmCore::Multistep
+  include UserConcerns::GroupAndUserCreation
   include UserConcerns::PreRegistration
   include UserConcerns::Validations
 
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
-  accepts_nested_attributes_for :needs, :general_offers
+  accepts_nested_attributes_for :needs, :general_offers, :owned_groups
 
   attr_accessor :credit_card_preauth
 

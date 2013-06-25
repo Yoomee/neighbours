@@ -1,0 +1,23 @@
+=semantic_form_for(@user, :url => group_registrations_path, :method => :post, :html => {:class => 'loading-text-disabled'}) do |form|
+  %ul.nav.nav-tabs.nav-tabs-register
+    =li_with_active(@user.current_group_step_group?) do
+      %span.tab-number
+        1
+      Group details
+    =li_with_active(@user.current_group_step_you?) do
+      %span.tab-number
+        2
+      Your details
+
+  .tab-content.register-tab-content
+    .register-tab-pane
+      =form.hidden_field :current_group_step
+      =form.hidden_field :in_group_and_user_creation
+      %div{:class => @user.current_group_step == 'group' ? '' : 'hide'}
+        =render("groups/tabs/group", :form => form)
+      %div{:class => @user.current_group_step == 'you' ? '' : 'hide'}
+        =render("groups/tabs/you", :form => form)
+    .form-actions
+      =form.submit("Next", :class => "btn btn-primary register-btn-next")
+      -unless @user.current_group_step_group?
+        =form.submit('Back', :name => 'back', :class => "btn btn-primary register-btn-back")
