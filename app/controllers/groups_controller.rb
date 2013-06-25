@@ -62,6 +62,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    params[:page] ||= @group.posts.page_number_for(params[:post_id]) if params[:post_id].present?
   end
 
   def update

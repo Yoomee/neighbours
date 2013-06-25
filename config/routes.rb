@@ -88,6 +88,7 @@ Neighbours::Application.routes.draw do
     resources :group_invitations, :path => 'invitations', :only => [:new, :create]
     resources :photos, :only => [:new, :create, :index, :show]
   end
+  get 'groups/:id/posts/:post_id' => 'groups#show', :as => 'group_post'
   resources :group_invitations, :only => :show do
     resources :group_registrations, :path => 'registrations', :only => :new
   end
