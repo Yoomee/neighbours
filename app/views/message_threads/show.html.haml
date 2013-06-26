@@ -39,3 +39,10 @@
         -else
           you have
         disabled private messaging.
+
+    =link_to("#inappropriate", :data => {:toggle => "modal"}) do
+      %i.icon-warning-sign
+      Report this message as inappropriate
+
+#inappropriate.modal.hide.fade
+  =render("flags/modal_form", :flag => @message_thread.flags.build)
