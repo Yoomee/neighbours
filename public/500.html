@@ -3,24 +3,82 @@
 <head>
   <title>We're sorry, but something went wrong (500)</title>
   <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
+html {
+ height:100%;
+ }
+ body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  height: 23px;
+  line-height: 23px;
+  height: 100%;
+}
+.wrapper {
+  float:left;
+  width:100%;
+}
+div.dialog {
+ width: 440px;
+ height: 520px;
+ margin: 80px auto 20px;
+ position: relative;
+
+}
+.header {
+  background: url(/assets/logo-intro.png) no-repeat 0 0;
+  width: 244px;
+  height: 83px;
+  text-indent: -9000em;
+  margin: 294px auto 40px;
+}
+p.message {
+ font-size: 18px;
+ font-weight: bold;
+ color: #666;
+ line-height: 1.4;
+ float: left;
+}
+p.message a {
+ color: #666;
+ text-decoration:underline;
+}
+h1 {
+  font-size: 100%; color: #f00; line-height: 1.5em;
+}
+a.home-link {
+ display: block;
+ width: 374px;
+ margin: 9px auto 0;
+ height: 81px;
+ float: left;
+ clear: both;
+ text-indent: -90000em;
+ position: absolute;
+ bottom: 54px;
+ left: 20px;
+}
+.hide {
+ display:none;
+}
+</style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
+  <!-- This file lives in public/422.html -->
+  <div class="wrapper">
+    <div class="dialog">
+      <div class="header">
+        Neighbours Can Help
+      </div>
+      <h2>
+        We're sorry, but something went wrong
+      </h2> 
+      <p class="message">We've been notified about this issue and we'll take a look at it shortly.</p>
+      <p class="message">How about going back to the <a href="/">homepage</a> and starting again?</p>
+      <p class="message">You could send us a <a href="mailto:info@neighbourscanhelp.org.uk?Subject=Page%20not%20found">message</a>.</p>
+      <a href="/" class="home-link">The Neighbours Can Help Team</a>
+    </div>
   </div>
 </body>
 </html>
