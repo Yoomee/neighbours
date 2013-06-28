@@ -6,4 +6,4 @@
       =group.name
       -if current_user.try(:is_admin?)
         %span.pull-right.label{ :class => group.private? ? 'label-important' : 'label-success' }
-          =group.private? ? 'Private' : 'Public'
+          =group.private? ? 'Private' : 'Open'
