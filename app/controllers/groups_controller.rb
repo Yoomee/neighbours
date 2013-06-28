@@ -38,6 +38,7 @@ class GroupsController < ApplicationController
 
   def join
     if @group.add_member!(current_user)
+      UserMailer.new_group_member(@group, current_user).deliver
       flash[:notice] = 'You are now a member of this group, welcome!'
       redirect_to @group
     else
