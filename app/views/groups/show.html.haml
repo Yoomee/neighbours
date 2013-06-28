@@ -6,7 +6,7 @@
         YmCore.scrollTo('#post#{params[:post_id]}', {offset: headerHeight + 20})
       
 =render('groups/header')
--if @group.has_member?(current_user)
+-if current_user.try(:admin?) || @group.has_member?(current_user)
   .row#group-posts
     .span7
       %h2.mb-2
