@@ -15,7 +15,13 @@
         =link_to '#validated', :'data-toggle' => 'tab' do
           Validated
       %li
-        =link_to '#champion_requests', :'data-toggle' => 'tab' do
+        =link_to '#group-users', :'data-toggle' => 'tab' do
+          Group users
+      %li
+        =link_to '#pre-registered', :'data-toggle' => 'tab' do
+          Pre-registered                  
+      %li
+        =link_to '#champion-requests', :'data-toggle' => 'tab' do
           Champion requests
       %li
         =link_to '#champions', :'data-toggle' => 'tab' do
@@ -32,7 +38,11 @@
         =render('table', :users => @unvalidated_users, :tab => "unvalidated")
       #validated.tab-pane.fade.in
         =render('table', :users => @validated_users, :tab => "validated")
-      #champion_requests.tab-pane.fade.in
+      #group-users.tab-pane.fade.in
+        =render('table', :users => @group_users, :tab => "group_users")
+      #pre-registered.tab-pane.fade.in
+        =render('table', :users => @pre_registered_users, :tab => "pre-registered")
+      #champion-requests.tab-pane.fade.in
         =render('table', :users => @community_champion_requests, :tab => "champion_requests")
       #champions.tab-pane.fade.in
         =render('table', :users => @community_champions, :tab => "champions")

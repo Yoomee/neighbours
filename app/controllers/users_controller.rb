@@ -19,7 +19,9 @@ class UsersController < ApplicationController
 
   def index
     @validated_users = User.not_deleted.validated
-    @unvalidated_users = User.not_deleted.unvalidated
+    @unvalidated_users = User.not_deleted.unvalidated.where(:role => nil)
+    @group_users = User.not_deleted.where(:role => 'group_user')
+    @pre_registered_users = User.not_deleted.where(:role => 'pre_registration')
     @community_champion_requests = User.not_deleted.community_champion_requesters
     @community_champions = User.not_deleted.community_champions
     @not_in_sheffield = User.not_in_sheffield
@@ -32,6 +34,8 @@ class UsersController < ApplicationController
           [ "All", @users ],
           [ "Unvalidated", @unvalidated_users ],
           [ "Validated", @validated_users ],
+          [ "Group users", @group_users ],
+          [ "Pre-registered", @pre_registered_users ],
           [ "Champion requests", @community_champion_requests ],
           [ "Champions", @community_champions ],
           [ "Not in Sheffield", @not_in_sheffield ],
