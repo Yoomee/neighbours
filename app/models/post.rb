@@ -2,6 +2,7 @@ class Post < ActiveRecord::Base
   
   include YmPosts::Post
 
+  has_many :users_that_commented, :through => :comments, :source => :user
   has_many :notifications, :as => :resource, :dependent => :destroy 
   
   after_create :create_notification
@@ -28,5 +29,5 @@ class Post < ActiveRecord::Base
       notifications.create(:user => target.user, :context => "my_requests")
     end
   end
-  
+
 end

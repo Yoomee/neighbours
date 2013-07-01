@@ -17,12 +17,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
   end
           
-  def new_comment(comment)
+  def new_comment(comment, user)
     @comment = comment
-    @need = @comment.post.target
-    @user = @comment.user == @comment.post.user ? @need.user : @comment.post.user
+    @user = user
+    @resource_url = @comment.post.target.is_a?(Need) ? need_url(@comment.post.target) : group_url(@comment.post.target)
     return true if @user.no_notifications?
-    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@comment.user}")
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@user}")
   end
   
   def new_offer(offer)
@@ -84,6 +84,12 @@ class UserMailer < ActionMailer::Base
   def new_group_member(group, member)
     @group, @member = [group, member]
     mail(:to => group.owner.email, :subject => "[Neighbours Can Help] #{member} joined #{group}")
+  end
+
+  def new_group_post(post)
+    @member = post.user
+    @group = post.target
+    mail(:to => @group.owner.email, :subject => "[Neighbours Can Help] #{@member} posted in #{@group}")
   end
 
 end

@@ -9,7 +9,13 @@ class Comment < ActiveRecord::Base
   def read_by?(user)
     !notifications.exists?(:user_id => user.id, :read => false)
   end
-  
+
+  def email_users
+    users_to_email.each do |user|
+      UserMailer.new_comment(self, user).deliver
+    end
+  end
+
   private
   def create_notification
     if user == post.user && post.target_type == "Need"
@@ -21,4 +27,8 @@ class Comment < ActiveRecord::Base
     end
   end
   
+  def users_to_email
+    ([post.user] + post.users_that_commented - [user]).uniq
+  end
+
 end
