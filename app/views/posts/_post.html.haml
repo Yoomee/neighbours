@@ -1,7 +1,7 @@
 .post.mb-2{:id => "post#{post.id}"}
   .well.post-content.mb-0
     .post_user.pull-left.clear.border-bottom.mb-1
-      =link_to(image_for(post.user, "32x32#"), post.user, :class => "pull-left")
+      =link_to(image_for_with_validation(post.user, "32x32#"), post.user, :class => "pull-left")
       .pull-left
         =link_to_self(post.user)
         -if post.target && post.target_type != "Neighbourhood"
