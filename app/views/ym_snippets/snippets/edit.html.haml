@@ -1,0 +1,12 @@
+-content_for :head do
+  :coffeescript
+    $ ->
+      Redactor.init()
+    
+%h2="Edit #{@snippet.slug}"
+
+=semantic_form_for(@snippet, :as => :snippet, :url => snippet_path) do |form|
+  =form.inputs do
+    =form.input :text, :as => :redactor, :label => false, :input_html => {:rows => 4, :class => "span6", :placeholder => "Add a snippet..."}
+  =form.buttons do
+    =form.commit_button "Save"
