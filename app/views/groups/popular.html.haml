@@ -5,6 +5,9 @@
     .span10
       %h1.page-title.mb-0.mt-2
         Popular Groups
+      %p
+        =neighbourhood_snippet_text(:popular_groups_intro, 'The most popular groups....')
+        =edit_snippet_link(:popular_groups_intro)
 .container
   .row
     =render @popular_groups
