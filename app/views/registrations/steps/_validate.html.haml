@@ -53,7 +53,7 @@
         =form.inputs() do
           =form.input :organisation_name, :label => false, :as => :select, :collection => User::ORGANISATIONS, :required => false, :prompt => "Please select organisation", :input_html => {:class => "span5"}
 
-  =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditons', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
+  =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditions', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
 
 
 =render('modals/conditions_popup')
