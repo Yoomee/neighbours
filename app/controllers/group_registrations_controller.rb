@@ -1,7 +1,10 @@
 class GroupRegistrationsController < ApplicationController
 
+  skip_before_filter :clear_pre_register_user_id
+
   def new
-    @user = User.new(:group_invitation_id => params[:group_invitation_id])
+    @user = User.find_by_id(session[:pre_register_user_id]) || User.new(:group_invitation_id => params[:group_invitation_id])
+    @user.last_name = nil if @user.last_name == '_BLANK_'
   end
 
   def create
@@ -44,6 +47,11 @@ class GroupRegistrationsController < ApplicationController
           return_or_redirect_to groups_path
         end
       else
+        if @user.errors[:email] == ["is already taken.  <a href='/login'>Log in</a> if this is your account"] && User.find_by_email(@user.email).role == 'pre_registration'
+          @already_pre_registered = true
+          @user.ensure_authentication_token
+          UserMailer.complete_group_registration(@user).deliver
+        end
         render :action => 'new'
       end
     end

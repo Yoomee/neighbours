@@ -12,6 +12,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "[Neighbours Can Help] #{subject}")
   end
 
+  def complete_group_registration(user)
+    @user = user
+    mail(:to => user.email, :subject => "[Neighbours Can Help] Join a group")
+  end
+
   def new_flag(flag)
     @flag = flag
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")

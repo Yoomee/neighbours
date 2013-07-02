@@ -15,6 +15,6 @@
         .register-tab-pane
           =render 'group_registrations/group_user_form', :form => form
         .form-actions
-          =form.submit("Register", :class => "btn btn-primary")
+          =form.submit("Register", :class => "btn btn-primary #{@already_pre_registered ? 'hide' : ''}")
 
 =render "modals/why_age"
