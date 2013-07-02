@@ -21,6 +21,7 @@ class Need < ActiveRecord::Base
   scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
+  scope :deadline_in_future, lambda { where('deadline IS NULL OR deadline >= ?', Date.today) }
 
   boolean_accessor :skip_user_validation, :skip_description_validation
 
@@ -34,6 +35,15 @@ class Need < ActiveRecord::Base
     has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
     set_property :delta => true
+  end
+
+  class << self
+    
+    def visible_to_user_with_deadline_in_future(user)
+      visible_to_user_without_deadline_in_future(user).deadline_in_future
+    end
+    alias_method_chain :visible_to_user, :deadline_in_future
+    
   end
 
   def description

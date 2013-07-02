@@ -10,6 +10,7 @@
       =form.date_select :dob, {:order => [:day, :month, :year], :prompt => true, :start_year => (Time.now.year - 100), :end_year => (Time.now.year)}, :class => "input-medium"
       %span.help-inline=@user.errors[:dob].try(:first)
   =form.input :bio, :required => false, :label => "Biography", :input_html => { :class => "span6", :rows => 5 }
+  =form.input :skill_list, :label => 'Skills', :hint => 'Enter your skills above separated by commas', :wrapper_html => {:class => 'clearfix-help'}, :input_html => {:placeholder => 'e.g. cleaning, gardening, good with pets'}
   =form.input :retained_image, :as => :hidden
   =form.input :image, :as => :file, :label=> "Your profile photo - <em>Choose a file to upload</em>".html_safe
   -unless current_user.admin?
