@@ -1,10 +1,9 @@
 class NeighbourhoodEmailsController < ApplicationController
   
-  load_resource :neighbourhood
-  
   before_filter :check_role
 
   def new
+    @neighbourhood = Neighbourhood.find(params[:neighbourhood_id])
     if @neighbourhood.live?
       params[:subject] = "We have launched in #{@neighbourhood.name}"
       params[:email_body] = @neighbourhood.welcome_email_text
@@ -12,6 +11,7 @@ class NeighbourhoodEmailsController < ApplicationController
   end
   
   def create
+    @neighbourhood = Neighbourhood.find(params[:neighbourhood_id])
     if params[:subject].blank? || params[:email_body].blank?
       render :action => 'new'
     else
