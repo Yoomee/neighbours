@@ -111,6 +111,11 @@ button.close {
   border: none;
   background: none;
 }
+form .clearfix-help .help-inline {
+  display: block;
+  margin-top: 10px;
+}
+
 /*========== Font ==========*/
 
 h1,

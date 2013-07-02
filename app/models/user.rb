@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
   attr_accessor :group_invitation_id
   boolean_accessor :seen_group_invitation_email_warning
 
+  acts_as_taggable_on :skills
+
   before_create :generate_validation_code
   before_save :set_neighbourhood, :ensure_authentication_token
   after_validation :geocode, :if => :address_changed?  
