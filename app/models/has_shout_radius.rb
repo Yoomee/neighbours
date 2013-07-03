@@ -53,6 +53,7 @@ module HasShoutRadius
 end
 
 HasShoutRadius::RADIUS_OPTIONS = [
+  ["About 200 yards", 0.125],
   ["1/4 mile", 0.25],
   ["1/2 mile", 0.5],
   ["1 mile",   1],

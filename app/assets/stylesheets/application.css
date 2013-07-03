@@ -686,6 +686,9 @@ a.home-cta-groups {
   border-bottom-color: rgba(0, 0, 0, 0.246094);
   border-left-color: rgba(0, 0, 0, 0.0976563);
 }
+#needs-cycle .call-to-action {
+  margin: 0 0 30px 0;
+}
 
 /*========== Logged out home ==========*/
 
