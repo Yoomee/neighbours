@@ -5,7 +5,6 @@ class GroupRegistrationsController < ApplicationController
   def new
     @user = User.find_by_id(session[:pre_register_user_id]) || User.new(:group_invitation_id => params[:group_invitation_id])
     @user.last_name = nil if @user.last_name == '_BLANK_'
-    @user.current_step = @user.steps[0]
   end
 
   def create
