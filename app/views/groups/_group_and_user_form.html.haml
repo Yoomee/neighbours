@@ -19,6 +19,6 @@
       %div{:class => @user.current_group_step == 'you' ? '' : 'hide'}
         =render("groups/tabs/you", :form => form)
     .form-actions
-      =form.submit("Next", :class => "btn btn-primary register-btn-next")
+      =form.submit("Next", :class => "btn btn-primary register-btn-next #{@already_pre_registered ? 'hide' : ''}")
       -unless @user.current_group_step_group?
-        =form.submit('Back', :name => 'back', :class => "btn btn-primary register-btn-back")
+        =form.submit('Back', :name => 'back', :class => "btn btn-primary register-btn-back #{@already_pre_registered ? 'hide' : ''}")
