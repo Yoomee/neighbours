@@ -15,7 +15,7 @@
           -@helped.each do |need|
             %li.list
               .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =link_to_with_tooltip(need, :class => "pull-left") do
                   =image_for_with_validation(need.user, "60x50#")
                   %p.small-text
                     =need.user
@@ -35,7 +35,7 @@
           -@general_offers.each do |general_offer|
             %li.list
               .list-image
-                =link_to general_offer, :rel => 'tooltip', :title => (general_offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =link_to_with_tooltip(general_offer, :class => "pull-left") do
                   =image_for_with_validation(general_offer.user, "60x50#")
                   %p.small-text
                     =general_offer.user
@@ -65,7 +65,7 @@
           -@needs.each do |need|
             %li.list
               .list-image
-                =link_to need, :rel => 'tooltip', :title => (need.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =link_to_with_tooltip(need, :class => "pull-left") do
                   =image_for_with_validation(need.user, "60x50#")
                   %p.small-text
                     =need.user

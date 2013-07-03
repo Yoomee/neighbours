@@ -10,7 +10,7 @@
         -@offers.order("created_at DESC").each do |offer|
           %li
             =link_to offer.need do
-              .list-image{:'data-tooltip' => 'tooltip', :title => (offer.need.user.street_name if current_user.try(:validated?))}
+              .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
                 =image_for_with_validation(offer.need.user, "60x50#")
                 %p.small-text=offer.need.user
               %h3=offer.need.title

@@ -132,6 +132,10 @@ class User < ActiveRecord::Base
   def lat_lng
     lat.present? && lng.present? ? [lat,lng] : nil
   end
+  
+  def miles_from(lat, lng)
+    haversine(lat, lng, self.lat, self.lng)
+  end
 
   def new_notification_count(context, need = nil)
     if need
@@ -209,6 +213,25 @@ class User < ActiveRecord::Base
   protected  
   def confirmation_required?
     false
+  end
+
+  def haversine(lat1, lng1, lat2, lng2)
+    degrees_to_radians = Math::PI/180
+    earth_radius = 3959
+    
+    rlat1 = lat1 * degrees_to_radians
+    rlng1 = lng1 * degrees_to_radians
+    rlat2 = lat2 * degrees_to_radians 
+    rlng2 = lng2 * degrees_to_radians
+ 
+    dlng = rlng1 - rlng2
+    dlat = rlat1 - rlat2
+ 
+    # a = power(Math::sin(dlat/2), 2) + Math::cos(rlat1) * Math::cos(rlat2) * power(Math::sin(dlng/2), 2)
+    a = (Math::sin(dlat/2) ** 2) + Math::cos(rlat1) * Math::cos(rlat2) * (Math::sin(dlng/2) ** 2)
+    c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+    
+    (earth_radius * c).round(1)
   end
 
 end

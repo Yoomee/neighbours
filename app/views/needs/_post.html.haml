@@ -3,7 +3,7 @@
     .row
       .span1
         .list-image
-          =link_to (can?(:read,post.user) ? post.user : '#'), :rel => 'tooltip', :title => (post.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+          =link_to_with_tooltip(can?(:read, post.user) ? post.user : '#', :class => "pull-left") do
             =image_for_with_validation(post.user, "60x60#")
             %p.small-text
               =post.user

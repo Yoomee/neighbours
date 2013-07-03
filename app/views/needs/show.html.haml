@@ -99,7 +99,7 @@
           -@offers.each do |offer|
             %li.span1
               .list-image.thumbnail
-                =link_to (can?(:read,offer.user) ? offer.user : '#'), :rel => 'tooltip', :title => (offer.user.street_name if current_user.try(:validated?)), :class => "pull-left" do
+                =link_to_with_tooltip(can?(:read, offer.user) ? offer.user : '#', :class => "pull-left") do
                   =image_for_with_validation(offer.user, "60x60#")
                   %p.small-text
                     =offer.user
