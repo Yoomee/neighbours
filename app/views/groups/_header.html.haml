@@ -10,7 +10,7 @@
         =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2')
       -else
         =link_to("Join this group", '#group-log-in-or-join', :'data-toggle' => 'modal', :class => 'btn btn-large btn-primary mt-2')
-        =render 'modals/group_log_in_or_join', :return_to => join_group_path(@group), :group_join_path => new_group_registration_path(:return_to =>  group_path(@group))
+        =render 'modals/group_log_in_or_join', :return_to => join_group_path(@group), :group_join_path => new_group_registration_path(:return_to => join_group_path(@group))
 
     .group-share.mt-3.mb-3
       %br

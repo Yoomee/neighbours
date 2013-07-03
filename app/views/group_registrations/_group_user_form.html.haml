@@ -19,6 +19,7 @@
     %h4 It looks like you've already signed up
     %p.mt-2 The email address you just entered has already been used to sign up. Follow the link in the email we've just sent you to join and create groups.
 =form.inputs(:class => "form-horizontal #{@already_pre_registered ? 'hide' : ''}") do
+  =form.hidden_field :current_step
   =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
