@@ -44,8 +44,11 @@ module ApplicationHelper
 
   def user_address_tooltip(user)
     return nil unless current_user.try(:validated?) && user.try(:street_name).present? && user != current_user
-    out = current_user.has_lat_lng? ? " (#{'%g' % current_user.miles_from(user.lat, user.lng)} miles)" : ""
-    user.street_name + out
+    if miles_from = current_user.miles_from(user.lat, user.lng)
+      "#{user.street_name} (#{'%g' % miles_from} miles)"
+    else
+      user.street_name
+    end
   end
   
 end
