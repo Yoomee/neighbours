@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
   end
   
   def miles_from(lat, lng)
-    return nil unless all_present?(:lat, :lng, :has_lat_lng?)
+    return nil if [lat, lng, has_lat_lng?].any?(&:blank?)
     haversine(lat, lng, self.lat, self.lng)
   end
 
