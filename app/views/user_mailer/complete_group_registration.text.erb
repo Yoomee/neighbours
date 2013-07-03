@@ -1,0 +1,11 @@
+Dear <%=@user.full_name%>,
+
+We're really pleased you'd like to join a group - because you've already preregistered, you'll need to complete registration by following this link:
+
+<%=group_auth_token_url(@user.authentication_token)%>
+    
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>

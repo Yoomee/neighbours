@@ -35,7 +35,11 @@ class ApplicationController < ActionController::Base
     return true unless current_user.try(:role_is?, 'pre_registration')
     user = current_user
     sign_out(current_user)
-    if user.neighbourhood.try(:live?)
+    if params[:controller] == 'group_registrations'
+      session[:pre_register_user_id] = user.id
+      flash.delete(:notice)
+      redirect_to new_group_registration_path
+    elsif user.neighbourhood.try(:live?)
       session[:pre_register_user_id] = user.id
       flash.delete(:notice)
       redirect_to new_registration_path

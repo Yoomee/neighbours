@@ -7,7 +7,7 @@
         Please fill out the fields below.
 .row
   .span10.offset1
-    =semantic_form_for(@user, :url => group_registrations_path, :method => :post)  do |form|
+    =semantic_form_for(@user, :url => group_registrations_path, :method => :post, :html => {:autocomplete => "off"})  do |form|
       =hidden_field_tag :return_to, params[:return_to]
       =form.hidden_field :group_invitation_id
       =form.hidden_field :seen_group_invitation_email_warning
@@ -15,6 +15,6 @@
         .register-tab-pane
           =render 'group_registrations/group_user_form', :form => form
         .form-actions
-          =form.submit("Register", :class => "btn btn-primary")
+          =form.submit("Register", :class => "btn btn-primary #{@already_pre_registered ? 'hide' : ''}")
 
 =render "modals/why_age"
