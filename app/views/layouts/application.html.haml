@@ -36,6 +36,7 @@
       .footer-wrapper
         =render("layouts/footer")
       -if current_user.nil?
-        =render ('pre_registrations/modals')
+        #pre-register.modal.hide{:data => {:backdrop => 'static'}}
+          =render('pre_registrations/modal_form')
       -elsif current_user.role_is?(:group_user)
-        =render ('modals/group_user_registration')
+        =render('modals/group_user_registration')

@@ -2,23 +2,19 @@ class PreRegistrationsController < ApplicationController
   
   def create
     @pre_register_user = User.new(params[:user].merge(:role => 'pre_registration'))
-    if !@pre_register_user.pre_register_need_or_offer_valid?
-      @pre_register_user.ready_for_pre_register_signup = false
-    elsif !@pre_register_user.ready_for_pre_register_signup?
-      @pre_register_user.ready_for_pre_register_signup = true
-    elsif @pre_register_user.save
-      if @pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live? 
-        session[:pre_register_user_id] = @pre_register_user.id
-        render :js => "window.location = '#{new_registration_path}'"
+    if @pre_register_user.save
+      sign_in(@pre_register_user)
+      UserMailer.pre_register_thank_you(@pre_register_user).deliver
+      UserMailer.admin_message("A new pre-registration", "Yippee! There has been a new pre-registration on the website.", @pre_register_user.attributes).deliver
+      if @pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live?
+        @next_url = new_registration_path
+      elsif @pre_register_user.neighbourhood
+        @next_url = neighbourhood_path(@pre_register_user.neighbourhood)
       else
-        UserMailer.pre_register_thank_you(@pre_register_user).deliver
-        UserMailer.admin_message("A new pre-registration", "Yippee! There has been a new pre-registration on the website.", @pre_register_user.attributes).deliver
-        if @pre_register_user.neighbourhood
-          render :js => "window.location = '#{neighbourhood_path(@pre_register_user.neighbourhood)}'"
-        else          
-          render :js => "window.location = '#{pre_registration_path(@pre_register_user)}'"
-        end
+        @next_url = pre_registration_path(@pre_register_user)
       end
+      @need = @pre_register_user.needs.build
+      @general_offer = @pre_register_user.general_offers.build
     end
   end
   

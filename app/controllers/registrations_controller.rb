@@ -1,7 +1,5 @@
 class RegistrationsController < ApplicationController
 
-  skip_before_filter :clear_pre_register_user_id
-
   before_filter :get_user
 
   def new
@@ -60,8 +58,8 @@ class RegistrationsController < ApplicationController
 
   private
   def get_user
-    @user = current_user.try(:group_user?) ? current_user : User.find_by_id(session[:pre_register_user_id])
-    if @user.try(:neighbourhood)
+    @user = current_user
+    if %w{pre_registration group_user}.include?(@user.role) && @user.try(:neighbourhood)
       @user.last_name = nil if @user.last_name == '_BLANK_'
     else      
       raise CanCan::AccessDenied

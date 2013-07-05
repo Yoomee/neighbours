@@ -1638,10 +1638,13 @@ a.cta-small {
 
 /*========== preregister modal form ==========*/
 
+.preregister-form .control-group {
+  margin-bottom: 20px;
+}
 .preregister-form .control-label {
   float: left;
   display: block;
-  width: 100px;
+  width: 170px;
   text-align: right;
   margin: 8px 20px 0 0;
 }
@@ -1651,7 +1654,7 @@ a.cta-small {
 }
 .already-registered-link {
  float: left;
- margin: 10px 20px; 
+ margin: 0px 190px;
  font-size: 14px;
 }
 .modal-body .call-to-action {

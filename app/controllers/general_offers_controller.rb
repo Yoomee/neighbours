@@ -16,11 +16,21 @@ class GeneralOffersController < ApplicationController
   
   def create
     @general_offer.user = current_user
-    if @general_offer.save
-      redirect_to thanks_general_offer_path(@general_offer)
-    else
-      get_suggested_needs
-      render :action => 'new'
+    @general_offer.save
+    respond_to do |format|
+      format.html do
+        if @general_offer.valid?
+          redirect_to thanks_general_offer_path(@general_offer)
+        else
+          get_suggested_needs
+          render :action => 'new'
+        end
+      end
+      format.js do
+        if @general_offer.valid?
+          render :js => "window.location = '#{params[:return_to].presence || root_path}'"
+        end
+      end
     end
   end
   

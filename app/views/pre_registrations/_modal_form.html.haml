@@ -1,0 +1,22 @@
+:coffeescript
+  $ ->
+    YmCore.Forms.LoadingText.init()
+    NewNeedForm.initShowHideDeadline()    
+    $('.help-icon').tooltip()
+    
+-if current_user.nil?
+  =render('pre_registrations/modals/signup')
+-else
+  =render('pre_registrations/modals/need') if @need
+  =render('pre_registrations/modals/general_offer') if @general_offer
+  #pre-register-options{:class => "#{[@need.errors, @general_offer.errors].any?(&:present?) ? 'hide' : ''}"}
+    .modal-header
+      =link_to('x', @next_url, :class => 'close')
+      %h3 How would you like to get involved?
+    .modal-body
+      .center
+        =neighbourhood_snippet_text(:preregistration_intro, "Ask your neighbours for help, or help them out.")
+        =link_to "I'd like some help", '#', :class => "btn call-to-action primary", :id => 'pre-register-need-link'
+        =link_to "I'd like to offer some help", '#', :class => "btn call-to-action", :id => 'pre-register-general-offer-link'
+    .modal-footer
+      =link_to "Skip", @next_url, :class => "pull-right btn"

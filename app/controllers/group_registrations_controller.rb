@@ -1,9 +1,8 @@
 class GroupRegistrationsController < ApplicationController
 
-  skip_before_filter :clear_pre_register_user_id
+  before_filter :get_user
 
   def new
-    @user = User.find_by_id(session[:pre_register_user_id]) || User.new(:group_invitation_id => params[:group_invitation_id])
     @user.last_name = nil if @user.last_name == '_BLANK_'
   end
 
@@ -61,6 +60,16 @@ class GroupRegistrationsController < ApplicationController
         end
         render :action => 'new'
       end
+    end
+  end
+
+  private
+  def get_user
+    @user = current_user || User.new(:group_invitation_id => params[:group_invitation_id])
+    if @user.new_record? || @user.role_is?(:pre_registration)
+      @user.last_name = nil if @user.last_name == '_BLANK_'
+    else
+      raise CanCan::AccessDenied
     end
   end
 

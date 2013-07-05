@@ -54,17 +54,23 @@ class NeedsController < ApplicationController
 
   def create
     @need.user = current_user
-    if @need.save
-      flash[:notice] = "Created new request for help"
-      if current_user.validated?
-        url_options = {}
-      else
-        url_options = { :modal => 'new_need_not_validated' }
+    @need.save
+    respond_to do |format|
+      format.html do
+        if @need.valid?
+          flash[:notice] = "Created new request for help"
+          url_options = current_user.validated? ? {} : {:modal => 'new_need_not_validated'}
+          redirect_to user_needs_path(current_user, url_options)
+        else
+          get_suggest_general_offers
+          render :action => 'new'
+        end
       end
-      redirect_to user_needs_path(current_user, url_options)
-    else
-      get_suggest_general_offers
-      render :action => 'new'
+      format.js do
+        if @need.valid?
+          render :js => "window.location = '#{params[:return_to].presence || root_path}'"
+        end
+      end
     end
   end
   

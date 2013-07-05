@@ -1,7 +1,6 @@
 module UserConcerns::PreRegistration
   
   def self.included(base)
-    base.before_validation :generate_password, :if => :pre_registration?
     base.before_validation :clean_up_needs_and_general_offers, :on => :create    
     base.validates :full_name, :presence => true
     base.validate :has_last_name, :if => :new_record?
@@ -32,10 +31,6 @@ module UserConcerns::PreRegistration
   def clean_up_needs_and_general_offers
     general_offers(true) unless pre_register_need_or_offer == 'general_offer'
     needs(true) unless pre_register_need_or_offer == 'need'
-  end
-  
-  def generate_password
-    self.password ||= SecureRandom.hex(8)
   end
   
   def has_last_name

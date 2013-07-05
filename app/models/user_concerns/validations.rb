@@ -9,7 +9,7 @@ module UserConcerns::Validations
     base.validate :group_invitation_email_matches, :on => :create
 
     base.validates :email_confirmation, :presence => true, :if => :who_you_are_step?
-    base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}    
+    base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
     
     base.validates :house_number, :street_name, :city, :presence => true, :if => :where_you_live_step?
 
