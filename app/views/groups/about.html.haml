@@ -9,13 +9,11 @@
         Share with the important groups in your life
 .container
   .row
-    .span12
+    .span7
       %h2 What are groups?
       %p
         =snippet_text(:about_groups, 'Share with the important groups in your life.')
         =edit_snippet_link(:about_groups)
-  .row
-    .span7
       -if current_user
         =link_to(new_group_path, :class => "btn call-to-action", :id => "create-group-cta") do
           %i.icon-plus
@@ -25,7 +23,10 @@
         =link_to('#group-log-in-or-join', :'data-toggle' => 'modal', :class => "btn call-to-action", :id => "create-group-cta") do
           %i.icon-plus
           Create a Group
-  .row
-    .span7
+          
       =link_to(popular_groups_path, :class => "btn call-to-action primary") do
         Join a Group
+    .span3.offset2
+      .row
+        -Group.most_members.limit(2).each do |group|
+          =render group
