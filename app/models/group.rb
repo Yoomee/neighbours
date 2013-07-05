@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
 
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   has_many :posts, :as => :target, :dependent => :destroy
-  has_and_belongs_to_many :members, :class_name => 'User', :uniq => true
+  has_and_belongs_to_many :members, :class_name => 'User', :uniq => true, :conditions => {:is_deleted => false}
   has_many :invitations, :class_name => 'GroupInvitation', :dependent => :destroy
   has_many :photos, :dependent => :destroy
   
