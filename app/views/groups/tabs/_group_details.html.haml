@@ -12,4 +12,5 @@
 =form.input :location, :required => false, :input_html => {:class => 'span6', :placeholder => 'e.g. Crookes, Sheffield'}
 =form.input :image, :label => 'Photo', :as => :image, :input_html => {:class => 'mb-1'}, :wrapper_html => {:class => 'mb-2'}
 .clearfix
-=form.input :invitation_emails_s, :label => 'Invite members to this group?', :placeholder => 'Email addresses separated by a comma'
+=form.input :invitation_emails_s, :label => 'Invite members to this group?', :placeholder => 'Email addresses separated by a comma', :input_html => {:class => 'span6'}
+=form.input :invitation_message, :as => :text, :label => 'Add an optional invite message', :input_html => {:class => 'span6', :rows => 4}
