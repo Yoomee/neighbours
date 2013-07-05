@@ -78,7 +78,7 @@ class UserMailer < ActionMailer::Base
   def group_invitation(group_invitation)
     @group_invitation = group_invitation
     @user = @group_invitation.user
-    mail(:to => group_invitation.email, :subject => "[Neighbours Can Help] Join #{group_invitation.group}")
+    mail(:to => group_invitation.email, :bcc => Settings.admin_email, :subject => "[Neighbours Can Help] Join #{group_invitation.group}")
   end
 
   def new_group(group)
