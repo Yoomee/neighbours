@@ -6,4 +6,5 @@
     =semantic_form_for(@group, :url => group_group_invitations_path(@group), :method => :post) do |form|
       =form.inputs do
         =form.input :invitation_emails_s, :label => 'Enter email addresses separated by commas', :input_html => {:class => 'span8'}
+        =form.input :invitation_message, :as => :text, :label => 'Add an optional message', :input_html => {:class => 'span8', :rows => 5}
         =form.commit_button 'Invite members', :button_html => {:class => 'btn btn-primary'}

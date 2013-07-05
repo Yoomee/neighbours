@@ -1,8 +1,14 @@
 <%=@user ? "Dear #{@user.first_name}," : "Hi,"%>
 
 <%=@group_invitation.inviter.first_name%> has invited you to join the group '<%=@group_invitation.group%>' on <%=Settings.site_name%>.
+<%if @group_invitation.message.present?%>
 
-<%=group_invitation_ref_url(@group_invitation, :ref => @group_invitation.ref)%>
+They left this message for you:
+  
+<%=@group_invitation.message%>
+<%end%>
+
+View the group: <%=group_invitation_ref_url(@group_invitation, :ref => @group_invitation.ref)%>
 
 Thanks,
 

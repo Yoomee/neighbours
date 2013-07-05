@@ -8,6 +8,9 @@
       has invited you to join the group
       %strong=@group_invitation.group
       ="on #{Settings.site_name}."
+    -if @group_invitation.message.present?
+      %p They left this message for you:
+      %p="\"#{@group_invitation.message}\""
     %p
       =link_to("View the group", group_invitation_ref_url(@group_invitation, :ref => @group_invitation.ref))
     %p

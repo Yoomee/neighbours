@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   
   image_accessor :image
   attr_writer :invitation_emails
-  attr_accessor :inviter_id
+  attr_accessor :inviter_id, :invitation_message
   
   validates :name, :description, :owner, :location, :lat, :lng, :presence => true
   validates_property :format, :of => :image, :in => [:jpeg, :jpg, :png, :gif], :case_sensitive => false, :message => "must be an image"
@@ -88,7 +88,7 @@ class Group < ActiveRecord::Base
     existing_invitations = invitations.where(['email IN (?)', invitation_emails])
     existing_invitations.each {|i| i.send(:send_email)}    
     new_emails = invitation_emails - existing_invitations.collect(&:email)
-    new_emails.each {|e| invitations.create(:email => e.strip, :inviter_id => inviter_id || user_id)}
+    new_emails.each {|e| invitations.create(:email => e.strip, :inviter_id => inviter_id || user_id, :message => invitation_message)}
   end
 
   def email_admins

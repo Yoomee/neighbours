@@ -8,7 +8,7 @@ class GroupInvitationsController < ApplicationController
 
   def create
     @group.invitations(true) # removes blank invitation built by cancan, which brakes group validation
-    attributes = params[:group].slice(:invitation_emails_s).merge(:inviter_id => current_user.id)
+    attributes = params[:group].slice(:invitation_emails_s, :invitation_message).merge(:inviter_id => current_user.id)
     if @group.update_attributes(attributes)
       flash[:notice] = "#{pluralize(@group.invitation_emails.count, 'invitation')} sent"
       redirect_to members_group_path(@group)
