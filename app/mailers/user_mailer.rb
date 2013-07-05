@@ -86,9 +86,10 @@ class UserMailer < ActionMailer::Base
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] New group")
   end
 
-  def new_group_member(group, member)
-    @group, @member = [group, member]
-    mail(:to => group.owner.email, :subject => "[Neighbours Can Help] #{member} joined #{group}")
+  def new_group_member(group, member, options = {})
+    @group, @member = group, member
+    @admin_email = options[:admin_email]
+    mail(:to => (@admin_email ? Settings.admin_email : group.owner.email), :subject => "[Neighbours Can Help] #{member} joined #{group}")
   end
 
   def new_group_post(post)

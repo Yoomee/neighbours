@@ -1,6 +1,6 @@
-Dear <%=@group.owner.first_name%>,
+Dear <%=@admin_email ? 'site admin' : @group.owner.first_name%>,
 
-<%=@member%> has joined your group <%=@group%>: 
+<%=@member%> has joined <%=@admin_email ? 'the' : 'your'%> group <%=@group%>:
 
 <%=group_url(@group)%>
 
