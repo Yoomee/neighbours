@@ -33,8 +33,7 @@
 
 .row
   .span6.offset2
-    -if current_user.try(:group_user?)
-      =link_to "I'd like to offer some help", '#', :class=>"btn call-to-action group-user-registration-link", :data => {:return_to => new_general_offer_path}
-    -else
+    -if current_user.fully_registered?
       =link_to "Find someone who needs your help", new_general_offer_path, :class=>"btn call-to-action"
-
+    -else
+      =link_to "I'd like to offer some help", '#', :class=>"btn call-to-action not-fully-registered-link", :data => {:return_to => new_general_offer_path}
