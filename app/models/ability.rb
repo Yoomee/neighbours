@@ -43,8 +43,13 @@ class Ability
       can [:accept, :reject], Offer do |offer|
         offer.need.user_id == user.id
       end
+      can :create, Need
+      cannot :new, Need
+      can :create, GeneralOffer
+      cannot :new, GeneralOffer
       if user.fully_registered?
-        can :create, Need
+        can :new, Need
+        can :new, GeneralOffer        
         can [:create, :thanks, :accept], GeneralOffer
         can :read, GeneralOffer do |general_offer|
           (general_offer.user_id == user.id) || general_offer.user.validated?
