@@ -14,7 +14,7 @@
       Needs.init();
     });
 
--if current_user && !current_user.group_user?
+-if current_user && !current_user.group_user? && !current_user.pre_registration?
   =render "neighbourhoods/validated_map"
 -else
   .container
