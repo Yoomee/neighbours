@@ -8,10 +8,6 @@ module UserConcerns::PreRegistration
     base.send(:boolean_accessor, :ready_for_pre_register_signup)
   end
   
-  def pre_registration?
-    role == 'pre_registration'
-  end
-  
   def pre_register_need_or_offer_valid?
     return true if pre_register_need_or_offer.blank?
     if pre_register_need_or_offer == 'need' && new_need = needs.first

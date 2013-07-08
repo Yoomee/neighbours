@@ -13,10 +13,6 @@ module UserConcerns::GroupAndUserCreation
     %w{group you}
   end
 
-  def group_user?
-    role == 'group_user'
-  end
-
   def method_missing(method_name, *args)
     if method_name =~ /^current_group_step_(\w+)\?$/
       if group_steps.include?($1)

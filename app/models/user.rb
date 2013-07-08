@@ -60,6 +60,8 @@ class User < ActiveRecord::Base
     set_property :delta => true
   end
   
+  has_roles :pre_registration, :group_user
+  
   class << self
     
     def visible_to_user(user)
