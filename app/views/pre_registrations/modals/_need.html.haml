@@ -2,7 +2,7 @@
   =semantic_form_for(@need, :remote => true) do |form|
     =hidden_field_tag :return_to, (params[:return_to] || @next_url)
     .modal-header
-      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+      =link_to('x', params[:return_to] || @next_url, :class => 'close')
       %h3 What would you like help with?
     .modal-body
       =form.inputs do
