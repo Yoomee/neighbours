@@ -49,7 +49,8 @@ window.NotFullyRegisteredModal =
       event.preventDefault()
       nextLink = $('#not-fully-registered').find('a.not-fully-registered-next')
       if nextLink.length
-        nextLink.attr('href', "#{nextLink.attr('href')}?return_to=#{$(this).data('return-to')}")
+        href = nextLink.attr('href').replace(/\?.*/, '')
+        nextLink.attr('href', "#{href}?return_to=#{$(this).data('return-to')}")
       $('#not-fully-registered').modal('show')
 
 window.PhotoModal =
