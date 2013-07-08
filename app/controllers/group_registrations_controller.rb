@@ -7,11 +7,7 @@ class GroupRegistrationsController < ApplicationController
   end
 
   def create
-    if @user = User.find_by_id(session[:pre_register_user_id])
-      @user.attributes = (params[:user]).merge(:role => 'group_user')
-    else
-      @user = User.new(params[:user].merge(:role => 'group_user'))
-    end
+    @user.attributes = (params[:user]).merge(:role => 'group_user')
     if @user.in_group_and_user_creation?
       @user.owned_groups.each {|g| g.owner = @user}
       if @user.current_group_step_group?
@@ -31,7 +27,7 @@ class GroupRegistrationsController < ApplicationController
           if invitation && (!invitation.group.private? || invitation.user_id == @user.id)
             redirect_to join_group_path(invitation.group)
           else
-            return_or_redirect_to groups_path
+            return_or_redirect_to(@user.owned_groups.first || @user.groups.first || groups_path)
           end
         else
           if @user.errors[:email] == ["is already taken.  <a href='/login'>Log in</a> if this is your account"] && User.find_by_email(@user.email).role == 'pre_registration'
@@ -51,7 +47,7 @@ class GroupRegistrationsController < ApplicationController
         if invitation && (!invitation.group.private? || invitation.user_id == @user.id)
           redirect_to join_group_path(invitation.group)
         else
-          return_or_redirect_to groups_path
+          return_or_redirect_to(@user.owned_groups.first || @user.groups.first || groups_path)
         end
       else
         if @user.errors[:email] == ["is already taken.  <a href='/login'>Log in</a> if this is your account"] && User.find_by_email(@user.email).role == 'pre_registration'
@@ -66,7 +62,7 @@ class GroupRegistrationsController < ApplicationController
   private
   def get_user
     @user = current_user || User.new(:group_invitation_id => params[:group_invitation_id])
-    if @user.new_record? || @user.role_is?(:pre_registration)
+    if @user.new_record? || @user.pre_registration?
       @user.last_name = nil if @user.last_name == '_BLANK_'
     else
       raise CanCan::AccessDenied

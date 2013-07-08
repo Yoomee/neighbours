@@ -56,12 +56,13 @@ class GroupsController < ApplicationController
   end
 
   def new
-    if current_user
+    if current_user.try(:fully_registered?) || current_user.try(:group_user?)
       @group = Group.new
       @group.location = current_user.city.presence || current_user.postcode
     else
-      @user = User.new(:group_invitation_id => params[:group_invitation_id], :in_group_and_user_creation => true)
-      @user.owned_groups.build
+      @user = current_user || User.new
+      @user.attributes = {:group_invitation_id => params[:group_invitation_id], :in_group_and_user_creation => true}
+      @user.owned_groups.build      
     end
   end
 

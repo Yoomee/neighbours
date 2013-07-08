@@ -19,7 +19,6 @@
     %h4 It looks like you've already signed up
     %p.mt-2 The email address you just entered has already been used to sign up. Follow the link in the email we've just sent you to join and create groups.
 =form.inputs(:class => "form-horizontal #{@already_pre_registered ? 'hide' : ''}") do
-  =form.hidden_field :current_step, :value => @user.steps.first
   =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
@@ -35,8 +34,10 @@
       %br
       =link_to "Change your mind....", "#why-age", :'data-toggle' => "modal"
   =form.input :gender, :as => :radio, :collection => [["Male","male"], ["Female","female"]]
-  =form.input :postcode, :required => false, :input_html => {:class => "span2"}
-  =form.input :email, :label => "Email address", :required => false, :help => "Enter the email address you would like to use for logging in again. We promise not share this with others.", :input_html => {:placeholder => "e.g. john@email.com"}
-  =form.input :email_confirmation, :label => "Confirm email address", :required => false, :help => "Type your email address again so that we can check there are no typos", :input_html => {:placeholder => "e.g. john@email.com"}
-  =form.input :password, :required => false, :help => "Choose a password that would you like to use to login"
-  =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => "Type the password again so that we can make sure you haven't made a mistake"
+  -unless current_user
+    =form.hidden_field :current_step, :value => @user.steps.first
+    =form.input :postcode, :required => false, :input_html => {:class => "span2"}
+    =form.input :email, :label => "Email address", :required => false, :help => "Enter the email address you would like to use for logging in again. We promise not share this with others.", :input_html => {:placeholder => "e.g. john@email.com"}
+    =form.input :email_confirmation, :label => "Confirm email address", :required => false, :help => "Type your email address again so that we can check there are no typos", :input_html => {:placeholder => "e.g. john@email.com"}
+    =form.input :password, :required => false, :help => "Choose a password that would you like to use to login"
+    =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => "Type the password again so that we can make sure you haven't made a mistake"

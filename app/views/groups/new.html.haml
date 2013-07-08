@@ -1,9 +1,9 @@
 .row
   .span10.offset1
-    -if current_user
-      %h1.page-title Enter your group details
-      =render('groups/form')
-    -else
+    -if @user
       %h1.page-title Enter your group and your own details
       =render 'groups/group_and_user_form'
+    -else
+      %h1.page-title Enter your group details
+      =render('groups/form')
 
