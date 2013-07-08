@@ -115,8 +115,8 @@ class User < ActiveRecord::Base
     true
   end
 
-  def group_user?
-    role == 'group_user'
+  def fully_registered?
+    !group_user? && !pre_registration?
   end
 
   def has_address?

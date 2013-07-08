@@ -38,5 +38,5 @@
       -if current_user.nil?
         #pre-register.modal.hide{:data => {:backdrop => 'static'}}
           =render('pre_registrations/modal_form')
-      -elsif current_user.role_is?(:group_user)
-        =render('modals/group_user_registration')
+      -elsif !current_user.fully_registered?
+        =render('modals/not_fully_registered')

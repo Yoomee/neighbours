@@ -1,6 +1,7 @@
--if current_user
+-title "My Neighbourhood" if current_user
+
+-if current_user.try(:fully_registered?)
   =google_maps_javascript_include_tag
-  -title "My Neighbourhood"
   
 -content_for :head do
   :javascript
@@ -10,11 +11,11 @@
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
       NeedsMap.general_offers = #{@general_offers_json};
-      #{'NeedsMap.init();' if current_user}
+      #{'NeedsMap.init();' if current_user.try(:fully_registered?)}
       Needs.init();
     });
 
--if current_user && !current_user.group_user? && !current_user.pre_registration?
+-if current_user.try(:fully_registered?)
   =render "neighbourhoods/validated_map"
 -else
   .container
@@ -31,7 +32,10 @@
             %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
           =link_to_slug('Find out more', :about, :class=>"illustration-link")  
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
-          =link_to "Join now", "#pre-register", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
+          -if current_user
+            =link_to_slug "Get involved", :get_involved, :class=>"home-cta home-cta-get-involved"
+          -else
+            =link_to "Join now", "#pre-register", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
           =link_to "Create a group", groups_path, :class=>"home-cta home-cta-groups"
           %span.badge#badge-groups-new NEW
 

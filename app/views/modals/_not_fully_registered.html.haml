@@ -1,14 +1,12 @@
-#group-user-registration.modal.hide
+#not-fully-registered.modal.hide
   .modal-header
-    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
-      ×
-    %h3
-      Sorry you can't do this yet
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+    %h3 Sorry you can't do this yet
   .modal-body
-    -if current_user.neighbourhood  
+    -if current_user.neighbourhood
       %p
         We need to validate your address before you can access these features.
-      =link_to "Next >>", new_registration_path, :class => "cta-intro group-user-registration-next"
+      =link_to "Next >>", new_registration_path, :class => "cta-intro not-fully-registered-next"
     -else
       %p
         Unfortunately you can't access these features until your area has gone live. We have users in your area, but need more before we can go fully live. We'll let you know when this happens.

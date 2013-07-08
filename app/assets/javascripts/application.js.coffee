@@ -33,7 +33,7 @@ $(document).ready () ->
   NewNeedForm.initShowHideDeadline()
   PreRegistration.init()
   PhotoModal.init()
-  GroupUserRegistration.init()
+  NotFullyRegisteredModal.init()
   FlagLinks.init()
 
 window.FlagLinks =
@@ -43,14 +43,14 @@ window.FlagLinks =
       $('#flag_resource_id').val($(this).data('post-id'))
       $('#inappropriate').modal('show')
 
-window.GroupUserRegistration =
+window.NotFullyRegisteredModal =
   init: ->
-    $('a.group-user-registration-link').click (event) ->
+    $('a.not-fully-registered-link').click (event) ->
       event.preventDefault()
-      nextLink = $('#group-user-registration').find('a.group-user-registration-next')
+      nextLink = $('#not-fully-registered').find('a.not-fully-registered-next')
       if nextLink.length
         nextLink.attr('href', "#{nextLink.attr('href')}?return_to=#{$(this).data('return-to')}")
-      $('#group-user-registration').modal('show')
+      $('#not-fully-registered').modal('show')
 
 window.PhotoModal =
   init: ->
