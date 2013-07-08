@@ -678,6 +678,10 @@ a.home-cta-groups {
   background: #abd424;
   border-color: #67c621;
 }
+.call-to-action.group, .call-to-action.group:hover  {
+  background: #8bd7dd;
+  border-color: #6CB7BD;
+}
 .call-to-action.blue, .call-to-action.blue:hover  {
   background: #0074CC;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -1659,6 +1663,7 @@ a.cta-small {
 }
 .modal-body .call-to-action {
   width: 60%;
+  margin: 15px 0;
 }
 .modal-footer .cta-intro {
   margin-top: 0;
