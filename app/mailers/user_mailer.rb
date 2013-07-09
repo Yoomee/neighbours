@@ -23,24 +23,21 @@ class UserMailer < ActionMailer::Base
   end
           
   def new_comment(comment, user)
-    @comment = comment
-    @user = user
+    return true unless should_email?(@user)
+    @comment, @user = comment, user
     @resource_url = @comment.post.target.is_a?(Need) ? need_url(@comment.post.target) : group_url(@comment.post.target)
-    return true if @user.no_notifications?
     mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@user}")
   end
   
   def new_offer(offer)
-    @offer = offer
-    @user = @offer.need.user
-    return true if @user.no_notifications?
+    @offer, @user = offer, offer.need.user
+    return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has offered to help you")
   end
   
   def accepted_offer(offer)
-    @offer = offer
-    @user = @offer.user
-    return true if @user.no_notifications?
+    @offer, @user = offer, @offer.user
+    return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.need.user} has accepted your offer of help")
   end
     
@@ -84,10 +81,12 @@ class UserMailer < ActionMailer::Base
   def group_request(group_request)
     @group_request = group_request
     @group_owner = @group_request.group.owner
+    return true unless should_email?(@group_owner)
     mail(:to => @group_owner.email, :subject => "[Neighbours Can Help] Someone has requested to join #{@group_request.group}")
   end
   
   def group_request_accepted(group_request)
+    return true unless should_email?(group_request.user)
     @group_request = group_request
     mail(:to => @group_request.user.email, :subject => "[Neighbours Can Help] You're now a member of #{@group_request.group}")
   end
@@ -100,13 +99,19 @@ class UserMailer < ActionMailer::Base
   def new_group_member(group, member, options = {})
     @group, @member = group, member
     @admin_email = options[:admin_email]
+    return true unless options[:admin_email] || should_email?(@group.owner)
     mail(:to => (@admin_email ? Settings.admin_email : group.owner.email), :subject => "[Neighbours Can Help] #{member} joined #{group}")
   end
 
   def new_group_post(post)
-    @member = post.user
-    @group = post.target
+    @member, @group = post.user, post.target
+    return true unless should_email?(@group.owner)
     mail(:to => @group.owner.email, :subject => "[Neighbours Can Help] #{@member} posted in #{@group}")
+  end
+
+  private
+  def should_email?(user)
+    !user.is_deleted? && !user.no_notifications?
   end
 
 end
