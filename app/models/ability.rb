@@ -84,7 +84,7 @@ class Ability
         g.user_id == user.id
       end
       can [:new, :create], GroupInvitation do |invitation|
-        invitation.group.try(:user_id) == user.id || (invitation.group && invitation.group.has_member?(user))
+        invitation.group.try(:user_id) == user.id || (invitation.group && !invitation.group.private? && invitation.group.has_member?(user))
       end
       can :create, GroupRequest
       can [:new, :create, :read], Photo do |photo|
