@@ -5,7 +5,9 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(params[:post])
     if @post.save
-      UserMailer.new_group_post(@post).deliver if @post.target.is_a?(Group)
+      if (@post.target_type == 'Group') && (@post.user != @post.target.owner)
+        UserMailer.new_group_post(@post).deliver
+      end
       @new_post = Post.new(:target => @post.target, :user => @post.user)
     end
   end
