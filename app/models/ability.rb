@@ -10,9 +10,7 @@ class Ability
     can :show, Page, :draft => false
     can :show, Need
     can [:show, :area, :about, :news, :help], Neighbourhood
-    can [:read, :popular], Group do |group|
-      !group.private? || group.has_member?(user) || (user && group.invitations.exists?(:user_id => user.id))
-    end
+    can [:read, :popular], Group
     can :create, Group
     can :read, GroupInvitation
     
@@ -86,8 +84,9 @@ class Ability
         g.user_id == user.id
       end
       can [:new, :create], GroupInvitation do |invitation|
-        invitation.group.try(:user_id) == user.id || (invitation.group && !invitation.group.private? && invitation.group.has_member?(user))
+        invitation.group.try(:user_id) == user.id || (invitation.group && invitation.group.has_member?(user))
       end
+      can :create, GroupRequest
       can [:new, :create, :read], Photo do |photo|
         photo.group.has_member?(user)
       end

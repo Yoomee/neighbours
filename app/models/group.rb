@@ -6,6 +6,7 @@ class Group < ActiveRecord::Base
   has_many :posts, :as => :target, :dependent => :destroy
   has_and_belongs_to_many :members, :class_name => 'User', :uniq => true, :conditions => {:is_deleted => false}
   has_many :invitations, :class_name => 'GroupInvitation', :dependent => :destroy
+  has_many :requests, :class_name => 'GroupRequest', :dependent => :destroy
   has_many :photos, :dependent => :destroy
   
   image_accessor :image
@@ -49,12 +50,16 @@ class Group < ActiveRecord::Base
     
   end
 
-  def add_member!(user)
-    invitations = user.group_invitations.where(:group_id => id)
-    if !private? || invitations.present?
-      invitations.destroy_all
-      members << user unless user.groups.exists?(id)
-    end
+  def add_member!(user, force = false)
+    return false unless force || can_join?(user)
+    user.group_invitations.where(:group_id => id).destroy_all
+    user.group_requests.where(:group_id => id).destroy_all
+    members << user unless user.groups.exists?(id)
+  end
+
+  def can_join?(user)
+    return false if user.nil?
+    !private? || user.group_invitations.exists?(:group_id => id)
   end
 
   def has_member?(user)

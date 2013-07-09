@@ -1,0 +1,10 @@
+<%="Dear #{@group_owner.first_name},"%>
+
+<%=@group_request.user%> has requested to join the group '<%=@group_request.group%>'.
+
+View all the join requests: <%=group_group_requests_url(@group_request.group)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>

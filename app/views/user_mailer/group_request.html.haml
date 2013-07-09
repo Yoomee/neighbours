@@ -1,0 +1,15 @@
+!!!
+%html
+  %body
+    %p
+      ="Dear #{@group_owner.first_name},"
+    %p
+      ="#{@group_request.user} has requested to join the group <strong>#{@group_request.group}</strong>.".html_safe
+    %p
+      =link_to("View all the join requests", group_group_requests_url(@group_request.group))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url

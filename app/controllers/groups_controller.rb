@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
   end
 
   def popular
-    @popular_groups = Group.not_private.most_members.paginate(:page => params[:page], :per_page => 16)
+    @popular_groups = Group.most_members.paginate(:page => params[:page], :per_page => 16)
   end
 
   def show

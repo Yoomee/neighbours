@@ -1,0 +1,26 @@
+=render('groups/header')
+.row.mb-2
+  .span12
+    %h2.pull-left
+      Join requests
+.row
+  .span12
+    -if @group.requests.empty?
+      %p There are no join requests at the moment.
+    -else
+      %ul.group-members-list.help-list.unstyled
+        -@group.requests.each do |request|
+          %li.list
+            .list-image
+              =link_to(request.user, :class => 'pull-left') do
+                =image_for_with_validation(request.user, "60x50#")
+              %p.small-text=request.user
+            .list-text
+              %h3=link_to_self(request.user)
+              %p
+                =link_to(accept_group_request_path(request), :method => :put, :class => "btn btn-success btn-mini") do
+                  %i.icon-ok
+                  Accept
+                =link_to(request, :method => :delete, :confirm => 'Are you sure you want to remove this request?', :class => "btn btn-danger btn-mini") do
+                  %i.icon-remove
+                  Remove

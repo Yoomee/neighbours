@@ -86,6 +86,7 @@ Neighbours::Application.routes.draw do
       delete :delete
     end
     resources :group_invitations, :path => 'invitations', :only => [:new, :create]
+    resources :group_requests, :path => 'requests', :only => [:create, :index]
     resources :photos, :only => [:new, :create, :index, :show]
   end
   get 'groups/:id/posts/:post_id' => 'groups#show', :as => 'group_post'
@@ -94,6 +95,11 @@ Neighbours::Application.routes.draw do
   end
   get 'group_invitations/:id/:ref' => 'group_invitations#show', :as => 'group_invitation_ref'
   resources :group_registrations, :path => 'groups/registrations', :only => [:new, :create]
+  resources :group_requests, :only => [:destroy] do
+    member do
+      put :accept
+    end
+  end
 
   get '/r/:auth_token' => 'registrations#new', :as => 'auth_token'
   get '/g/:auth_token' => 'group_registrations#new', :as => 'group_auth_token'

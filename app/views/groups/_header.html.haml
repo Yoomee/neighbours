@@ -7,7 +7,10 @@
       -if @group_invitation && @group_invitation.user.nil?
         =link_to("Join this group", new_group_invitation_group_registration_path(@group_invitation), :class => 'btn btn-large btn-primary mt-2')
       -elsif current_user
-        =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2')
+        -if @group.can_join?(current_user)
+          =link_to("Join this group", join_group_path(@group), :class => 'btn btn-large btn-primary mt-2')
+        -else
+          =link_to("Request to join this group", group_group_requests_path(@group), :class => 'btn btn-large btn-primary mt-2', :method => :post)
       -else
         =link_to("Join this group", '#group-log-in-or-join', :'data-toggle' => 'modal', :class => 'btn btn-large btn-primary mt-2')
         =render 'modals/group_log_in_or_join', :return_to => join_group_path(@group), :group_join_path => new_group_registration_path(:return_to => join_group_path(@group))
@@ -35,6 +38,7 @@
                 =link_to(can?(:read, user) ? user : '#', :class => "pull-left") do
                   =image_for_with_validation(user, "60x60#")
                   %p.small-text=user
+                  
 -if current_user.try(:admin?) || @group.has_member?(current_user)
   .row
     .span12
@@ -52,3 +56,9 @@
             %i.icon-camera
             Photos
             =" (#{@group.photos.count})" if @group.photos.count > 0
+        -if @group.private? && (current_user.admin? || @group.owner == current_user)
+          %li{:class => "#{'active' if controller_name.group_requests?}"}
+            =link_to(group_group_requests_path(@group)) do
+              %i.icon-user
+              Join requests
+              =" (#{@group.requests.count})" if @group.requests.count > 0

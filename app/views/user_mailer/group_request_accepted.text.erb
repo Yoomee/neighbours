@@ -1,0 +1,10 @@
+<%="Dear #{@group_request.user.first_name},"%>
+
+Your request has been accepted and you are now a member of the group '<%=@group_request.group%>'.
+
+View the group: <%=group_url(@group_request.group)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>
