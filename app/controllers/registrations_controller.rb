@@ -17,10 +17,9 @@ class RegistrationsController < ApplicationController
     else
       if @user.valid?
         if @user.last_step?
-          pre_register_user = (@user.role_was == 'pre_registration')
           if @user.save
-            send_emails if pre_register_user
-            sign_in(@user)
+            send_emails
+            sign_in(@user, :bypass => true)
             if @user.validate_by == "post" && !@user.validated?
               flash[:modal] = {:title => "Thanks for registering", :text => "We'll send you a letter with a unique code and instructions on how to validate your account."}
             end
