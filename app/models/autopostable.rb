@@ -1,9 +1,8 @@
 module Autopostable
   
   def self.included(base)
+    base.send(:include, Rails.application.routes.url_helpers)
     base.has_many :autopost_statuses, :as => :autopostable, :autosave => true, :dependent => :destroy
-    base.before_create :prepare_for_autopost
-    base.after_create :autopost
   end
   
   def autopost
@@ -14,6 +13,10 @@ module Autopostable
   end
   
   private
+  def autopost_url
+    polymorphic_url(self, ActionMailer::Base.default_url_options)
+  end
+  
   def prepare_for_autopost
     if user.validated?
       autopost_statuses.build(:provider => "twitter", :status => "pending")

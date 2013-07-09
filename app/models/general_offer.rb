@@ -11,6 +11,9 @@ class GeneralOffer < ActiveRecord::Base
 
   validates :category, :description, :presence => true
 
+  before_create :prepare_for_autopost
+  after_create :autopost
+
   delegate :lat, :lng, :street_name, :to => :user
   delegate :first_name, :to => :user, :prefix => true
 
@@ -36,16 +39,9 @@ class GeneralOffer < ActiveRecord::Base
     
   end
   
-  def autopost_url
-    "#{Settings.site_url}/general_offers/#{id}"
-  end
-  
   def autopost_text
-    if user.neighbourhood
-      "#{user} from #{user.neighbourhood} has offered to help with #{title}"
-    else
-      "#{user} has offered to help with #{title}"
-    end
+    out = user.neighbourhood ? "#{user} from #{user.neighbourhood}" : user.to_s
+    "#{out} has offered to help with #{title}"
   end
 
   def create_need_for_user(user_wanting_help)

@@ -18,6 +18,9 @@ class Need < ActiveRecord::Base
   
   default_scope where(:removed => false)
 
+  before_create :prepare_for_autopost
+  after_create :autopost
+
   scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
@@ -79,16 +82,9 @@ class Need < ActiveRecord::Base
     [category,sub_category].compact.map(&:to_s).join(': ')
   end
   
-  def autopost_url
-    "#{Settings.site_url}/needs/#{id}"
-  end
-  
   def autopost_text
-    if user.neighbourhood
-      "#{user} from #{user.neighbourhood} needs help with #{title}"
-    else
-      "#{user} needs help with #{title}"
-    end
+    out = user.neighbourhood ? "#{user} from #{user.neighbourhood}" : user.to_s
+    "#{out} needs help with #{title}"
   end
 
   private

@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
 
   include YmCore::Model
+  include Autopostable
 
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   has_many :posts, :as => :target, :dependent => :destroy
@@ -13,6 +14,8 @@ class Group < ActiveRecord::Base
   attr_writer :invitation_emails
   attr_accessor :inviter_id, :invitation_message
   
+  alias_attribute :user, :owner
+  
   validates :name, :description, :owner, :location, :lat, :lng, :presence => true
   validates_property :format, :of => :image, :in => [:jpeg, :jpg, :png, :gif], :case_sensitive => false, :message => "must be an image"
   validate :valid_invitation_emails, :geocodable_location
@@ -20,6 +23,8 @@ class Group < ActiveRecord::Base
   geocoded_by :location_with_country, :latitude => :lat, :longitude => :lng
 
   before_validation :geocode, :if => :location_changed?
+  before_create :prepare_for_autopost, :unless => :private?
+  after_create :autopost, :unless => :private?
   after_create :add_owner_to_members
   after_create :email_admins
   after_save :create_invitations
@@ -55,6 +60,11 @@ class Group < ActiveRecord::Base
     user.group_invitations.where(:group_id => id).destroy_all
     user.group_requests.where(:group_id => id).destroy_all
     members << user unless user.groups.exists?(id)
+  end
+  
+  def autopost_text
+    out = owner.neighbourhood ? "#{owner} from #{owner.neighbourhood}" : owner.to_s
+    "#{out} has created a new group called #{name}"
   end
 
   def can_join?(user)
