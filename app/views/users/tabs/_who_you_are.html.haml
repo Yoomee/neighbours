@@ -1,4 +1,3 @@
-=form.hidden_field :current_step, :value => "who_you_are"
 =form.inputs(:class => "form-horizontal") do
   -if current_user.admin?
     =form.input :first_name, :required => false, :input_html => {:placeholder => "e.g. John"}

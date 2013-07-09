@@ -1,6 +1,4 @@
-=form.hidden_field :current_step, :value => "where_you_live"
 =form.inputs(:class => "form-horizontal") do
-  =form.input :current_step, :as => :hidden, :value => "where_you_live"
   -if current_user.admin?
     %label.control-label#address-label Address
     =form.input :house_number, :label => "Number", :required => false, :input_html => {:placeholder => "34", :class => "span1"}, :help => "Please enter your house number or house name."
