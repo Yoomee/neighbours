@@ -18,7 +18,7 @@
             .list-text
               %h3=link_to_self(request.user)
               %p
-                =link_to(accept_group_request_path(request), :method => :put, :class => "btn btn-success btn-mini") do
+                =link_to(accept_group_request_path(request), :method => :put, :class => "btn btn-success btn-mini mr-05") do
                   %i.icon-ok
                   Accept
                 =link_to(request, :method => :delete, :confirm => 'Are you sure you want to remove this request?', :class => "btn btn-danger btn-mini") do
