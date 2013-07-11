@@ -5,7 +5,7 @@
     -elsif current_user
       =link_to "I'd like some help", '#', :class=>"btn call-to-action primary not-fully-registered-link", :data => {:return_to => new_need_path}
     -else
-      =link_to "I'd like some help", '#', :class=>"btn call-to-action primary pre-register-need-link"
+      =link_to "I'd like some help", '#pre-register', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
       
     -if @general_offers.empty?
       %h2
@@ -54,7 +54,7 @@
     -elsif current_user
       =link_to "I'd like to offer some help", '#', :class=>"btn call-to-action not-fully-registered-link", :data => {:return_to => new_general_offer_path}
     -else
-      =link_to "I'd like to offer some help", '#', :class=>"btn call-to-action pre-register-general-offer-link"
+      =link_to "I'd like to offer some help", '#pre-register', :class=>"btn call-to-action", :"data-toggle"=>"modal"
         
     %h2 Neighbours who need help
     .help-list-wrapper
