@@ -43,6 +43,9 @@ class Ability
       end
       can :create, Need
       cannot :new, Need
+      can :destroy, Need do |need|
+        need.user_id == user.id
+      end
       can :create, GeneralOffer
       cannot :new, GeneralOffer
       if user.fully_registered?

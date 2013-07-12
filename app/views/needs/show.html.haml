@@ -106,12 +106,13 @@
 .row
   .span12
     =options_panel do
-      -unless @need.removed?
-        =link_if_can("Remove this request", @need, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
       -if current_user
         =link_to("#inappropriate", :data => {:toggle => "modal"}) do
           %i.icon-warning-sign
           Report this page as inappropriate
+      -if !@need.removed? && can?(:destroy, @need)
+        .clearfix      
+        =link_to("Remove this request", @need, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger mt-2")
 
 -if @need.user != current_user
   #offer-form.modal.hide.fade
