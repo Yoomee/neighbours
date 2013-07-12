@@ -70,21 +70,22 @@
       .mb-1
         %h4 Notifications
         %p
-          You do
-          ='not' if @user.no_notifications?
-          receive emails when people reply to your requests and offers of help.
+          You
+          =@user.no_notifications? ? "won't" : 'will'
+          receive emails related to your requests, offers and groups.
         %p
           =switch_text(@user).html_safe.sub('You can change these settings using the button.', '')
         .action-link
           =link_to("Edit settings", edit_user_path(@user, :anchor => "notifications")) if can?(:edit, @user)
-          
-    %h4.mt-2.mb-1 Groups
-    -@user.groups.each do |group|
-      =link_to(group, :class => "profile span3 group-tile") do
-        .inner.clearfix
-          .group-tile-image-wrap
-            =image_for(group, '190x130#')
-          %h4=group.name
+
+    -if @user.groups.present?
+      %h4.mt-2.mb-1 Groups
+      -@user.groups.each do |group|
+        =link_to(group, :class => "profile span3 group-tile") do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_for(group, '190x130#')
+            %h4=group.name
 
 .row.mt-2
   .span8
