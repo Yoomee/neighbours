@@ -80,10 +80,10 @@
                 .row.mt-2                
                   -if current_user.try(:validated?)
                     =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-                  -elsif current_user
+                  -elsif current_user.try(:fully_registered?)
                     =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
-                  -else
-                    =link_to "Maybe I can help", "#register-popup", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                  -elsif current_user
+                    =link_to "Maybe I can help", '#', :class => "btn btn-primary mb-2 not-fully-registered-link", :data => {:return_to => need_path(@need)}
               -else
                 .row
                   =neighbourhood_snippet_text(:need_cannot_use, "Here is some text explaining why this page be cannot be used. This will be edited by John.")
