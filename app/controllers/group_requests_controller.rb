@@ -20,7 +20,7 @@ class GroupRequestsController < ApplicationController
     else
       request = @group.requests.find_or_create_by_user_id(current_user.id)
       UserMailer.group_request(request).deliver
-      flash[:notice] = "Your request has been sent"
+      flash[:notice] = "Your request has been sent to the group owner"
     end
     redirect_to @group
   end
