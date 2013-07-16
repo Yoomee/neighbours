@@ -48,7 +48,6 @@ class Group < ActiveRecord::Base
     
     def closest_to(*args)
       options = args.extract_options!
-      puts options.inspect
       lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
     end

@@ -21,8 +21,9 @@ class Need < ActiveRecord::Base
   before_create :prepare_for_autopost
   after_create :autopost
 
-  scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
-  scope :resolved, joins(:user).where("EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  # scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :unresolved, joins("LEFT OUTER JOIN offers ON (offers.need_id = needs.id AND offers.accepted = 1)").where('offers.id IS NULL')
+  scope :resolved, joins(:offers).where("offers.accepted = 1")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
   scope :deadline_in_future, lambda { where('deadline IS NULL OR deadline >= ?', Date.today) }
 
@@ -34,13 +35,21 @@ class Need < ActiveRecord::Base
   define_index do
     indexes description
     has id, user_id, category_id, deadline, radius, created_at, updated_at
-    join user
-    has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
+    join user, neighbourhood
+    has "RADIANS(users.lat)", :as => :latitude, :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
+    has "EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = 1)", :as => :resolved, :type => :boolean
+    has "neighbourhoods.live", :as => :neighbourhood_live, :type => :boolean
     set_property :delta => true
   end
 
   class << self
+    
+    def closest_to(*args)
+      options = args.extract_options!
+      lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
+      search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
+    end
     
     def visible_to_user_with_deadline_in_future(user)
       visible_to_user_without_deadline_in_future(user).deadline_in_future
