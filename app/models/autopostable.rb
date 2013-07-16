@@ -35,10 +35,9 @@ module Autopostable
   
   def post_to_facebook
     begin  
-      res = facebook_client.post("me/feed", nil, {
-        :link    => autopost_url,
-        :message => autopost_text
-      })
+      options = {:link => autopost_url, :message => autopost_text}
+      options[:picture] = Settings.site_url + (image || default_image).thumb("400x400#").url if self.to_s == "Group"
+      res = facebook_client.post("me/feed", nil, options)
       raise Exception if res["id"].blank?
       autopost_statuses.facebook.first.update_attribute(:status, 'posted')
     rescue Exception => e
