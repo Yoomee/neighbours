@@ -14,8 +14,9 @@
         -else
           =link_to("Request to join this group", group_group_requests_path(@group), :class => 'btn btn-large btn-primary mt-2', :method => :post)
       -else
-        =link_to("Join this group", '#group-log-in-or-join', :'data-toggle' => 'modal', :class => 'btn btn-large btn-primary mt-2')
-        =render 'modals/group_log_in_or_join', :return_to => join_group_path(@group), :group_join_path => new_group_registration_path(:return_to => join_group_path(@group))
+        -return_to_url = @group.private? ? group_path(@group) : join_group_path(@group)
+        =link_to("#{@group.private? ? 'Request to join' : 'Join'} this group", '#group-log-in-or-join', :'data-toggle' => 'modal', :class => 'btn btn-large btn-primary mt-2')
+        =render 'modals/group_log_in_or_join', :return_to => return_to_url, :group_join_path => new_group_registration_path(:return_to => return_to_url)
 
     .group-share.mt-3.mb-3
       %br
