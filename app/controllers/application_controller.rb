@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate
-    return true unless STAGING
+    return true #unless STAGING
     authenticate_or_request_with_http_basic do |username|
       AUTH_USERS[username]
     end
