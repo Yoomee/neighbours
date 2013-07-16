@@ -38,7 +38,7 @@ module Autopostable
       options = {:link => autopost_url, :message => autopost_text}
       if self.is_a?(Group)
         options[:picture] = Settings.site_url + (image || default_image).thumb("400x400#").url
-        options[:title] = name
+        options[:name] = name
         options[:description] = description
       end
       res = facebook_client.post("me/feed", nil, options)
