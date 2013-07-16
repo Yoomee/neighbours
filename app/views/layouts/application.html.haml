@@ -10,6 +10,10 @@
     <![endif]-->
     =javascript_include_tag("application")
     =csrf_meta_tags
+    %meta{:property => "og:title", :content => Settings.site_name}
+    %meta{:property => "og:site_name", :content => Settings.site_name}
+    %meta{:property => "og:description", :content => Settings.site_description}
+    %meta{:property => "og:image", :content => "#{Settings.site_url}/assets/site-logo-large.jpg"}
     =yield :head
     :javascript
       $(document).ready(function() {
