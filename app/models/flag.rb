@@ -10,6 +10,9 @@ class Flag < ActiveRecord::Base
 
   self.per_page = 10
 
+  scope :unresolved, where(:resolved_at => nil)
+  scope :unremoved_needs, joins("LEFT OUTER JOIN needs ON (flags.resource_type = 'Need' AND flags.resource_id = needs.id)").where('needs.id IS NULL OR needs.removed = 0')
+
   def resource_description
     if resource.respond_to?(:description)
       resource.description
