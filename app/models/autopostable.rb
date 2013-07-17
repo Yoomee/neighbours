@@ -18,7 +18,7 @@ module Autopostable
   end
   
   def prepare_for_autopost
-    if user.validated?
+    if user.validated? || self.is_a?(Group)
       autopost_statuses.build(:provider => "twitter", :status => "pending")
       autopost_statuses.build(:provider => "facebook", :status => "pending")
       return autopost_statuses
