@@ -19,7 +19,7 @@
       $(document).ready(function() {
         IntroPageNav.init();
       });
-    =google_analytics_js
+    =google_analytics_js unless STAGING
     
     -body_tag(:class => "#{show_control_panel? ? 'with-control-panel' : ''}") do  
       .main-wrapper
