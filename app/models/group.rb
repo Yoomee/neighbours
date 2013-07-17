@@ -66,7 +66,7 @@ class Group < ActiveRecord::Base
   end
 
   def can_join?(user)
-    return false if user.nil?
+    return false if user.nil? || user.pre_registration?
     !private? || user.group_invitations.exists?(:group_id => id)
   end
 
