@@ -39,7 +39,6 @@ class Group < ActiveRecord::Base
     has id
     has "RADIANS(lat)", :as => :latitude,  :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float
-    where "private = 0"
     where "deleted_at IS NULL"    
     set_property :delta => true
   end
