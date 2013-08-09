@@ -57,7 +57,7 @@ window.PreRegistrationMap =
           title:user.name
       });
       marker.userId = user.id
-      marker.contentString = "<div class='user-infowindow'><h3>#{user.full_name}</h3><p>#{user.email}<br/>#{user.postcode}<br/>#{user.area}</p></div>"
+      marker.contentString = "<div class='user-infowindow'><h3>#{user.full_name}</h3><p>#{user.email}<br/>#{user.postcode}<br/>#{user.area || ''}</p></div>"
       
       oms.addMarker(marker)
       markers.push(marker)
