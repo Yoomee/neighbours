@@ -39,7 +39,6 @@ class Group < ActiveRecord::Base
     has id
     has "RADIANS(lat)", :as => :latitude,  :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float
-    where "private = 0"
     where "deleted_at IS NULL"    
     set_property :delta => true
   end
@@ -48,7 +47,6 @@ class Group < ActiveRecord::Base
     
     def closest_to(*args)
       options = args.extract_options!
-      puts options.inspect
       lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
     end
@@ -68,7 +66,7 @@ class Group < ActiveRecord::Base
   end
 
   def can_join?(user)
-    return false if user.nil?
+    return false if user.nil? || user.pre_registration?
     !private? || user.group_invitations.exists?(:group_id => id)
   end
 

@@ -3,15 +3,20 @@
     .row
       .span3
         .user-thumbnail-large
-          =image_for_with_validation(@user, "220x")
+          =image_for_with_validation(@user, "220x", :class => 'mb-1')
           -if @user.validated?
             .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
-        %p=link_to(@user.image ? "Edit" : "Upload your own picture", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
+        -if can?(:edit, @user)
+          =link_to(@user.image ? "Edit" : "+ Upload your own picture", edit_user_path(@user, :anchor => "who_you_are"))
         -if user != current_user
           =link_to(new_user_message_path(@user), :class => "btn mt-1")  do
             %i.icon-envelope
             &nbsp; Send message
   .span9
+    -if current_user == @user && !@user.fully_registered? && @user.neighbourhood
+      .alert
+        You're not fully registered. You can access more features if you
+        =link_to("complete your registration", new_registration_path)
     %h1.mb-1=title(@user)
     %h3.mb-1
       -if @user.is_community_champion?
@@ -70,21 +75,22 @@
       .mb-1
         %h4 Notifications
         %p
-          You do
-          ='not' if @user.no_notifications?
-          receive emails when people reply to your requests and offers of help.
+          You
+          =@user.no_notifications? ? "won't" : 'will'
+          receive emails related to your requests, offers and groups.
         %p
           =switch_text(@user).html_safe.sub('You can change these settings using the button.', '')
         .action-link
           =link_to("Edit settings", edit_user_path(@user, :anchor => "notifications")) if can?(:edit, @user)
-          
-    %h4.mt-2.mb-1 Groups
-    -@user.groups.each do |group|
-      =link_to(group, :class => "profile span3 group-tile") do
-        .inner.clearfix
-          .group-tile-image-wrap
-            =image_for(group, '190x130#')
-          %h4=group.name
+
+    -if @user.groups.present?
+      %h4.mt-2.mb-1 Groups
+      -@user.groups.each do |group|
+        =link_to(group, :class => "profile span3 group-tile") do
+          .inner.clearfix
+            .group-tile-image-wrap
+              =image_for(group, '190x130#')
+            %h4=group.name
 
 .row.mt-2
   .span8

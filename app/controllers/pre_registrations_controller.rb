@@ -30,8 +30,8 @@ class PreRegistrationsController < ApplicationController
   end
 
   def map
-    @pre_registered_users = User.where(:role => 'pre_registration').order(:created_at).paginate(:page => params[:page], :per_page => 50)
-    @pr_json = User.where(:role => 'pre_registration').with_lat_lng.to_json(:methods => [:lat_lng, :full_name])
+    @pre_registered_users = User.not_deleted.where(:role => 'pre_registration').order(:created_at).paginate(:page => params[:page], :per_page => 50)
+    @pr_json = User.not_deleted.where(:role => 'pre_registration').with_lat_lng.to_json(:methods => [:lat_lng, :full_name, :area])
   end
   
   def index

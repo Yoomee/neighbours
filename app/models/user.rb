@@ -98,8 +98,8 @@ class User < ActiveRecord::Base
     "#{address}, UK"
   end
 
-  def city
-    read_attribute(:city).presence || "Sheffield"
+  def area
+    neighbourhood.try(:name).presence || city
   end
 
   def credit_card

@@ -14,7 +14,7 @@ class FlagsController < ApplicationController
   end
   
   def index
-    @flags = Flag.where('resolved_at IS NULL').page(params[:page])
+    @flags = Flag.unresolved.unremoved_needs.page(params[:page])
   end
   
   def resolve

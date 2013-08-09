@@ -10,7 +10,7 @@
       NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
-      NeedsMap.general_offers = #{@general_offers_json};
+      NeedsMap.general_offers = #{[*@general_offers_json]};
       #{'NeedsMap.init();' if current_user.try(:fully_registered?)}
       Needs.init();
     });
@@ -36,7 +36,7 @@
             =link_to_slug "Get involved", :get_involved, :class=>"home-cta home-cta-get-involved"
           -else
             =link_to "Join now", "#pre-register", :class=>"home-cta home-cta-get-involved", :"data-toggle"=>"modal"
-          =link_to "Create a group", groups_path, :class=>"home-cta home-cta-groups"
+          =link_to "Join a group", groups_path, :class=>"home-cta home-cta-groups"
           %span.badge#badge-groups-new NEW
 
 .container

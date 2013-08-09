@@ -4,6 +4,7 @@ class Post < ActiveRecord::Base
 
   has_many :users_that_commented, :through => :comments, :source => :user
   has_many :notifications, :as => :resource, :dependent => :destroy 
+  has_many :flags, :as => :resource, :dependent => :destroy  
   
   after_create :create_notification
   

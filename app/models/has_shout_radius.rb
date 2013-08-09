@@ -23,19 +23,28 @@ module HasShoutRadius
       end.select { |k,v| v <= (max_miles * 1609.344).round }
     end
   
-    def visible_from_location(lat,lng)
-      sphinx_search = search_for_ids({
+    def visible_from_location(lat,lng, options = {})
+      sphinx_options = {
         :with => { "@geodist" => 0.0..maximum_radius.to_f },
         :geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)],
         :per_page => 100000
-      })
+      }
+      sphinx_options[:order] = "@geodist ASC" if options[:order_by_closest]
+      sphinx_search = search_for_ids(sphinx_options)
       ids = []
       sphinx_search.results[:matches].each do |match|
         if match[:attributes]["radius"].to_f > match[:attributes]["@geodist"].to_f
           ids << match[:attributes]['id']
         end
+        break if ids.size == options[:limit]
       end
-      where("#{table_name}.id IN (?)", ids)
+      out = where("#{table_name}.id IN (?)", ids)
+      if options[:order_by_closest]
+        order_string = ids.reverse.collect{|id| "#{table_name}.id=#{id}"}.join(",")
+        out.order(order_string)
+      else
+        out
+      end
     end
     
     def visible_to_user(user)

@@ -18,7 +18,7 @@ module Autopostable
   end
   
   def prepare_for_autopost
-    if user.validated?
+    if user.validated? || self.is_a?(Group)
       autopost_statuses.build(:provider => "twitter", :status => "pending")
       autopost_statuses.build(:provider => "facebook", :status => "pending")
       return autopost_statuses
@@ -35,10 +35,13 @@ module Autopostable
   
   def post_to_facebook
     begin  
-      res = facebook_client.post("me/feed", nil, {
-        :link    => autopost_url,
-        :message => autopost_text
-      })
+      options = {:link => autopost_url, :message => autopost_text}
+      if self.is_a?(Group)
+        options[:picture] = Settings.site_url + (image || default_image).thumb("400x400#").url
+        options[:name] = name
+        options[:description] = description
+      end
+      res = facebook_client.post("me/feed", nil, options)
       raise Exception if res["id"].blank?
       autopost_statuses.facebook.first.update_attribute(:status, 'posted')
     rescue Exception => e

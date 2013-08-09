@@ -4,6 +4,5 @@
       =image_for(group, '190x130#')
     %h4
       =group.name
-      -if current_user.try(:is_admin?)
-        %span.pull-right.label{ :class => group.private? ? 'label-important' : 'label-success' }
-          =group.private? ? 'Private' : 'Open'
+      -if group.private?
+        %span.pull-right.label.label-important Private
