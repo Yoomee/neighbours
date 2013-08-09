@@ -1,4 +1,5 @@
 class Neighbourhood < ActiveRecord::Base
+  include YmCore::Model
 
   has_many :posts, :as => :target
   belongs_to :admin, :class_name => "User"
@@ -13,6 +14,7 @@ class Neighbourhood < ActiveRecord::Base
   validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
 
   after_validation :geocode, :if => :postcode_prefix_changed?
+  before_destroy :find_new_neighbourhood_for_users
 
   class << self
     
@@ -66,6 +68,14 @@ class Neighbourhood < ActiveRecord::Base
   
   def welcome_email_text
     Neighbourhood::WELCOME_EMAIL_TEXT.sub('[NAME]', name)
+  end
+  
+  private
+  def find_new_neighbourhood_for_users
+    users.each do |user|
+      user.neighbourhood = Neighbourhood.without(self).find_by_postcode_or_area(user.postcode)
+      user.save
+    end
   end
   
 end
