@@ -2021,3 +2021,8 @@ h2.messages-title {
 body.controller_groups form .register-tab-pane {
   padding-top: 40px;
 }
+
+/*=============  Manage users ===================*/
+.nav-tabs-users li a{
+  padding: 8px 10px;
+}

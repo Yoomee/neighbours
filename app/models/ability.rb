@@ -70,9 +70,10 @@ class Ability
       can :index, :admin do
         user.is_neighbourhood_admin?
       end
-      can [:manage], User do |u|
+      can :manage, User do |u|
         u.try(:neighbourhood).try(:admin_id) == user.id
       end
+      cannot :index, User unless user.is_neighbourhood_admin?
       can [:manage], Page do |p|
         p.try(:neighbourhood).try(:admin_id) == user.id
       end

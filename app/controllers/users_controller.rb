@@ -42,11 +42,16 @@ class UsersController < ApplicationController
   def toggle_is_deleted
     @user.is_deleted = !@user.is_deleted
     if @user.save
-      flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}"
+      flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}" unless @user == current_user  
     else
       flash[:error] = "Something has gone wrong.  Please try again"
     end
-    redirect_to users_path
+    if @user.is_deleted? && @user == current_user
+      sign_out(current_user)
+      redirect_to root_path
+    else
+      redirect_to users_path      
+    end
   end
 
   def toggle_champion

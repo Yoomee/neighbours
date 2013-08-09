@@ -96,4 +96,4 @@
   .span8
     =options_panel do
       =link_if_can("Edit profile", [:edit, @user])
-      =link_if_can("Delete user", [:toggle_is_deleted, @user],:method => :put, :confirm => "Are you sure?")
+      =link_if_can(@user == current_user ? "Delete my account" : "Delete user", [:toggle_is_deleted, @user],:method => :put, :confirm => "Are you sure?")
