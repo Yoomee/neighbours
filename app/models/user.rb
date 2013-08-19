@@ -205,8 +205,9 @@ class User < ActiveRecord::Base
   end
 
   def set_neighbourhood
-    unless neighbourhood
-      self.neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
+    return true unless neighbourhood.nil? || postcode_changed?
+    if new_neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
+      self.neighbourhood = new_neighbourhood
     end
   end
 
