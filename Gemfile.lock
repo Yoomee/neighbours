@@ -430,7 +430,7 @@ DEPENDENCIES
   ym_core (~> 0.1.66)
   ym_enquiries (~> 0.1)
   ym_messages (~> 0.0.18)
-  ym_notifications (~> 0.1)
+  ym_notifications (= 0.1)
   ym_posts (~> 0.1)
   ym_search (~> 0.1)
   ym_snippets (~> 0.1.2)
