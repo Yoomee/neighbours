@@ -34,7 +34,7 @@ class Need < ActiveRecord::Base
 
   define_index do
     indexes description
-    has id, user_id, category_id, deadline, radius, created_at, updated_at
+    has id, user_id, category_id, deadline, radius, created_at, updated_at, removed
     join user, neighbourhood
     has "RADIANS(users.lat)", :as => :latitude, :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
@@ -47,6 +47,7 @@ class Need < ActiveRecord::Base
     
     def closest_to(*args)
       options = args.extract_options!
+      options[:with] = (options[:with] || {}).merge(:removed => false)
       lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
     end
