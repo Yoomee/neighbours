@@ -1,3 +1,9 @@
+-if @general_offer.removed?
+  .row
+    .span12
+      .alert.alert-error
+        This offer has been removed from the site and is only visible to admins.
+
 -if !@general_offer.user.validated?
   .row
     .span12
@@ -27,7 +33,7 @@
       -else
         =@general_offer.category.description
       .mt1
-        -if logged_in_as?(@general_offer.user)
+        -if can?(:destroy, @general_offer)
           =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
         -elsif @general_offer.user.validated?
           =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')

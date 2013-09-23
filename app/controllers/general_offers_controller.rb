@@ -1,6 +1,7 @@
 class GeneralOffersController < ApplicationController
-  load_and_authorize_resource
   
+  load_and_authorize_resource :except => :show
+
   def index
     @general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)])
     if params[:need_category_id].present?
@@ -35,9 +36,16 @@ class GeneralOffersController < ApplicationController
   end
   
   def destroy
-    @general_offer.destroy
+    @general_offer.update_attribute(:removed_at, Time.now)
     flash_notice(@general_offer)
-    redirect_to(offers_path)
+    return_or_redirect_to root_path
+  end
+
+  def show
+    @general_offer = GeneralOffer.unscoped.find(params[:id])
+    if @general_offer.removed? && !current_user.try(:admin?)
+      raise ActionController::RoutingError.new('Not Found')
+    end
   end
   
   def thanks

@@ -14,6 +14,8 @@ class GeneralOffer < ActiveRecord::Base
   before_create :prepare_for_autopost
   after_create :autopost
 
+  default_scope where(:removed_at => nil)
+
   delegate :lat, :lng, :street_name, :to => :user
   delegate :first_name, :to => :user, :prefix => true
 
@@ -23,6 +25,7 @@ class GeneralOffer < ActiveRecord::Base
     join user
     has "RADIANS(users.lat)",  :as => :latitude,  :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
+    where "removed_at IS NULL"
     set_property :delta => true
   end
 
@@ -55,6 +58,10 @@ class GeneralOffer < ActiveRecord::Base
     end
   end
   
+  def removed?
+    removed_at.present?
+  end
+
   def title
     [category,sub_category].compact.map(&:to_s).join(': ')
   end
