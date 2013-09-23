@@ -4,12 +4,12 @@ module UserConcerns::Validations
     base.validates :postcode, :postcode => true, :presence => true
     base.validates :validation_code, :uniqueness => true    
     base.validate :dob_or_undiclosed_age, :over_16, :unless => :pre_registration?
-    base.validates_confirmation_of :email, :message => "these don't match", :if => :who_you_are_step?
+    base.validates_confirmation_of :email, :message => "these don't match", :if => [:who_you_are_step?, :group_user?, :new_record?]
     base.validates_confirmation_of :password, :message => "these don't match", :unless => :pre_registration?
     base.validate :group_invitation_email_matches, :on => :create
 
-    base.validates :email_confirmation, :presence => true, :if => :who_you_are_step?
-    base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.who_you_are_step? && u.password.blank?}}
+    base.validates :email_confirmation, :presence => true, :if => [:who_you_are_step?, :group_user?, :new_record?]
+    base.validates :password_confirmation, :presence => {:if => Proc.new{|u| u.group_user? && u.password.blank? && u.new_record?}}
     
     base.validates :house_number, :street_name, :city, :presence => true, :if => :where_you_live_step?
 
@@ -54,7 +54,7 @@ module UserConcerns::Validations
   end
 
   def add_password_errors_for_who_you_are_step
-    return true if !who_you_are_step?
+    return true unless (who_you_are_step? && group_user? && new_record?)
     if errors.present?
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
