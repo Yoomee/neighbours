@@ -18,9 +18,10 @@
         %tr
           %td.span4
             .list-image
-              =link_to flag.resource_url do
-                =image_for_with_validation(flag.resource.user, "60x50#")
-              %p.small-text=flag.resource.user
+              -unless flag.resource.is_a?(MessageThread)
+                =link_to flag.resource_url do
+                  =image_for_with_validation(flag.resource.user, "60x50#")
+                %p.small-text=flag.resource.user
             =link_to(flag.resource_name, flag.resource_url)
             %p=truncate(strip_tags(flag.resource_description), :length => 100)
           %td.span4=flag.text
