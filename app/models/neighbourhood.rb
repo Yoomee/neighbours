@@ -14,6 +14,7 @@ class Neighbourhood < ActiveRecord::Base
   validates :max_radius, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
 
   after_validation :geocode, :if => :postcode_prefix_changed?
+  after_save :find_users
   before_destroy :find_new_neighbourhood_for_users
 
   class << self
@@ -78,6 +79,10 @@ class Neighbourhood < ActiveRecord::Base
     end
   end
   
+  def find_users
+    User.where(:neighbourhood_id => nil).where("postcode LIKE ?", "#{postcode_prefix}%").update_all(:neighbourhood_id => id)
+  end
+
 end
 
 Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES = 5
