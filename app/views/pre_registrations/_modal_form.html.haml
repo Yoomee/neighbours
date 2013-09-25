@@ -9,7 +9,7 @@
 -else
   =render('pre_registrations/modals/need') if @need
   =render('pre_registrations/modals/general_offer') if @general_offer
-  #pre-register-options{:class => "#{[@need.errors, @general_offer.errors].any?(&:present?) ? 'hide' : ''}"}
+  #pre-register-options{:class => "#{[@need.try(:errors), @general_offer.try(:errors)].any?(&:present?) ? 'hide' : ''}"}
     .modal-header
       =link_to('x', @next_url, :class => 'close')
       %h3 How would you like to get involved?
