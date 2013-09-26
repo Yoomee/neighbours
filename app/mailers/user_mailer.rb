@@ -36,7 +36,7 @@ class UserMailer < ActionMailer::Base
   end
   
   def accepted_offer(offer)
-    @offer, @user = offer, @offer.user
+    @offer, @user = offer, offer.user
     return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.need.user} has accepted your offer of help")
   end
