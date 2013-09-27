@@ -1,21 +1,23 @@
 Hi <%=@user.first_name%>,
 
-Congratulations! We have now validated your address. Your region is live and you can now use all the current features on the Neighbours Can Help website. 
+Congratulations! We have now validated your address. Your region is live and you can now use all the current features on the <%=Settings.site_name%>.
 
-We would like to thank you for joining us in these very early days, and would ask you to please bear with us as we bring more features online and roll out to the wider Sheffield region. Neighbours Can Help is going live at different times in different streets, depending on when there are enough of neighbours online to help each other. Any help you can give by telling your friends and neighbours about Neighbours Can Help will be much appreciated!
+We would like to thank you for joining us in these early days, and would ask you to please bear with us as we bring more features online and roll out to the wider region.....Rome wasn't built in a day!
 
-http://neighbourscanhelp.org.uk 
+<%=Settings.site_name%> is going live at different times in different streets, depending on when there are enough neighbours online to help each other. Any help you can give by telling your friends and neighbours about <%=Settings.site_name%> will be much appreciated!
 
-Our Grand Sheffield Launch will later in the year when we will have an event at the Meadowhall Shopping Centre.
+<%if get_involved_page = Page.find_by_slug(:get_involved)%>
+<%=Settings.site_url + page_path(get_involved_page)%>
+<%end%>
 
 Please feel free to contact us for any information and we thank you for any comments you give on our developing website.
 
 Thank you for your interest and we hope you enjoy the website!
 
-John, David, Rose and Ange
-The Neighbours Can Help Team
+John, David, Justine and Jude
+The <%=Settings.site_name%> Team
 
-0114 244 3623
-rose.woodfine@neighbourscanhelp.org.uk
-7 Brompton Road, Sheffield S9 2PA
-http://neighbourscanhelp.org.uk
+<%=Settings.company_phone%>
+<%=Settings.site_email%>
+<%=Settings.company_address%>
+<%=Settings.site_url%>
