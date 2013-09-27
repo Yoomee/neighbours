@@ -8,8 +8,10 @@ Thank you for registering your interest in <%=Settings.site_name%>! Your support
 <%=Settings.site_url + page_path(get_involved_page)%>
 <%end%>
 
+<%unless @pre_register_user.neighbourhood.try(:live?)%>
 When there are enough neighbours in your postcode to make helping and asking for help possible, we will switch your street and surrounding area live and let you and all your neighbours know about it.
 
+<%end%>
 Please feel free to contact us for any information and we thank you for any comments you might give on our developing website <%="#{Settings.site_url}/feedback"%>
 
 Thanks again you for your interest; we hope to be back in touch soon!
