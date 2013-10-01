@@ -5,7 +5,7 @@ class MessageThread < ActiveRecord::Base
   has_many :flags, :as => :resource, :dependent => :destroy
 
   def to_s
-    "messages between #{users.collect(&:full_name).to_sentence}"
+    "messages between #{users.collect(&:to_s).to_sentence}"
   end
 
 end

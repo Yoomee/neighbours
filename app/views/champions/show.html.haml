@@ -11,7 +11,7 @@
                 =link_to("Edit", edit_user_path(@champion, :anchor => "who_you_are"))
   .span9
     %h1.mb-1
-      =title(@champion.full_name)
+      =title(@champion.to_s)
       \- your neighbourhood champion
 
     -if @champion.bio.present?

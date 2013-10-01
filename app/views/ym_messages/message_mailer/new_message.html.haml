@@ -1,0 +1,20 @@
+%p
+  =@message.user
+  sent you a private message as follows:
+
+%hr
+=simple_format(@message.text)
+
+%hr
+%p
+  Please login to the
+  =Settings.site_name
+  website to view more messages and reply.
+%p
+  Thanks,
+%p
+  The
+  =Settings.site_name
+  team
+  %br
+  =Settings.live_site_url

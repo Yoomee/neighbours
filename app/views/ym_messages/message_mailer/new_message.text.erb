@@ -1,0 +1,14 @@
+<%= @message.user %> sent you a private message as follows:
+
+------------------------------------------------------
+
+<%= strip_tags(@message.text) %>
+
+-------------------------------------------------------
+
+Please login to the <%= Settings.site_name %> website to view more messages and reply.
+
+Thanks,
+
+The <%= Settings.site_name %> team
+<%= Settings.live_site_url %>

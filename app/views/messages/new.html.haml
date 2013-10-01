@@ -6,7 +6,7 @@
     .reply-box-inner
       .reply-form
         =semantic_form_for(@message) do |form|
-          =form.input :recipient_ids, :as => :select, :multiple => true, :collection => Message.valid_recipients_for_user(current_user), :input_html => { :class => 'span7', :'data-placeholder' => 'To'}, :label => false, :placeholder => 'To'
+          =form.input :recipient_ids, :as => :select, :multiple => true, :collection => Message.valid_recipients_for_user(current_user), :label_method => :to_s, :input_html => { :class => 'span7', :'data-placeholder' => 'To'}, :label => false, :placeholder => 'To'
           =form.input :text, :label => false, :title => 'Reply', :input_html => {:rows => 6, :placeholder => 'Write a message...', :class => 'reply-field'}
           =form.input :message_thread_id, :as => :hidden
           =form.commit_button 'Send', :button_html => {:class => 'btn message-reply-btn', :'data-loading-text' => 'Sending...'}
