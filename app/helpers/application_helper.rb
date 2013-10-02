@@ -43,7 +43,7 @@ module ApplicationHelper
   end
 
   def user_address_tooltip(user)
-    if user && user != current_user && miles_from = current_user.miles_from(user.lat, user.lng)
+    if user && current_user && user != current_user && miles_from = current_user.miles_from(user.lat, user.lng)
       "#{'%g' % miles_from} miles away"
     end
   end
