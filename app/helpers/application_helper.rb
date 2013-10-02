@@ -35,19 +35,16 @@ module ApplicationHelper
     options = args.extract_options!
     object = block_given? ? args[0] : args[1]
     user = (object.is_a?(User) ? object : object.try(:user)) || options.delete(:user)
-    if user && current_user.try(:validated?)
-      options.merge!(:rel => 'tooltip', :title => user_address_tooltip(user))
+    if tooltip = user_address_tooltip(user)
+      options.merge!(:rel => 'tooltip', :title => tooltip)
     end
     args << options
     link_to(*args, &block)
   end
 
   def user_address_tooltip(user)
-    return nil unless current_user.try(:validated?) && user.try(:street_name).present? && user != current_user
-    if miles_from = current_user.miles_from(user.lat, user.lng)
-      "#{user.street_name} (#{'%g' % miles_from} miles)"
-    else
-      user.street_name
+    if user && user != current_user && miles_from = current_user.miles_from(user.lat, user.lng)
+      "#{'%g' % miles_from} miles away"
     end
   end
   
