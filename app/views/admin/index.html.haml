@@ -3,17 +3,8 @@
     %h1
       %i.icon-cogs
       =title "Admin"
-      
--if current_user.is_neighbourhood_admin?
-  .row
-    .span4
-      .well
-        %h2
-          %i.icon-user
-          Users
-        %ul.unstyled
-          %li=link_to "Manage users", users_path
--else
+
+-if current_user.admin?
   .row
     .span4
       .well
@@ -92,3 +83,13 @@
         %ul.unstyled
           %li=link_to "View all groups", list_groups_path
           %li=link_to "New group", new_group_path
+
+-else
+  .row
+    .span4
+      .well
+        %h2
+          %i.icon-user
+          Users
+        %ul.unstyled
+          %li=link_to "Manage users", users_path
