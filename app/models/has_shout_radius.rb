@@ -9,7 +9,7 @@ module HasShoutRadius
   module ClassMethods
 
     def default_radius
-      radius_options[2].last
+      radius_options[3].last
     end
     
     def maximum_radius
