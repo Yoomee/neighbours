@@ -12,9 +12,14 @@ class NeedsController < ApplicationController
       render :action => "user_index"
     elsif params[:need_category_id].present?
       @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user)
-      @needs = current_user.try(:admin?) ? @needs.paginate(:page => params[:page], :per_page => 5) : @needs.random(5)
+      @needs = current_user.try(:admin?) ? @needs.page(params[:page]) : @needs.random(Need.per_page)
     else
-      @needs = current_user ? Need.unresolved.where("user_id != #{current_user.id}").visible_to_user(current_user).order("created_at DESC") : Need.unresolved.order("created_at DESC")
+      @needs = Need.unresolved.order("created_at DESC").visible_to_user(current_user)
+      if current_user.try(:admin?) && request.xhr?
+        @needs = @needs.page(params[:page])
+      elsif current_user
+        @needs = @needs.where("user_id != #{current_user.id}")
+      end
     end
   end
 
@@ -82,7 +87,11 @@ class NeedsController < ApplicationController
   
   private
   def get_suggest_general_offers
-    @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(5)
+    if current_user.try(:admin?)
+      @suggested_general_offers = GeneralOffer.page(params[:page])
+    else
+      @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(GeneralOffer.per_page)
+    end
   end
   
   def redirect_if_logged_out

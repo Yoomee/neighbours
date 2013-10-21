@@ -29,6 +29,8 @@ class GeneralOffer < ActiveRecord::Base
     set_property :delta => true
   end
 
+  self.per_page = 5
+
   class << self
     
     def visible_to_user_with_validated_users(user)

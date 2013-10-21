@@ -43,6 +43,8 @@ class Need < ActiveRecord::Base
     set_property :delta => true
   end
 
+  self.per_page = 5
+
   class << self
     
     def closest_to(*args)

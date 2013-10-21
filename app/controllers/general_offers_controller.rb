@@ -7,7 +7,7 @@ class GeneralOffersController < ApplicationController
     if params[:need_category_id].present?
       @general_offers = @general_offers.where(:category_id => params[:need_category_id])
     end
-    @general_offers = current_user.try(:admin?) ? @general_offers.paginate(:page => params[:page], :per_page => 5) : @general_offers.random(5)
+    @general_offers = current_user.try(:admin?) ? @general_offers.page(params[:page]) : @general_offers.random(GeneralOffer.per_page)
   end
   
   def new
@@ -65,7 +65,8 @@ class GeneralOffersController < ApplicationController
 
   private
   def get_suggested_needs
-    @suggested_needs = Need.unresolved.visible_to_user(current_user).random(5)
+    @suggested_needs = Need.unresolved.visible_to_user(current_user)
+    @suggested_needs = current_user.try(:admin?) ? @suggested_needs.order("created_at DESC").page(params[:page]) : @suggested_needs.random(Need.per_page)
   end
   
 end
