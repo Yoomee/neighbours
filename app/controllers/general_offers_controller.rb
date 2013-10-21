@@ -7,7 +7,7 @@ class GeneralOffersController < ApplicationController
     if params[:need_category_id].present?
       @general_offers = @general_offers.where(:category_id => params[:need_category_id])
     end
-    @general_offers = @general_offers.random(5)
+    @general_offers = current_user.try(:admin?) ? @general_offers.paginate(:page => params[:page], :per_page => 5) : @general_offers.random(5)
   end
   
   def new

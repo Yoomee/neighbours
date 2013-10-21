@@ -21,12 +21,7 @@
   %hr
   .span6
     %h2 Offer these people help
-    %ul#suggested-needs.loader-square.help-list.unstyled
-      -if @suggested_needs.empty?
-        %li
-          %p Looks like no-one in your neighbourhood is requesting help at the moment but describe how you can help, as someone might need your help in the future.
-      -else
-        -@suggested_needs.each do |need|
-          =render('needs/list_item', :need => need)
+    #suggested-needs.loader-square
+      =render('needs/list', :needs => @suggested_needs)
   .span6
     =render('form')

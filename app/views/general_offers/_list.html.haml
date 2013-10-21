@@ -1,0 +1,26 @@
+%ul.help-list.unstyled
+  -if general_offers.empty?
+    %li
+      %p 
+        Looks like no-one is offering help in 
+        =params[:need_category_id].present? ? 'this category' : 'your neighbourhood'
+        at the moment. Explain what you would like help with using the form on the right.
+  -else
+    -general_offers.each do |general_offer|
+      %li.list
+        .list-image
+          =link_to(general_offer, :class => "pull-left") do
+            =image_for_with_validation(general_offer.user, "60x50#")
+            %p.small-text=general_offer.user
+        .list-text
+          %h3
+            =link_to general_offer.title, general_offer
+          %p
+            -if current_user.try(:validated?)
+              =general_offer.description
+            -else
+              =general_offer.category.description
+          =link_to("Accept help from #{general_offer.user}", general_offer, :class=>"btn btn-primary small-help-btn")
+.clearfix
+-if general_offers.respond_to?(:total_pages)
+  =will_paginate(general_offers, :remote => true)

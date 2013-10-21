@@ -1,0 +1,26 @@
+%ul.unstyled.help-list
+  -if needs.empty?
+    %li
+      %p
+      Looks like no-one in your neighbourhood is requesting help
+      ='in this category' if params[:need_category_id].present?
+      at the moment but describe how you can help, as someone might need your help in the future.
+  -else
+    -needs.each do |need|
+      %li.list
+        .list-image
+          =link_to(need, :class => "pull-left") do
+            =image_for_with_validation(need.user, "60x50#")
+            %p.small-text=need.user
+        .list-text
+          %h3
+            =link_to need.title, need
+          %p
+            -if current_user.try(:validated?)
+              =need.description
+            -else
+              =need.category.description
+          =link_to("Help #{need.user}", need, :class=>"btn btn-primary small-help-btn")
+.clearfix
+-if needs.respond_to?(:total_pages)
+  =will_paginate(needs, :remote => true)

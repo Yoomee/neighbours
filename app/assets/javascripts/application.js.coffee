@@ -164,6 +164,10 @@ window.NeedCategorySelector =
   selectSubCategory: (subCategoryId) ->
     $('input#sub-category-id').val(subCategoryId)
   init: (typeToSuggest) ->
+    $('#suggested-general-offers').on 'ajax:before', '.pagination a', (event) ->
+      $('#suggested-general-offers').addClass('loading')
+    $('#suggested-needs').on 'ajax:before', '.pagination a', (event) ->
+      $('#suggested-needs').addClass('loading')
     $('a.need-category').click (event) ->
       event.preventDefault()
       $('a.need-category').removeClass('btn-primary')

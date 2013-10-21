@@ -21,12 +21,7 @@
   %hr
   .span6
     %h2 Accept help from these people
-    %ul#suggested-general-offers.loader-square.help-list.unstyled
-      -if @suggested_general_offers.empty?
-        %li
-          %p Looks like no-one is offering help in your neighbourhood at the moment. Explain what you would like help with using the form on the right.
-      -else
-        -@suggested_general_offers.each do |general_offer|
-          =render('general_offers/list_item', :general_offer => general_offer)
+    #suggested-general-offers.loader-square
+      =render('general_offers/list', :general_offers => @suggested_general_offers)
   .help-box.span6
     =render('form')
