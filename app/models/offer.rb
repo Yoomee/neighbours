@@ -4,6 +4,8 @@ class Offer < ActiveRecord::Base
   belongs_to :user
   belongs_to :general_offer
   
+  default_scope joins(:need).where('needs.removed = 0')
+
   after_create :create_post_for_need
   
   attr_accessor :post_for_need
