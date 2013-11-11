@@ -18,7 +18,7 @@ class NeedsController < ApplicationController
       if current_user.try(:admin?) && request.xhr?
         @needs = @needs.page(params[:page])
       elsif current_user
-        @needs = @needs.where("user_id != #{current_user.id}")
+        @needs = @needs.where("needs.user_id != #{current_user.id}")
       end
     end
   end
