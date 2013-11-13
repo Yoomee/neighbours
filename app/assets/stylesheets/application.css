@@ -127,6 +127,9 @@ body, p {
 .underline {
   text-decoration: underline;
 }
+.block {
+  display: block;
+}
 
 /*========== Forms ==========*/
 select[multiple='multiple']{

@@ -18,7 +18,7 @@
         You're not fully registered. You can access more features if you
         =link_to("complete your registration", new_registration_path)
     %h1.mb-1=title(@user)
-    %h3.mb-1
+    %h3.block.mb-2
       -if @user.is_community_champion?
         ="#{first_name_or_you(@user, 'is', 'are').capitalize} a neighbourhood champion"
       -elsif @user.community_champion
@@ -28,8 +28,11 @@
           ="#{first_name_or_your(@user).capitalize} request to become a neighbourhood champion is being considered"
         -else
           ="There isn't a neighbourhood champion for #{first_name_or_your(@user)} area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
-    
-    .mt-2.mb-1  
+
+    -if current_user == @user
+      %h3.block.mb-1
+        These details are public
+    .mb-1
       -if current_user == @user
         %h4 Bio
       -if @user.bio.present?
@@ -49,7 +52,12 @@
           %span.italic Nothing entered yet.
         .action-link
           =link_to("Edit", edit_user_path(@user, :anchor => "who_you_are")) if can?(:edit, @user)
-    
+
+    -if current_user == @user
+      %h3.block.mb-1
+        These details are private
+        %br
+        %small Your private details will not be shared with anyone.
     -if current_user == @user
       .mb-1
         %h4 Date of birth
