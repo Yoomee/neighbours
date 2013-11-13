@@ -23,10 +23,7 @@
         %span=title @general_offer.title
         %p.location-smallprint
           %i.icon-map-marker
-          -if logged_in_as?(@general_offer.user) || current_user.try(:validated?)
-            ="#{@general_offer.user.street_name}, #{@general_offer.created_at.strftime("%e %B %Y")}"
-          -else
-            ="#{@general_offer.created_at.strftime("%e %B %Y")}"
+          =[@general_offer.miles_from_s(current_user), @general_offer.created_at.strftime("%e %B %Y")].reject(&:blank?).join(', ')
             
       -if logged_in_as?(@general_offer.user) || current_user.try(:validated?)
         =simple_format(@general_offer.description)

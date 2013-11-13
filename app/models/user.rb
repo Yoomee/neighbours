@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :needs, :general_offers, :owned_groups
 
   attr_accessor :credit_card_preauth
+  attr_accessor :current_user # used for miles_from_s on home#index
 
   # accessors below are used in group_registrations#create
   attr_accessor :group_invitation_id
@@ -102,6 +103,12 @@ class User < ActiveRecord::Base
     neighbourhood.try(:name).presence || city
   end
 
+  # hack to pass current_user to to_json on home#index
+  def as_json(options = {})
+    self.current_user = options[:current_user]
+    super
+  end
+
   def credit_card
     @credit_card ||= ActiveMerchant::Billing::CreditCard.new
   end
@@ -139,6 +146,14 @@ class User < ActiveRecord::Base
   def miles_from(lat, lng)
     return nil if [lat, lng, has_lat_lng?].any?(&:blank?)
     haversine(lat, lng, self.lat, self.lng)
+  end
+
+  def miles_from_s(user = self.current_user)
+    if miles = miles_from(user.lat, user.lng)
+      "#{'%g' % miles} miles away"
+    else
+      ""
+    end
   end
 
   def new_notification_count(context, need = nil)

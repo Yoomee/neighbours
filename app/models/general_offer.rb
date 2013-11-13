@@ -16,6 +16,8 @@ class GeneralOffer < ActiveRecord::Base
 
   default_scope where(:removed_at => nil)
 
+  attr_accessor :current_user # used for miles_from_s on home#index
+
   delegate :lat, :lng, :street_name, :to => :user
   delegate :first_name, :to => :user, :prefix => true
 
@@ -44,6 +46,12 @@ class GeneralOffer < ActiveRecord::Base
     
   end
   
+  # hack to pass current_user to to_json on home#index
+  def as_json(options = {})
+    self.current_user = options[:current_user]
+    super
+  end
+
   def autopost_text
     out = user.neighbourhood ? "#{user} from #{user.neighbourhood}" : user.to_s
     "#{out} has offered to help with #{title}"
@@ -60,6 +68,11 @@ class GeneralOffer < ActiveRecord::Base
     end
   end
   
+  def miles_from_s(user = self.current_user)
+    return '' if user.nil?
+    self.user.miles_from_s(user)
+  end
+
   def removed?
     removed_at.present?
   end

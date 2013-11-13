@@ -107,7 +107,7 @@ window.NeedsMap =
           strokeOpacity: 0,            
           scale: 15
       })
-      marker.contentString = "<div class='user-infowindow'><h3>#{user.first_name}</h3><p>#{user.street_name}</p></div>"
+      marker.contentString = "<div class='user-infowindow'><h3>#{user.first_name}</h3><p>#{user.miles_from_s}</p></div>"
 
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()
@@ -127,7 +127,7 @@ window.NeedsMap =
           scale: 15
       })
       marker.generalOfferId = general_offer.id
-      marker.contentString = "<div class='user-infowindow'><h3>#{general_offer.title}</h3><p>#{general_offer.street_name}</p><a href='/general_offers/#{general_offer.id}'>View offer &rarr;</a></div>"
+      marker.contentString = "<div class='user-infowindow'><h3>#{general_offer.title}</h3><p>#{general_offer.miles_from_s}</p><a href='/general_offers/#{general_offer.id}'>View offer &rarr;</a></div>"
 
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()
@@ -160,7 +160,7 @@ window.NeedsMap =
           radius: need.radius
         })
       marker.needId = need.id
-      marker.contentString = "<div class='need-infowindow'><h3>#{need.title}</h3><p>#{need.street_name}</p><a href='/needs/#{need.id}'>View request &rarr;</a></div>"
+      marker.contentString = "<div class='need-infowindow'><h3>#{need.title}</h3><p>#{need.miles_from_s}</p><a href='/needs/#{need.id}'>View request &rarr;</a></div>"
     
       google.maps.event.addListener marker, 'click', ->
         NeedsMap.infowindow.close()

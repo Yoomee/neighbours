@@ -27,6 +27,7 @@ class Need < ActiveRecord::Base
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
   scope :deadline_in_future, lambda { where('deadline IS NULL OR deadline >= ?', Date.today) }
 
+  attr_accessor :current_user # used for miles_from_s on home#index
   boolean_accessor :skip_user_validation, :skip_description_validation
 
   delegate :lat, :lng, :street_name, :to => :user
@@ -61,6 +62,12 @@ class Need < ActiveRecord::Base
     
   end
 
+  # hack to pass current_user to to_json on home#index
+  def as_json(options = {})
+    self.current_user = options[:current_user]
+    super
+  end
+
   def description
     return read_attribute(:description) if new_record?
     read_attribute(:description).presence || category.description
@@ -72,6 +79,11 @@ class Need < ActiveRecord::Base
 
   def notifications
     Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
+  end
+
+  def miles_from_s(user = self.current_user)
+    return '' if user.nil?
+    self.user.miles_from_s(user)
   end
 
   def posts_viewable_by(user)

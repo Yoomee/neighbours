@@ -32,10 +32,7 @@
         %span=title @need.title
         %p.location-smallprint
           %i.icon-map-marker
-          -if current_user.try(:validated?)
-            ="#{@need.user.street_name}, #{@need.created_at.strftime("%e %B %Y")}"
-          -else
-            ="#{@need.created_at.strftime("%e %B %Y")}"  
+          =[@need.miles_from_s(current_user), @need.created_at.strftime("%e %B %Y")].reject(&:blank?).join(', ')
             
       -if current_user && current_user.validated?
         =simple_format(@need.description.capitalize)
