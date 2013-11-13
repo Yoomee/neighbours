@@ -121,6 +121,12 @@ body, p {
 .mb-05 {
   margin-bottom: 5px;
 }
+.no-color {
+  color: inherit;
+}
+.underline {
+  text-decoration: underline;
+}
 
 /*========== Forms ==========*/
 select[multiple='multiple']{
