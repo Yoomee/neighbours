@@ -16,4 +16,4 @@
       =link_to("Add a video", "#", :data => {:toggle => "collapse", :target => "#post_video_url_input", :parent => ".post_form"}, :class => "btn btn-small")
       =link_to("Add a file", "#", :data => {:toggle => "collapse", :target => "#post_file_input", :parent => ".post_form"}, :class => "btn btn-small")
       =form.commit_button "Post", :button_html => {:class => "pull-right btn-primary", :"data-loading-text" => "Posting..."}
-      =form.input :private, :wrapper_html => {:class => "post-private-checkbox pull-right", :rel => "tooltip", :title => "Only you and #{current_user.community_champion.first_name} will this message"}, :label => "Private"
+      =form.input :private, :wrapper_html => {:class => "post-private-checkbox pull-right", :rel => "tooltip", :title => "Only you and #{@champion.first_name} will this message"}, :label => "Private"

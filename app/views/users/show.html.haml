@@ -22,7 +22,7 @@
       -if @user.is_community_champion?
         ="#{first_name_or_you(@user, 'is', 'are').capitalize} a neighbourhood champion"
       -elsif @user.community_champion
-        ="#{first_name_or_your(@user).capitalize} neighbourhood champion is #{link_to(@user.community_champion.to_s, champion_path)}".html_safe
+        ="#{first_name_or_your(@user).capitalize} neighbourhood champion is #{link_to(@user.community_champion.to_s, user_champion_path(@user))}".html_safe
       -else
         -if @user.champion_request_at
           ="#{first_name_or_your(@user).capitalize} request to become a neighbourhood champion is being considered"

@@ -38,13 +38,14 @@ Neighbours::Application.routes.draw do
   resources :users, :only => []  do
     resources :needs, :only => :index
     resources :offers, :only => :index
+    resource :champion, :only => :show
     member do
       put :request_to_be_champion
       get :validate
       put :unvalidate
       put :assign_champion
       put :toggle_champion
-      put :toggle_is_deleted
+      put :toggle_is_deleted      
     end
     collection do
       get :map
