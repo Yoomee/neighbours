@@ -11,12 +11,9 @@
     =form.label :publication_date
     .controls
       =form.date_select :publication_date, {:order => [:day, :month, :year], :prompt => @page.new_record?, :default => @page.created_at}, :class => "span2"
-  =form.input :text, :as => :redactor  
-  -if !@page.new_record? && @page.image
-    .control-group
-      =image_for(@page, "100x100#")
-  =form.input :retained_image, :as => :hidden
-  =form.input :image, :as => :file, :label => "Cover image"
+  =form.input :text, :as => :redactor   
+  =form.input :image, :as => :image, :label => "Cover image"
+  .clearfix
   =form.input :view_name, :as => :select, :collection => Page::view_names, :include_blank => false, :member_label => "titleize", :label => "Layout"
   =form.input :permalink_path, :label => "Permalink"
   =form.input :slug if current_user.try(:yoomee_staff?)  
