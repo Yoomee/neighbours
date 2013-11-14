@@ -4,7 +4,7 @@
       .span4
         %p &copy; Neighbours Can Help Ltd
         %p Provincial House, Solly Street, Sheffield S1 4BA
-        %ul.unstyled.footer-links
+        %ul.unstyled.footer-links.mt-2
           %li
             =link_to_slug(:help, :class=>"") do
               %icon.icon-question-sign
@@ -12,11 +12,7 @@
           =li_with_active(@page && (@page.slug == "safety_tips" || @page.descendant_of_slug("safety_tips")), link_to_slug(:safety_tips, :class=>""))
           =li_with_active(current_page?(feedback_path), link_to("Contact us", feedback_path, :class => ""))
       .span4
-        %p Photos on flickr
-        :css
-          .flickr_badge_image {margin:0px;display:inline;}
-          .flickr_badge_image img {border: 0px solid #666666 !important; padding:1px; margin:2px;}
-          #flickr_badge_wrapper {width:250px;text-align:left}
+        %p.ml-3 Photos on flickr          
         #flickr_badge_wrapper
           %script{src: "http://www.flickr.com/badge_code_v2.gne?count=6&display=random&size=s&layout=x&source=user&user=43156706@N02", type: "text/javascript"}          
       .span4
