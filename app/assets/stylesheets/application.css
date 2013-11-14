@@ -982,15 +982,14 @@ a.yoomee-logo {
 }
 
 .find-us-on {
-	float: right;
+	float: left;
 	clear: both;
 	font-weight: bold;
 	margin: 10px 0;
 
   
 }
-.find-us-on > li {
-  float: left;
+.find-us-on > li {  
   margin: 0 0 0 10px;
 }
 

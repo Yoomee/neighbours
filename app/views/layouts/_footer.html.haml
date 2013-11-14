@@ -1,7 +1,7 @@
 %footer.footer
   .container
     .row
-      .span5
+      .span4
         %p &copy; Neighbours Can Help Ltd
         %p Provincial House, Solly Street, Sheffield S1 4BA
         %ul.unstyled.footer-links
@@ -11,10 +11,19 @@
               Help
           =li_with_active(@page && (@page.slug == "safety_tips" || @page.descendant_of_slug("safety_tips")), link_to_slug(:safety_tips, :class=>""))
           =li_with_active(current_page?(feedback_path), link_to("Contact us", feedback_path, :class => ""))
-      .span7
-        =link_to "Nominet trust", "http://www.nominettrust.org.uk/", :Target=>"_blank", :class=>"nominet-logo footer-logo"
-        =link_to "Yoomee", "http://www.yoomee.com/", :Target=>"_blank", :class=>"yoomee-logo footer-logo"
+      .span4
+        %p Photos on flickr
+        :css
+          .flickr_badge_image {margin:0px;display:inline;}
+          .flickr_badge_image img {border: 0px solid #666666 !important; padding:1px; margin:2px;}
+          #flickr_badge_wrapper {width:250px;text-align:left}
+        #flickr_badge_wrapper
+          %script{src: "http://www.flickr.com/badge_code_v2.gne?count=6&display=random&size=s&layout=x&source=user&user=43156706@N02", type: "text/javascript"}          
+      .span4
         %ul.unstyled.find-us-on
           %li.find-title Find us on
           %li=link_to "Facebook", "https://www.facebook.com/NeighboursCanHelp", :class=>"link-find-us link-find-us-facebook", :target=>"_blank", :title=>"Like us!"
           %li=link_to "Twitter", "https://twitter.com/NeighbrsCanHelp", :class=>"link-find-us link-find-us-twitter", :target=>"_blank", :title=>"Follow for updates, news and more"
+        =link_to "Nominet trust", "http://www.nominettrust.org.uk/", :Target=>"_blank", :class=>"nominet-logo footer-logo"
+        =link_to "Yoomee", "http://www.yoomee.com/", :Target=>"_blank", :class=>"yoomee-logo footer-logo"
+        
