@@ -30,7 +30,8 @@
               -else
                 Welcome to Neighbours Can Help
             %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
-          =link_to_slug('Find out more', :about, :class=>"illustration-link")  
+            =render_slideshow_by_slug(:homepage_slideshow)
+          / =link_to_slug('Find out more', :about, :class=>"illustration-link")
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about")
           -if current_user
             =link_to_slug "Get involved", :get_involved, :class=>"home-cta home-cta-get-involved"
