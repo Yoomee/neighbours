@@ -454,8 +454,10 @@ br.clear {
   position: relative;
   width: 100%;
 }
-#home-intro-2 {
-	background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
+#home-intro-2{
+  background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
+}
+#home-intro-2, #home-intro-3 {
   height: 430px;
   float: left;
   position: relative;
@@ -493,6 +495,9 @@ a.home-cta-groups {
   top: 350px;
   right: 115px;
   background: #8bd7dd;
+}
+.slideshow{
+  display:none;
 }
 @-webkit-keyframes pulsate {
     0% {opacity: 0.0;}

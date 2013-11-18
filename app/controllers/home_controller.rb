@@ -11,6 +11,7 @@ class HomeController < ApplicationController
       @needs_json ||= []
       @users_json ||= []
     end
+    @slideshow = Slideshow.find_by_slug(:homepage_slideshow)
   end
   
   def preregister
