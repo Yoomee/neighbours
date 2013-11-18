@@ -105,7 +105,14 @@ Neighbours::Application.routes.draw do
   get '/r/:auth_token' => 'registrations#new', :as => 'auth_token'
   get '/g/:auth_token' => 'group_registrations#new', :as => 'group_auth_token'
   
-  resources :neighbourhoods
+  resources :neighbourhoods do
+    member do
+      get :stats
+    end
+    collection do
+      get :stats, :action => 'all_stats'
+    end
+  end
   
   get "neighbourhoods/:neighbourhood_id/emails/:role/new" => "neighbourhood_emails#new", :as => 'email_neighbourhood'
   post "neighbourhoods/:neighbourhood_id/emails/:role" => "neighbourhood_emails#create", :as => 'create_email_neighbourhood'

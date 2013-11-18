@@ -75,4 +75,16 @@ class NeighbourhoodsController < ApplicationController
     redirect_to neighbourhoods_path
   end
 
+  def all_stats
+    @neighbourhoods = Neighbourhood.all
+
+  end
+
+  def stats
+    @neighbourhood = Neighbourhood.find_by_id(params[:id])
+    @offers = @neighbourhood.offers
+    @needs = @neighbourhood.needs
+    @removed_needs = @neighbourhood.needs.where(:removed => 1)
+  end
+
 end

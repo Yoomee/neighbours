@@ -6,6 +6,8 @@ class Neighbourhood < ActiveRecord::Base
   has_many :users
   has_many :pages
   has_permalinks
+  has_many :offers, :through => :users
+  has_many :needs, :through => :users
 
   geocoded_by :postcode_with_country, :latitude => :lat, :longitude => :lng
   

@@ -159,6 +159,11 @@ a.category,
    -webkit-font-smoothing: antialiased;
 }
 
+.huge{
+  font-size:40px;
+  font-weight:bold;
+}
+
 h1,
 h2
 {
