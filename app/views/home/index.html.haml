@@ -30,8 +30,6 @@
               -else
                 Welcome to Neighbours Can Help
             %h3.home-where.home-intro-text=neighbourhood_snippet_text(:mission_statement, "..where neighbours are helping each other")
-            =render_slideshow_by_slug(:homepage_slideshow) if @slideshow
-          / =link_to_slug('Find out more', :about, :class=>"illustration-link")
           =link_to_slug('Find out more', :about, :class=>"home-cta home-cta-about #{@slideshow ? 'slideshow' : 'no-slideshow'}")
           -if current_user
             =link_to_slug "Get involved", :get_involved, :class=>"home-cta home-cta-get-involved #{@slideshow ? 'slideshow' : 'no-slideshow'}"
@@ -39,6 +37,9 @@
             =link_to "Join now", "#pre-register", :class=>"home-cta home-cta-get-involved #{@slideshow ? 'slideshow' : 'no-slideshow'}", :"data-toggle"=>"modal"
           =link_to "Join a group", groups_path, :class=>"home-cta home-cta-groups #{@slideshow ? 'slideshow' : 'no-slideshow'}"
           %span.badge#badge-groups-new{:class => "#{@slideshow ? 'slideshow' : 'no-slideshow'}"} NEW
+            
+          =render_slideshow_by_slug(:homepage_slideshow) if @slideshow
+        / =link_to_slug('Find out more', :about, :class=>"illustration-link")
 
 .container
   =render('home/cycled_columns')

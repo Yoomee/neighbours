@@ -459,11 +459,14 @@ br.clear {
   position: relative;
   width: 100%;
 }
-#home-intro-2{
-  background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
+#home-intro-2 {
+	background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
+}
+#home-intro-3 {
+	background: #f6f5f1;
 }
 #home-intro-2, #home-intro-3 {
-  height: 430px;
+  min-height: 430px;
   float: left;
   position: relative;
   width: 100%;
@@ -471,6 +474,7 @@ br.clear {
 }
 .home-intro-inner {
   position: relative;
+  text-align: center;
 }
 .home-cta {
   display: block;
@@ -501,8 +505,22 @@ a.home-cta-groups {
   right: 115px;
   background: #8bd7dd;
 }
-.slideshow{
-  display:none;
+.home-cta.slideshow {
+  display: inline-block;
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-top: 40px;
+}
+a.home-cta-get-involved.slideshow {
+  top: auto;
+  right: auto;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+a.home-cta-groups.slideshow {
+  top: auto;
+  right: auto;
 }
 @-webkit-keyframes pulsate {
     0% {opacity: 0.0;}
@@ -519,6 +537,10 @@ a.home-cta-groups {
   line-height:17px;
   -webkit-animation: pulsate 2s ease-out;
   -webkit-animation-iteration-count: infinite; 
+}
+#badge-groups-new.slideshow {
+  top: 140px;
+  right: 190px;
 }
 .illustration-link {
   display: block;
@@ -1979,4 +2001,48 @@ body.controller_groups form .register-tab-pane {
 /*=============  Manage users ===================*/
 .nav-tabs-users li a{
   padding: 8px 10px;
+}
+
+
+/*=============  Slideshows ===================*/
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  margin:0 auto;
+  max-height: 280px;
+  width: auto;
+}
+.carousel {
+  margin-bottom: 0px;
+  margin-top: 40px;
+}
+.carousel-control {
+  top: 7%;
+  color: #000000;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(0,0,0,0.2);
+  opacity: 0.5;
+}
+.carousel-control:hover {
+  opacity: 0.7;
+  color: #000000;
+  background: #ffffff;
+}
+.carousel-caption {
+  color: #fff;
+  text-shadow: none;
+  background: rgba(0,0,0,0.3);
+  width: 80%;
+  padding: 15px 0;
+  font-size: 20px;
+  margin: 20px 0;
+  border-radius: 30px 30px 0px 0px;
+  margin: 0 auto;
+}
+.carousel-indicators {
+  bottom: 15px;
+  top: auto;
+  right: 50%;
+}
+.carousel-indicators {
+  display: none;
 }
