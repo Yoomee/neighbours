@@ -456,7 +456,7 @@ br.clear {
 }
 #home-intro-2 {
 	background: #f6f5f1 url(/assets/home_intro_2.jpg) center 0px no-repeat;
-  height: 430px;
+  min-height: 430px;
   float: left;
   position: relative;
   width: 100%;
@@ -1970,3 +1970,44 @@ body.controller_groups form .register-tab-pane {
 .nav-tabs-users li a{
   padding: 8px 10px;
 }
+
+
+/*=============  Slideshows ===================*/
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  margin:0 auto;
+  max-height: 280px;
+  width: auto;
+}
+.carousel {
+  margin-bottom: 0px;
+  margin-top: 40px;
+}
+.carousel-caption {
+  color: #fff;
+  text-shadow: none;
+  background: rgba(0,0,0,0.3);
+  width: 100%;
+  padding: 15px 0;
+  font-size: 20px;
+  margin: 20px 0;
+}
+.carousel-indicators {
+  bottom: 15px;
+  top: auto;
+  right: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
