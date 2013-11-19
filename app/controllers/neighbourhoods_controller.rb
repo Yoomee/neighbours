@@ -3,6 +3,8 @@ class NeighbourhoodsController < ApplicationController
   
   skip_before_filter :set_neighbourhood, :except => [:about, :help, :news]
 
+  helper_method :sort_column, :sort_direction
+
   include YmSnippets::SnippetsHelper
   
   def about
@@ -82,9 +84,37 @@ class NeighbourhoodsController < ApplicationController
 
   def stats
     @neighbourhood = Neighbourhood.find_by_id(params[:id])
-    @offers = @neighbourhood.offers
-    @needs = @neighbourhood.needs
+    case params[:sort]    
+    when 'created_at'
+      @offers = @neighbourhood.offers.order("created_at #{params[:direction]}")
+    when 'accepted'    
+      @offers = @neighbourhood.offers.order("accepted #{params[:direction]}")
+    else
+      @offers = @neighbourhood.offers
+    end
+
+    case params[:sort]
+    when 'created_at'
+      @needs = @neighbourhood.needs.order("created_at #{params[:direction]}")  
+    when 'resolved'
+      @needs = @neighbourhood.needs.resolved + @neighbourhood.needs.unresolved
+    when 'category_id'
+      @needs = @neighbourhood.needs.order("category_id")
+    else
+      @needs = @neighbourhood.needs
+    end
+    
     @removed_needs = @neighbourhood.needs.where(:removed => 1)
+  end
+
+  private
+
+  def sort_column
+    %w[].include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

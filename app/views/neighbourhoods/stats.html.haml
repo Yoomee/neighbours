@@ -4,11 +4,11 @@
   %thead
     %tr
       %th ID
-      %th Date/Time      
+      %th=sortable "Date/Time"
       %th Description      
-      %th Category
+      %th=sortable "Category"
       %th Offers made
-      %th Resolved         
+      %th=sortable "Resolved"
   %tbody
     -@needs.each do |need|
       %tr
@@ -23,11 +23,11 @@
   %thead
     %tr
       %th ID
-      %th Date/Time      
+      %th=sortable "Date/Time"
       %th Description      
-      %th Category
+      %th=sortable "Category"
       %th Offers made
-      %th Resolved          
+      %th=sortable "Resolved"
   %tbody
     -@removed_needs.each do |need|
       %tr
@@ -42,9 +42,9 @@
   %thead
     %tr
       %th ID
-      %th Date/Time
+      %th=sortable "Date/Time"
       %th Need request description            
-      %th Accepted         
+      %th=sortable "Accepted"
   %tbody
     -@offers.each do |offer|
       %tr

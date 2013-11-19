@@ -47,5 +47,23 @@ module ApplicationHelper
       user.miles_from_s(current_user)
     end
   end
+
+  def sortable(column)
+    title = column
+    case column
+    when "Date/Time"
+      sort = "created_at"
+    when "Category"
+      sort = "category_id"
+    when "Resolved"
+      sort = "resolved"
+    when "Accepted"
+      sort = "accepted"
+    end
+
+    css_class = column == sort_column ? "current #{sort_direction}" : nil
+    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    link_to title, {:sort => sort, :direction => direction}, {:class => css_class}
+  end
   
 end
