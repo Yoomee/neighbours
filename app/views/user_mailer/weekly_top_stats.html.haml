@@ -1,0 +1,15 @@
+!!!
+%html
+  %body
+    %p
+      Dear Neighbours Admin,
+    %p
+      The top level stats stand as follows:
+    %p
+      ="#{Offer.count} offers made in total"
+    %p
+      ="#{Offer.where(:accepted => 1).count} accepted offers" 
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url

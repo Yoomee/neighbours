@@ -109,6 +109,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => @group.owner.email, :subject => "[Neighbours Can Help] #{@member} posted in #{@group}")
   end
 
+  def weekly_top_stats(options = {})
+    @admin_email = options[:admin_email]
+    mail(:to => @admin_email || Settings.admin_email, :subject => "[Neighbours Can Help] Weekly Top Stats")
+  end
+
   private
   def should_email?(user)
     !user.is_deleted? && !user.no_notifications?
