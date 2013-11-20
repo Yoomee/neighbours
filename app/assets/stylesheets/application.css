@@ -131,6 +131,10 @@ body, p {
   display: block;
 }
 
+table.table-condensed td.date-time{
+  font-size: 12px;
+}
+
 /*========== Forms ==========*/
 select[multiple='multiple']{
   width:620px;
@@ -206,7 +210,7 @@ div, input, select, .btn, label, textarea {
   font-size: 11px;
   line-height: 14px;
 }
-a.call-to-action-link, .carousel-text p, .small-text {
+a.call-to-action-link, .carousel-text p, .small-text, a.read-more-link{
   font-size: 13px;
   line-height: 16px;
 }

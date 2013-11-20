@@ -1,54 +1,63 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}")
 %h2 Needs
-%table.table.table-striped
-  %thead
-    %tr
-      %th ID
-      %th=sortable "Date/Time"
-      %th Description      
-      %th=sortable "Category"
-      %th Offers made
-      %th=sortable "Resolved"
-  %tbody
-    -@needs.each do |need|
+-if @needs.present?
+  %table.table.table-striped.table-condensed
+    %thead
       %tr
-        %td=need.id
-        %td=need.created_at.strftime("%d %b %y %H:%M")
-        %td=need.description
-        %td=need.category
-        %td=need.offers.count
-        %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
+        %th ID
+        %th=sortable "Date/Time"
+        %th Description      
+        %th=sortable "Category"
+        %th Offers made
+        %th=sortable "Resolved"
+    %tbody
+      -@needs.each do |need|
+        %tr
+          %td=need.id
+          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(need.description, :length => 50)
+          %td=need.category
+          %td=need.offers.count
+          %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
+-else
+  %p No needs yet.
 %h2 Needs - removed
-%table.table.table-striped
-  %thead
-    %tr
-      %th ID
-      %th=sortable "Date/Time"
-      %th Description      
-      %th=sortable "Category"
-      %th Offers made
-      %th=sortable "Resolved"
-  %tbody
-    -@removed_needs.each do |need|
+-if @removed_needs.present?
+  %table.table.table-striped.table-condensed
+    %thead
       %tr
-        %td=need.id
-        %td=need.created_at.strftime("%d %b %y %H:%M")
-        %td=need.description
-        %td=need.category
-        %td=need.offers.count
-        %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
+        %th ID
+        %th=sortable "Date/Time"
+        %th Description      
+        %th=sortable "Category"
+        %th Offers made
+        %th=sortable "Resolved"
+    %tbody
+      -@removed_needs.each do |need|
+        %tr
+          %td=need.id
+          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(need.description, :length => 50)
+          %td=need.category
+          %td=need.offers.count
+          %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
+-else
+  %p No removed needs.
 %h2 Offers
-%table.table.table-striped
-  %thead
-    %tr
-      %th ID
-      %th=sortable "Date/Time"
-      %th Need request description            
-      %th=sortable "Accepted"
-  %tbody
-    -@offers.each do |offer|
+-if @offers.present?
+  %table.table.table-striped.table-condensed
+    %thead
       %tr
-        %td=offer.id
-        %td=offer.created_at.strftime("%d %b %y %H:%M")
-        %td=offer.need.description
-        %td=offer.accepted?
+        %th ID
+        %th=sortable "Date/Time"
+        %th Need request description            
+        %th=sortable "Accepted"
+    %tbody
+      -@offers.each do |offer|
+        %tr
+          %td=offer.id
+          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(offer.need.description, :length => 50)
+          %td=offer.accepted?
+-else
+  %p No offers yet.

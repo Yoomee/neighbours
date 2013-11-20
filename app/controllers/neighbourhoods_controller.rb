@@ -84,34 +84,28 @@ class NeighbourhoodsController < ApplicationController
 
   def stats
     @neighbourhood = Neighbourhood.find_by_id(params[:id])
-    case params[:sort]    
-    when 'created_at'
-      @offers = @neighbourhood.offers.order("created_at #{params[:direction]}")
-    when 'accepted'    
-      @offers = @neighbourhood.offers.order("accepted #{params[:direction]}")
-    else
-      @offers = @neighbourhood.offers
-    end
-
+    @offers = @neighbourhood.offers
+    @needs = @neighbourhood.needs
+    @removed_needs = @neighbourhood.needs.where(:removed => 1)
+      
     case params[:sort]
     when 'created_at'
-      @needs = @neighbourhood.needs.order("created_at #{params[:direction]}")  
+      @offers = @neighbourhood.offers.order("created_at #{params[:direction]}")
+      @needs = @neighbourhood.needs.order("created_at #{params[:direction]}")
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}") 
+    when 'accepted'    
+      @offers = @neighbourhood.offers.order("accepted #{params[:direction]}")
     when 'resolved'
       @needs = @neighbourhood.needs.resolved + @neighbourhood.needs.unresolved
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}")
     when 'category_id'
-      @needs = @neighbourhood.needs.order("category_id")
-    else
-      @needs = @neighbourhood.needs
-    end
-    
-    @removed_needs = @neighbourhood.needs.where(:removed => 1)
+      @needs = @neighbourhood.needs.order("category_id #{params[:direction]}")
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("category_id #{params[:direction]}")    
+    end  
+
   end
 
-  private
-
-  def sort_column
-    %w[].include?(params[:sort]) ? params[:sort] : "name"
-  end
+  private 
   
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
