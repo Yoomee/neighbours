@@ -49,6 +49,7 @@ Neighbours::Application.routes.draw do
     end
     collection do
       get :map
+      get :search
     end
   end
 

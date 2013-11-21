@@ -2050,3 +2050,16 @@ body.controller_groups form .register-tab-pane {
 .carousel-indicators {
   display: none;
 }
+
+/*============= User search ===================*/
+.form-user-search {
+  background:#ddd;
+  padding:4px 6px;
+  border-radius:2px;
+}
+.form-user-search input#q{
+  padding:0px 4px;
+}
+.btn-download-spreadsheet {
+  margin-top:3px;
+}
