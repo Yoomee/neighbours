@@ -2006,7 +2006,14 @@ body.controller_groups form .register-tab-pane {
 .nav-tabs-users li a{
   padding: 8px 10px;
 }
-
+.nav-tabs-users li.no-results a{
+  cursor:default;
+  color:#999;
+}
+.nav-tabs-users li.no-results a:hover{
+  background-color:#fff;
+  color:#999;
+}
 
 /*=============  Slideshows ===================*/
 

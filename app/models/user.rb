@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
 
   define_index do
     indexes first_name
+    indexes last_name
     has id
     has "RADIANS(lat)", :as => :latitude,  :type => :float
     has "RADIANS(lng)", :as => :longitude, :type => :float

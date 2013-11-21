@@ -2,7 +2,7 @@
   .span5
     %h1
       -if action_name.search?
-        =title "Search users"
+        =title "Found #{pluralize(@results_count, 'user')}"
       -else
         =title "Users"
   .span7
@@ -16,30 +16,14 @@
 .row
   .span12
     %ul.nav.nav-tabs.nav-tabs-users
-      %li.active
-        =link_to '#unvalidated', :'data-toggle' => 'tab' do
-          Unvalidated
-      %li
-        =link_to '#validated', :'data-toggle' => 'tab' do
-          Validated
-      %li
-        =link_to '#group-users', :'data-toggle' => 'tab' do
-          Group users
-      %li
-        =link_to '#pre-registered', :'data-toggle' => 'tab' do
-          Pre-registered                  
-      %li
-        =link_to '#champion-requests', :'data-toggle' => 'tab' do
-          Champion requests
-      %li
-        =link_to '#champions', :'data-toggle' => 'tab' do
-          Champions
-      %li
-        =link_to '#not-in-sheffield', :'data-toggle' => 'tab' do
-          Not in Sheffield
-      %li
-        =link_to '#deleted', :'data-toggle' => 'tab' do
-          Deleted
+      =users_tab_li("Unvalidated", @unvalidated_users)
+      =users_tab_li("Validated", @validated_users)
+      =users_tab_li("Group users", @group_users)
+      =users_tab_li("Pre-registered", @pre_registered_users)
+      =users_tab_li("Champion requests", @community_champion_requests)
+      =users_tab_li("Champions", @community_champions)
+      =users_tab_li("Not in Sheffield", @not_in_sheffield)
+      =users_tab_li("Deleted", @deleted_users)
 
     .tab-content
       #unvalidated.tab-pane.fade.in.active
