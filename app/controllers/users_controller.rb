@@ -18,14 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @validated_users = User.not_deleted.validated
-    @unvalidated_users = User.not_deleted.unvalidated.where(:role => nil)
-    @group_users = User.not_deleted.where(:role => 'group_user')
-    @pre_registered_users = User.not_deleted.where(:role => 'pre_registration')
-    @community_champion_requests = User.not_deleted.community_champion_requesters
-    @community_champions = User.not_deleted.community_champions
-    @not_in_sheffield = User.not_in_sheffield
-    @deleted_users = User.deleted
+    get_users
     
     respond_to do |format|
       format.html {}
@@ -37,6 +30,13 @@ class UsersController < ApplicationController
 
   def map
     @users_json = User.with_lat_lng.to_json(:only => [:id, :lat, :lng, :house_number, :street_name], :methods => [:full_name])
+  end
+  
+  def search
+    user_ids = User.search_for_ids(params[:q])
+    get_users(user_ids)
+    @results_count = user_ids.size
+    render :action => 'index'
   end
 
   def toggle_is_deleted
@@ -102,5 +102,20 @@ class UsersController < ApplicationController
   end
 
   def validate
+  end
+  
+  private
+  def get_users(only = nil)
+    users = only ? User.where(:id => only) : User.scoped
+    
+    @validated_users = users.not_deleted.validated
+    @unvalidated_users = users.not_deleted.unvalidated.where(:role => nil)
+    @group_users = users.not_deleted.where(:role => 'group_user')
+    @pre_registered_users = users.not_deleted.where(:role => 'pre_registration')
+    @community_champion_requests = users.not_deleted.community_champion_requesters
+    @community_champions = users.not_deleted.community_champions
+    @not_in_sheffield = users.not_in_sheffield
+    @deleted_users = users.deleted
+    
   end
 end

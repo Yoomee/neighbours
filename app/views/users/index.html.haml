@@ -1,10 +1,18 @@
 .row
-  .span8
-    %h1=title "Users"
-  .span4
-    =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right') do
-      %i.icon-download-alt
-      Download spreadsheet
+  .span5
+    %h1
+      -if action_name.search?
+        =title "Search users"
+      -else
+        =title "Users"
+  .span7
+    =form_tag(search_users_path, :method => :get, :class => 'pull-right form form-inline form-user-search form-search') do
+      =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
+      =submit_tag "Go", :class => 'btn'
+    -unless action_name.search?
+      =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
+        %i.icon-download-alt
+        Download spreadsheet
 .row
   .span12
     %ul.nav.nav-tabs.nav-tabs-users
