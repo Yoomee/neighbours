@@ -38,10 +38,13 @@
             %td=user.community_champion.try(:full_name) || '-'
           -if tab == "unvalidated"
             %td
-              -if user.sent_activation_code_at?
-                =user.sent_activation_code_at.strftime("%d %b %y %H:%M")
+              -if user.validate_by == 'post'
+                -if user.sent_activation_code_at?
+                  =user.sent_activation_code_at.strftime("%d %b %y %H:%M")
+                -else
+                  =link_to "Mark sent", send_activation_code_user_path(user), :method => :put
               -else
-                =link_to "Mark sent", send_activation_code_user_path(user), :method => :put
+                \-
           %td=link_to "View actions", "##{tab}-user-#{user.id}", :'data-toggle'=>"modal"
 
           .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
