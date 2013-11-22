@@ -1228,6 +1228,10 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   cursor:pointer;
 }
 
+.users-table .modal-body .btn{
+  margin-right:10px;
+}
+
 
 /*========== Comments ==========*/
 

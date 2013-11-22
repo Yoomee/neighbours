@@ -1,27 +1,28 @@
-.row
-  .span5
-    %h1
-      -if action_name.search?
-        =title "Found #{pluralize(@results_count, 'user')}"
-      -else
-        =title "Users"
-  .span7
-    =form_tag(search_users_path, :method => :get, :class => 'pull-right form form-inline form-user-search form-search') do
-      =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
-      =submit_tag "Go", :class => 'btn'
-    -unless action_name.search?
-      =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
-        %i.icon-download-alt
-        Download spreadsheet
-.row
-  .span12
-    %ul.nav.nav-tabs.nav-tabs-users
-      -users_tabs = {"Unvalidated" => @unvalidated_users, "Validated"=> @validated_users, "Group users" => @group_users, "Pre-registered" => @pre_registered_users, "Champion requests" => @community_champion_requests, "Champions" => @community_champions, "Not in Sheffield" => @not_in_sheffield, "Deleted" => @deleted_users} 
-      =users_tab_li(users_tabs)
+.container
+  .row
+    .span5
+      %h1
+        -if action_name.search?
+          =title "Found #{pluralize(@results_count, 'user')}"
+        -else
+          =title "Users"
+    .span7
+      =form_tag(search_users_path, :method => :get, :class => 'pull-right form form-inline form-user-search form-search') do
+        =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
+        =submit_tag "Go", :class => 'btn'
+      -unless action_name.search?
+        =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
+          %i.icon-download-alt
+          Download spreadsheet
 
-    .tab-content
-      -users_tabs.each do |name, users|
-        -name = name.downcase.gsub(' ', '-')
-        .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated") ? 'active' : ''}"}       
-          =render('table', :users => users, :tab => name)
-    #choose-community-champion.modal.hide.fade
+.users-table.ml-3.mr-3
+  %ul.nav.nav-tabs.nav-tabs-users
+    -users_tabs = {"Unvalidated" => @unvalidated_users, "Validated"=> @validated_users, "Group users" => @group_users, "Pre-registered" => @pre_registered_users, "Champion requests" => @community_champion_requests, "Champions" => @community_champions, "Not in Sheffield" => @not_in_sheffield, "Deleted" => @deleted_users} 
+    =users_tab_li(users_tabs)
+
+  .tab-content
+    -users_tabs.each do |name, users|
+      -name = name.downcase.gsub(' ', '-')
+      .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated") ? 'active' : ''}"}
+        =render('table', :users => users, :tab => name)
+  #choose-community-champion.modal.hide.fade
