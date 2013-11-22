@@ -65,7 +65,11 @@ module ApplicationHelper
 
     css_class = "current #{sort_direction}"
     direction = sort_direction == "asc" ? "desc" : "asc"
-    link_to title, {:sort => sort, :direction => direction, :tab => (tab if tab.present?)}, {:class => css_class, :icon => sort_direction == "asc" ? "caret-up" : "caret-down"}
+    if params[:sort] == sort
+      link_to title, {:sort => sort, :direction => direction, :tab => (tab if tab.present?)}, {:class => css_class, :icon => sort_direction == "asc" ? "caret-up" : "caret-down"}
+    else
+      link_to title, {:sort => sort, :direction => direction, :tab => (tab if tab.present?)}, {:class => css_class}
+    end
   end
   
 end
