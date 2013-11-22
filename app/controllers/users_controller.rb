@@ -116,7 +116,11 @@ class UsersController < ApplicationController
   private
   def get_users(only = nil)
     users = only ? User.where(:id => only) : User.scoped
-    users = params[:sort] && params[:direction] ? users.order("#{params[:sort]} #{sort_direction}") : users.order("created_at desc")
+    if params[:sort] == "champion_request"
+      users = users.community_champion_requesters + users.without(users.community_champion_requesters)
+    else
+      users = params[:sort] && params[:direction] ? users.order("#{params[:sort]} #{sort_direction}") : users.order("created_at desc")
+    end
     
     @validated_users = users.not_deleted.validated
     @unvalidated_users = users.not_deleted.unvalidated.where(:role => nil)
