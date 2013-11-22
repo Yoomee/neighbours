@@ -16,6 +16,17 @@ class UsersController < ApplicationController
 
   def edit
   end
+  
+  def inactive
+    @months = params[:months].to_i.zero? ? 3 : params[:months].to_i
+    @users = User.not_deleted.where("neighbourhood_id IS NOT NULL").where(["current_sign_in_at < ?", @months.months.ago]).order(:last_name, :first_name)
+    respond_to do |format|
+      format.html {}
+      format.csv do
+        headers["Content-Disposition"] = "attachment; filename=\"Inactive users (#{@months} months) #{Date.today.strftime('%d-%m-%Y')}.csv\"" 
+      end
+    end
+  end
 
   def index
     get_users

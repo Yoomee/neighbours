@@ -48,6 +48,7 @@ Neighbours::Application.routes.draw do
       put :toggle_is_deleted      
     end
     collection do
+      get :inactive
       get :map
       get :search
     end

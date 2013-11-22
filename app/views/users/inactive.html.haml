@@ -1,0 +1,35 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function(){
+      $('select#months').change(function(){
+        location.href = '#{inactive_users_path}?months=' + $('select#months').val();
+      });
+    });
+.row
+  .span5
+    %h1
+      =title "Inactive users"
+  .span7
+    =link_to(inactive_users_path(:format => 'csv', :months => @months), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
+      %i.icon-download-alt
+      Download spreadsheet
+.row
+  .span12
+    %p.lead
+      In the past
+      =select_tag('months', options_for_select((1..12).map{|n| [pluralize(n, 'month'),n]}, @months), :class => 'input-medium mb-0')
+      ="these #{pluralize(@users.count, 'user')} with neighbourhoods haven't logged in"
+    %table.table.table-striped.table-users
+      %thead
+        %tr
+          %th Name
+          %th Address
+          %th Neighbourhood
+          %th Last login
+      %tbody
+        -@users.each do |user|
+          %tr
+            %td=full_name_and_role(user)
+            %td=user.address
+            %td=user.neighbourhood
+            %td=user.current_sign_in_at.to_s(:date)
