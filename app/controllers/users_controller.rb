@@ -42,6 +42,12 @@ class UsersController < ApplicationController
     render :action => 'index'
   end
 
+  def send_activation_code
+    @user = User.find(params[:id])
+    @user.update_attribute(:sent_activation_code_at, Time.now)
+    redirect_to users_path
+  end
+
   def toggle_is_deleted
     @user.is_deleted = !@user.is_deleted
     if @user.save
