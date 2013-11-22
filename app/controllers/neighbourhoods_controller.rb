@@ -3,7 +3,7 @@ class NeighbourhoodsController < ApplicationController
   
   skip_before_filter :set_neighbourhood, :except => [:about, :help, :news]
 
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_direction
 
   include YmSnippets::SnippetsHelper
   
@@ -97,7 +97,7 @@ class NeighbourhoodsController < ApplicationController
       @offers = @neighbourhood.offers.order("accepted #{params[:direction]}")
     when 'resolved'
       @needs = @neighbourhood.needs.resolved + @neighbourhood.needs.unresolved
-      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}")
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).resolved + @neighbourhood.needs.where(:removed => 1).unresolved
     when 'category_id'
       @needs = @neighbourhood.needs.order("category_id #{params[:direction]}")
       @removed_needs = @neighbourhood.needs.where(:removed => 1).order("category_id #{params[:direction]}")    
