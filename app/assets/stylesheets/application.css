@@ -135,6 +135,10 @@ table.table-condensed td.date-time{
   font-size: 12px;
 }
 
+.bold{
+  font-weight: bold;
+}
+
 /*========== Forms ==========*/
 select[multiple='multiple']{
   width:620px;
