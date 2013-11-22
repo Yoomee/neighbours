@@ -33,10 +33,17 @@
       -else
         =@general_offer.category.description
       .mt1
+        -if @general_offer.user.validated?
+          -if current_user.validated?
+            =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')
+          -elsif current_user.pre_registration? || current_user.group_user?
+            %p.bold
+              You will be able to accept this offer once you are
+              =link_to " fully registered.", new_registration_path
+          -else
+            %p.bold You will be able to accept this offer once you are validated.
         -if can?(:destroy, @general_offer)
           =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
-        -elsif @general_offer.user.validated?
-          =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')
 .row
   .span12
     =options_panel do
