@@ -54,7 +54,7 @@ module Neighbours
                         "Validated by" => "validate_by",
                         "Organisation name" => "organisation_name",
                         "Neighbourhood champion?" => "is_community_champion",
-                        "Requested to be a champion?" => "champion_request_at",
+                        "Requested to be a champion?" => "champion_request",
                         "Assigned neighbourhood champion?" => "community_champion_id"
                     }
 end
