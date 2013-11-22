@@ -16,30 +16,12 @@
 .row
   .span12
     %ul.nav.nav-tabs.nav-tabs-users
-      =users_tab_li("Unvalidated", @unvalidated_users)
-      =users_tab_li("Validated", @validated_users)
-      =users_tab_li("Group users", @group_users)
-      =users_tab_li("Pre-registered", @pre_registered_users)
-      =users_tab_li("Champion requests", @community_champion_requests)
-      =users_tab_li("Champions", @community_champions)
-      =users_tab_li("Not in Sheffield", @not_in_sheffield)
-      =users_tab_li("Deleted", @deleted_users)
+      -users_tabs = {"Unvalidated" => @unvalidated_users, "Validated"=> @validated_users, "Group users" => @group_users, "Pre-registered" => @pre_registered_users, "Champion requests" => @community_champion_requests, "Champions" => @community_champions, "Not in Sheffield" => @not_in_sheffield, "Deleted" => @deleted_users} 
+      =users_tab_li(users_tabs)
 
     .tab-content
-      #unvalidated.tab-pane.fade.in.active
-        =render('table', :users => @unvalidated_users, :tab => "unvalidated")
-      #validated.tab-pane.fade.in
-        =render('table', :users => @validated_users, :tab => "validated")
-      #group-users.tab-pane.fade.in
-        =render('table', :users => @group_users, :tab => "group_users")
-      #pre-registered.tab-pane.fade.in
-        =render('table', :users => @pre_registered_users, :tab => "pre-registered")
-      #champion-requests.tab-pane.fade.in
-        =render('table', :users => @community_champion_requests, :tab => "champion_requests")
-      #champions.tab-pane.fade.in
-        =render('table', :users => @community_champions, :tab => "champions")
-      #not-in-sheffield.tab-pane.fade.in
-        =render('table', :users => @not_in_sheffield, :tab => "not_in_sheffield")
-      #deleted.tab-pane.fade.in
-        =render('table', :users => @deleted_users, :tab => "deleted")
+      -users_tabs.each do |name, users|
+        -name = name.downcase.gsub(' ', '-')
+        .tab-pane.fade.in.active{:id => "#{name}", :class => "#{params[:tab] == name ? 'active' : ''}"}       
+          =render('table', :users => users, :tab => name)
     #choose-community-champion.modal.hide.fade
