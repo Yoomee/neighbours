@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  helper_method :sort_direction
+
   include YmUsers::UsersController
   load_and_authorize_resource
 
@@ -107,6 +110,7 @@ class UsersController < ApplicationController
   private
   def get_users(only = nil)
     users = only ? User.where(:id => only) : User.scoped
+    users = params[:sort] && params[:direction] ? users.order("#{params[:sort]} #{sort_direction}") : users.order("created_at desc")
     
     @validated_users = users.not_deleted.validated
     @unvalidated_users = users.not_deleted.unvalidated.where(:role => nil)
@@ -116,6 +120,9 @@ class UsersController < ApplicationController
     @community_champions = users.not_deleted.community_champions
     @not_in_sheffield = users.not_in_sheffield
     @deleted_users = users.deleted
-    
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

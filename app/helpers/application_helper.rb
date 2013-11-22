@@ -48,7 +48,7 @@ module ApplicationHelper
     end
   end
 
-  def sortable(column)
+  def sortable(column, tab=nil)
     title = column
     case column
     when "Date/Time"
@@ -59,11 +59,13 @@ module ApplicationHelper
       sort = "resolved"
     when "Accepted"
       sort = "accepted"
+    else
+      sort = Neighbours::SORTABLES[column]
     end
 
     css_class = "current #{sort_direction}"
     direction = sort_direction == "asc" ? "desc" : "asc"
-    link_to title, {:sort => sort, :direction => direction}, {:class => css_class, :icon => sort_direction == "asc" ? "caret-up" : "caret-down"}
+    link_to title, {:sort => sort, :direction => direction, :tab => (tab if tab.present?)}, {:class => css_class, :icon => sort_direction == "asc" ? "caret-up" : "caret-down"}
   end
   
 end

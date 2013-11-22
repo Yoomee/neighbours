@@ -45,4 +45,16 @@ module Neighbours
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
+
+  Neighbours::SORTABLES = {"Full name" => "last_name, first_name",
+                        "Validation Code" => "validation_code",
+                        "Date of birth" => "dob",
+                        "Email address" => "email",
+                        "Requested validation by" => "validate_by",
+                        "Validated by" => "validate_by",
+                        "Organisation name" => "organisation_name",
+                        "Neighbourhood champion?" => "is_community_champion",
+                        "Requested to be a champion?" => "champion_request_at",
+                        "Assigned neighbourhood champion?" => "community_champion_id"
+                    }
 end
