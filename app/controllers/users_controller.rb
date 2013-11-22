@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  helper_method :sort_direction
+
   include YmUsers::UsersController
   load_and_authorize_resource
 
@@ -48,6 +51,12 @@ class UsersController < ApplicationController
     get_users(user_ids)
     @results_count = user_ids.size
     render :action => 'index'
+  end
+
+  def send_activation_code
+    @user = User.find(params[:id])
+    @user.update_attribute(:sent_activation_code_at, Time.now)
+    redirect_to users_path
   end
 
   def toggle_is_deleted
@@ -118,6 +127,11 @@ class UsersController < ApplicationController
   private
   def get_users(only = nil)
     users = only ? User.where(:id => only) : User.scoped
+    if params[:sort] == "champion_request"
+      users = users.community_champion_requesters + users.without(users.community_champion_requesters)
+    else
+      users = params[:sort] && params[:direction] ? users.order("#{params[:sort]} #{sort_direction}") : users.order("created_at desc")
+    end
     
     @validated_users = users.not_deleted.validated
     @unvalidated_users = users.not_deleted.unvalidated.where(:role => nil)
@@ -127,6 +141,9 @@ class UsersController < ApplicationController
     @community_champions = users.not_deleted.community_champions
     @not_in_sheffield = users.not_in_sheffield
     @deleted_users = users.deleted
-    
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

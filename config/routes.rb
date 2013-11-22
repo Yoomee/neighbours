@@ -45,7 +45,8 @@ Neighbours::Application.routes.draw do
       put :unvalidate
       put :assign_champion
       put :toggle_champion
-      put :toggle_is_deleted      
+      put :toggle_is_deleted
+      put :send_activation_code
     end
     collection do
       get :inactive

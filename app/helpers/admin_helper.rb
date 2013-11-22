@@ -8,15 +8,20 @@ module AdminHelper
     end.html_safe
   end
   
-  def users_tab_li(name, users)
-    li_class = users.size.zero? ? 'no-results' : 'results'
-    if @active_tab.blank? && users.size.nonzero?
-      @active_tab = name
-      active_class = 'active'
+  def users_tab_li(user_tabs)
+    html = ""
+
+    user_tabs.keys.each do |name|
+      li_class = user_tabs.values.size.zero? ? 'no-results' : 'results'
+      if params[:tab] == name.downcase.gsub(' ', '-') || params[:tab].nil? && name == "Unvalidated"
+        li_class += ' active'
+      end
+
+      html << content_tag(:li, :class => li_class) do
+        link_to(name, "##{name.downcase.gsub(' ', '-')}", :'data-toggle' => 'tab')
+      end
     end
-    content_tag(:li, :class => li_class) do
-      link_to(name, "##{name.downcase.gsub(' ', '-')}", :'data-toggle' => 'tab')
-    end
+    html.html_safe
   end
   
 end
