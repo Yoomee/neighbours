@@ -22,6 +22,6 @@
     .tab-content
       -users_tabs.each do |name, users|
         -name = name.downcase.gsub(' ', '-')
-        .tab-pane.fade.in.active{:id => "#{name}", :class => "#{params[:tab] == name ? 'active' : ''}"}       
+        .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated") ? 'active' : ''}"}       
           =render('table', :users => users, :tab => name)
     #choose-community-champion.modal.hide.fade
