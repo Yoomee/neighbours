@@ -8,7 +8,7 @@
             .validated-icon{ :rel => 'tooltip', :title =>"Address validated"}
         -if can?(:edit, @user)
           =link_to(@user.image ? "Edit" : "+ Upload your own picture", edit_user_path(@user, :anchor => "who_you_are"))
-        -if user != current_user
+        -if Message.valid_recipients_for_user(current_user).include?(@user)
           =link_to(new_user_message_path(@user), :class => "btn mt-1")  do
             %i.icon-envelope
             &nbsp; Send message
