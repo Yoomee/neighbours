@@ -13,8 +13,7 @@
     -elsif current_user
       =link_to "I'd like some help", '#', :class=>"btn call-to-action primary not-fully-registered-link", :data => {:return_to => new_need_path}
     -else
-      =link_to "I'd like some help", '#pre-register', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
-      
+      =link_to "I'd like some help", '#pre-register', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"    
     -if @general_offers.empty?
       %h2
         Neighbours who've been helped
