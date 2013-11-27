@@ -22,6 +22,9 @@ class OffersController < ApplicationController
   
   def reject
     @offer.update_attribute(:accepted, false)
+    if @offer.need.posts.first.comments.first
+      @offer.need.posts.first.comments.first.destroy if @offer.need.posts.first.comments.first.text == Settings.offer_acceptance_text
+    end
     redirect_to @offer.need
   end
 end

@@ -63,7 +63,7 @@ class GeneralOffer < ActiveRecord::Base
     else
       need = Need.create(:user => user_wanting_help, :category => self.category, :skip_description_validation => true)
       offer = offers.create(:need => need, :user => self.user, :post_for_need => self.description, :accepted => true)
-      offer.need.posts.first.comments.create(:user => user_wanting_help, :text => "I would like to accept your offer for help")
+      offer.need.posts.first.comments.create(:user => user_wanting_help, :text => Settings.offer_acceptance_text)
       need
     end
   end
