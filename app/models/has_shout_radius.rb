@@ -11,6 +11,12 @@ module HasShoutRadius
     def default_radius
       radius_options[3].last
     end
+
+    def get_lat_lng_from_postcode(postcode)
+      results = Geocoder.search(postcode)
+      geometry = results.first.data['geometry']
+      lat,lng = geometry['location']['lat']
+    end
     
     def maximum_radius
       radius_options.last.last
@@ -24,8 +30,13 @@ module HasShoutRadius
     end
   
     def visible_from_location(lat,lng, options = {})
+      if options[:max_radius]
+        max_radius = options[:max_radius] * 1609.344
+      else
+       max_radius = maximum_radius
+      end
       sphinx_options = {
-        :with => { "@geodist" => 0.0..maximum_radius.to_f },
+        :with => { "@geodist" => 0.0..max_radius.to_f },
         :geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)],
         :per_page => 100000
       }
