@@ -12,3 +12,40 @@
 %ul.unstyled
   -@neighbourhoods.each do |neighbourhood|
     %li=link_to neighbourhood.name, stats_neighbourhood_path(neighbourhood)
+
+%h2 General Offers
+-if @general_offers.present?
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th ID
+        %th=sortable "Date/Time"
+        %th Description
+        %th=sortable "Category"
+    %tbody
+      -@general_offers.each do |offer|
+        %tr
+          %td=offer.id
+          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(offer.description, :length => 50)
+          %td=offer.category
+-else
+  %p No general offers.
+%h2 Removed General Offers
+-if @removed_general_offers.present?
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th ID
+        %th=sortable "Removed At"
+        %th Description
+        %th=sortable "Category"
+    %tbody
+      -@removed_general_offers.each do |offer|
+        %tr
+          %td=offer.id
+          %td.date-time=offer.removed_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(offer.description, :length => 50)
+          %td=offer.category
+-else
+  %p No removed general offers.

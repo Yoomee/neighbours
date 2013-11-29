@@ -79,20 +79,31 @@ class NeighbourhoodsController < ApplicationController
 
   def all_stats
     @neighbourhoods = Neighbourhood.all
+    @general_offers = GeneralOffer.order("created_at desc")
+    @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at desc")
 
+    case params[:sort]
+    when 'created_at'
+      @general_offers = GeneralOffer.order("created_at #{params[:direction]}")
+    when 'removed_at'
+      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at #{params[:direction]}")
+    when 'category_id'
+      @general_offers = GeneralOffer.unscoped.order("category_id #{params[:direction]}")
+      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("category_id #{params[:direction]}")
+    end
   end
 
   def stats
     @neighbourhood = Neighbourhood.find_by_id(params[:id])
-    @offers = @neighbourhood.offers
-    @needs = @neighbourhood.needs
-    @removed_needs = @neighbourhood.needs.where(:removed => 1)
+    @offers = @offers = @neighbourhood.offers.order("created_at desc")
+    @needs = @neighbourhood.needs.order("created_at desc")
+    @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at desc")
       
     case params[:sort]
     when 'created_at'
       @offers = @neighbourhood.offers.order("created_at #{params[:direction]}")
       @needs = @neighbourhood.needs.order("created_at #{params[:direction]}")
-      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}") 
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}")
     when 'accepted'    
       @offers = @neighbourhood.offers.order("accepted #{params[:direction]}")
     when 'resolved'
@@ -100,7 +111,7 @@ class NeighbourhoodsController < ApplicationController
       @removed_needs = @neighbourhood.needs.where(:removed => 1).resolved + @neighbourhood.needs.where(:removed => 1).unresolved
     when 'category_id'
       @needs = @neighbourhood.needs.order("category_id #{params[:direction]}")
-      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("category_id #{params[:direction]}")    
+      @removed_needs = @neighbourhood.needs.where(:removed => 1).order("category_id #{params[:direction]}")
     end  
 
   end

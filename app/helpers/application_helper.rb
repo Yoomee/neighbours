@@ -53,6 +53,8 @@ module ApplicationHelper
     case column
     when "Date/Time"
       sort = "created_at"
+    when "Removed At"
+      sort = "removed_at"
     when "Category"
       sort = "category_id"
     when "Resolved"
