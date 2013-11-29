@@ -6,15 +6,14 @@
         =select_tag "distance", options_for_select(["1 mile", "2 miles", "3 miles", "5 miles"])
         =label_tag "postcode"
         =text_field_tag(:postcode)
-        =submit_
+        =submit_tag "Filter"
   .span6
     -if current_user.try(:fully_registered?)
       =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
     -elsif current_user
       =link_to "I'd like some help", '#', :class=>"btn call-to-action primary not-fully-registered-link", :data => {:return_to => new_need_path}
     -else
-      =link_to "I'd like some help", '#pre-register', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"
-      
+      =link_to "I'd like some help", '#pre-register', :class=>"btn call-to-action primary", :"data-toggle"=>"modal"    
     -if @general_offers.empty?
       %h2
         Neighbours who've been helped
