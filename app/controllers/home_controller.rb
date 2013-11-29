@@ -29,11 +29,7 @@ class HomeController < ApplicationController
       @needs = Need.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => false}, :without => {:deadline => Need.first.created_at..Time.now}, :limit => 20).at_least(20)
     else
       @general_offers = GeneralOffer.from_live_neighbourhood.visible_to_user(current_user).order('created_at DESC').limit(20).at_least(20)
-      if params[:postcode]
-        @helped = Need.visible_from_location(lat, lng, :maximum_radius => 5).from_live_neighbourhood.resolved.order('created_at DESC').limit(20).at_least(20) if @general_offers.empty?
-      else
-        @helped = Need.from_live_neighbourhood.resolved.order('created_at DESC').limit(20).at_least(20) if @general_offers.empty?
-      end
+      @helped = Need.from_live_neighbourhood.resolved.order('created_at DESC').limit(20).at_least(20) if @general_offers.empty?
       @needs = Need.from_live_neighbourhood.unresolved.deadline_in_future.order('created_at DESC').limit(20).at_least(20)
     end
   end

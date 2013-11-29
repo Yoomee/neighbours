@@ -1,12 +1,4 @@
 .row#needs-cycle
-  -if !current_user
-    .span12
-      =form_tag(root_path, {:class => "form-inline"}) do
-        =label_tag "distance"
-        =select_tag "distance", options_for_select(["1 mile", "2 miles", "3 miles", "5 miles"])
-        =label_tag "postcode"
-        =text_field_tag(:postcode)
-        =submit_tag "Filter"
   .span6
     -if current_user.try(:fully_registered?)
       =link_to "I'd like some help", new_need_path, :class=>"btn call-to-action primary"
