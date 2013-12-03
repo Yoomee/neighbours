@@ -103,10 +103,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => (@admin_email ? Settings.admin_email : group.owner.email), :subject => "[Neighbours Can Help] #{member} joined #{group}")
   end
 
-  def new_group_post(post)
-    @member, @group = post.user, post.target
-    return true unless should_email?(@group.owner)
-    mail(:to => @group.owner.email, :subject => "[Neighbours Can Help] #{@member} posted in #{@group}")
+  def new_group_post(post, member)
+    @user, @group = post.user, post.target
+    @member = member
+
+    return true unless should_email?(member)
+    mail(:to => member.email, :subject => "[Neighbours Can Help] #{@user} posted in #{@group}")
   end
 
   def weekly_top_stats(options = {})
