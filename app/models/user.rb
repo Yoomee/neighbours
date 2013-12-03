@@ -96,6 +96,10 @@ class User < ActiveRecord::Base
     ["#{house_number} #{street_name}".strip, city, postcode].reject(&:blank?).join(', ')
   end
 
+  def address_without_postcode
+    ["#{house_number} #{street_name}".strip, city].reject(&:blank?).join(', ')
+  end
+
   def address_with_country
     "#{address}, UK"
   end
