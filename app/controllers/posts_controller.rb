@@ -9,6 +9,11 @@ class PostsController < ApplicationController
         @post.target.members.without(@post.user).each do |member|
           UserMailer.new_group_post(@post, member).deliver
         end
+      elsif(@post.target_type == 'Neighbourhood')
+        members = User.where(:is_community_champion => true)
+        members.without(@post.user).each do |member|
+          UserMailer.new_forum_post(@post, member).deliver
+        end
       end
       @new_post = Post.new(:target => @post.target, :user => @post.user)
     end
