@@ -91,6 +91,14 @@ class UserMailer < ActionMailer::Base
     mail(:to => @group_request.user.email, :subject => "[Neighbours Can Help] You're now a member of #{@group_request.group}")
   end
 
+  def new_forum_post(post, member)
+    @user = post.user
+    @member = member
+
+    return true unless should_email?(member)
+    mail(:to => member.email, :subject => "[Neighbours Can Help] #{@user} posted in the discussion forum")
+  end
+
   def new_group(group)
     @group = group
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] New group")
