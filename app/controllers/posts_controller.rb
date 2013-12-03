@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(params[:post])
+    current_post.user = current_user
     if @post.save
       if (@post.target_type == 'Group') && (@post.user != @post.target.owner)
         @post.target.members.without(@post.user).each do |member|
