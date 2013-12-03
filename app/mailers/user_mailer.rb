@@ -23,7 +23,7 @@ class UserMailer < ActionMailer::Base
   end
           
   def new_comment(comment, user)
-    return true unless should_email?(@user)
+    return true unless should_email?(user)
     @comment, @user = comment, user
     @resource_url = @comment.post.target.is_a?(Need) ? need_url(@comment.post.target) : group_url(@comment.post.target)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@user}")
@@ -91,6 +91,14 @@ class UserMailer < ActionMailer::Base
     mail(:to => @group_request.user.email, :subject => "[Neighbours Can Help] You're now a member of #{@group_request.group}")
   end
 
+  def new_forum_post(post, member)
+    @user = post.user
+    @member = member
+
+    return true unless should_email?(member)
+    mail(:to => member.email, :subject => "[Neighbours Can Help] #{@user} posted in the discussion forum")
+  end
+
   def new_group(group)
     @group = group
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] New group")
@@ -103,10 +111,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => (@admin_email ? Settings.admin_email : group.owner.email), :subject => "[Neighbours Can Help] #{member} joined #{group}")
   end
 
-  def new_group_post(post)
-    @member, @group = post.user, post.target
-    return true unless should_email?(@group.owner)
-    mail(:to => @group.owner.email, :subject => "[Neighbours Can Help] #{@member} posted in #{@group}")
+  def new_group_post(post, member)
+    @user, @group = post.user, post.target
+    @member = member
+
+    return true unless should_email?(member)
+    mail(:to => member.email, :subject => "[Neighbours Can Help] #{@user} posted in #{@group}")
   end
 
   def weekly_top_stats(options = {})

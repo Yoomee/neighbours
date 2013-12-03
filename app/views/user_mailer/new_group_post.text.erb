@@ -1,10 +1,11 @@
-Dear <%=@group.owner.first_name%>,
+Dear <%=@member.first_name%>,
 
-<%=@member%> has posted in your group <%=@group%>: 
+<%=@user%> has posted in the group <%=@group%>.
 
-<%=group_url(@group)%>
+<%=link_to("View the group", group_url(@group))%>
 
 Thanks,
 
 The <%=Settings.site_name%> team
+
 <%=Settings.site_url%>
