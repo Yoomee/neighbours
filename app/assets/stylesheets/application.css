@@ -2078,3 +2078,32 @@ body.controller_groups form .register-tab-pane {
 .btn-download-spreadsheet {
   margin-top:3px;
 }
+
+/*============= User edit profile ===================*/
+
+.profile-title {
+  background: #abd424;
+  border-top: 1px solid; 
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-bottom: none;
+  border-color: #67c621;
+  border-radius: 4px 4px 0px 0px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.profile-title-private {
+  background: #f8bb61;
+  border-color: #f78a1e;
+}
+.profile-title-private small {
+  color: #292929;
+}
+.profile-details {
+  border: 1px solid #67c621;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.profile-details-private {
+  border: 1px solid #f78a1e;
+}
