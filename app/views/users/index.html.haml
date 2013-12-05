@@ -21,8 +21,13 @@
     =users_tab_li(users_tabs)
 
   .tab-content
+    -active_set = false
     -users_tabs.each do |name, users|
       -name = name.downcase.gsub(' ', '-')
-      .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated") ? 'active' : ''}"}
-        =render('table', :users => users, :tab => name)
+      .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated" && !params[:q].present?) || params[:q].present? && users.present? && active_set == false ? 'active' : ''}"}
+        -if users.size > 0
+          =render('table', :users => users, :tab => name)
+          -active_set = true
+        -else
+          %p No results in this tab.
   #choose-community-champion.modal.hide.fade
