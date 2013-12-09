@@ -14,7 +14,8 @@ module UserConcerns::Validations
     base.validates :house_number, :street_name, :city, :presence => true, :if => :where_you_live_step?
 
     base.validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
-    base.validates :agreed_conditions, :inclusion => { :in => [true], :if => :validation_step?, :message => "You must accept our terms and conditions to continue" }
+    base.validate :agreed_conditions
+
     base.validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
 
     base.validate :preauth_credit_card, :if => :validation_step?
@@ -58,6 +59,16 @@ module UserConcerns::Validations
     if errors.present?
       errors.add(:password, "enter a password") unless errors[:password].present?
       errors.add(:password_confirmation, "enter a password") unless errors[:password_confirmation].present?
+    end
+  end
+
+  def agreed_conditions
+    if validation_step? || group_user?
+      if read_attribute(:agreed_conditions) == true
+        return true
+      else
+        errors.add(:agreed_conditions, "You must accept our terms and conditions to continue")
+      end
     end
   end
   
