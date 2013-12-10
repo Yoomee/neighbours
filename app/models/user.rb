@@ -132,6 +132,10 @@ class User < ActiveRecord::Base
     self.removed_at = Time.now
   end
 
+  def full_name
+    first_name + " " + last_name
+  end
+
   def fully_registered?
     !group_user? && !pre_registration?
   end
