@@ -12,15 +12,15 @@ class User < ActiveRecord::Base
   devise :confirmable
   devise :token_authenticatable
 
-  has_many :needs, :dependent => :destroy
-  has_many :offers, :dependent => :destroy
-  has_many :general_offers, :dependent => :destroy
-  has_many :flags, :dependent => :destroy
+  has_many :needs
+  has_many :offers
+  has_many :general_offers
+  has_many :flags
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
   has_many :owned_groups, :class_name => 'Group'
   has_and_belongs_to_many :groups, :uniq => true
-  has_many :group_invitations, :dependent => :destroy
-  has_many :group_requests, :dependent => :destroy
+  has_many :group_invitations
+  has_many :group_requests
   has_many :photos, :dependent => :nullify
 
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
@@ -126,6 +126,10 @@ class User < ActiveRecord::Base
   # overwritten devise method: users don't need to confirm their email address, so everyone is confirmed
   def confirmed?
     true
+  end
+
+  def destroy
+    self.removed_at = Time.now
   end
 
   def fully_registered?

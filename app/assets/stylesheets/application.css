@@ -199,6 +199,9 @@ h2.home-title, .big-title, .about_page_view #page_title {
   margin-bottom: 20px;
 
 }
+p.deleted-user{
+  color:#FF6347;
+}
 body, p,
 div, input, select, .btn, label, textarea {
   font-weight: normal;

@@ -16,7 +16,7 @@ class Need < ActiveRecord::Base
   validates :description, :presence => {:unless => :skip_description_validation?}
   validate :deadline_is_in_future
   
-  default_scope where(:removed => false)
+  default_scope where(:removed_at => nil)
 
   before_create :prepare_for_autopost
   after_create :autopost
