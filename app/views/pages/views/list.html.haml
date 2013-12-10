@@ -23,7 +23,7 @@
               -if @page.slug == "blog"
                 \- 
                 =(page.publication_date || page.created_at).to_s(:date)
-            %p=truncate(strip_tags(page.text), :length => 220)
+            %p=truncate(strip_tags(page.text).gsub!("&nbsp;", "") , :length => 220)
             =link_to raw('&rarr; Read more'), page
   .span3
     %h3.mb-2

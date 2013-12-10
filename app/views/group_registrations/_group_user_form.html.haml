@@ -41,3 +41,8 @@
     =form.input :email_confirmation, :label => "Confirm email address", :required => false, :help => "Type your email address again so that we can check there are no typos", :input_html => {:placeholder => "e.g. john@email.com"}
     =form.input :password, :required => false, :help => "Choose a password that would you like to use to login"
     =form.input :password_confirmation, :label => "Confirm password", :required => false, :help => "Type the password again so that we can make sure you haven't made a mistake"
+  =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditions', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
+
+=render('modals/conditions_popup')
+=render('modals/privacy_popup')
+

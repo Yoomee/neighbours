@@ -10,8 +10,7 @@ class OffersController < ApplicationController
   def create
     @offer.need = @need = Need.find_by_id(params[:need_id])
     @offer.user = current_user
-    @offer.save
-    UserMailer.new_offer(@offer).deliver
+    UserMailer.new_offer(@offer).deliver if @offer.save
   end
   
   def accept

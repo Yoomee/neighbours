@@ -50,6 +50,7 @@ module Neighbours
                         "Validation Code" => "validation_code",
                         "Date of birth" => "dob",
                         "Email address" => "email",
+                        "Postcode" => "postcode",
                         "Requested validation by" => "validate_by",
                         "Validated by" => "validate_by",
                         "Organisation name" => "organisation_name",

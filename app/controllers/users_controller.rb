@@ -61,6 +61,12 @@ class UsersController < ApplicationController
 
   def toggle_is_deleted
     @user.is_deleted = !@user.is_deleted
+
+    dependents = [@user.needs, @user.offers, @user.general_offers, @user.flags, @user.group_invitations, @user.posts]
+    dependents.each do |dependent|
+      dependent.each{|n|n.update_attributes(:removed_at => @user.is_deleted? ? Time.now : nil)} unless dependent.empty?
+    end
+
     if @user.save
       flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}" unless @user == current_user  
     else
@@ -93,6 +99,12 @@ class UsersController < ApplicationController
   end
 
   def show
+    unless current_user.admin?
+      if @user.is_deleted?
+        redirect_to root_path
+        flash[:notice] = "#{@user} has been #{@user.is_deleted ? 'deleted' : 'undeleted'}" unless @user == current_user
+      end
+    end
   end
 
   def request_to_be_champion

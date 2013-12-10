@@ -6,6 +6,8 @@ class GroupInvitation < ActiveRecord::Base
 
   validates :group, :presence => true
   validates :email, :email => true, :presence => {:unless => :user}, :allow_blank => true
+
+  default_scope where(:removed_at => nil)
   
   before_create :generate_ref
   after_create :send_email

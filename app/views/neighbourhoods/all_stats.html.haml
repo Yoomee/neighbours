@@ -1,51 +1,60 @@
-%h1 Stats
-%h2 Overall stats
-%p
-  %span.huge=Offer.count
-  %br
-  offers made in total
-%p
-  %span.huge=Offer.where(:accepted => 1).count
-  %br
-  accepted offers
-%h2 Stats for each neighbourhood
-%ul.unstyled
-  -@neighbourhoods.each do |neighbourhood|
-    %li=link_to neighbourhood.name, stats_neighbourhood_path(neighbourhood)
+.container
+  .row
+    .span12
+      %h1 Stats
+      %h2 Overall stats
+      .container
+        .row.mb-3
+          .span2.offer-count-1
+            %p
+              %span.huge-offer-count=Offer.count
+              %br
+              offers made in total
+          .span2.offer-count-2
+            %p
+              %span.huge-offer-count=Offer.where(:accepted => 1).count
+              %br
+              accepted offers
+      .mb-3
+        %h2 Stats for each neighbourhood
+        %ul.unstyled
+          -@neighbourhoods.each do |neighbourhood|
+            %li=link_to neighbourhood.name, stats_neighbourhood_path(neighbourhood)
 
-%h2 General Offers
--if @general_offers.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Date/Time"
-        %th Description
-        %th=sortable "Category"
-    %tbody
-      -@general_offers.each do |offer|
-        %tr
-          %td=offer.id
-          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(offer.description, :length => 50)
-          %td=offer.category
--else
-  %p No general offers.
-%h2 Removed General Offers
--if @removed_general_offers.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Removed At"
-        %th Description
-        %th=sortable "Category"
-    %tbody
-      -@removed_general_offers.each do |offer|
-        %tr
-          %td=offer.id
-          %td.date-time=offer.removed_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(offer.description, :length => 50)
-          %td=offer.category
--else
-  %p No removed general offers.
+      .mb-3
+        %h2 General Offers
+        -if @general_offers.present?
+          %table.table.table-striped.table-condensed
+            %thead
+              %tr
+                %th ID
+                %th=sortable "Date/Time"
+                %th Description
+                %th=sortable "Category"
+            %tbody
+              -@general_offers.each do |offer|
+                %tr
+                  %td=offer.id
+                  %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
+                  %td=read_more_truncate(offer.description, :length => 50)
+                  %td=offer.category
+        -else
+          %p No general offers.
+        %h2 Removed General Offers
+        -if @removed_general_offers.present?
+          %table.table.table-striped.table-condensed
+            %thead
+              %tr
+                %th ID
+                %th=sortable "Removed At"
+                %th Description
+                %th=sortable "Category"
+            %tbody
+              -@removed_general_offers.each do |offer|
+                %tr
+                  %td=offer.id
+                  %td.date-time=offer.removed_at.strftime("%d %b %y %H:%M")
+                  %td=read_more_truncate(offer.description, :length => 50)
+                  %td=offer.category
+        -else
+          %p No removed general offers.

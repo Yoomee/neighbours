@@ -172,6 +172,19 @@ a.category,
   font-weight:bold;
 }
 
+.huge-offer-count {
+  font-size:70px;
+  font-weight:bold;
+  line-height:70px;  
+}
+
+.offer-count-2 {
+  border-bottom: 4px solid #abd424;
+}
+.offer-count-1 {
+  border-bottom: 4px solid #f8bb61;  
+}
+
 h1,
 h2
 {
@@ -198,6 +211,9 @@ h2.home-title, .big-title, .about_page_view #page_title {
   font-weight: normal;
   margin-bottom: 20px;
 
+}
+p.deleted-user{
+  color:#FF6347;
 }
 body, p,
 div, input, select, .btn, label, textarea {
@@ -443,14 +459,14 @@ br.clear {
 }
 
 .flash_container .alert {
-  margin-bottom:0px;
+  margin-bottom: 0px;
   background: none;
   padding: 20px;
   border: none;
-  color: #fff;
-
-  text-shadow: none;
-  font-weight: bold;  
+  color: #3a3a3a;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.9);
+  font-weight: bold;
+  word-spacing: 2px; 
 }
 .flash_container .span12 {
   margin: 0 auto;
@@ -2077,4 +2093,33 @@ body.controller_groups form .register-tab-pane {
 }
 .btn-download-spreadsheet {
   margin-top:3px;
+}
+
+/*============= User edit profile ===================*/
+
+.profile-title {
+  background: #abd424;
+  border-top: 1px solid; 
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-bottom: none;
+  border-color: #67c621;
+  border-radius: 4px 4px 0px 0px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.profile-title-private {
+  background: #f8bb61;
+  border-color: #f78a1e;
+}
+.profile-title-private small {
+  color: #292929;
+}
+.profile-details {
+  border: 1px solid #67c621;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.profile-details-private {
+  border: 1px solid #f78a1e;
 }

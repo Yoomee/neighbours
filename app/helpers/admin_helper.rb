@@ -11,14 +11,16 @@ module AdminHelper
   def users_tab_li(user_tabs)
     html = ""
 
+    active_set = false
     user_tabs.keys.each do |name|
       li_class = user_tabs.values.size.zero? ? 'no-results' : 'results'
-      if params[:tab] == name.downcase.gsub(' ', '-') || params[:tab].nil? && name == "Unvalidated"
-        li_class += ' active'
+      if params[:tab] == name.downcase.gsub(' ', '-') || params[:tab].nil? && name == "Unvalidated" && !params[:q].present? || params[:q].present? && user_tabs[name].present?
+        li_class += ' active' if active_set == false
+        active_set = true
       end
 
       html << content_tag(:li, :class => li_class) do
-        link_to(name, "##{name.downcase.gsub(' ', '-')}", :'data-toggle' => 'tab')
+        link_to(name + "#{user_tabs[name].empty? || params[:q].nil? ? '' : " (" + user_tabs[name].size.to_s + ")"}", "##{name.downcase.gsub(' ', '-')}", :'data-toggle' => 'tab')
       end
     end
     html.html_safe
