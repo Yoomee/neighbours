@@ -172,6 +172,19 @@ a.category,
   font-weight:bold;
 }
 
+.huge-offer-count {
+  font-size:70px;
+  font-weight:bold;
+  line-height:70px;  
+}
+
+.offer-count-2 {
+  border-bottom: 4px solid #abd424;
+}
+.offer-count-1 {
+  border-bottom: 4px solid #f8bb61;  
+}
+
 h1,
 h2
 {
