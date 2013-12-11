@@ -59,7 +59,7 @@
                 Address validated
               -else
                 Address not validated
-          .span3
+          .span2
             =link_to user_needs_path(current_user), :class=>"control-panel-link" do
               %h3.control-panel-title
                 My requests
@@ -68,7 +68,7 @@
                   =header_messages_badge(0)
                 -else
                   =header_messages_badge(current_user.new_notification_count("my_requests"))
-          .span3
+          .span2
             =link_to offers_path, :class=>"control-panel-link" do
               %h3.control-panel-title
                 My offers
@@ -77,11 +77,17 @@
                   =header_messages_badge(0)
                 -else
                   =header_messages_badge(current_user.new_notification_count("my_offers"))
-          .span3
+          .span2
             =link_to groups_path, :class=>"control-panel-link" do
               %h3.control-panel-title
                 My groups
             =link_to messages_path do
+              %p.control-panel-subtitle
+                =header_messages_badge(current_user.unread_message_count)
+          .span3
+            =link_to messages_path, :class=>"control-panel-link" do
+              %h3.control-panel-title
+                The NCH team
               %p.control-panel-subtitle
                 =header_messages_badge(current_user.unread_message_count)
           

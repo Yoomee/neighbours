@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   
   def inactive
     @months = params[:months].to_i.zero? ? 3 : params[:months].to_i
-    @users = User.not_deleted.where("neighbourhood_id IS NOT NULL").where(["current_sign_in_at < ?", @months.months.ago]).order(:last_name, :first_name)
+    @users = User.not_deleted.where("neighbourhood_id IS NOT NULL").where(["current_sign_in_at < ?", @months.months.ago]).where("role != 'pre_registration' OR role IS NULL").order(:last_name, :first_name)
     respond_to do |format|
       format.html {}
       format.csv do

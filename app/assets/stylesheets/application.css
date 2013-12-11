@@ -151,6 +151,9 @@ form .clearfix-help .help-inline {
   display: block;
   margin-top: 10px;
 }
+form#new_message label{
+  display:inline;
+}
 
 /*========== Font ==========*/
 
