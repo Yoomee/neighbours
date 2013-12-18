@@ -27,5 +27,5 @@
   .comments
     .comment-list
       =render(:partial => "comments/comment", :collection => post.comments)
-    -if logged_in_as?(@need.user, offers.collect(&:user)) && current_user.validated?
+    -if logged_in_as?(@need.user, @offers.collect(&:user)) && current_user.validated?
       =render("comments/form", :comment => post.comments.build) 
