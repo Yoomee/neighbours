@@ -25,8 +25,8 @@ class HomeController < ApplicationController
     lat, lng = Need.get_lat_lng_from_postcode(params[:postcode]) if params[:postcode]
     if current_user.try(:has_lat_lng?)
       @general_offers = GeneralOffer.from_live_neighbourhood.visible_from_location(current_user.lat, current_user.lng, :order_by_closest => true, :limit => 20).at_least(20).select{|need| need.removed_at.nil?}
-      @helped = Need.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => true}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?
-      @needs = Need.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => false}, :without => {:deadline => Need.first.created_at..Time.now}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?}
+      @helped = Need.resolved.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => true}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?
+      @needs = Need.unresolved.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => false}, :without => {:deadline => Need.first.created_at..Time.now}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?}
     else
       @general_offers = GeneralOffer.from_live_neighbourhood.visible_to_user(current_user).order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?}
       @helped = Need.from_live_neighbourhood.resolved.order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?
