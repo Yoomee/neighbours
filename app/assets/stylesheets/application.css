@@ -2041,6 +2041,10 @@ body.controller_groups form .register-tab-pane {
   background-color:#fff;
   color:#999;
 }
+textarea#user_notes{
+  width:450px;
+  height:100px;
+}
 
 /*=============  Slideshows ===================*/
 

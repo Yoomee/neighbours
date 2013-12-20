@@ -64,3 +64,6 @@
                   =link_to "Make champion",toggle_champion_user_path(user), :class => "btn", :method => :put
               -else
                 =link_to "Validate", validate_user_path(user), :class => "btn btn-primary", :remote => true, :'data-user-id' => user.id
+              =semantic_form_for user do |f|
+                =f.input :notes
+                =f.submit

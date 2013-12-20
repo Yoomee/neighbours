@@ -125,7 +125,14 @@ class UsersController < ApplicationController
 
   def update
     attrs = current_user.admin? ? params[:user] : params[:user].slice!(:first_name, :last_name, :house_number, :street_name, :city, :postcode)
-    if @user.update_attributes(attrs)
+    if params[:user][:notes]
+      if @user.update_attribute(:notes, params[:user][:notes])
+        flash[:notice] = "User notes have been added"
+      else
+        flash[:error] = "Something has gone wrong.  Please try again"
+      end
+      redirect_to users_path
+    elsif @user.update_attributes(attrs)
       flash[:notice] = "Your profile has been updated"
       redirect_to @user
     else
