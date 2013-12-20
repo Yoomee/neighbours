@@ -17,7 +17,7 @@
         %th=sortable "Assigned neighbourhood champion?", tab
       %th=sortable "Validation Code", tab
       -if tab == "unvalidated"
-        %th="Sent code"
+        %th=sortable "Sent code", tab
       %th Actions
     -users.each do |user|
       -if current_user.admin? || user.try(:neighbourhood).try(:admin_id) == current_user.id
