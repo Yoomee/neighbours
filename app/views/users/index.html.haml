@@ -11,9 +11,12 @@
         =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
         =submit_tag "Go", :class => 'btn'
       -unless action_name.search?
-        =link_to(users_path(:format => 'xls'), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
+        =link_to(users_path({:format => 'xls', :deleted => false}), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
           %i.icon-download-alt
-          Download spreadsheet
+          Download users
+        =link_to(users_path(:format => 'xls', :deleted => true), :class => 'btn btn-primary pull-right mr-1 btn-download-spreadsheet') do
+          %i.icon-download-alt
+          Download deleted users
 
 .users-table.ml-3.mr-3
   %ul.nav.nav-tabs.nav-tabs-users

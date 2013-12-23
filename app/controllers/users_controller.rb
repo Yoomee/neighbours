@@ -37,6 +37,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xls do
+        @users = params[:deleted] == "true" ? @users.deleted : @users.not_deleted
         headers["Content-Disposition"] = "attachment; filename=\"Users #{Date.today.strftime('%d-%m-%Y')}.xls\"" 
       end
     end
