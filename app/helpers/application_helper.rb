@@ -61,6 +61,10 @@ module ApplicationHelper
       sort = "resolved"
     when "Accepted"
       sort = "accepted"
+    when "Person Who Offered" , "Person In Need"
+      sort = "name"
+    when "Person Who Needed", "Person Who Helped"
+      sort = "name_secondary"
     else
       sort = Neighbours::SORTABLES[column]
     end

@@ -1,32 +1,57 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}")
-%h2 Needs
+%h2 Needs Open
 -if @needs.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
         %th ID
+        %th Person In Need
         %th=sortable "Date/Time"
         %th Description      
         %th=sortable "Category"
         %th Offers made
-        %th=sortable "Resolved"
     %tbody
       -@needs.each do |need|
         %tr
-          %td=need.id
+          %td=link_to need.id, need_path(need)
+          %td=link_to need.user.full_name, user_path(need.user)
           %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(need.description, :length => 50)
           %td=need.category
           %td=need.offers.count
-          %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
 -else
-  %p No needs yet.
-%h2 Needs - removed
+  %p No needs open.
+%h2 Needs Resolved
+-if @needs_resolved.present?
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th ID
+        %th=sortable "Person In Need"
+        %th=sortable "Person Who Helped"
+        %th=sortable "Date/Time"
+        %th Description
+        %th=sortable "Category"
+        %th Offers made
+    %tbody
+      -@needs_resolved.each do |need|
+        %tr
+          %td=link_to need.id, need_path(need)
+          %td=link_to need.user.full_name, user_path(need.user)
+          %td=link_to need.offers.where(:accepted => true).first.user.full_name, user_path(need.offers.where(:accepted => true))
+          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(need.description, :length => 50)
+          %td=need.category
+          %td=need.offers.count
+-else
+  %p No needs resolved.
+%h2 Needs Removed
 -if @removed_needs.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
         %th ID
+        %th=sortable "Person In Need"
         %th=sortable "Date/Time"
         %th Description      
         %th=sortable "Category"
@@ -35,7 +60,8 @@
     %tbody
       -@removed_needs.each do |need|
         %tr
-          %td=need.id
+          %td=link_to need.id, need_path(need)
+          %td=link_to need.user.full_name, user_path(need.user)
           %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(need.description, :length => 50)
           %td=need.category
@@ -43,21 +69,71 @@
           %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
 -else
   %p No removed needs.
-%h2 Offers
+%h2 Offers Open
 -if @offers.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
         %th ID
+        %th=sortable "Person who offered"
+        %th=sortable "Person who needed"
         %th=sortable "Date/Time"
-        %th Need request description            
-        %th=sortable "Accepted"
+        %th Need request description
+        %th Need category
     %tbody
       -@offers.each do |offer|
         %tr
-          %td=offer.id
+          %td=link_to offer.id, need_path(offer.need)
+          %td=link_to offer.user.full_name, user_path(offer.user)
+          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
+          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(offer.need.description, :length => 50)
+          %td=offer.need.category
+-else
+  %p No offers open.
+%h2 Offers Accepted
+-if @offers_accepted.present?
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th ID
+        %th=sortable "Person Who Offered"
+        %th=sortable "Person Who Needed"
+        %th=sortable "Date/Time"
+        %th Need request description
+        %th Need category
+    %tbody
+      -@offers_accepted.each do |offer|
+        %tr
+          %td=link_to offer.id, need_path(offer.need)
+          %td=link_to offer.user.full_name, user_path(offer.user)
+          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
+          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
+          %td=read_more_truncate(offer.need.description, :length => 50)
+          %td=offer.need.category
+-else
+  %p No offers accepted.
+%h2 Offers Removed
+-if @offers_removed.present?
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th ID
+        %th=sortable "Person Who Offered"
+        %th=sortable "Person Who Needed"
+        %th=sortable "Date/Time"
+        %th Need request description            
+        %th=sortable "Accepted"
+        %th Need category
+    %tbody
+      -@offers_removed.each do |offer|
+        %tr
+          %td=link_to offer.id, need_path(offer.need)
+          %td=link_to offer.user.full_name, user_path(offer.user)
+          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
           %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(offer.need.description, :length => 50)
           %td=offer.accepted?
+          %td=offer.need.category
 -else
-  %p No offers yet.
+  %p No offers removed.
