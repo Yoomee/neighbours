@@ -55,7 +55,7 @@ module ApplicationHelper
       sort = "created_at"
     when "Removed At"
       sort = "removed_at"
-    when "Category"
+    when "Category", "Need category"
       sort = "category_id"
     when "Resolved"
       sort = "resolved"

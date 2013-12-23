@@ -98,41 +98,47 @@ class NeighbourhoodsController < ApplicationController
 
     @needs_open = @neighbourhood.needs.unresolved.order("created_at desc")
     @needs_resolved = @neighbourhood.needs.resolved.order("created_at desc")
-    @needs_removed = @neighbourhood.needs.where(:removed => 1).order("created_at desc")
+    @needs_removed = @neighbourhood.needs.removed.order("created_at desc")
 
-    @offers_open = @neighbourhood.offers.order("created_at desc")
-    @offers_accepted = @neighbourhood.offers.where(:accepted => 1).order("created_at desc")
-    @offers_removed = @neighbourhood.offers.unscoped.where('removed_at IS NOT NULL').order("created_at desc")
+    @offers_open = @neighbourhood.offers.open_offers.order("created_at desc")
+    @offers_accepted = @neighbourhood.offers.accepted.order("created_at desc")
+    @offers_removed = @neighbourhood.offers.removed.order("created_at desc")
       
     case params[:sort]
     when 'created_at'
       @needs_open = @neighbourhood.needs.unresolved.order("created_at #{params[:direction]}")
       @needs_resolved = @neighbourhood.needs.resolved.order("created_at #{params[:direction]}")
-      @needs_removed = @neighbourhood.needs.where(:removed => 1).order("created_at #{params[:direction]}")
+      @needs_removed = @neighbourhood.needs.removed.order("created_at #{params[:direction]}")
 
-      @offers_open = @neighbourhood.offers.order("created_at #{params[:direction]}")
-      @offers_accepted = @neighbourhood.offers.where(:accepted => 1).order("created_at #{params[:direction]}")
-      @offers_removed = @neighbourhood.offers.unscoped.where('removed_at IS NOT NULL').order("created_at #{params[:direction]}")
-
+      @offers_open = @neighbourhood.offers.open_offers.order("created_at #{params[:direction]}")
+      @offers_accepted = @neighbourhood.offers.accepted.order("created_at #{params[:direction]}")
+      @offers_removed = @neighbourhood.offers.removed.order("created_at #{params[:direction]}")
     when 'accepted'    
       @offers_removed = @neighbourhood.offers.order("accepted #{params[:direction]}")
     when 'resolved'
-      @needs_removed = @neighbourhood.needs.where(:removed => 1).resolved + @neighbourhood.needs.where(:removed => 1).unresolved
+      @needs_removed = @neighbourhood.needs.removed.resolved + @neighbourhood.needs.removed.unresolved
     when 'category_id'
-      # @needs = @neighbourhood.needs.order("category_id #{params[:direction]}")
-      # @removed_needs = @neighbourhood.needs.where(:removed => 1).order("category_id #{params[:direction]}")
+      @needs_open = @neighbourhood.needs.unresolved.joins(:category).order("need_categories.name #{params[:direction]}")
+      @needs_resolved = @neighbourhood.needs.resolved.joins(:category).order("need_categories.name #{params[:direction]}")
+      @needs_removed = @neighbourhood.needs.removed.joins(:category).order("need_categories.name #{params[:direction]}")
 
-      #Do this once you've given offers categories
+      @offers_open = @neighbourhood.offers.open_offers.joins(:category).order("need_categories.name #{params[:direction]}")
+      @offers_accepted = @neighbourhood.offers.accepted.joins(:category).order("need_categories.name #{params[:direction]}")
+      @offers_removed = @neighbourhood.offers.removed.joins(:category).order("need_categories.name #{params[:direction]}")
     when 'name'
       @needs_open = @neighbourhood.needs.unresolved.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
       @needs_resolved = @neighbourhood.needs.resolved.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
-      @needs_removed = @neighbourhood.needs.where(:removed => 1).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @needs_removed = @neighbourhood.needs.removed.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
 
-      @offers_open = @neighbourhood.offers.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @offers_open = @neighbourhood.offers.open_offers.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
       @offers_accepted = @neighbourhood.offers.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
-      @offers_removed = @neighbourhood.offers.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @offers_removed = @neighbourhood.offers.removed.order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
     when 'name_secondary'
-      @needs_resolved = @neighbourhood.needs.resolved
+      @needs_resolved = @neighbourhood.offers.accepted.includes(:need).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:need)
+
+      @offers_open = Need.where(id: @neighbourhood.offers.open_offers.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
+      @offers_accepted = @neighbourhood.needs.resolved.includes(:accepted_offer).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:accepted_offer)
+      @offers_removed = Need.where(id: @neighbourhood.offers.removed.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
     end
 
 

@@ -22,6 +22,7 @@ class Need < ActiveRecord::Base
   after_create :autopost
 
   # scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
+  scope :removed, where(:removed => true)
   scope :unresolved, joins("LEFT OUTER JOIN offers ON (offers.need_id = needs.id AND offers.accepted = 1)").where('offers.id IS NULL')
   scope :resolved, joins(:offers).where("offers.accepted = 1")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")

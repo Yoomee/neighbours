@@ -79,7 +79,7 @@
         %th=sortable "Person who needed"
         %th=sortable "Date/Time"
         %th Need request description
-        %th Need category
+        %th=sortable 'Need category'
     %tbody
       -@offers.each do |offer|
         %tr
@@ -88,7 +88,7 @@
           %td=link_to offer.need.user.full_name, user_path(offer.need.user)
           %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.need.category
+          %td=offer.category
 -else
   %p No offers open.
 %h2 Offers Accepted
@@ -101,7 +101,7 @@
         %th=sortable "Person Who Needed"
         %th=sortable "Date/Time"
         %th Need request description
-        %th Need category
+        %th=sortable 'Need category'
     %tbody
       -@offers_accepted.each do |offer|
         %tr
@@ -110,7 +110,7 @@
           %td=link_to offer.need.user.full_name, user_path(offer.need.user)
           %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.need.category
+          %td=offer.category
 -else
   %p No offers accepted.
 %h2 Offers Removed
@@ -124,7 +124,7 @@
         %th=sortable "Date/Time"
         %th Need request description            
         %th=sortable "Accepted"
-        %th Need category
+        %th=sortable 'Need category'
     %tbody
       -@offers_removed.each do |offer|
         %tr
@@ -133,7 +133,7 @@
           %td=link_to offer.need.user.full_name, user_path(offer.need.user)
           %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.accepted?
-          %td=offer.need.category
+          %td=offer.accepted? ? 'Yes' : 'No'
+          %td=offer.category
 -else
   %p No offers removed.
