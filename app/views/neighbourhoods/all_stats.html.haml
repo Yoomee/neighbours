@@ -28,13 +28,15 @@
             %thead
               %tr
                 %th ID
+                %th Person Offering
                 %th=sortable "Date/Time"
                 %th Description
                 %th=sortable "Category"
             %tbody
               -@general_offers.each do |offer|
                 %tr
-                  %td=offer.id
+                  %td=link_to offer.id, general_offer_path(offer.id)
+                  %td=link_to offer.user.full_name, user_path(offer.user)
                   %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
                   %td=read_more_truncate(offer.description, :length => 50)
                   %td=offer.category
@@ -46,13 +48,15 @@
             %thead
               %tr
                 %th ID
+                %th Person Offering
                 %th=sortable "Removed At"
                 %th Description
                 %th=sortable "Category"
             %tbody
               -@removed_general_offers.each do |offer|
                 %tr
-                  %td=offer.id
+                  %td=link_to offer.id, general_offer_path(offer.id)
+                  %td=link_to offer.user.full_name, user_path(offer.user)
                   %td.date-time=offer.removed_at.strftime("%d %b %y %H:%M")
                   %td=read_more_truncate(offer.description, :length => 50)
                   %td=offer.category
