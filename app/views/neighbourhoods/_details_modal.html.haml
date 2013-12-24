@@ -1,0 +1,50 @@
+.modal-header
+  %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+.modal-body
+  %h1=resource.is_a?(Need) ? "Need #{resource.id}" : "Offer #{resource.id}"
+  %h2=resource.user.full_name
+  %p
+    %strong Created at
+    =resource.created_at
+  -if resource.is_a? Offer
+    %p
+      %strong Person who needed
+      =resource.need.user.full_name
+  %p
+    -if resource.is_a? Need
+      %strong Description
+      =resource.description
+    -else
+      %strong Need request description
+      =resource.need.description
+  %p
+    -if resource.is_a? Need
+      %strong Category
+      =resource.category
+    -else
+      %strong Need Category
+      =resource.need.category
+  -if resource.is_a? Need
+    -if resource.offers.count > 0 
+      %p
+        %strong Offers made by
+        %ul.unstyled
+          -resource.offers.each do |offer|
+            %li
+              =offer.user.full_name
+              %strong= "Accepted" if offer.accepted?
+    -else
+      %p No offers made yet.
+  -else    
+    -other_offers = resource.need.offers.tap{|offers| offers.delete resource}
+
+    -if other_offers.count > 0
+      %p
+        %strong Other people who offered
+        %ul.unstyled
+          -other_offers.each do |offer|
+            %li
+              =offer.user.full_name
+
+
+
