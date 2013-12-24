@@ -8,7 +8,7 @@ class Offer < ActiveRecord::Base
 
   scope :accepted, where(:accepted => true)
   scope :open_offers, where(:accepted => false)
-  scope :removed, unscoped.where(:removed_at => nil)
+  scope :removed, unscoped.where('offers.removed_at IS NOT NULL')
   
   default_scope joins(:need).where('needs.removed_at IS NULL').readonly(false)
 
