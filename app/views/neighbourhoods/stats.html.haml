@@ -1,6 +1,6 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}")
 %h2 Needs Open
--if @needs.present?
+-if @needs_open.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
@@ -10,8 +10,9 @@
         %th Description      
         %th=sortable "Category"
         %th Offers made
+        %th
     %tbody
-      -@needs.each do |need|
+      -@needs_open.each do |need|
         %tr
           %td=link_to need.id, need_path(need)
           %td=link_to need.user.full_name, user_path(need.user)
@@ -46,7 +47,7 @@
 -else
   %p No needs resolved.
 %h2 Needs Removed
--if @removed_needs.present?
+-if @needs_removed.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
@@ -58,7 +59,7 @@
         %th Offers made
         %th=sortable "Resolved"
     %tbody
-      -@removed_needs.each do |need|
+      -@needs_removed.each do |need|
         %tr
           %td=link_to need.id, need_path(need)
           %td=link_to need.user.full_name, user_path(need.user)
@@ -70,7 +71,7 @@
 -else
   %p No removed needs.
 %h2 Offers Open
--if @offers.present?
+-if @offers_open.present?
   %table.table.table-striped.table-condensed
     %thead
       %tr
@@ -81,7 +82,7 @@
         %th Need request description
         %th=sortable 'Need category'
     %tbody
-      -@offers.each do |offer|
+      -@offers_open.each do |offer|
         %tr
           %td=link_to offer.id, need_path(offer.need)
           %td=link_to offer.user.full_name, user_path(offer.user)
