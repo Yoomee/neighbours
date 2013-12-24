@@ -61,6 +61,7 @@ Neighbours::Application.routes.draw do
     member do
       get :accept
       get :reject
+      get :remove
     end
   end
 

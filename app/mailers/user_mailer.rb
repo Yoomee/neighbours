@@ -34,6 +34,12 @@ class UserMailer < ActionMailer::Base
     return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has offered to help you")
   end
+
+  def remove_offer(offer)
+    @offer, @user = offer, offer.need.user
+    return true unless should_email?(@user)
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has withdrawn their offer")
+  end
   
   def accepted_offer(offer)
     @offer, @user = offer, offer.user
