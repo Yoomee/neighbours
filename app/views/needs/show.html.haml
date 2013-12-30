@@ -1,4 +1,4 @@
--if @need.removed?
+-if @need.removed? && current_user.admin?
   .row
     .span12
       .alert.alert-error
