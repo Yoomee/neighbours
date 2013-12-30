@@ -90,6 +90,9 @@ class NeighbourhoodsController < ApplicationController
     when 'category_id'
       @general_offers = GeneralOffer.unscoped.order("category_id #{params[:direction]}")
       @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("category_id #{params[:direction]}")
+    when 'name'
+      @general_offers = GeneralOffer.unscoped.joins(:user).order("users.last_name, users.first_name")
+      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').joins(:user).order("users.last_name, users.first_name")
     end
   end
 

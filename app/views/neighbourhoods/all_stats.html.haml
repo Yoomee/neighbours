@@ -28,10 +28,11 @@
             %thead
               %tr
                 %th ID
-                %th Person Offering
+                %th=sortable "Person Who Offered"
                 %th=sortable "Date/Time"
                 %th Description
                 %th=sortable "Category"
+                %th Details
             %tbody
               -@general_offers.each do |offer|
                 %tr
@@ -48,10 +49,11 @@
             %thead
               %tr
                 %th ID
-                %th Person Offering
+                %th=sortable "Person Who Offered"
                 %th=sortable "Removed At"
                 %th Description
                 %th=sortable "Category"
+                %th Details
             %tbody
               -@removed_general_offers.each do |offer|
                 %tr
