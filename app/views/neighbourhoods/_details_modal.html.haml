@@ -11,14 +11,14 @@
       %strong Person who needed
       =resource.need.user.full_name
   %p
-    -if resource.is_a? Need
+    -if resource.is_a? Need or resource.is_a? GeneralOffer
       %strong Description
       =resource.description
     -else
       %strong Need request description
       =resource.need.description
   %p
-    -if resource.is_a? Need
+    -if resource.is_a? Need or resource.is_a? GeneralOffer
       %strong Category
       =resource.category
     -else
@@ -35,7 +35,7 @@
               %strong= "Accepted" if offer.accepted?
     -else
       %p No offers made yet.
-  -else    
+  -elsif resource.is_a? Offer
     -other_offers = resource.need.offers.tap{|offers| offers.delete resource}
 
     -if other_offers.count > 0
@@ -45,6 +45,18 @@
           -other_offers.each do |offer|
             %li
               =offer.user.full_name
+  -elsif resource.is_a? GeneralOffer
+    -accepted_offers =  resource.offers.where(:accepted => 1)
+
+    -if accepted_offers.count > 0
+      %p
+        %strong People who accepted this general offer
+        %ul.unstyled
+          -accepted_offers.each do |offer|
+            %li
+              =offer.need.user.full_name
+
+
 
 
 
