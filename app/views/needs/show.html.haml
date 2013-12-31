@@ -68,17 +68,23 @@
           -if current_user && @need.offers.exists?(:user_id => current_user.id)
             %p.mb3
               ="You can continue your discussion with #{@need.user} by writing a comment below ."
+          -elsif @chat
+            %p.mb3
+            ="You can chat about #{@need.user}'s need by writing a comment below. If you decide you can help with this later, click the 'Maybe I can help' button to continue."
+            =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2 mt-2"
           -else
             %p.mb3
               -if current_user
                 .row
-                  If you think you can help, then click on this button to start a private discussion with
-                  ="#{@need.user}."
+                  If you think you can help, then click 'Maybe I can help' to send an offer and a message to
+                  ="#{@need.user}. Alternatively, click 'Chat to #{@need.user} to chat about this need."
                 .row.mt-2                
                   -if current_user.try(:validated?)
                     =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                    =link_to "Chat to #{@need.user}", need_path(@need, :context => "chat"), :class => "btn btn-primary mb-2"
                   -elsif current_user.try(:fully_registered?)
                     =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                    =link_to "Chat to #{@need.user}", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
                   -elsif current_user
                     =link_to "Maybe I can help", '#', :class => "btn btn-primary mb-2 not-fully-registered-link", :data => {:return_to => need_path(@need)}
               -else
@@ -87,8 +93,12 @@
                 .row
                   =link_to "Join now", "#pre-register", :id=>"cta-3", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
               
-      %ul.unstyled.need-posts
-        =render(:partial => "needs/post", :collection => @need.posts_viewable_by(current_user).order("created_at DESC"))
+      .row
+        .span6
+          %ul.unstyled.need-posts.mt-2
+            -if can?(:create, Post) && @chat
+              =render("posts/remote_form", :post => current_user.posts.build(:target => @need, :context => 'chat'))
+            =render(:partial => "needs/post", :collection => @need.posts_viewable_by(current_user).order("created_at DESC"))
     .span4
       -if @offers.present?
         %h3.mb1 People offering help

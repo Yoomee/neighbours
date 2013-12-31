@@ -1,15 +1,16 @@
 <%if @post.valid? && params[:return_to].present?%>
   window.location.href = '<%=params[:return_to]%>';
-<%elsif @post.target_type == "Need"%>
+<%elsif @post.target_type == "Need" && @post.context != 'chat'%>
   <%=remotipart_response do%>
     <%post = (@new_post || @post)%>
     $('form#new_post').replaceWith('<%=escape_javascript(render('needs/modal_post_form', :post => post, :need => post.target))%>');
   <%end%>
 <%else%>
   <%=remotipart_response do%>
-    $('form#new_post').replaceWith('<%=escape_javascript(render('posts/remote_form', :post => (@new_post || @post)))%>');
     <%if @post.valid?%>
-      $('div.posts').prepend('<%=escape_javascript(render('posts/post', :post => @post))%>');
+      $('.need-posts').prepend('<%=escape_javascript(render('needs/post', :post => @post))%>');
     <%end%>
+    $('form#new_post').remove()
+    $('.need-posts').prepend('<%=escape_javascript(render('remote_form', :post => (@new_post || @post)))%>');
   <%end%>
 <%end%>

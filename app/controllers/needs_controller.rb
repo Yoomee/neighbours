@@ -30,6 +30,7 @@ class NeedsController < ApplicationController
     end
     authorize! :show, @need
     @offers = @need.offers
+    @chat = params[:context] == 'chat' || @need.posts.where(:context => 'chat').collect(&:user).include?(current_user)
   end
 
   def new

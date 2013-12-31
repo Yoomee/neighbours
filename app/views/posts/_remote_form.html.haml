@@ -1,0 +1,9 @@
+-if can?((post.new_record? ? :create : :update), post)
+  =semantic_form_for(post, :format => :js, :remote => true, :multipart => true, :html => {:class => "post_form#{post.errors.present? ? ' expanded' : ''}"}) do |form|
+    =form.inputs do
+      =form.input :target_type, :as => :hidden
+      =form.input :target_id, :as => :hidden
+      =form.input :context, :as => :hidden
+      .fake-textarea
+        =form.input :text, :label => false, :input_html => {:rows => 3, :placeholder => "Post something"}        
+      =form.commit_button "Post", :button_html => {:class => "pull-right btn-primary", :"data-loading-text" => "Posting..."}

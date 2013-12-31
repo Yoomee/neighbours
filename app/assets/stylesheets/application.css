@@ -155,6 +155,10 @@ form#new_message label{
   display:inline;
 }
 
+form#new_post .btn.commit{
+  margin-top: 10px;
+}
+
 /*========== Font ==========*/
 
 h1,

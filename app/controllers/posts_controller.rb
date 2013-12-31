@@ -4,6 +4,10 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(params[:post])
+    if @post.target_type = 'Need'
+      @need = Need.find(@post.target_id)
+      @offers = @need.offers
+    end
     current_post.user = current_user
     if @post.save
       if (@post.target_type == 'Group') && (@post.user != @post.target.owner)
@@ -16,7 +20,11 @@ class PostsController < ApplicationController
           UserMailer.delay.new_forum_post(@post, member)
         end
       end
-      @new_post = Post.new(:target => @post.target, :user => @post.user)
+      if @post.context == 'chat'
+        @new_post = Post.new(:target => @post.target, :user => @post.user, :context => 'chat')
+      else
+        @new_post = Post.new(:target => @post.target, :user => @post.user)
+      end
     end
   end
   
