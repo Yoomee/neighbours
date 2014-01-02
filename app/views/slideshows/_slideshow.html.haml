@@ -6,7 +6,7 @@
 
 .row
   .span12
-    #slideshow-carousel.carousel.slide
+    #slideshow-carousel.carousel.slide{:'data-interval' => slideshow.interval || 5000}
       %ol.carousel-indicators
         -slideshow.slides.each_with_index do |slide, index|
           %li{ :class => index == 0 ? 'active' : '', :data => { :slide_to => index, :target => '#slideshow-carousel' } }

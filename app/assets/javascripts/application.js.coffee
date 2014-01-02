@@ -28,6 +28,7 @@ $(document).ready () ->
   $('.help-icon').tooltip()
   $('.link-find-us').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
+  $('.carousel').carousel({interval:$('.carousel').data('interval')})
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
   NewNeedForm.initShowHideDeadline()
@@ -245,6 +246,9 @@ window.SlideshowForm =
             $('input#slideshow_slideshow_slug').val(setSlug)
           else
             $('input#slideshow_slideshow_slug').val(SlideshowForm.generateRandomString())
+      # Sets the default value if there's no value in the database
+      if $('#slideshow_slideshow_interval').val() == ""
+        $('#slideshow_slideshow_interval').val('5000')
     generateRandomString: ->
       text = ""
       possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
