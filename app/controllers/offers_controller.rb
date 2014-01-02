@@ -21,7 +21,7 @@ class OffersController < ApplicationController
 
   def remove
     @offer.update_attribute(:removed_at, Time.now)
-    Post.where(:target_id => @offer.need.id).collect{|post| post.update_attribute(:removed_at, Time.now)}
+    Post.where(:target_id => @offer.need.id).where('context IS NULL').collect{|post| post.update_attribute(:removed_at, Time.now)}
     UserMailer.remove_offer(@offer).deliver
     flash[:notice] = "Your offer has been withdrawn."
     redirect_to @offer.need

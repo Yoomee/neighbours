@@ -10,7 +10,7 @@ class Offer < ActiveRecord::Base
   scope :open_offers, where(:accepted => false)
   scope :removed, unscoped.where('offers.removed_at IS NOT NULL')
   
-  default_scope joins(:need).where('needs.removed_at IS NULL').readonly(false)
+  default_scope where('offers.removed_at IS NULL').joins(:need).where('needs.removed_at IS NULL').readonly(false)
 
   after_create :create_post_for_need
   

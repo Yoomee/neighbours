@@ -88,7 +88,7 @@ class Need < ActiveRecord::Base
   end
 
   def posts_viewable_by(user)
-    (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)])
+    (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)]).where("posts.removed_at IS NULL")
   end
 
   def read_all_notifications!(user)
