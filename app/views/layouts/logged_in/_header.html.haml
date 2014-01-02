@@ -83,11 +83,11 @@
                 My groups
             =link_to messages_path do
               %p.control-panel-subtitle
-                =header_messages_badge(current_user.unread_message_count)
+                =header_messages_badge(@unread_messages_count)
           .span3
             =link_to messages_path(:context => "NCH"), :class=>"control-panel-link" do
               %h3.control-panel-title
                 The NCH team
               %p.control-panel-subtitle
-                =header_messages_badge(current_user.unread_message_count)
+                =header_messages_badge(@nch_unread_messages_count)
           
