@@ -159,6 +159,11 @@ form#new_post .btn.commit{
   margin-top: 10px;
 }
 
+form#new_slideshow .home-page-input label{
+  display:inline;
+  margin-right:10px;
+}
+
 /*========== Font ==========*/
 
 h1,

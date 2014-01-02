@@ -35,6 +35,7 @@ $(document).ready () ->
   PhotoModal.init()
   NotFullyRegisteredModal.init()
   FlagLinks.init()
+  SlideshowForm.init()
 
 window.FlagLinks =
   init: ->
@@ -226,3 +227,30 @@ window.NeedSelect =
   init: ->
     $('#what-help-select').change ->
       window.location.href = "/need_categories/#{$('#what-help-select').val()}/needs/new"
+
+window.SlideshowForm =
+    init:() ->
+      if $('input#homepage_checkbox').data('homepage-slideshow')
+        $('#homepage_checkbox').attr('checked', true)
+        setSlug = ""
+      else if $('input#slideshow_slideshow_slug').val()?
+        setSlug = $('input#slideshow_slideshow_slug').val()
+      else
+        $('input#slideshow_slideshow_slug').val(SlideshowForm.generateRandomString())
+      $('#homepage_checkbox').change ->
+        if $(this).attr('checked')
+          $('input#slideshow_slideshow_slug').val('homepage_slideshow')
+        else
+          if setSlug != ""
+            $('input#slideshow_slideshow_slug').val(setSlug)
+          else
+            $('input#slideshow_slideshow_slug').val(SlideshowForm.generateRandomString())
+    generateRandomString: ->
+      text = ""
+      possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      i = 0
+
+      while i < 12
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+        i++
+      text
