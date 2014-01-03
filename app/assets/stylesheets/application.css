@@ -227,6 +227,10 @@ h2.home-title, .big-title, .about_page_view #page_title {
 p.deleted-user{
   color:#FF6347;
 }
+p.login-error{
+  font-weight: bold;
+  color:red;
+}
 body, p,
 div, input, select, .btn, label, textarea {
   font-weight: normal;

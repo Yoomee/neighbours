@@ -38,6 +38,10 @@ $(document).ready () ->
   FlagLinks.init()
   SlideshowForm.init()
 
+window.Login =
+  init: ->
+    if $('.flash_container .alert').text() == "xInvalid email or password."
+      $('.flash_container').hide()
 window.FlagLinks =
   init: ->
     $('#group-posts').on 'click', 'a.flag-link', (event) ->
