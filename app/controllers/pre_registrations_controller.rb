@@ -17,6 +17,10 @@ class PreRegistrationsController < ApplicationController
       @general_offer = @pre_register_user.general_offers.build
     end
   end
+
+  def about
+
+  end
   
   def destroy_all
     User.where(:role => 'pre_registration').destroy_all(['id IN (?)', params[:user_ids]])

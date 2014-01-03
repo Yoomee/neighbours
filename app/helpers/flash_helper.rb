@@ -8,7 +8,7 @@ module FlashHelper
         render_modal(val)
       else
         if val == "Welcome back!" && current_user && !current_user.fully_registered? && current_user.neighbourhood
-          val = "Welcome back " + current_user.first_name + "! You haven't fully registered yet. #{link_to "Complete your registration", new_registration_path, :class => "no-color underline"}"
+          val = "Welcome back " + current_user.first_name + "! You haven't fully registered yet. #{link_to "Find out more about registration", about_pre_registrations_path, :class => "no-color underline"}"
         end
         content_tag(:div, dismiss_link('x','alert') + val.html_safe, :class => alert_class(key))
       end

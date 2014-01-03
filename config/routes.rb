@@ -15,6 +15,7 @@ Neighbours::Application.routes.draw do
   resources :pre_registrations, :path => 'pr' do
     collection do
       get :map
+      get :about
       delete :destroy_all
     end
   end
