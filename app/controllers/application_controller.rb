@@ -28,8 +28,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_unread_messages_count
-    @unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => nil}).count
-    @nch_unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => "NCH"}).count
+    if current_user.present?
+      @unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => nil}).count
+      @nch_unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => "NCH"}).count
+    end
   end
 
 end
