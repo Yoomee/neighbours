@@ -10,7 +10,7 @@
       NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
-      NeedsMap.general_offers = #{@general_offers_json};
+      #{"NeedsMap.general_offers = #{@general_offers_json};" if @general_offers_json.present?}
       #{'NeedsMap.init();' if current_user.try(:fully_registered?)}
       Needs.init();
       FullyRegister.init();
