@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+
+  after_filter :set_seen_preregistered_modal, :only => :index
   
   def index
     get_items_for_cycle_columns
@@ -32,6 +34,10 @@ class HomeController < ApplicationController
       @helped = Need.from_live_neighbourhood.resolved.order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?
       @needs = Need.from_live_neighbourhood.unresolved.deadline_in_future.order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?}
     end
+  end
+
+  def set_seen_preregistered_modal
+    session[:seen_preregistered_modal] = true if current_user
   end
   
 end

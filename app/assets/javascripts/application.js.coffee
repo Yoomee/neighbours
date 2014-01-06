@@ -49,6 +49,13 @@ window.FlagLinks =
       $('#flag_resource_id').val($(this).data('post-id'))
       $('#inappropriate').modal('show')
 
+window.FullyRegister =
+  init: ->
+    $("#fully-register").modal "show"
+
+    $("#fully-register").on "hide", ->
+      $(".modal-bg").hide()
+
 window.NotFullyRegisteredModal =
   init: ->
     $('a.not-fully-registered-link').click (event) ->
