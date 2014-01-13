@@ -8,7 +8,6 @@ class Offer < ActiveRecord::Base
 
   scope :accepted, where(:accepted => true)
   scope :open_offers, where(:accepted => false)
-  scope :removed, unscoped.where('offers.removed_at IS NOT NULL')
   
   default_scope where('offers.removed_at IS NULL').joins(:need).where('needs.removed_at IS NULL').readonly(false)
 
@@ -20,6 +19,10 @@ class Offer < ActiveRecord::Base
   validates :post_for_need, :presence => {:on => :create}
   validates_uniqueness_of :user_id, :scope => :need_id, :allow_blank => true
   validate :only_one_accepted_offer
+
+  def self.removed
+    unscoped.where('offers.removed_at IS NOT NULL')
+  end
   
   private
   def create_post_for_need
