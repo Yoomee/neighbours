@@ -5,6 +5,7 @@ class Offer < ActiveRecord::Base
   belongs_to :general_offer
 
   has_one :category, :through => :need
+  has_one :need_user, :through => :need, :source => :user
 
   scope :accepted, where(:accepted => true)
   scope :open_offers, where(:accepted => false)
@@ -20,8 +21,15 @@ class Offer < ActiveRecord::Base
   validates_uniqueness_of :user_id, :scope => :need_id, :allow_blank => true
   validate :only_one_accepted_offer
 
-  def self.removed
-    unscoped.where('offers.removed_at IS NOT NULL')
+  class << self
+
+    def removed
+      unscoped.where('offers.removed_at IS NOT NULL')
+    end
+  end
+
+  def postcode
+    need.user.postcode
   end
   
   private

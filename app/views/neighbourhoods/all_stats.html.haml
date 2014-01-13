@@ -20,7 +20,7 @@
         %ul.unstyled
           -@neighbourhoods.each do |neighbourhood|
             %li=link_to neighbourhood.name, stats_neighbourhood_path(neighbourhood)
-
+        =render 'table'
       .mb-3
         %h2 General Offers
         -if @general_offers.present?

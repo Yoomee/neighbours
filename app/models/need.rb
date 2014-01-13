@@ -87,6 +87,10 @@ class Need < ActiveRecord::Base
     self.user.miles_from_s(user)
   end
 
+  def postcode
+    user.postcode
+  end
+
   def posts_viewable_by(user)
     (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)]).where("posts.removed_at IS NULL")
   end

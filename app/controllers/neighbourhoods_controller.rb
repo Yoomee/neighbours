@@ -82,18 +82,69 @@ class NeighbourhoodsController < ApplicationController
     @general_offers = GeneralOffer.order("created_at desc")
     @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at desc")
 
+    @needs_open = Need.unresolved.order("created_at desc")
+    @needs_resolved = Need.resolved.order("created_at desc")
+    @needs_removed = Need.removed.order("created_at desc")
+
+    @offers_open = Offer.open_offers.order("created_at desc")
+    @offers_accepted = Offer.accepted.order("created_at desc")
+    @offers_removed = Offer.removed.order("created_at desc")
+
     case params[:sort]
     when 'created_at'
       @general_offers = GeneralOffer.order("created_at #{params[:direction]}")
+
+      @needs_open = Need.unresolved.order("created_at #{params[:direction]}")
+      @needs_resolved = Need.resolved.order("created_at #{params[:direction]}")
+      @needs_removed = Need.removed.order("created_at #{params[:direction]}")
+
+      @offers_open = Offer.open_offers.order("created_at #{params[:direction]}")
+      @offers_accepted = Offer.accepted.order("created_at #{params[:direction]}")
+      @offers_removed = Offer.removed.order("created_at #{params[:direction]}")
+    when 'accepted'    
+      @offers_removed = Offer.order("accepted #{params[:direction]}")
+    when 'resolved'
+      @needs_removed = Need.removed.resolved + Need.removed.unresolved
     when 'removed_at'
       @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at #{params[:direction]}")
     when 'category_id'
       @general_offers = GeneralOffer.unscoped.order("category_id #{params[:direction]}")
       @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("category_id #{params[:direction]}")
+
+      @needs_open = Need.unresolved.joins(:category).order("need_categories.name #{params[:direction]}")
+      @needs_resolved = Need.resolved.joins(:category).order("need_categories.name #{params[:direction]}")
+      @needs_removed = Need.removed.joins(:category).order("need_categories.name #{params[:direction]}")
+
+      @offers_open = Offer.open_offers.joins(:category).order("need_categories.name #{params[:direction]}")
+      @offers_accepted = Offer.accepted.joins(:category).order("need_categories.name #{params[:direction]}")
+      @offers_removed = Offer.removed.joins(:category).order("need_categories.name #{params[:direction]}")
     when 'name'
       @general_offers = GeneralOffer.unscoped.joins(:user).order("users.last_name, users.first_name")
       @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').joins(:user).order("users.last_name, users.first_name")
+
+      @needs_open = Need.unresolved.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @needs_resolved = Need.resolved.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @needs_removed = Need.removed.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+
+      @offers_open = Offer.open_offers.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @offers_accepted = Offer.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+      @offers_removed = Offer.removed.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
+    when 'name_secondary'
+      @needs_resolved = Offer.accepted.joins(:user).includes(:need).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:need)
+
+      @offers_open = Need.where(id:Offer.open_offers.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
+      @offers_accepted = Need.resolved.includes(:accepted_offer).joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:accepted_offer)
+      @offers_removed = Need.where(id: Offer.removed.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
+    when 'postcode'
+      @needs_open = Need.unresolved.joins(:user).order("users.postcode #{params[:direction]}")
+      @needs_resolved = Need.resolved.joins(:user).order("users.postcode #{params[:direction]}")
+      @needs_removed = Need.removed.joins(:user).order("users.postcode #{params[:direction]}")
+
+      @offers_open = Offer.open_offers.joins(:need_user).order('users.postcode')
+      @offers_accepted = Offer.accepted.joins(:need_user).order('users.postcode')
+      @offers_removed = Offer.removed.joins(:need_user).order('users.postcode')
     end
+
   end
 
   def stats

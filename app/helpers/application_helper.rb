@@ -65,6 +65,8 @@ module ApplicationHelper
       sort = "name"
     when "Person Who Needed", "Person Who Helped"
       sort = "name_secondary"
+    when "Postcode", "Need Postcode"
+      sort = "postcode"
     else
       sort = Neighbours::SORTABLES[column]
     end
