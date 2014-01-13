@@ -6,14 +6,14 @@
       -elsif @page == Page.find_by_slug(:news)
         At the HQ
       -else
-        =@page.title
+        =@page.title unless @page == Page.find_by_slug(:get_involved)
     =raw(@page.text)
 .row.mb-2
   .span9
     -if @page_children.blank? && @neighbourhood.present?
       %p="There's no news for the #{@neighbourhood} neighbourhood yet."
     -else
-      -@page_children.latest.each do |page|
+      -@page_children.each do |page|
         .row.mb-2
           .span3.fade_in
             -if page.image_uid.present?

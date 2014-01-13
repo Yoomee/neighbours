@@ -15,7 +15,7 @@
             =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
             -if get_involved_page = Page.find_by_slug(:get_involved)
               %ul.dropdown-menu
-                -get_involved_page.children.each do |child|
+                -get_involved_page.children.order(:position).each do |child|
                   %li=link_to_self(child)
           %li=link_to_slug('News', :news, :class=>"intro-nav-link intro-nav-link-latest")
           %li=link_to("Help", @neighbourhood ? neighbourhood_help_path(@neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
