@@ -92,7 +92,7 @@
         .well          
           %h2 Be fully part of it
           -if current_user.nil?
-            =link_to "Get involved", '#pre-register', :class=>"cta-intro", :"data-toggle"=>"modal"          
+            =link_to "Join now", '#pre-register', :class=>"cta-intro", :"data-toggle"=>"modal"
           -elsif current_user.try(:role) !=  ("pre_registration" || "group_user")
             =link_to_slug "Get involved", :get_involved, :class=>"cta-intro"          
           -else
