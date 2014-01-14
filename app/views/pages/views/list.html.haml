@@ -19,7 +19,7 @@
             -if page.image_uid.present?
               =link_to(image_for(page, "220x160#"), page)
             -else
-              =link_to(image_tag(Page.get_thumbnail_url(page.text), :width => 220, :height => 160), page)
+              =link_to(image_tag(page.get_thumbnail_url, :width => 220, :height => 160), page)
           .span6
             %h3
               =link_to_self(page)
