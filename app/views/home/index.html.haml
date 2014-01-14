@@ -42,17 +42,16 @@
           =render_slideshow_by_slug(:homepage_slideshow) if @slideshow
         / =link_to_slug('Find out more', :about, :class=>"illustration-link")
 
--if(current_user.try(:role) == 'pre_registration' && session[:seen_preregistered_modal].nil?)
+-if(current_user.try(:role) == 'pre_registration' && session[:seen_preregistered_modal].nil? && current_user.neighbourhood.present?)
   .modal-bg
   #fully-register.modal.hide
     .modal-header
       %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
       %h3="Welcome back #{current_user}!"
     .modal-body
-      -if current_user.neighbourhood
-        %p
-          You haven't fully registered yet.
-        =link_to "Find out more about registration", about_pre_registrations_path, :class => "cta-intro not-fully-registered-next"
+      %p
+        You haven't fully registered yet.
+      =link_to "Find out more about registration", about_pre_registrations_path, :class => "cta-intro not-fully-registered-next"
 
 .container
   =render('home/cycled_columns')
