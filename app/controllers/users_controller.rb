@@ -37,8 +37,25 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xls do
-        @users = params[:deleted] == "true" ? @users.deleted : @users.not_deleted
-        headers["Content-Disposition"] = "attachment; filename=\"Users #{Date.today.strftime('%d-%m-%Y')}.xls\"" 
+        case params[:users]
+        when 'unvalidated'
+          @users = @unvalidated_users
+        when 'validated'
+          @users = @validated_users
+        when 'group-users'
+          @users = @group_users
+        when 'pre-registered'
+          @users = @pre_registered_users
+        when 'champion-requests'
+          @users = @community_champion_requests
+        when 'champions'
+          @users = @community_champions
+        when 'not-in-sheffield'
+          @users = @not_in_sheffield
+        when 'deleted'
+          @users = @deleted_users
+        end
+        headers["Content-Disposition"] = "attachment; filename=\"Users #{params[:users]} #{Date.today.strftime('%d-%m-%Y')}.xls\""
       end
     end
   end
