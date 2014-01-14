@@ -18,7 +18,7 @@
                 %iframe{:width => 620, :height => 490, :src => slide.video_embed_url, :frameborder => 0, :allowfullscreen => true}
             -else
               %img{ :alt => '', :src => "#{Settings.site_url}#{slide.image.url}" }
-            -if slide.caption.present?
+            -if slide.caption.present? && !slide.has_video?
               .carousel-caption=slide.caption.html_safe
       %a.left.carousel-control{"data-slide" => "prev", :href => "#slideshow-carousel"} ‹
       %a.right.carousel-control{"data-slide" => "next", :href => "#slideshow-carousel"} ›
