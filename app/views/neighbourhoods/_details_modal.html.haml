@@ -1,6 +1,12 @@
 .modal-body
-  %h1=resource.is_a?(Need) ? "Need #{resource.id}" : "Offer #{resource.id}"
   %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+  %h1
+    -if resource.is_a?(Need)
+      =link_to "Need #{resource.id}", resource
+    -elsif resource.is_a?(Offer)
+      =link_to "Offer #{resource.id}", resource
+    -else
+      =link_to "General Offer #{resource.id}", resource
   %h2=link_to resource.user.full_name, resource.user
   %p
     %strong Created at
