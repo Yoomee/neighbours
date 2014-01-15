@@ -1,7 +1,6 @@
-.modal-header
-  %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
 .modal-body
   %h1=resource.is_a?(Need) ? "Need #{resource.id}" : "Offer #{resource.id}"
+  %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
   %h2=link_to resource.user.full_name, resource.user
   %p
     %strong Created at

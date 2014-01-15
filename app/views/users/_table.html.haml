@@ -50,9 +50,8 @@
           %td=link_to "View actions", "##{tab}-user-#{user.id}", :'data-toggle'=>"modal"
 
           .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
-            .modal-header
-              %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
             .modal-body
+              %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
               =link_to "#{user.is_deleted? ? 'Un-delete user' : 'Delete user'}", toggle_is_deleted_user_path(user), :class => 'btn btn-danger pull-left', :method => :put, :confirm => "Are you sure?"
               -if user.validated?
                 =link_to "Unvalidate", unvalidate_user_path(user), :class => 'btn btn-danger pull-left', :method => :put
