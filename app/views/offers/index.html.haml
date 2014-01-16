@@ -1,19 +1,35 @@
 .row
   .span8.offset2
-    %h1 My offers    
+    %h1
+      My offers
+      %small (These conversations are NOT visible to the public)
     -if @offers.empty?
-      Your haven't offered to help anyone yet. Click 
+      Your haven't offered to help anyone yet. Click
       =link_to("here",new_general_offer_path)
       to see who you could help.
     -else
+      %h3 Open offers
       %ul.nav.nav-tabs.nav-stacked
-        -@offers.order("created_at DESC").each do |offer|
+        -@offers.order("created_at DESC").reject{ |i| i.accepted? }.each do |offer|
           %li
             =link_to offer.need do
               .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
                 =image_for_with_validation(offer.need.user, "60x50#")
                 %p.small-text=offer.need.user
               %h3=offer.need.title
+              %h5.needs-description=truncate(offer.need.description, :length =>95)
+              %p
+                =messages_badge(current_user.new_notification_count("my_offers", offer.need))
+      %h3 Accepted offers
+      %ul.nav.nav-tabs.nav-stacked
+        -@offers.order("created_at DESC").select{ |i| i.accepted? }.each do |offer|
+          %li
+            =link_to offer.need do
+              .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
+                =image_for_with_validation(offer.need.user, "60x50#")
+                %p.small-text=offer.need.user
+              %h3=offer.need.title
+              %h5.needs-description=truncate(offer.need.description, :length =>95)
               %p
                 =messages_badge(current_user.new_notification_count("my_offers", offer.need))
 -if @general_offers.present?
