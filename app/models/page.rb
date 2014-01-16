@@ -17,8 +17,12 @@ class Page < ActiveRecord::Base
     thumbnail_url = 'logo.png'
     if(video_url.presence)
       video_id = video_url[video_url.rindex("/") + 1..video_url.length]
-      response = JSON.parse(open("http://vimeo.com/api/v2/video/#{video_id}.json").read)
-      thumbnail_url = response.first["thumbnail_medium"]
+      begin
+        response = JSON.parse(open("http://vimeo.com/api/v2/video/#{video_id}.json").read)
+        thumbnail_url = response.first["thumbnail_medium"]
+      rescue OpenURI::HTTPError => ex
+        puts "Video not found"
+      end
     end
     thumbnail_url
   end
