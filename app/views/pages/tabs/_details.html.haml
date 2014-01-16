@@ -4,17 +4,17 @@
     =form.input :parent_id, :as => :hidden, :value => (@page.parent_id || Page.find_by_slug(:news).id)
   -else
     =parent_page_select(form)
-    =form.input :neighbourhood, :include_blank => "All"
+    =form.input :neighbourhood, :prompt => "All"
   =form.input :title
   =form.input :short_title
   .control-group
     =form.label :publication_date
     .controls
       =form.date_select :publication_date, {:order => [:day, :month, :year], :prompt => @page.new_record?, :default => @page.created_at}, :class => "span2"
-  =form.input :text, :as => :redactor   
+  =form.input :text, :as => :redactor
   =form.input :image, :as => :image, :label => "Cover image"
   .clearfix
   =form.input :view_name, :as => :select, :collection => Page::view_names, :include_blank => false, :member_label => "titleize", :label => "Layout"
   =form.input :permalink_path, :label => "Permalink"
-  =form.input :slug if current_user.try(:yoomee_staff?)  
+  =form.input :slug if current_user.try(:yoomee_staff?)
   =form.input :draft, :label => "This is a draft"
