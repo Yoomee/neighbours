@@ -119,7 +119,7 @@
           Report this page as inappropriate
       -if !@need.removed? && can?(:destroy, @need)
         .clearfix      
-        =link_to("Remove this request", @need, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger mt-2")
+        =link_to("Remove this request", remove_need_path(@need), :confirm => "Are you sure?", :class => "btn btn-danger mt-2")
 
 -if @need.user != current_user
   #offer-form.modal.hide.fade

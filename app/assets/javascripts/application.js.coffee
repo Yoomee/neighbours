@@ -37,6 +37,7 @@ $(document).ready () ->
   NotFullyRegisteredModal.init()
   FlagLinks.init()
   SlideshowForm.init()
+  Stats.init()
 
 window.Login =
   init: ->
@@ -269,3 +270,40 @@ window.SlideshowForm =
         text += possible.charAt(Math.floor(Math.random() * possible.length))
         i++
       text
+window.Stats =
+  init: () ->
+    $('.btn-destroy-needs').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('need', 'destroy', $(this).data('neighbourhood'))
+    $('.btn-delete-needs').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('need', 'delete')
+    $('.btn-delete-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('offer', 'delete')
+    $('.btn-destroy-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('offer', 'destroy')
+    $('.btn-destroy-general-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('general_offer', 'destroy')
+    $('.btn-delete-general-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('general_offer', 'delete')
+  handleButtonClick: (resourceType, method, neighbourhood) ->
+    ids = []
+
+    $("input[id^='#{resourceType}-select']").each () ->
+      ids.push($(this).data('id')) if $(this)[0].checked
+
+    if ids.length!= 0
+      if confirm("Are you sure you want to delete #{ids.length} #{resourceType}s?")
+        urlMethod = if method is 'destroy' then "destroy" else "remove"
+        $.ajax({
+          type: if method is 'destroy' then "DELETE" else "PUT"
+          url: "/#{resourceType}s/#{urlMethod}_all"
+          data: {ids: ids, neighbourhood:neighbourhood}
+        }).done (data) ->
+          history.go(0)
+    else
+      alert("You haven't selected anything.")

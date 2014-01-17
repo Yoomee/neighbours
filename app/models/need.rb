@@ -22,7 +22,6 @@ class Need < ActiveRecord::Base
   after_create :autopost
 
   # scope :unresolved, joins(:user).where("NOT EXISTS (SELECT * FROM offers WHERE offers.need_id = needs.id AND offers.accepted = true)")
-  scope :removed, where(:removed => true)
   scope :unresolved, joins("LEFT OUTER JOIN offers ON (offers.need_id = needs.id AND offers.accepted = 1)").where('offers.id IS NULL')
   scope :resolved, joins(:offers).where("offers.accepted = 1")
   scope :with_lat_lng, joins(:user).where("users.lat IS NOT NULL AND users.lng IS NOT NULL")
@@ -54,6 +53,10 @@ class Need < ActiveRecord::Base
       options[:with] = (options[:with] || {}).merge(:removed => false)
       lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
+    end
+
+    def removed
+      unscoped.where('removed_at IS NOT NULL')
     end
     
     def visible_to_user_with_deadline_in_future(user)
@@ -98,6 +101,10 @@ class Need < ActiveRecord::Base
   def read_all_notifications!(user)
     context = (self.user == user) ? 'my_requests' : 'my_offers'
     notifications.where(["context = '#{context}' AND notifications.user_id = ?", user.id]).update_all(:read => true)
+  end
+
+  def removed?
+    removed_at.present?
   end
 
   def valid_without_user?

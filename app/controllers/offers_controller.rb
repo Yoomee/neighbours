@@ -12,6 +12,20 @@ class OffersController < ApplicationController
     @offer.user = current_user
     UserMailer.new_offer(@offer).deliver if @offer.save
   end
+
+  def destroy_all
+    Offer.destroy_all(['offers.id IN (?)', params[:ids]])
+    # flash[:notice] = "Offers successfully destroyed."
+    # render stats_neighbourhood_path(params[:neighbourhood]), :method => 'GET'
+  end
+
+  def remove_all
+    Offer.where('offers.id IN (?)', params[:ids]).each do |offer|
+      unless offer.removed_at.present?
+        offer.update_attribute(:removed_at, Time.now)
+    end
+    #Need to render something here
+  end
   
   def accept
     @offer.update_attribute(:accepted, true)

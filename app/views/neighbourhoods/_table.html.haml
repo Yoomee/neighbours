@@ -1,4 +1,6 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}") if @neighbourhood.present?
+=link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
+=link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
 %h2 Needs Open
 -if @needs_open.present?
   %table.table.table-striped.table-condensed
@@ -23,6 +25,7 @@
           %td=need.category
           %td=need.offers.count
           %td=link_to "View details", "#open-need#{need.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
         .modal.hide.fade{:id => "open-need#{need.id}"}
           =render('details_modal', :resource => need)
 -else
@@ -53,6 +56,7 @@
           %td=need.category
           %td=need.offers.count
           %td=link_to "View details", "#resolved-need#{need.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
         .modal.hide.fade{:id => "resolved-need#{need.id}"}
           =render('details_modal', :resource => need)
 -else
@@ -83,10 +87,18 @@
           %td=need.offers.count
           %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
           %td=link_to "View details", "#removed-need#{need.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
         .modal.hide.fade{:id => "removed-need#{need.id}"}
           =render('details_modal', :resource => need)
 -else
   %p No removed needs.
+.deletion-buttons
+  =link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
+  =link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
+%br
+.deletion-buttons
+  =link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
+  =link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
 %h2 Offers Open
 -if @offers_open.present?
   %table.table.table-striped.table-condensed
@@ -111,6 +123,7 @@
           %td=read_more_truncate(offer.need.description, :length => 50)
           %td=offer.category
           %td=link_to "View details", "#open-offer#{offer.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
         .modal.hide.fade{:id => "open-offer#{offer.id}"}
           =render('details_modal', :resource => offer)
 -else
@@ -139,6 +152,7 @@
           %td=read_more_truncate(offer.need.description, :length => 50)
           %td=offer.category
           %td=link_to "View details", "#accepted-offer#{offer.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
         .modal.hide.fade{:id => "accepted-offer#{offer.id}"}
           =render('details_modal', :resource => offer)
 -else
@@ -169,7 +183,10 @@
           %td=offer.accepted? ? 'Yes' : 'No'
           %td=offer.category
           %td=link_to "View details", "#removed-offer#{offer.id}", :'data-toggle'=>"modal"
+          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
         .modal.hide.fade{:id => "removed-offer#{offer.id}"}
           =render('details_modal', :resource => offer)
 -else
   %p No offers removed.
+=link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
+=link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id )

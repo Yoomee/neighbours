@@ -28,6 +28,11 @@ class Offer < ActiveRecord::Base
     end
   end
 
+  def need
+    #I overwrote this because I couldn't get a removed need from an offer because the default scope was looking for none-removed needs only
+    Need.unscoped.joins(:offers).where("offers.id = #{id}").first
+  end
+
   def postcode
     need.user.postcode
   end

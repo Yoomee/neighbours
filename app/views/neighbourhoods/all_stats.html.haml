@@ -23,6 +23,9 @@
         =render 'table'
       .mb-3
         %h2 General Offers
+        .deletion-buttons
+          =link_to 'Destroy selected general offers', '#', :class => 'btn btn-destroy-general-offers btn-danger pull-right ml-1'
+          =link_to 'Delete selected general offers', '#', :class => 'btn btn-delete-general-offers btn-warning pull-right'
         -if @general_offers.present?
           %table.table.table-striped.table-condensed
             %thead
@@ -42,12 +45,12 @@
                   %td=read_more_truncate(offer.description, :length => 50)
                   %td=offer.category
                   %td=link_to "View details", "#general-offer#{offer.id}", :'data-toggle'=>"modal"
+                  %td=check_box_tag "general_offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
                 .modal.hide.fade{:id => "general-offer#{offer.id}"}
                   =render('details_modal', :resource => offer)
         -else
           %p No general offers.
         %h2 Removed General Offers
-        -if @removed_general_offers.present?
           %table.table.table-striped.table-condensed
             %thead
               %tr
@@ -66,7 +69,11 @@
                   %td=read_more_truncate(offer.description, :length => 50)
                   %td=offer.category
                   %td=link_to "View details", "#removed-general-offer#{offer.id}", :'data-toggle'=>"modal"
+                  %td=check_box_tag "general_offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
                 .modal.hide.fade{:id => "removed-general-offer#{offer.id}"}
                   =render('details_modal', :resource => offer)
         -else
           %p No removed general offers.
+        .deletion-buttons
+          =link_to 'Destroy selected general offers', '#', :class => 'btn btn-destroy-general-offers btn-danger pull-right ml-1'
+          =link_to 'Delete selected general offers', '#', :class => 'btn btn-delete-general-offers btn-warning pull-right'

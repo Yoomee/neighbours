@@ -80,9 +80,27 @@ class NeedsController < ApplicationController
       end
     end
   end
+
+  def update
+
+  end
+
+  def destroy_all
+    Need.destroy_all(['id IN (?)', params[:ids]])
+    flash[:notice] = "Needs successfully destroyed."
+    #render stats_neighbourhood_path(params[:neighbourhood]), :method => 'GET'
+    render :nothing => true
+  end
+
+  def remove_all
+    Need.where('id IN (?)', params[:ids]).each do |need|
+      need.update_attribute(:removed_at, Time.now)
+    end
+    #Need to render something here
+  end
   
-  def destroy
-    @need.update_attribute(:removed, true)
+  def remove    
+    @need.update_attribute(:removed_at, Time.now)
     return_or_redirect_to @need
   end
   
