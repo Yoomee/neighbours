@@ -28,7 +28,7 @@ $(document).ready () ->
   $('.help-icon').tooltip()
   $('.link-find-us').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
-  $('.carousel').carousel({interval:$('.carousel').data('interval')})
+  #$('.carousel').carousel() # {interval:$('.carousel').data('interval')})
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
   NewNeedForm.initShowHideDeadline()
@@ -38,6 +38,33 @@ $(document).ready () ->
   FlagLinks.init()
   SlideshowForm.init()
   Stats.init()
+  if (window.addEventListener)
+    window.addEventListener('message', Vimeo.handleVimeo, false);
+  else
+    window.attachEvent('onmessage', Vimeo.handleVimeo, false);
+
+window.Vimeo =
+  handleVimeo: (e) ->
+        data = JSON.parse(e.data);
+        switch (data.event)
+          when 'ready' then Vimeo.onReady()
+          when 'play' then Vimeo.onPlay()
+          when 'finish' then Vimeo.onFinish()
+  onReady: ->
+        Vimeo.post('addEventListener', 'pause');
+        Vimeo.post('addEventListener', 'play');
+        Vimeo.post('addEventListener', 'finish');
+  post: (action, value)->
+    data = { method: action };
+    if (value)
+      data.value = value;
+    $('iframe').each ->
+      url = $(this).attr('src').split('?')[0]
+      this.contentWindow.postMessage(JSON.stringify(data), url);
+  onPlay: ->
+    $('#slideshow-carousel').carousel('pause')
+  onFinish: ->
+    $('#slideshow-carousel').carousel('cycle')
 
 window.Login =
   init: ->
