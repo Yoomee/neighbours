@@ -1,7 +1,8 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}") if @neighbourhood.present?
+%h2 Needs Open
 =link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
 =link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
-%h2 Needs Open
+
 -if @needs_open.present?
   %table.table.table-striped.table-condensed
     %thead
@@ -96,10 +97,11 @@
   =link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
   =link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
 %br
+%hr
+%h2 Offers Open
 .deletion-buttons
   =link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
   =link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
-%h2 Offers Open
 -if @offers_open.present?
   %table.table.table-striped.table-condensed
     %thead
@@ -190,3 +192,5 @@
   %p No offers removed.
 =link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
 =link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id )
+%br
+%hr
