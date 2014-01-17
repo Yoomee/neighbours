@@ -48,9 +48,11 @@ window.Vimeo =
         switch (data.event)
           when 'ready' then Vimeo.onReady()
           when 'play' then Vimeo.onPlay()
+          when 'finish' then Vimeo.onFinish()
   onReady: ->
         Vimeo.post('addEventListener', 'pause');
         Vimeo.post('addEventListener', 'play');
+        Vimeo.post('addEventListener', 'finish');
   post: (action, value)->
     data = { method: action };
     if (value)
@@ -60,7 +62,8 @@ window.Vimeo =
       this.contentWindow.postMessage(JSON.stringify(data), url);
   onPlay: ->
     $('#slideshow-carousel').carousel('pause')
-    return
+  onFinish: ->
+    $('#slideshow-carousel').carousel('cycle')
 
 window.Login =
   init: ->
