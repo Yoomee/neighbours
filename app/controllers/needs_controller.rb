@@ -86,7 +86,7 @@ class NeedsController < ApplicationController
   end
 
   def destroy_all
-    Need.destroy_all(['id IN (?)', params[:ids]])
+    Need.unscoped.destroy_all(['id IN (?)', params[:ids]])
     flash[:notice] = "Needs successfully destroyed."
     render :nothing => true
   end
