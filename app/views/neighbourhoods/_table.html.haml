@@ -10,7 +10,7 @@
         %th= sortable "Person In Need"
         %th=sortable "Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
-        %th Description      
+        %th Description
         %th=sortable "Category"
         %th Offers made
         %th Details
@@ -36,7 +36,7 @@
     %thead
       %tr
         %th ID
-        %th=sortable "Person In Need"        
+        %th=sortable "Person In Need"
         %th=sortable "Person Who Helped"
         %th=sortable "Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
@@ -50,7 +50,7 @@
           %td=link_to need.id, need_path(need)
           %td=link_to need.user.full_name, user_path(need.user)
           %td=link_to need.offers.where(:accepted => true).first.user.full_name, user_path(need.offers.where(:accepted => true))
-          %td=need.postcode if @neighbourhoods.present?         
+          %td=need.postcode if @neighbourhoods.present?
           %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
           %td=read_more_truncate(need.description, :length => 50)
           %td=need.category
@@ -70,7 +70,7 @@
         %th=sortable "Person In Need"
         %th=sortable "Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
-        %th Description      
+        %th Description
         %th=sortable "Category"
         %th Offers made
         %th=sortable "Resolved"
@@ -105,7 +105,7 @@
     %thead
       %tr
         %th ID
-        %th=sortable "Person Who Offered"        
+        %th=sortable "Person Who Offered"
         %th=sortable "Person Who Needed"
         %th=sortable "Need Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
@@ -134,7 +134,7 @@
     %thead
       %tr
         %th ID
-        %th=sortable "Person Who Offered"        
+        %th=sortable "Person Who Offered"
         %th=sortable "Person Who Needed"
         %th=sortable "Need Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
@@ -167,7 +167,7 @@
         %th=sortable "Person Who Needed"
         %th=sortable "Need Postcode" if @neighbourhoods.present?
         %th=sortable "Date/Time"
-        %th Need request description            
+        %th Need request description
         %th=sortable "Accepted"
         %th=sortable 'Need category'
         %th Details

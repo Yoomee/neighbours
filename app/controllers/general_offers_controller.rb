@@ -36,7 +36,7 @@ class GeneralOffersController < ApplicationController
   end
 
   def destroy_all
-    GeneralOffer.destroy_all(['id IN (?)', params[:ids]])
+    GeneralOffer.unscoped.destroy_all(['id IN (?)', params[:ids]])
     flash[:notice] = "General offers successfully destroyed."
     render :nothing => true
   end
