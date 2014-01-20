@@ -130,7 +130,10 @@
           =render('details_modal', :resource => offer)
 -else
   %p No offers open.
-%h2 Offers Accepted
+%h2 
+  Offers Accepted
+  %small Accepted offers cannot be removed, please remove the need in order to remove accepted offers.
+
 -if @offers_accepted.present?
   %table.table.table-striped.table-condensed
     %thead
@@ -154,7 +157,7 @@
           %td=read_more_truncate(offer.need.description, :length => 50)
           %td=offer.category
           %td=link_to "View details", "#accepted-offer#{offer.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
+          / %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
         .modal.hide.fade{:id => "accepted-offer#{offer.id}"}
           =render('details_modal', :resource => offer)
 -else
