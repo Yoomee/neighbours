@@ -11,7 +11,7 @@ class PagesController < ApplicationController
     if @page == Page.find_by_slug(:get_involved)
       @page_children =  @page.children.where('neighbourhood_id IS NULL').order(:position) || []
     elsif current_user
-      @page_children = @page.children.where("neighbourhood_id IS NULL OR neighbourhood_id = #{current_user.neighbourhood_id}").latest || []
+      @page_children = @page.children.where("neighbourhood_id IS NULL OR neighbourhood_id = #{current_user.neighbourhood_id || 0} ").latest || []
     else
       @page_children = @page.children.where("neighbourhood_id IS NULL").latest || []
     end
