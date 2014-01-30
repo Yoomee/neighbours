@@ -1328,6 +1328,7 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   position: absolute;
   top: 0;
   left: 0;
+  width:100%;
 }
 
 /*========== Categories page ==========*/
