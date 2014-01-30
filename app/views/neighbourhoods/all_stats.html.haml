@@ -9,12 +9,32 @@
             %p
               %span.huge-offer-count=Offer.count
               %br
-              offers made in total
+              offers made
           .span2.offer-count-2
             %p
               %span.huge-offer-count=Offer.where(:accepted => 1).count
               %br
               accepted offers
+          .span2.offer-count-1
+            %p
+              %span.huge-offer-count=Need.count
+              %br
+              needs requested
+          .span2.offer-count-2
+            %p
+              %span.huge-offer-count=Need.resolved.count
+              %br
+              resolved needs
+          .span2.offer-count-1
+            %p
+              %span.huge-offer-count=GeneralOffer.count
+              %br
+              general offers
+          .span2.offer-count-2
+            %p
+              %span.huge-offer-count=GeneralOffer.joins(:offers).count
+              %br
+              accepted general offers
       .mb-3
         %h2 Stats for each neighbourhood
         %ul.unstyled
