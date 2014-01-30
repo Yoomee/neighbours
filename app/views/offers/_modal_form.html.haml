@@ -5,7 +5,7 @@
     %h3 Offer to help
   .modal-body
     %p
-      Hey thanks for offering to help! Please type your message below, including any questions that you have for
+      Hey thanks for offering to help! Please type your private message below, including any questions that you have for
       ="#{@need.user}."  
     =form.input :post_for_need, :as => :text, :input_html => {:class => "span6", :rows => 5}, :label => "Type your message", :required => false
   .modal-footer

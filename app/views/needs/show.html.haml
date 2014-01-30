@@ -70,14 +70,14 @@
               ="You can continue your discussion with #{@need.user} by writing a comment below ."
           -elsif @chat
             %p.mb3
-            ="You can chat about #{@need.user}'s need by writing a comment below. If you decide you can help with this later, click the 'Maybe I can help' button to continue."
+            ="You can chat privately about #{@need.user}'s need by writing a comment below. If you decide you can help with this later, click the 'Maybe I can help' button to continue."
             =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2 mt-2"
           -else
             %p.mb3
               -if current_user
                 .row
-                  If you think you can help, then click 'Maybe I can help' to send an offer and a message to
-                  ="#{@need.user}. Alternatively, click 'Chat to #{@need.user} to chat about this need."
+                  If you think you can help, then click 'Maybe I can help' to send a private offer and a message to
+                  ="#{@need.user}. Alternatively, click 'Chat to #{@need.user} to chat privately about this need."
                 .row.mt-2                
                   -if current_user.try(:validated?)
                     =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
