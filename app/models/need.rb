@@ -34,7 +34,7 @@ class Need < ActiveRecord::Base
 
   define_index do
     indexes description
-    has id, user_id, category_id, deadline, radius, created_at, updated_at, removed
+    has id, user_id, category_id, deadline, radius, created_at, updated_at
     join user, neighbourhood
     has "RADIANS(users.lat)", :as => :latitude, :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
