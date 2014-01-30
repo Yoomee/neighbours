@@ -148,6 +148,10 @@ class User < ActiveRecord::Base
     neighbourhoods_as_admin.count > 0
   end
 
+  def is_owner?
+    owned_groups.present?
+  end
+
   def lat_lng
     lat.present? && lng.present? ? [lat,lng] : nil
   end
