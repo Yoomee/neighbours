@@ -73,6 +73,10 @@ class GeneralOffer < ActiveRecord::Base
     self.user.miles_from_s(user)
   end
 
+  def postcode
+    user.postcode
+  end
+
   def removed?
     removed_at.present?
   end
