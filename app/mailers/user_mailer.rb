@@ -26,7 +26,7 @@ class UserMailer < ActionMailer::Base
     return true unless should_email?(user)
     @comment, @user = comment, user
     @resource_url = @comment.post.target.is_a?(Need) ? need_url(@comment.post.target) : group_url(@comment.post.target)
-    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@user}")
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@comment.user}")
   end
   
   def new_offer(offer)
