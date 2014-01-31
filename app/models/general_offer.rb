@@ -62,7 +62,7 @@ class GeneralOffer < ActiveRecord::Base
       "You can't accept your own offer"
     else
       need = Need.create(:user => user_wanting_help, :category => self.category, :skip_description_validation => true)
-      offer = offers.create(:need => need, :user => self.user, :post_for_need => self.description, :accepted => true)
+      offer = unscoped_offers.create(:need => need, :user => self.user, :post_for_need => self.description, :accepted => true)
       offer.need.posts.first.comments.create(:user => user_wanting_help, :text => Settings.offer_acceptance_text)
       need
     end
@@ -83,6 +83,10 @@ class GeneralOffer < ActiveRecord::Base
 
   def title
     [category,sub_category].compact.map(&:to_s).join(': ')
+  end
+
+  def unscoped_offers
+    Offer.unscoped.where(:general_offer_id => id)
   end
 
 end
