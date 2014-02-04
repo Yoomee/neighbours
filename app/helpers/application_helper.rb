@@ -55,7 +55,7 @@ module ApplicationHelper
       sort = "created_at"
     when "Removed At"
       sort = "removed_at"
-    when "Category", "Need category"
+    when "Category", "Need Category"
       sort = "category_id"
     when "Resolved"
       sort = "resolved"
@@ -63,9 +63,9 @@ module ApplicationHelper
       sort = "accepted"
     when "Person Who Offered" , "Person In Need"
       sort = "name"
-    when "Person Who Needed", "Person Who Helped"
+    when "Person Who Needed", "Person Helping"
       sort = "name_secondary"
-    when "Postcode", "Need Postcode"
+    when "Need Postcode", "Offer Postcode"
       sort = "postcode"
     else
       sort = Neighbours::SORTABLES[column]

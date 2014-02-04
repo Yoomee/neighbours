@@ -311,12 +311,12 @@ window.Stats =
     $('.btn-destroy-offers').click (event) ->
       event.preventDefault()
       Stats.handleButtonClick('offer', 'destroy')
-    $('.btn-destroy-general-offers').click (event) ->
+    $('.btn-destroy-generaloffers').click (event) ->
       event.preventDefault()
-      Stats.handleButtonClick('general_offer', 'destroy')
-    $('.btn-delete-general-offers').click (event) ->
+      Stats.handleButtonClick('generaloffer', 'destroy')
+    $('.btn-delete-generaloffers').click (event) ->
       event.preventDefault()
-      Stats.handleButtonClick('general_offer', 'delete')
+      Stats.handleButtonClick('generaloffer', 'delete')
   handleButtonClick: (resourceType, method, neighbourhood) ->
     ids = []
 
@@ -324,7 +324,8 @@ window.Stats =
       ids.push($(this).data('id')) if $(this)[0].checked
 
     if ids.length!= 0
-      if confirm("Are you sure you want to delete #{ids.length} #{resourceType}s?")
+      if confirm("Are you sure you want to #{method} #{ids.length} #{resourceType}s?")
+        resourceType = "general_offer" if resourceType is "generaloffer"
         urlMethod = if method is 'destroy' then "destroy" else "remove"
         $.ajax({
           type: if method is 'destroy' then "DELETE" else "PUT"

@@ -1,199 +1,68 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}") if @neighbourhood.present?
-%h2 Needs Open
-=link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
-=link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
+-@resources.each do |name, set|
 
--if @needs_open.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th= sortable "Person In Need"
-        %th=sortable "Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Description
-        %th=sortable "Category"
-        %th Offers made
-        %th Details
-    %tbody
-      -@needs_open.each do |need|
-        %tr
-          %td=link_to need.id, need_path(need)
-          %td=link_to need.user.full_name, user_path(need.user)
-          %td=need.postcode if @neighbourhoods.present?
-          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(need.description, :length => 50)
-          %td=need.category
-          %td=need.offers.count
-          %td=link_to "View details", "#open-need#{need.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
-        .modal.hide.fade{:id => "open-need#{need.id}"}
-          =render('details_modal', :resource => need)
--else
-  %p No needs open.
-%h2 Needs Resolved
--if @needs_resolved.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Person In Need"
-        %th=sortable "Person Who Helped"
-        %th=sortable "Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Description
-        %th=sortable "Category"
-        %th Offers made
-        %th Details
-    %tbody
-      -@needs_resolved.each do |need|
-        %tr
-          %td=link_to need.id, need_path(need)
-          %td=link_to need.user.full_name, user_path(need.user)
-          %td=link_to need.offers.where(:accepted => true).first.user.full_name, user_path(need.offers.where(:accepted => true))
-          %td=need.postcode if @neighbourhoods.present?
-          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(need.description, :length => 50)
-          %td=need.category
-          %td=need.offers.count
-          %td=link_to "View details", "#resolved-need#{need.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
-        .modal.hide.fade{:id => "resolved-need#{need.id}"}
-          =render('details_modal', :resource => need)
--else
-  %p No needs resolved.
-%h2 Needs Removed
--if @needs_removed.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Person In Need"
-        %th=sortable "Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Description
-        %th=sortable "Category"
-        %th Offers made
-        %th=sortable "Resolved"
-        %th Details
-    %tbody
-      -@needs_removed.each do |need|
-        %tr
-          %td=link_to need.id, need_path(need)
-          %td=link_to need.user.full_name, user_path(need.user)
-          %td=need.postcode if @neighbourhoods.present?
-          %td.date-time=need.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(need.description, :length => 50)
-          %td=need.category
-          %td=need.offers.count
-          %td=need.offers.count > 0 ? need.has_accepted_offer? : "-"
-          %td=link_to "View details", "#removed-need#{need.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "need-select#{need.id}", 'selected', false, {:"data-id" => need.id}
-        .modal.hide.fade{:id => "removed-need#{need.id}"}
-          =render('details_modal', :resource => need)
--else
-  %p No removed needs.
-.deletion-buttons
-  =link_to 'Destroy selected needs', '#', :class => 'btn btn-destroy-needs btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
-  =link_to 'Delete selected needs', '#', :class => 'btn btn-delete-needs btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
-%br
-%hr
-%h2 Offers Open
-.deletion-buttons
-  =link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
-  =link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id)
--if @offers_open.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Person Who Offered"
-        %th=sortable "Person Who Needed"
-        %th=sortable "Need Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Need request description
-        %th=sortable 'Need category'
-        %th Details
-    %tbody
-      -@offers_open.each do |offer|
-        %tr
-          %td=link_to offer.id, need_path(offer.need)
-          %td=link_to offer.user.full_name, user_path(offer.user)
-          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
-          %td=offer.postcode if @neighbourhoods.present?
-          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.category
-          %td=link_to "View details", "#open-offer#{offer.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
-        .modal.hide.fade{:id => "open-offer#{offer.id}"}
-          =render('details_modal', :resource => offer)
--else
-  %p No offers open.
-%h2 
-  Offers Accepted
-  %small Accepted offers cannot be removed, please remove the need in order to remove accepted offers.
+  -resource_name = set.first.class.name.downcase
 
--if @offers_accepted.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Person Who Offered"
-        %th=sortable "Person Who Needed"
-        %th=sortable "Need Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Need request description
-        %th=sortable 'Need category'
-        %th Details
-    %tbody
-      -@offers_accepted.each do |offer|
+  %h2=name
+  .deletion-buttons
+  -unless set.blank?
+    =link_to "Destroy selected #{resource_name}s", '#', :class => "btn btn-destroy-#{resource_name}s btn-danger pull-right ml-1", :'data-neighbourhood' => @neighbourhood.try(:id)
+    =link_to "Delete selected #{resource_name}s", '#', :class => "btn btn-delete-#{resource_name}s btn-warning pull-right", :'data-neighbourhood' => @neighbourhood.try(:id) unless name.start_with? "Removed"
+  -if set.present?
+    %table.table.table-striped.table-condensed
+      %thead
         %tr
-          %td=link_to offer.id, need_path(offer.need)
-          %td=link_to offer.user.full_name, user_path(offer.user)
-          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
-          %td=offer.postcode if @neighbourhoods.present?
-          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.category
-          %td=link_to "View details", "#accepted-offer#{offer.id}", :'data-toggle'=>"modal"
-          / %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
-        .modal.hide.fade{:id => "accepted-offer#{offer.id}"}
-          =render('details_modal', :resource => offer)
--else
-  %p No offers accepted.
-%h2 Offers Removed
--if @offers_removed.present?
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th ID
-        %th=sortable "Person Who Offered"
-        %th=sortable "Person Who Needed"
-        %th=sortable "Need Postcode" if @neighbourhoods.present?
-        %th=sortable "Date/Time"
-        %th Need request description
-        %th=sortable "Accepted"
-        %th=sortable 'Need category'
-        %th Details
-    %tbody
-      -@offers_removed.each do |offer|
-        %tr
-          %td=link_to offer.id, need_path(offer.need)
-          %td=link_to offer.user.full_name, user_path(offer.user)
-          %td=link_to offer.need.user.full_name, user_path(offer.need.user)
-          %td=offer.postcode if @neighbourhoods.present?
-          %td.date-time=offer.created_at.strftime("%d %b %y %H:%M")
-          %td=read_more_truncate(offer.need.description, :length => 50)
-          %td=offer.accepted? ? 'Yes' : 'No'
-          %td=offer.category
-          %td=link_to "View details", "#removed-offer#{offer.id}", :'data-toggle'=>"modal"
-          %td=check_box_tag "offer-select#{offer.id}", 'selected', false, {:"data-id" => offer.id}
-        .modal.hide.fade{:id => "removed-offer#{offer.id}"}
-          =render('details_modal', :resource => offer)
--else
-  %p No offers removed.
-=link_to 'Destroy selected offers', '#', :class => 'btn btn-destroy-offers btn-danger pull-right ml-1', :'data-neighbourhood' => @neighbourhood.try(:id)
-=link_to 'Delete selected offers', '#', :class => 'btn btn-delete-offers btn-warning pull-right', :'data-neighbourhood' => @neighbourhood.try(:id )
+          %th ID
+          %th=sortable resource_name == "need" ? "Person In Need" : "Person Who Offered"
+          -unless name == "Open Needs" || resource_name == "generaloffer"
+            %th=sortable resource_name == "offer" || resource_name == "generaloffer" ? "Person Who Needed" : "Person Helping"
+          %th=sortable resource_name == "need" ? "Need Postcode" : "Offer Postcode"
+          -unless name == "Open Needs" || resource_name == "generaloffer"
+            %th=sortable resource_name == "need" ? "Offer Postcode" : "Need Postcode"
+          %th=sortable name.start_with?("Removed") ? "Removed At" : "Date/Time"
+          %th=resource_name == "offer" ? "Need Request Description" : "Description"
+          %th=sortable resource_name == "offer" ? "Need Category" : "Category"
+          %th= "Offers made" if resource_name == "need"
+          -if name.start_with?("Removed") && resource_name != "generaloffer"
+            %th=resource_name == "need" ? "Resolved" : "Accepted"
+          %th Details
+      %tbody
+        -set.each do |resource|
+          %tr
+            -if resource_name == "generaloffer"
+              %td=link_to resource.id, general_offer_path(resource)
+            -else
+              %td=link_to resource.id, need_path(resource_name == "need" ? resource : resource.need)
+            %td=link_to resource.user.full_name, user_path(resource.user)
+            -unless name == "Open Needs" || resource_name == "generaloffer"
+              -if resource_name == "need"
+                -if resource.has_accepted_offer?
+                  %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true))
+                -else
+                  %td="-"
+              -elsif resource_name == "offer"
+                %td=link_to resource.need.user.full_name, user_path(resource.need.user)
+            %td=resource.user.postcode
+            -unless name == "Open Needs" || resource_name == "generaloffer"
+              -if resource_name == "offer" || resource.has_accepted_offer?
+                %td=resource_name == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode
+              -else
+                %td="-"
+            %td.date-time=name.start_with?("Removed") ? resource.removed_at.strftime("%d %b %y %H:%M") : resource.created_at.strftime("%d %b %y %H:%M")
+            %td=read_more_truncate(resource_name == "offer" ? resource.need.description : resource.description, :length => 50)
+            %td=resource_name == "offer" ? resource.need.category : resource.category
+            %td=resource.offers.count if resource_name == "need"
+            -if name.start_with?("Removed") && resource_name != "generaloffer"
+              -if resource_name == "need"
+                %td=resource.offers.count > 0 ? need.has_accepted_offer? : '-'
+              -elsif resource_name == "offer"
+                %td=resource.accepted? ? 'Yes' : 'No'
+            %td=link_to "View details", "#resolved-#{resource_name}#{resource.id}", :'data-toggle'=>"modal"
+            %td=check_box_tag "#{resource_name}-select#{resource.id}", 'selected', false, {:"data-id" => resource.id}
+
+          .modal.hide.fade{:id => "resolved-#{resource_name}#{resource.id}"}
+            =render('details_modal', :resource => resource)
+  -else
+    %p="Nothing yet for #{name.downcase}."
 %br
 %hr

@@ -32,10 +32,6 @@ class Offer < ActiveRecord::Base
     Need.unscoped.find(need_id)
   end
   alias_method :need, :unscoped_need
-
-  def postcode
-    need.user.postcode
-  end
   
   private
   def create_post_for_need
