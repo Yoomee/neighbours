@@ -40,7 +40,7 @@ class Offer < ActiveRecord::Base
   end
   
   def only_one_accepted_offer
-    if accepted? && need.try(:accepted_offer)
+    if accepted? && need.try(:accepted_offer) && need.accepted_offer != self
       errors.add(:accepted, "need already has an accepted offer")
     end
   end
