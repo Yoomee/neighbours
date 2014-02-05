@@ -124,7 +124,7 @@ class NeighbourhoodsController < ApplicationController
       @resources["Resolved Needs"] = Offer.accepted.joins(:user).includes(:need).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:need)
 
       @resources["Open Offers"] = Need.where(id:Offer.open_offers.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
-      @resources["Accepted Offers"] = Need.resolved.includes(:accepted_offer).joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:accepted_offer)
+      @resources["Accepted Offers"] = Need.resolved.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:accepted_offer)
       @resources["Removed Offers"] = Need.where(id: Offer.removed.select(:need_id)).joins(:user).includes(:offers).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}").collect(&:offers).flatten.uniq
     when 'postcode'
       @resources["General Offers"] = GeneralOffer.joins(:user).order("users.postcode #{params[:direction]}")

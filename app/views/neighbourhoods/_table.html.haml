@@ -37,7 +37,7 @@
             -unless name == "Open Needs" || resource_name == "generaloffer"
               -if resource_name == "need"
                 -if resource.has_accepted_offer?
-                  %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true))
+                  %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true).first.user)
                 -else
                   %td="-"
               -elsif resource_name == "offer"
