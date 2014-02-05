@@ -2081,7 +2081,8 @@ textarea#user_notes{
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
   margin:0 auto;
-  max-height: 280px;
+  min-height: 345px;
+  max-height: 345px;
   width: auto;
 }
 .carousel {

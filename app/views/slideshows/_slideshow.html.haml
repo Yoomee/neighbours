@@ -14,8 +14,7 @@
         -slideshow.slides.each_with_index do |slide, index|
           .item{ :class => index == 0 ? 'active' : '' }
             -if slide.has_video?
-              %img
-                %iframe{:width => 620, :height => 490, :src => "#{slide.video_embed_url}?api=1", :frameborder => 0, :allowfullscreen => true}
+              %iframe{:width => 620, :height => 345, :src => "#{slide.video_embed_url}?api=1", :frameborder => 0, :allowfullscreen => true}
             -else
               %img{ :alt => '', :src => "#{Settings.site_url}#{slide.image.url}" }
             -if slide.caption.present? && !slide.has_video?
