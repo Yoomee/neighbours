@@ -1,7 +1,18 @@
 .container
   .row
     .span12
-      %h1 Stats
+      %h1
+        Stats
+        =link_to(stats_neighbourhoods_path({:format => 'xls', :type => 'needs'}), :class => 'btn btn-primary pull-right mr-1 mb-1 btn-download-spreadsheet') do
+          %i.icon-download-alt
+          ="Download Needs"
+        =link_to(stats_neighbourhoods_path({:format => 'xls', :type => 'offers'}), :class => 'btn btn-primary pull-right mr-1 mb-1 btn-download-spreadsheet') do
+          %i.icon-download-alt
+          ="Download Offers"
+        =link_to(stats_neighbourhoods_path({:format => 'xls', :type => 'general_offers'}), :class => 'btn btn-primary pull-right mr-1 mb-1 btn-download-spreadsheet') do
+          %i.icon-download-alt
+          ="Download General Offers"
+
       %h2 Overall stats
       .container
         .row.mb-3

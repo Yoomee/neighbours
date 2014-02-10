@@ -80,6 +80,21 @@ class NeighbourhoodsController < ApplicationController
   def all_stats
     @neighbourhoods = Neighbourhood.all
 
+    respond_to do |format|
+      format.html {}
+      format.xls do
+        case params[:type]
+          when 'needs'
+            @resource = Need.all
+          when 'offers'
+            @resource = Offer.all
+          when 'general_offers'
+            @resource = GeneralOffer.all
+        end
+        headers["Content-Disposition"] = "attachment; filename=\"#{params[:type]} #{Date.today.strftime('%d-%m-%Y')}.xls\""
+      end
+    end
+
     @resources = {"Open Needs" => Need.unresolved.order("created_at desc"), "Resolved Needs" => Need.resolved.order("created_at desc"), "Removed Needs" => Need.removed.order("created_at desc"), "General Offers" => GeneralOffer.order("created_at desc"), "Removed General Offers" => GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at desc"), "Open Offers" => Offer.open_offers.order("created_at desc"), "Accepted Offers" => Offer.accepted.order("created_at desc"), "Removed Offers" => Offer.removed.order("created_at desc")}
 
     case params[:sort]
@@ -97,10 +112,10 @@ class NeighbourhoodsController < ApplicationController
     when 'resolved'
       @resources["Removed Needs"] = Need.removed.resolved + Need.removed.unresolved
     when 'removed_at'
-      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at #{params[:direction]}")
+      @resources["Removed General Offers"] = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at #{params[:direction]}")
     when 'category_id'
       @resources["General Offers"] = GeneralOffer.unscoped.order("category_id #{params[:direction]}")
-      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("category_id #{params[:direction]}")
+      @resources["Removed General Offers"] = GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("category_id #{params[:direction]}")
 
       @resources["Open Needs"] = Need.unresolved.joins(:category).order("need_categories.name #{params[:direction]}")
       @resources["Resolved Needs"] = Need.resolved.joins(:category).order("need_categories.name #{params[:direction]}")
@@ -111,7 +126,7 @@ class NeighbourhoodsController < ApplicationController
       @resources["Removed Offers"] = Offer.removed.joins(:category).order("need_categories.name #{params[:direction]}")
     when 'name'
       @resources["General Offers"] = GeneralOffer.unscoped.joins(:user).order("users.last_name, users.first_name")
-      @removed_general_offers = GeneralOffer.unscoped.where('removed_at IS NOT NULL').joins(:user).order("users.last_name, users.first_name")
+      @resources["Removed General Offers"] = GeneralOffer.unscoped.where('removed_at IS NOT NULL').joins(:user).order("users.last_name, users.first_name")
 
       @resources["Open Needs"] = Need.unresolved.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
       @resources["Resolved Needs"] = Need.resolved.joins(:user).order("users.last_name #{params[:direction]}, users.first_name #{params[:direction]}")
