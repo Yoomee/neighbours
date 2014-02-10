@@ -80,7 +80,7 @@ class NeighbourhoodsController < ApplicationController
   def all_stats
     @neighbourhoods = Neighbourhood.all
 
-    @resources = {"General Offers" => GeneralOffer.order("created_at desc"), "Removed General Offers" => GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at desc"), "Open Needs" => Need.unresolved.order("created_at desc"), "Resolved Needs" => Need.resolved.order("created_at desc"), "Removed Needs" => Need.removed.order("created_at desc"), "Open Offers" => Offer.open_offers.order("created_at desc"), "Accepted Offers" => Offer.accepted.order("created_at desc"), "Removed Offers" => Offer.removed.order("created_at desc")}
+    @resources = {"Open Needs" => Need.unresolved.order("created_at desc"), "Resolved Needs" => Need.resolved.order("created_at desc"), "Removed Needs" => Need.removed.order("created_at desc"), "General Offers" => GeneralOffer.order("created_at desc"), "Removed General Offers" => GeneralOffer.unscoped.where('removed_at IS NOT NULL').order("removed_at desc"), "Open Offers" => Offer.open_offers.order("created_at desc"), "Accepted Offers" => Offer.accepted.order("created_at desc"), "Removed Offers" => Offer.removed.order("created_at desc")}
 
     case params[:sort]
     when 'created_at'
