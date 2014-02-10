@@ -1,66 +1,66 @@
 %h1=title("Stats for neighbourhood #{@neighbourhood}") if @neighbourhood.present?
 -@resources.each do |name, set|
 
-  -resource_name = set.first.class.name.downcase
+  -resource_type = set.first.class.name.downcase
 
   %h2=name
   .deletion-buttons
   -unless set.blank?
-    =link_to "Destroy selected #{resource_name}s", '#', :class => "btn btn-destroy-#{resource_name}s btn-danger pull-right ml-1", :'data-neighbourhood' => @neighbourhood.try(:id)
-    =link_to "Delete selected #{resource_name}s", '#', :class => "btn btn-delete-#{resource_name}s btn-warning pull-right", :'data-neighbourhood' => @neighbourhood.try(:id) unless name.start_with? "Removed"
+    =link_to "Destroy selected #{resource_type}s", '#', :class => "btn btn-destroy-#{resource_type}s btn-danger pull-right ml-1", :'data-neighbourhood' => @neighbourhood.try(:id)
+    =link_to "Delete selected #{resource_type}s", '#', :class => "btn btn-delete-#{resource_type}s btn-warning pull-right", :'data-neighbourhood' => @neighbourhood.try(:id) unless name.start_with? "Removed"
   -if set.present?
     %table.table.table-striped.table-condensed
       %thead
         %tr
           %th ID
-          %th=sortable resource_name == "need" ? "Person In Need" : "Person Who Offered"
-          -unless name == "Open Needs" || resource_name == "generaloffer"
-            %th=sortable resource_name == "offer" || resource_name == "generaloffer" ? "Person Who Needed" : "Person Helping"
-          %th=sortable resource_name == "need" ? "Need Postcode" : "Offer Postcode"
-          -unless name == "Open Needs" || resource_name == "generaloffer"
-            %th=sortable resource_name == "need" ? "Offer Postcode" : "Need Postcode"
+          %th=sortable resource_type == "need" ? "Person In Need" : "Person Who Offered"
+          -unless name == "Open Needs" || resource_type == "generaloffer"
+            %th=sortable resource_type == "offer" || resource_type == "generaloffer" ? "Person Who Needed" : "Person Helping"
+          %th=sortable resource_type == "need" ? "Need Postcode" : "Offer Postcode"
+          -unless name == "Open Needs" || resource_type == "generaloffer"
+            %th=sortable resource_type == "need" ? "Offer Postcode" : "Need Postcode"
           %th=sortable name.start_with?("Removed") ? "Removed At" : "Date/Time"
-          %th=resource_name == "offer" ? "Need Request Description" : "Description"
-          %th=sortable resource_name == "offer" ? "Need Category" : "Category"
-          %th= "Offers made" if resource_name == "need"
-          -if name.start_with?("Removed") && resource_name != "generaloffer"
-            %th=resource_name == "need" ? "Resolved" : "Accepted"
+          %th=resource_type == "offer" ? "Need Request Description" : "Description"
+          %th=sortable resource_type == "offer" ? "Need Category" : "Category"
+          %th= "Offers made" if resource_type == "need"
+          -if name.start_with?("Removed") && resource_type != "generaloffer"
+            %th=resource_type == "need" ? "Resolved" : "Accepted"
           %th Details
       %tbody
         -set.each do |resource|
           %tr
-            -if resource_name == "generaloffer"
+            -if resource_type == "generaloffer"
               %td=link_to resource.id, general_offer_path(resource)
             -else
-              %td=link_to resource.id, need_path(resource_name == "need" ? resource : resource.need)
+              %td=link_to resource.id, need_path(resource_type == "need" ? resource : resource.need)
             %td=link_to resource.user.full_name, user_path(resource.user)
-            -unless name == "Open Needs" || resource_name == "generaloffer"
-              -if resource_name == "need"
+            -unless name == "Open Needs" || resource_type == "generaloffer"
+              -if resource_type == "need"
                 -if resource.has_accepted_offer?
                   %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true).first.user)
                 -else
                   %td="-"
-              -elsif resource_name == "offer"
+              -elsif resource_type == "offer"
                 %td=link_to resource.need.user.full_name, user_path(resource.need.user)
             %td=resource.user.postcode
-            -unless name == "Open Needs" || resource_name == "generaloffer"
-              -if resource_name == "offer" || resource.has_accepted_offer?
-                %td=resource_name == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode
+            -unless name == "Open Needs" || resource_type == "generaloffer"
+              -if resource_type == "offer" || resource.has_accepted_offer?
+                %td=resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode
               -else
                 %td="-"
             %td.date-time=name.start_with?("Removed") ? resource.removed_at.strftime("%d %b %y %H:%M") : resource.created_at.strftime("%d %b %y %H:%M")
-            %td=read_more_truncate(resource_name == "offer" ? resource.need.description : resource.description, :length => 50)
-            %td=resource_name == "offer" ? resource.need.category : resource.category
-            %td=resource.offers.count if resource_name == "need"
-            -if name.start_with?("Removed") && resource_name != "generaloffer"
-              -if resource_name == "need"
+            %td=read_more_truncate(resource_type == "offer" ? resource.need.description : resource.description, :length => 50)
+            %td=resource_type == "offer" ? resource.need.category : resource.category
+            %td=resource.offers.count if resource_type == "need"
+            -if name.start_with?("Removed") && resource_type != "generaloffer"
+              -if resource_type == "need"
                 %td=resource.offers.count > 0 ? need.has_accepted_offer? : '-'
-              -elsif resource_name == "offer"
+              -elsif resource_type == "offer"
                 %td=resource.accepted? ? 'Yes' : 'No'
-            %td=link_to "View details", "#resolved-#{resource_name}#{resource.id}", :'data-toggle'=>"modal"
-            %td=check_box_tag "#{resource_name}-select#{resource.id}", 'selected', false, {:"data-id" => resource.id}
+            %td=link_to "View details", "#resolved-#{resource_type}#{resource.id}", :'data-toggle'=>"modal"
+            %td=check_box_tag "#{resource_type}-select#{resource.id}", 'selected', false, {:"data-id" => resource.id}
 
-          .modal.hide.fade{:id => "resolved-#{resource_name}#{resource.id}"}
+          .modal.hide.fade{:id => "resolved-#{resource_type}#{resource.id}"}
             =render('details_modal', :resource => resource)
   -else
     %p="Nothing yet for #{name.downcase}."
