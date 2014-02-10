@@ -85,11 +85,11 @@ class NeighbourhoodsController < ApplicationController
       format.xls do
         case params[:type]
           when 'needs'
-            @resource = Need.all
+            @resource = Need.unscoped
           when 'offers'
-            @resource = Offer.all
+            @resource = Offer.unscoped
           when 'general_offers'
-            @resource = GeneralOffer.all
+            @resource = GeneralOffer.unscoped
         end
         headers["Content-Disposition"] = "attachment; filename=\"#{params[:type]} #{Date.today.strftime('%d-%m-%Y')}.xls\""
       end

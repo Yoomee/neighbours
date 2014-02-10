@@ -54,7 +54,7 @@
             %td=resource.offers.count if resource_type == "need"
             -if name.start_with?("Removed") && resource_type != "generaloffer"
               -if resource_type == "need"
-                %td=resource.offers.count > 0 ? need.has_accepted_offer? : '-'
+                %td=resource.offers.count > 0 ? resource.has_accepted_offer? : '-'
               -elsif resource_type == "offer"
                 %td=resource.accepted? ? 'Yes' : 'No'
             %td=link_to "View details", "#resolved-#{resource_type}#{resource.id}", :'data-toggle'=>"modal"

@@ -17,13 +17,14 @@
           <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
             <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Offer Postcode" : "Need Postcode" %></Data></Cell>
           <% end %>
-          <Cell><Data ss:Type="String"><%=resource_type.start_with?("Removed") ? "Removed At" : "Date/Time" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%="Created At"%></Data></Cell>
           <Cell><Data ss:Type="String"><%=resource_type == "offer" ? "Need Request Description" : "Description" %></Data></Cell>
           <Cell><Data ss:Type="String"><%=resource_type == "offer" ? "Need Category" : "Category" %></Data></Cell>
           <Cell><Data ss:Type="String"><%= "Offers made" if resource_type == "need" %></Data></Cell>
-          <% if resource_type.start_with?("Removed") && resource_type != "generaloffer" %>
+          <% if resource_type != "generaloffer" %>
             <Cell><Data ss:Type="String"><%= resource_type == "need" ? "Resolved" : "Accepted" %></Data></Cell>
           <% end %>
+          <Cell><Data ss:Type="String"><%="Removed At"%></Data></Cell>
         </Row>  
         <% @resource.each do |resource| %>
           <Row>
@@ -52,17 +53,18 @@
                 <Cell><Data ss:Type="String"><%= "-" %></Data></Cell>
               <% end %>
             <% end %>
-            <Cell><Data ss:Type="String"><%= resource_type.start_with?("Removed") ? resource.removed_at.strftime("%d %b %y %H:%M") : resource.created_at.strftime("%d %b %y %H:%M") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%=resource.created_at.strftime("%d %b %y %H:%M")%></Data></Cell>
             <Cell><Data ss:Type="String"><%=resource_type == "offer" ? resource.need.description : resource.description %></Data></Cell>
             <Cell><Data ss:Type="String"><%= resource_type == "offer" ? resource.need.category : resource.category %></Data></Cell>
             <Cell><Data ss:Type="String"><%= resource.offers.count if resource_type == "need" %></Data></Cell>
-            <% if resource_type.start_with?("Removed") && resource_type != "generaloffer" %>
+            <% if resource_type != "generaloffer" %>
               <% if resource_type == "need" %>
-                <Cell><Data ss:Type="String"><%= resource.offers.count > 0 ? need.has_accepted_offer? : '-' %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= resource.offers.count > 0 ? resource.has_accepted_offer? : '-' %></Data></Cell>
               <% elsif resource_type == "offer" %>
                 <Cell><Data ss:Type="String"><%= resource.accepted? ? 'Yes' : 'No' %></Data></Cell>
               <% end %>
             <% end %>
+            <Cell><Data ss:Type="String"><%= resource.removed_at.present? ? resource.removed_at.strftime("%d %b %y %H:%M") : "-" %></Data></Cell>
           </Row>
         <% end %>
     </Table>
