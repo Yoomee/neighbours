@@ -14,9 +14,9 @@
         %tr
           %th ID
           %th=sortable resource_type == "need" ? "Person In Need" : "Person Who Offered"
+          %th=sortable resource_type == "need" ? "Need Postcode" : "Offer Postcode"
           -unless name == "Open Needs" || resource_type == "generaloffer"
             %th=sortable resource_type == "offer" || resource_type == "generaloffer" ? "Person Who Needed" : "Person Helping"
-          %th=sortable resource_type == "need" ? "Need Postcode" : "Offer Postcode"
           -unless name == "Open Needs" || resource_type == "generaloffer"
             %th=sortable resource_type == "need" ? "Offer Postcode" : "Need Postcode"
           %th=sortable name.start_with?("Removed") ? "Removed At" : "Date/Time"
@@ -34,6 +34,7 @@
             -else
               %td=link_to resource.id, need_path(resource_type == "need" ? resource : resource.need)
             %td=link_to resource.user.full_name, user_path(resource.user)
+            %td=resource.user.postcode
             -unless name == "Open Needs" || resource_type == "generaloffer"
               -if resource_type == "need"
                 -if resource.has_accepted_offer?
@@ -42,7 +43,6 @@
                   %td="-"
               -elsif resource_type == "offer"
                 %td=link_to resource.need.user.full_name, user_path(resource.need.user)
-            %td=resource.user.postcode
             -unless name == "Open Needs" || resource_type == "generaloffer"
               -if resource_type == "offer" || resource.has_accepted_offer?
                 %td=resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode

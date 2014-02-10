@@ -10,10 +10,10 @@
         <Row>
           <Cell><Data ss:Type="String">ID</Data></Cell>
           <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Person In Need" : "Person Who Offered" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Need Postcode" : "Offer Postcode" %></Data></Cell>
           <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
             <Cell><Data ss:Type="String"><%=resource_type == "offer" || resource_type == "generaloffer" ? "Person Who Needed" : "Person Helping" %></Data></Cell>
           <% end %>
-          <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Need Postcode" : "Offer Postcode" %></Data></Cell>
           <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
             <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Offer Postcode" : "Need Postcode" %></Data></Cell>
           <% end %>
@@ -23,7 +23,7 @@
           <Cell><Data ss:Type="String"><%= "Offers made" if resource_type == "need" %></Data></Cell>
           <% if resource_type.start_with?("Removed") && resource_type != "generaloffer" %>
             <Cell><Data ss:Type="String"><%= resource_type == "need" ? "Resolved" : "Accepted" %></Data></Cell>
-          <% end %>          
+          <% end %>
         </Row>  
         <% @resource.each do |resource| %>
           <Row>
@@ -33,6 +33,7 @@
               <Cell><Data ss:Type="String"><%=resource.id%></Data></Cell>
             <% end %>
             <Cell><Data ss:Type="String"><%=resource.user.full_name%></Data></Cell>
+            <Cell><Data ss:Type="String"><%= resource.user.postcode %></Data></Cell>
             <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
               <% if resource_type == "need" %>
                 <% if resource.has_accepted_offer? %>
@@ -44,7 +45,6 @@
                 <Cell><Data ss:Type="String"><%=resource.need.user.full_name%></Data></Cell>
               <% end %>
             <% end %>
-            <Cell><Data ss:Type="String"><%= resource.user.postcode %></Data></Cell>
             <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
               <% if resource_type == "offer" || resource.has_accepted_offer? %>
                 <Cell><Data ss:Type="String"><%= resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode %></Data></Cell>
