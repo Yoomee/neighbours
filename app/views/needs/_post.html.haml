@@ -10,11 +10,14 @@
       .span6
         .post-speech=simple_format(post.text)
         .post-actions
-          -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
+          -if offer = @need.unscoped_offers.where(["offers.user_id = ?", post.user_id]).first
             -if logged_in_as?(@need.user, offer.user) && !current_user.validated?
               .post-action
                 %i.icon-comment-alt
                 You can respond when we have validated your account
+            -elsif offer.removed_at.present? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
+              .post-action.offer-removed
+                This offer has been removed.
             -elsif offer.accepted? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
               %span.badge.badge-success Accepted
               =link_to reject_offer_path(offer), :class=>"post-action" do

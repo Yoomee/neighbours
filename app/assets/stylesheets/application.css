@@ -1184,6 +1184,11 @@ a.yoomee-logo {
   font-size: 13px;
   margin-left: 10px;
 }
+
+.need-post .post-action.offer-removed{
+  color:red;
+}
+
 .need-posts .comments {
   width: 475px;
   float: right;
