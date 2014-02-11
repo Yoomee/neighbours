@@ -29,7 +29,7 @@ class NeedsController < ApplicationController
       @need = Need.find(params[:id])
     end
     authorize! :show, @need
-    @offers = @need.offers
+    @offers = @need.unscoped_offers
     @chat = params[:context] == 'chat' || @need.posts.where(:context => 'chat').collect(&:user).include?(current_user)
   end
 
