@@ -15,7 +15,7 @@
               .post-action
                 %i.icon-comment-alt
                 You can respond when we have validated your account
-            -elsif offer.removed_at.present? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
+            -elsif offer.removed_at.present? && (logged_in_as?(@need.user, offer.user) || current_user.admin?) && post.context != 'chat'
               .post-action.offer-removed
                 This offer has been removed.
             -elsif offer.accepted? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
