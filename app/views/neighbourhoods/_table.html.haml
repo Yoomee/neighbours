@@ -28,40 +28,44 @@
           %th Details
       %tbody
         -set.each do |resource|
-          %tr
-            -if resource_type == "generaloffer"
-              %td=link_to resource.id, general_offer_path(resource)
-            -else
-              %td=link_to resource.id, need_path(resource_type == "need" ? resource : resource.need)
-            %td=link_to resource.user.full_name, user_path(resource.user)
-            %td=resource.user.postcode
-            -unless name == "Open Needs" || resource_type == "generaloffer"
-              -if resource_type == "need"
-                -if resource.has_accepted_offer?
-                  %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true).first.user)
+          -begin
+            %tr
+              -if resource_type == "generaloffer"
+                %td=link_to resource.id, general_offer_path(resource)
+              -else
+                %td=link_to resource.id, need_path(resource_type == "need" ? resource : resource.need)
+              %td=link_to resource.user.full_name, user_path(resource.user)
+              %td=resource.user.postcode
+              -unless name == "Open Needs" || resource_type == "generaloffer"
+                -if resource_type == "need"
+                  -if resource.has_accepted_offer?
+                    %td=link_to resource.unscoped_offers.where(:accepted => true).first.user.full_name, user_path(resource.unscoped_offers.where(:accepted => true).first.user)
+                  -else
+                    %td="-"
+                -elsif resource_type == "offer"
+                  %td=link_to resource.need.user.full_name, user_path(resource.need.user)
+              -unless name == "Open Needs" || resource_type == "generaloffer"
+                -if resource_type == "offer" || resource.has_accepted_offer?
+                  %td=resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode
                 -else
                   %td="-"
-              -elsif resource_type == "offer"
-                %td=link_to resource.need.user.full_name, user_path(resource.need.user)
-            -unless name == "Open Needs" || resource_type == "generaloffer"
-              -if resource_type == "offer" || resource.has_accepted_offer?
-                %td=resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode
-              -else
-                %td="-"
-            %td.date-time=name.start_with?("Removed") ? resource.removed_at.strftime("%d %b %y %H:%M") : resource.created_at.strftime("%d %b %y %H:%M")
-            %td=read_more_truncate(resource_type == "offer" ? resource.need.description : resource.description, :length => 50)
-            %td=resource_type == "offer" ? resource.need.category : resource.category
-            %td=resource.offers.count if resource_type == "need"
-            -if name.start_with?("Removed") && resource_type != "generaloffer"
-              -if resource_type == "need"
-                %td=resource.offers.count > 0 ? resource.has_accepted_offer? : '-'
-              -elsif resource_type == "offer"
-                %td=resource.accepted? ? 'Yes' : 'No'
-            %td=link_to "View details", "#resolved-#{resource_type}#{resource.id}", :'data-toggle'=>"modal"
-            %td=check_box_tag "#{resource_type}-select#{resource.id}", 'selected', false, {:"data-id" => resource.id}
+              %td.date-time=name.start_with?("Removed") ? resource.removed_at.strftime("%d %b %y %H:%M") : resource.created_at.strftime("%d %b %y %H:%M")
+              %td=read_more_truncate(resource_type == "offer" ? resource.need.description : resource.description, :length => 50)
+              %td=resource_type == "offer" ? resource.need.category : resource.category
+              %td=resource.offers.count if resource_type == "need"
+              -if name.start_with?("Removed") && resource_type != "generaloffer"
+                -if resource_type == "need"
+                  %td=resource.offers.count > 0 ? resource.has_accepted_offer? : '-'
+                -elsif resource_type == "offer"
+                  %td=resource.accepted? ? 'Yes' : 'No'
+              %td=link_to "View details", "#resolved-#{resource_type}#{resource.id}", :'data-toggle'=>"modal"
+              %td=check_box_tag "#{resource_type}-select#{resource.id}", 'selected', false, {:"data-id" => resource.id}
 
-          .modal.hide.fade{:id => "resolved-#{resource_type}#{resource.id}"}
-            =render('details_modal', :resource => resource)
+            .modal.hide.fade{:id => "resolved-#{resource_type}#{resource.id}"}
+              =render('details_modal', :resource => resource)
+          -rescue ActiveRecord::RecordNotFound
+            %p="#{resource_type} #{resource.id} had an associated record that has been destroyed, so it cannot be shown."
+
   -else
     %p="Nothing yet for #{name.downcase}."
 %br
