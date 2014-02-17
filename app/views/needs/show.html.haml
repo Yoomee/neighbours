@@ -3,7 +3,7 @@
     .span12
       .alert.alert-error
         This request has been removed from the site and is only visible to admins.
--if @need.has_accepted_offer?
+-if @need.has_accepted_offer? && @need.accepted_offer.removed_at.nil?
   .row
     .span12
       -if logged_in_as?(@need.user)

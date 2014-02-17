@@ -7,7 +7,7 @@
   .deletion-buttons
   -unless set.blank?
     =link_to "Destroy selected #{resource_type}s", '#', :class => "btn btn-destroy-#{resource_type}s btn-danger pull-right ml-1", :'data-neighbourhood' => @neighbourhood.try(:id)
-    =link_to "Delete selected #{resource_type}s", '#', :class => "btn btn-delete-#{resource_type}s btn-warning pull-right", :'data-neighbourhood' => @neighbourhood.try(:id) unless name.start_with? "Removed"
+    =link_to "Delete selected #{resource_type}s", '#', :class => "btn btn-delete-#{resource_type}s btn-warning pull-right", :'data-neighbourhood' => @neighbourhood.try(:id) unless name.start_with? "Removed" or name.start_with? "Accepted"
   -if set.present?
     %table.table.table-striped.table-condensed
       %thead
