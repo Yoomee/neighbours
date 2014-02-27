@@ -77,17 +77,16 @@
                   =header_messages_badge(0)
                 -else
                   =header_messages_badge(current_user.new_notification_count("my_offers"))
-          .span2
-            =link_to groups_path, :class=>"control-panel-link" do
+          .span3
+            =link_to messages_path, :class=>"control-panel-link" do
               %h3.control-panel-title
-                My groups
-            =link_to messages_path do
+                Private messages
               %p.control-panel-subtitle
                 =header_messages_badge(@unread_messages_count)
-          .span3
+          .span2
             =link_to messages_path(:context => "NCH"), :class=>"control-panel-link" do
               %h3.control-panel-title
-                The NCH team
+                NCH team
               %p.control-panel-subtitle
                 =header_messages_badge(@nch_unread_messages_count)
           
