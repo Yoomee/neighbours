@@ -5,5 +5,5 @@
       =form.input :target_id, :as => :hidden
       =form.input :context, :as => :hidden
       .fake-textarea
-        =form.input :text, :label => false, :input_html => {:rows => 3, :placeholder => "Post something"}        
-      =form.commit_button "Post", :button_html => {:class => "pull-right btn-primary", :"data-loading-text" => "Posting..."}
+        =form.input :text, :label => false, :input_html => {:rows => 3, :placeholder => "Write your private message here"}
+      =form.commit_button "Send", :button_html => {:class => "pull-right btn-primary", :"data-loading-text" => "Posting..."}
