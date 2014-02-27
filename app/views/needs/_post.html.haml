@@ -8,6 +8,7 @@
             %p.small-text
               =post.user
       .span6
+        .small-text.mb-1=post.created_at.strftime("%d %B %Y %H:%M")
         .post-speech=simple_format(post.text)
         .post-actions
           -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
