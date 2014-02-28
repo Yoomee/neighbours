@@ -4,6 +4,7 @@ class OffersController < ApplicationController
   def index
     @user = User.find_by_id(params[:user_id]) || current_user
     @offers = @user.offers.group(:need_id)
+    @chats = Need.joins(:posts).where("posts.user_id = ?", current_user.id).where("posts.context = 'chat'")
     @general_offers = @user.general_offers
   end
 

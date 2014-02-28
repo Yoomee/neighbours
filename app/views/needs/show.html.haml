@@ -46,7 +46,7 @@
     .span2=link_to "Ask again", new_need_path(:like => @need.id ), :class => "btn"
       
 #request-activity.row
-  -if logged_in_as?(@need.user) && @offers.empty?
+  -if logged_in_as?(@need.user) && @offers.empty? && !@chat
     .span9.offset2
       .alert.alert-info
         -if current_user.try(:validated?)
