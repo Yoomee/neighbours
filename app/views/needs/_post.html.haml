@@ -8,7 +8,11 @@
             %p.small-text
               =post.user
       .span6
-        .small-text.mb-1=post.created_at.strftime("%d %B %Y %H:%M")
+        .small-text.mb-1
+          =post.created_at.strftime("%d %B %Y %H:%M")
+          %br
+          ="Any replies you send below this message will only be seen by #{post.user}" if post.context == 'chat' && current_user == @need.user
+
         .post-speech=simple_format(post.text)
         .post-actions
           -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
