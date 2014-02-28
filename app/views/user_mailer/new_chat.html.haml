@@ -1,0 +1,20 @@
+!!!
+%html
+  %body
+    %p
+      ="Hi #{@user.first_name},"
+    %p
+      Your neighbour
+      =@post.user
+      has sent you a private message about your need.
+    %p
+      =link_to("View the message", need_url(@post.target))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    %p
+      Turn these notifications off by updating your
+      =link_to 'profile.', edit_user_url(@user, :anchor => 'notifications')

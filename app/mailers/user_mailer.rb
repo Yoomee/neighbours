@@ -21,6 +21,12 @@ class UserMailer < ActionMailer::Base
     @flag = flag
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
   end
+
+  def new_chat(post)
+    @post, @user = post, post.target.user
+    return true unless should_email?(@user)
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@post.user} is chatting about your need")
+  end
           
   def new_comment(comment, user)
     return true unless should_email?(user)

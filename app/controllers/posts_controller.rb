@@ -22,6 +22,7 @@ class PostsController < ApplicationController
       end
       if @post.context == 'chat'
         @new_post = Post.new(:target => @post.target, :user => @post.user, :context => 'chat')
+        UserMailer.new_chat(@post).deliver
       else
         @new_post = Post.new(:target => @post.target, :user => @post.user)
       end
