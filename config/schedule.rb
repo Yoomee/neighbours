@@ -6,6 +6,5 @@ every 1.day, :at => '6pm' do
 end
 
 every :monday, :at => '8am' do
-  runner "UserMailer.weekly_top_stats.deliver" if Rails.env.production?
+  runner "UserMailer.weekly_top_stats.deliver"
 end
-
