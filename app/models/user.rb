@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   User::CARD_TYPES = %w{visa mastercard american_express}
-  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Maltby Model Village Community Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Maltby Academy"]
+  User::ORGANISATIONS = ["South Yorkshire Housing Association", "Neighbours Can Help", "Manor & Castle Development Trust", "Christ Church Walkley", "Age UK Sheffield"]
 
   include YmUsers::User
   include YmCore::Multistep
