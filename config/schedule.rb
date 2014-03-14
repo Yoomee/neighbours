@@ -5,8 +5,7 @@ every 1.day, :at => '6pm' do
   rake "ts:index -t"
 end
 
-case @environment
-when 'production'
+unless File.expand_path("#{File.dirname(__FILE__)}") =~ /staging/
   every :monday, :at => '8am' do
     runner "UserMailer.weekly_top_stats.deliver"
   end
