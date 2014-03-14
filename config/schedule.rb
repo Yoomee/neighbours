@@ -5,6 +5,9 @@ every 1.day, :at => '6pm' do
   rake "ts:index -t"
 end
 
-every :monday, :at => '8am' do
-  runner "UserMailer.weekly_top_stats.deliver"
+case @environment
+when 'production'
+  every :monday, :at => '8am' do
+    runner "UserMailer.weekly_top_stats.deliver"
+  end
 end
