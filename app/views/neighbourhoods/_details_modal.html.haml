@@ -1,0 +1,67 @@
+.modal-body
+  %button.close{:type => 'button', :'data-dismiss' => 'modal'} x
+  %h1
+    -if resource.is_a?(Need)
+      =link_to "Need #{resource.id}", resource
+    -elsif resource.is_a?(Offer)
+      =link_to "Offer #{resource.id}", resource.need
+    -else
+      =link_to "General Offer #{resource.id}", resource
+  %h2=link_to resource.user.full_name, resource.user
+  %p
+    %strong Created at
+    =resource.created_at
+  -if resource.is_a? Offer
+    %p
+      %strong Person who needed
+      =link_to resource.need.user.full_name, resource.user
+  %p
+    -if resource.is_a? Need or resource.is_a? GeneralOffer
+      %strong Description
+      =resource.description
+    -else
+      %strong Need request description
+      =resource.need.description
+  %p
+    -if resource.is_a? Need or resource.is_a? GeneralOffer
+      %strong Category
+      =resource.category
+    -else
+      %strong Need Category
+      =resource.need.category
+  -if resource.is_a? Need
+    -if resource.offers.count > 0 
+      %p
+        %strong Offers made by
+        %ul.unstyled
+          -resource.offers.each do |offer|
+            %li
+              =link_to offer.user.full_name, offer.user
+              %strong= "Accepted" if offer.accepted?
+    -else
+      %p No offers made yet.
+  -elsif resource.is_a? Offer
+    -other_offers = resource.need.offers.tap{|offers| offers.delete resource}
+
+    -if other_offers.count > 0
+      %p
+        %strong Other people who offered
+        %ul.unstyled
+          -other_offers.each do |offer|
+            %li
+              =link_to offer.user.full_name, offer.user
+  -elsif resource.is_a? GeneralOffer
+    -accepted_offers =  resource.offers.where(:accepted => 1)
+
+    -if accepted_offers.count > 0
+      %p
+        %strong People who accepted this general offer
+        %ul.unstyled
+          -accepted_offers.each do |offer|
+            %li
+              =link_to offer.need.user.full_name, offer.need.user
+
+
+
+
+

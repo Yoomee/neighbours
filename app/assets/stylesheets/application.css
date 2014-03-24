@@ -155,6 +155,15 @@ form#new_message label{
   display:inline;
 }
 
+form#new_post .btn.commit{
+  margin-top: 10px;
+}
+
+form#new_slideshow .home-page-input label{
+  display:inline;
+  margin-right:10px;
+}
+
 /*========== Font ==========*/
 
 h1,
@@ -217,6 +226,10 @@ h2.home-title, .big-title, .about_page_view #page_title {
 }
 p.deleted-user{
   color:#FF6347;
+}
+p.login-error{
+  font-weight: bold;
+  color:red;
 }
 body, p,
 div, input, select, .btn, label, textarea {
@@ -1134,6 +1147,11 @@ a.yoomee-logo {
 .request-message-text {
 	color: #888;
 }
+.needs-description {
+  color: #000;
+  font-weight: normal;
+}
+
 /*========== request page ==========*/
 #request-activity {
 	padding-top: 40px;
@@ -1166,6 +1184,7 @@ a.yoomee-logo {
   font-size: 13px;
   margin-left: 10px;
 }
+
 .need-posts .comments {
   width: 475px;
   float: right;
@@ -1310,6 +1329,7 @@ body.controller_users.action_show .user-thumbnail-large .validated-icon {
   position: absolute;
   top: 0;
   left: 0;
+  width:100%;
 }
 
 /*========== Categories page ==========*/
@@ -1341,7 +1361,6 @@ body.controller_home.logged_out .header-intro {
   position: relative;
 }
 .header-intro-inner ul.nav {
-  width: 500px;
   float: left;
 }
 .logo-intro {
@@ -1554,6 +1573,7 @@ a.intro-nav-link-security {
   -webkit-border-radius:3px;
   font-weight: bold;
   margin: 30px 0 0 20px;
+  line-height: 1.2em;
 }
 .header-intro .cta-intro {
   font-weight: bold;
@@ -1701,6 +1721,17 @@ a.cta-small {
 
 /*========== preregister modal form ==========*/
 
+
+.modal-bg {
+  background: black;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left:0;
+  right: 0;
+  z-index: 1000;
+}
 .preregister-form .control-group {
   margin-bottom: 20px;
 }
@@ -2041,12 +2072,17 @@ body.controller_groups form .register-tab-pane {
   background-color:#fff;
   color:#999;
 }
+textarea#user_notes{
+  width:450px;
+  height:100px;
+}
 
 /*=============  Slideshows ===================*/
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
   margin:0 auto;
-  max-height: 280px;
+  min-height: 345px;
+  max-height: 345px;
   width: auto;
 }
 .carousel {
@@ -2054,7 +2090,6 @@ body.controller_groups form .register-tab-pane {
   margin-top: 40px;
 }
 .carousel-control {
-  top: 7%;
   color: #000000;
   background: rgba(255,255,255,0.2);
   border: 1px solid rgba(0,0,0,0.2);

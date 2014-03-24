@@ -1,0 +1,105 @@
+.container
+.intro-text
+  .container
+    .row
+      .span8.offset2
+        %h2.center
+          =neighbourhood_snippet_text(:pre_reg_about_title, "About Registering for Neighbours Can Help")
+          =edit_snippet_link(:pre_reg_about_title)              
+        .center
+          =simple_format(neighbourhood_snippet_text(:pre_reg_about_heading, "We'd like to join with you in making your neighbourhood a better place by helping people to help their neighbours because: we believe most people want to be helpful and we hope everyone and every neighbourhood  will be better off by doing so .So what is Neighbours Can Help? What's it all about?\n\nSo what is Neighbours Can Help? What's it all about?"))
+          =edit_snippet_link(:pre_reg_about_heading)     
+#how-it-works.intro-strip
+  .container
+    .row
+      .span12
+        %h2 How it works
+      .span4  
+        %p
+          %strong
+            =neighbourhood_snippet_text(:pre_reg_about_how_it_works_title_1,"Well hopefully, something like this...")
+            =edit_snippet_link(:pre_reg_about_how_it_works_title_1) 
+        %p   
+          =neighbourhood_snippet_text(:pre_reg_about_how_it_works_para_1,"You decide you want to be part of a movement to help people in your neighbourhood get to know each other better, get to help each other more and get to strengthen your street’s sense of community. You sign up to Neighbours Can Help (use the Register or Join now button) and tell all your neighbours, friends and family about it.")
+          =edit_snippet_link(:pre_reg_about_how_it_works_para_1)
+        -if current_user
+          =link_to_slug "Get involved", :get_involved, :id=>"cta-1", :class=>"cta-intro cta-small"
+        -else
+          =link_to "Join now", "#pre-register", :id=>"cta-1", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
+      .span4
+        %p
+          %strong
+            =neighbourhood_snippet_text(:pre_reg_about_how_it_works_title_2,"Then what next?")
+            =edit_snippet_link(:pre_reg_about_how_it_works_title_2)
+        %p 
+          =neighbourhood_snippet_text(:pre_reg_about_how_it_works_para_2,"We monitor every postcode, and when we’ve got enough people signed up in your street to make it work, we’ll make the site fully live in your area and let everyone in your postcode know about it.  Then because there will be enough neighbours in a given area to make it work, you’ll be at the forefront of a new wave of community involvement, where you and your neighbours can genuinely help each other more than before..... But only if you want to !!  It’s quick, easy and under your own control.You can start and stop whenever you want…and you can ask for, and also give, as much or as little help as you like…")
+          =edit_snippet_link(:pre_reg_about_how_it_works_para_2)
+        
+           
+                        
+      .span12.pencil-line.mb-2
+      .span6
+        %p
+          %strong
+            =neighbourhood_snippet_text(:pre_reg_about_live_title ,"Why can’t you just make the site live for everyone?")
+            =edit_snippet_link(:pre_reg_about_live_title)
+        %p    
+          =neighbourhood_snippet_text(:pre_reg_about_live_para_1, "Because all the advice we are getting from all those clever internet people who know about these things, points to one thing.......If you launch a social networking site with too few users, it will just fade away.......or become “moribund” if that’s the right word ! You’ve got to have enough neighbours signed up in a given street so that when someone joins, they have someone else in the street they can ask for help from or someone to possibly help !!")
+          =edit_snippet_link(:pre_reg_about_live_para_1)  
+      .span6    
+        %p
+          =neighbourhood_snippet_text(:pre_reg_about_live_para_2, "So that’s where your support for this as an idea, by letting all your friends, family and neighbours know will really help to get things started. So, if you think it’s a good idea, please sign up.")
+          =edit_snippet_link(:pre_reg_about_live_para_2) 
+        -if current_user
+          =link_to_slug "Get involved", :get_involved, :id=>"cta-3", :class=>"cta-intro cta-small"
+        -else
+          =link_to "Join now", "#pre-register", :id=>"cta-3", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
+      .span12.pencil-line    
+          
+
+          
+#security.intro-strip
+  .container
+    .row
+      .span8.offset4
+        
+      .span4.offset4
+        %h3
+          =neighbourhood_snippet_text(:pre_reg_about_long_term_title_1, "Long term ambitions")
+          =edit_snippet_link(:pre_reg_about_long_term_title_1)
+        %p
+          =neighbourhood_snippet_text(:pre_reg_about_long_term_para_1, "We have already launched this site in Maltby because at Neighbours Can Help we've had a long standing connection with Maltby through The Maltby Model Village Community Association, South Yorkshire Housing Association, South Yorkshire Police Community Safety Team, Maltby Town Council and Maltby Academy. And we'd like to say a BIG THANK YOU to them all for their help and support!")
+          =edit_snippet_link(:pre_reg_about_long_term_para_1)
+      .span4
+        %h3
+          =neighbourhood_snippet_text(:pre_reg_about_long_term_title_2, "Sheffield Next!")
+          =edit_snippet_link(:pre_reg_about_long_term_title_2)
+        %p                
+          =neighbourhood_snippet_text(:pre_reg_about_long_term_para_2, "Neighbours Can help is actually a Sheffield organisation and we’d LOVE to get it working properly in our home town!! We will be making areas of Sheffield live next – all depending upon where and how much support we get.....even if we get enough people in just one street, our clever computer system will allow us to launch in that street !!.....so sign up here now.....")
+          =edit_snippet_link(:pre_reg_about_long_term_para_2)
+        -if current_user
+          =link_to_slug "Get involved", :get_involved, :id=>"cta-2", :class=>"cta-intro cta-small"
+        -else  
+          =link_to "Join now", "#pre-register", :id=>"cta-2", :class=>"cta-intro cta-small", :"data-toggle"=>"modal"
+      .span12.pencil-line
+      .span8.offset2.center.bottom-paragraph
+        =simple_format(neighbourhood_snippet_text(:pre_reg_about_footer, "And eventually, we would like to see this website used to meet the many hidden needs in every street within the UK.\n\n So if you agree with this long term ambition, please sign up and encourage others to do the same....and remember there's no long term commitment ; it's not neighbours MUST help or neighbours OUGHT TO help - it's neighbours CAN help.....and only if and when they want to. We just happen to believe they will.....\n\nThank you !\n\nJohn, David, Rose and Ange\n\nThe Neighbours Can Help Team"))
+        =edit_snippet_link(:pre_reg_about_footer)
+#big-cta
+  .container
+    .row
+      .span6.offset3
+        .well          
+          %h2 Be fully part of it
+          -if current_user.nil?
+            =link_to "Join now", '#pre-register', :class=>"cta-intro", :"data-toggle"=>"modal"
+          -elsif current_user.try(:role) !=  ("pre_registration" || "group_user")
+            =link_to_slug "Get involved", :get_involved, :class=>"cta-intro"          
+          -else
+            =link_to "Complete your registration", new_registration_path, :class=>"cta-intro"
+          .clearfix
+        =link_to "Top", "#top", :class=>"to-top-link"
+
+                          
+        
+.push

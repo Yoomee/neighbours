@@ -8,7 +8,15 @@
     %p
       ="#{Offer.count} offers made in total"
     %p
-      ="#{Offer.where(:accepted => 1).count} accepted offers" 
+      ="#{Offer.where(:accepted => 1).count} accepted offers"
+    %p
+      ="#{Need.count} needs requested in total"
+    %p
+      ="#{Need.resolved.count} resolved needs"
+    %p
+      ="#{GeneralOffer.count} general offers made in total"
+    %p
+      ="#{GeneralOffer.joins(:offers).count} accepted general offers"
     %p
       ="The #{Settings.site_name} team"
       %br

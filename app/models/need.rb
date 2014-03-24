@@ -9,13 +9,11 @@ class Need < ActiveRecord::Base
   has_many :offers, :dependent => :destroy
   has_many :posts, :as => :target, :dependent => :destroy
   has_many :flags, :as => :resource, :dependent => :destroy
-  has_one :accepted_offer, :class_name => 'Offer', :conditions => {:accepted => true}
 
   validates :user, :presence => {:unless => :skip_user_validation?}
   validates :category, :presence => true
   validates :description, :presence => {:unless => :skip_description_validation?}
   validate :deadline_is_in_future
-  
   default_scope where(:removed_at => nil)
 
   before_create :prepare_for_autopost
@@ -35,7 +33,7 @@ class Need < ActiveRecord::Base
 
   define_index do
     indexes description
-    has id, user_id, category_id, deadline, radius, created_at, updated_at, removed
+    has id, user_id, category_id, deadline, radius, created_at, updated_at, removed_at
     join user, neighbourhood
     has "RADIANS(users.lat)", :as => :latitude, :type => :float
     has "RADIANS(users.lng)", :as => :longitude, :type => :float
@@ -50,9 +48,13 @@ class Need < ActiveRecord::Base
     
     def closest_to(*args)
       options = args.extract_options!
-      options[:with] = (options[:with] || {}).merge(:removed => false)
+      options[:with] = (options[:with] || {})
       lat, lng = args.size == 1 ? [args[0].lat, args[0].lng] : args
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
+    end
+
+    def removed
+      unscoped.where('removed_at IS NOT NULL')
     end
     
     def visible_to_user_with_deadline_in_future(user)
@@ -60,6 +62,10 @@ class Need < ActiveRecord::Base
     end
     alias_method_chain :visible_to_user, :deadline_in_future
     
+  end
+
+  def accepted_offer
+    unscoped_offers.where(:accepted => true).first
   end
 
   # hack to pass current_user to to_json on home#index
@@ -87,12 +93,20 @@ class Need < ActiveRecord::Base
   end
 
   def posts_viewable_by(user)
-    (user == self.user || user.try(:admin?)) ? posts : posts.where(["posts.user_id = ?", user.try(:id)])
+    (user == self.user || user.try(:admin?)) ? posts.where("posts.removed_at IS NULL") : posts.where(["posts.user_id = ?", user.try(:id)]).where("posts.removed_at IS NULL")
   end
 
   def read_all_notifications!(user)
     context = (self.user == user) ? 'my_requests' : 'my_offers'
     notifications.where(["context = '#{context}' AND notifications.user_id = ?", user.id]).update_all(:read => true)
+  end
+
+  def removed?
+    removed_at.present?
+  end
+
+  def unscoped_offers
+    Offer.unscoped.where(:need_id => id)
   end
 
   def valid_without_user?

@@ -1,0 +1,20 @@
+!!!
+%html
+  %body
+    %p
+      ="Hi #{@user.first_name},"
+    %p
+      Your neighbour
+      =@offer.user
+      has withdrawn their offer to help. You can see the current status of your offer below.
+    %p
+      =link_to("View the offer of help.", need_url(@offer.need))
+    %p
+      Thanks,
+    %p
+      ="The #{Settings.site_name} team"
+      %br
+      =Settings.site_url
+    %p
+      Turn these notifications off by updating your
+      =link_to 'profile.', edit_user_url(@user, :anchor => 'notifications')

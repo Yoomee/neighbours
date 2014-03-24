@@ -67,7 +67,7 @@ module UserConcerns::Validations
       if read_attribute(:agreed_conditions) == true
         return true
       else
-        errors.add(:agreed_conditions, "You must accept our terms and conditions to continue")
+        errors.add(:agreed_conditions, "You must accept our terms and conditions and privacy policy to continue")
       end
     end
   end

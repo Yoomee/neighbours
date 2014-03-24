@@ -1,0 +1,12 @@
+Hi <%=@user.first_name%>,
+
+Your neighbour <%=@offer.user%> has withdrawn their offer to help. You can see the current status of your offer below.
+
+<%=need_url(@offer.need)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>
+
+Turn these notifications off by updating your profile <%=edit_user_url(@user, :anchor => 'notifications')%>

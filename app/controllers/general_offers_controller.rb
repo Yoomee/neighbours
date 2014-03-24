@@ -34,6 +34,19 @@ class GeneralOffersController < ApplicationController
       end
     end
   end
+
+  def destroy_all
+    GeneralOffer.unscoped.destroy_all(['id IN (?)', params[:ids]])
+    flash[:notice] = "General offers successfully destroyed."
+    render :nothing => true
+  end
+
+  def remove_all
+    GeneralOffer.where('id IN (?)', params[:ids]).each do |need|
+      need.update_attribute(:removed_at, Time.now)
+    end
+    render :nothing => true
+  end
   
   def destroy
     @general_offer.update_attribute(:removed_at, Time.now)

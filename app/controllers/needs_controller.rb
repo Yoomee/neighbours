@@ -30,6 +30,7 @@ class NeedsController < ApplicationController
     end
     authorize! :show, @need
     @offers = @need.offers
+    @chat = params[:context] == 'chat' || @need.posts.where(:context => 'chat').collect(&:user).include?(current_user) || @need.posts.where(:context => 'chat').present? && (@need.user == current_user)
   end
 
   def new
@@ -79,9 +80,27 @@ class NeedsController < ApplicationController
       end
     end
   end
+
+  def update
+
+  end
+
+  def destroy_all
+    Need.unscoped.destroy_all(['id IN (?)', params[:ids]])
+    flash[:notice] = "Needs successfully destroyed."
+    render :nothing => true
+  end
+
+  def remove_all
+    Need.where('id IN (?)', params[:ids]).each do |need|
+      need.update_attribute(:removed_at, Time.now)
+    end
+    flash[:notice] = "Needs successfully deleted."
+    render :nothing => true
+  end
   
-  def destroy
-    @need.update_attribute(:removed, true)
+  def remove    
+    @need.update_attribute(:removed_at, Time.now)
     return_or_redirect_to @need
   end
   

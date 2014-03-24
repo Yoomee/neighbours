@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <% resource_type = @resource.first.class.name.downcase %>    
+    <Table>  
+        <Row>
+          <Cell><Data ss:Type="String">ID</Data></Cell>
+          <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Person In Need" : "Person Who Offered" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Need Postcode" : "Offer Postcode" %></Data></Cell>
+          <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
+            <Cell><Data ss:Type="String"><%=resource_type == "offer" || resource_type == "generaloffer" ? "Person Who Needed" : "Person Helping" %></Data></Cell>
+          <% end %>
+          <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
+            <Cell><Data ss:Type="String"><%=resource_type == "need" ? "Offer Postcode" : "Need Postcode" %></Data></Cell>
+          <% end %>
+          <Cell><Data ss:Type="String"><%="Created At"%></Data></Cell>
+          <Cell><Data ss:Type="String"><%=resource_type == "offer" ? "Need Request Description" : "Description" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%=resource_type == "offer" ? "Need Category" : "Category" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= "Offers made" if resource_type == "need" %></Data></Cell>
+          <% if resource_type != "generaloffer" %>
+            <Cell><Data ss:Type="String"><%= resource_type == "need" ? "Resolved" : "Accepted" %></Data></Cell>
+          <% end %>
+          <Cell><Data ss:Type="String"><%="Removed At"%></Data></Cell>
+        </Row>  
+        <% @resource.each do |resource| %>
+          <Row>
+            <% if resource_type == "generaloffer" %>
+              <Cell><Data ss:Type="String"><%=resource.id%></Data></Cell>
+            <% else %>
+              <Cell><Data ss:Type="String"><%=resource.id%></Data></Cell>
+            <% end %>
+            <Cell><Data ss:Type="String"><%=resource.user.full_name%></Data></Cell>
+            <Cell><Data ss:Type="String"><%= resource.user.postcode %></Data></Cell>
+            <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
+              <% if resource_type == "need" %>
+                <% if resource.has_accepted_offer? %>
+                  <Cell><Data ss:Type="String"><%=resource.unscoped_offers.where(:accepted => true).first.user.full_name%></Data></Cell>
+                <% else %>
+                  <Cell><Data ss:Type="String"><%= "-" %></Data></Cell>
+                <% end %>
+              <% elsif resource_type == "offer" %>
+                <Cell><Data ss:Type="String"><%=resource.need.user.full_name%></Data></Cell>
+              <% end %>
+            <% end %>
+            <% unless resource_type == "Open Needs" || resource_type == "generaloffer" %>
+              <% if resource_type == "offer" || resource.has_accepted_offer? %>
+                <Cell><Data ss:Type="String"><%= resource_type == "need" ? resource.accepted_offer.user.postcode : resource.need.user.postcode %></Data></Cell>
+              <% else %>
+                <Cell><Data ss:Type="String"><%= "-" %></Data></Cell>
+              <% end %>
+            <% end %>
+            <Cell><Data ss:Type="String"><%=resource.created_at.strftime("%d %b %y %H:%M")%></Data></Cell>
+            <Cell><Data ss:Type="String"><%=resource_type == "offer" ? resource.need.description : resource.description %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= resource_type == "offer" ? resource.need.category : resource.category %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= resource.offers.count if resource_type == "need" %></Data></Cell>
+            <% if resource_type != "generaloffer" %>
+              <% if resource_type == "need" %>
+                <Cell><Data ss:Type="String"><%= resource.offers.count > 0 ? resource.has_accepted_offer? : '-' %></Data></Cell>
+              <% elsif resource_type == "offer" %>
+                <Cell><Data ss:Type="String"><%= resource.accepted? ? 'Yes' : 'No' %></Data></Cell>
+              <% end %>
+            <% end %>
+            <Cell><Data ss:Type="String"><%= resource.removed_at.present? ? resource.removed_at.strftime("%d %b %y %H:%M") : "-" %></Data></Cell>
+          </Row>
+        <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

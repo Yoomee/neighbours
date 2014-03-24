@@ -6,7 +6,7 @@
     .reply-box-inner
       .reply-form
         =semantic_form_for(@message) do |form|
-          =form.input :recipient_ids, :as => :select, :multiple => true, :collection => Message.valid_recipients_for_user(current_user), :label_method => :full_name, :input_html => { :class => 'span7', :'data-placeholder' => 'To'}, :label => false, :placeholder => 'To'
+          =form.input :recipient_ids, :as => :select, :multiple => true, :collection => Message.valid_recipients_for_user(current_user), :label_method => current_user.admin? || current_user.is_owner? ? :full_name : :first_name, :input_html => { :class => 'span7', :'data-placeholder' => 'To'}, :label => false, :placeholder => 'To'
           -if current_user.admin?
             =check_box_tag(:context)
             =label_tag(:context, "This is an NCH Team Message")

@@ -15,6 +15,7 @@ Neighbours::Application.routes.draw do
   resources :pre_registrations, :path => 'pr' do
     collection do
       get :map
+      get :about
       delete :destroy_all
     end
   end
@@ -27,6 +28,11 @@ Neighbours::Application.routes.draw do
     collection do
       get :search
       get :map
+      put :remove_all
+      delete :destroy_all
+    end
+    member do
+      get :remove
     end
   end
   
@@ -57,10 +63,15 @@ Neighbours::Application.routes.draw do
 
   resource :champion, :only => :show
 
-  resources :offers, :only => [:index, :create] do
+  resources :offers, :only => [:index, :create, :destroy] do
+    collection do
+      put :remove_all
+      delete :destroy_all
+    end
     member do
       get :accept
       get :reject
+      get :remove
     end
   end
 
@@ -68,6 +79,10 @@ Neighbours::Application.routes.draw do
     member do
       get :thanks
       post :accept
+    end
+    collection do
+      put :remove_all
+      delete :destroy_all
     end
   end
 

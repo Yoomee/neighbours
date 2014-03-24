@@ -1,0 +1,12 @@
+=semantic_form_for(@slideshow, :multipart => true) do |form|
+  =form.semantic_fields_for(:slideshow, @slideshow) do |slideshow_form|
+    =slideshow_form.input :independent_slideshow, :as => :hidden
+    =slideshow_form.input :title
+    .home-page-input.mb-2
+      =label_tag(:homepage_checkbox,  "Make this slideshow the home page slideshow")
+      =check_box_tag(:homepage_checkbox, "yes", false, :"data-homepage-slideshow" => @slideshow.slug == "homepage_slideshow")
+    =slideshow_form.input :interval, :label => "Speed (interval between slides in milliseconds)"  , :as => :string
+    =slideshow_form.input :slug, :as => :hidden
+  =render('fields', :slideshow => @slideshow, :form => form)
+  =form.buttons do
+    =form.submit"Save"

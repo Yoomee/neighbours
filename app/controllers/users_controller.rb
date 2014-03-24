@@ -37,7 +37,25 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xls do
-        headers["Content-Disposition"] = "attachment; filename=\"Users #{Date.today.strftime('%d-%m-%Y')}.xls\"" 
+        case params[:users]
+        when 'unvalidated'
+          @users = @unvalidated_users
+        when 'validated'
+          @users = @validated_users
+        when 'group-users'
+          @users = @group_users
+        when 'pre-registered'
+          @users = @pre_registered_users
+        when 'champion-requests'
+          @users = @community_champion_requests
+        when 'champions'
+          @users = @community_champions
+        when 'not-in-sheffield'
+          @users = @not_in_sheffield
+        when 'deleted'
+          @users = @deleted_users
+        end
+        headers["Content-Disposition"] = "attachment; filename=\"Users #{params[:users]} #{Date.today.strftime('%d-%m-%Y')}.xls\""
       end
     end
   end
@@ -125,7 +143,14 @@ class UsersController < ApplicationController
 
   def update
     attrs = current_user.admin? ? params[:user] : params[:user].slice!(:first_name, :last_name, :house_number, :street_name, :city, :postcode)
-    if @user.update_attributes(attrs)
+    if params[:user][:notes]
+      if @user.update_attribute(:notes, params[:user][:notes])
+        flash[:notice] = "User notes have been added"
+      else
+        flash[:error] = "Something has gone wrong.  Please try again"
+      end
+      redirect_to users_path
+    elsif @user.update_attributes(attrs)
       flash[:notice] = "Your profile has been updated"
       redirect_to @user
     else

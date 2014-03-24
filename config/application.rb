@@ -56,6 +56,7 @@ module Neighbours
                         "Organisation name" => "organisation_name",
                         "Neighbourhood champion?" => "is_community_champion",
                         "Requested to be a champion?" => "champion_request",
-                        "Assigned neighbourhood champion?" => "community_champion_id"
+                        "Assigned neighbourhood champion?" => "community_champion_id",
+                        "Sent code" => "sent_activation_code_at"
                     }
 end

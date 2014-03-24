@@ -36,7 +36,7 @@
             =link_to_slug('Get involved', :get_involved, :class=>"intro-nav-link intro-nav-link-get-involved")
             -if get_involved_page = Page.find_by_slug(:get_involved)
               %ul.dropdown-menu
-                -get_involved_page.children.each do |child|
+                -get_involved_page.children.order(:position).each do |child|
                   %li=link_to_self(child)
           %li=link_to_slug('News', :news, :class=>"intro-nav-link-latest intro-nav-link")
           %li=link_to("Help", neighbourhood ? neighbourhood_help_path(neighbourhood) : Page.find_by_slug(:help), :class=> "intro-nav-link intro-nav-link-help")
@@ -77,17 +77,16 @@
                   =header_messages_badge(0)
                 -else
                   =header_messages_badge(current_user.new_notification_count("my_offers"))
-          .span2
-            =link_to groups_path, :class=>"control-panel-link" do
-              %h3.control-panel-title
-                My groups
-            =link_to messages_path do
-              %p.control-panel-subtitle
-                =header_messages_badge(current_user.unread_message_count)
           .span3
             =link_to messages_path, :class=>"control-panel-link" do
               %h3.control-panel-title
-                The NCH team
+                Private messages
               %p.control-panel-subtitle
-                =header_messages_badge(current_user.unread_message_count)
+                =header_messages_badge(@unread_messages_count)
+          .span2
+            =link_to messages_path(:context => "NCH"), :class=>"control-panel-link" do
+              %h3.control-panel-title
+                NCH team
+              %p.control-panel-subtitle
+                =header_messages_badge(@nch_unread_messages_count)
           

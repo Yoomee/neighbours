@@ -21,18 +21,30 @@ class UserMailer < ActionMailer::Base
     @flag = flag
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
   end
+
+  def new_chat(post)
+    @post, @user = post, post.target.user
+    return true unless should_email?(@user)
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@post.user} is chatting about your need")
+  end
           
   def new_comment(comment, user)
     return true unless should_email?(user)
     @comment, @user = comment, user
     @resource_url = @comment.post.target.is_a?(Need) ? need_url(@comment.post.target) : group_url(@comment.post.target)
-    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@user}")
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] New comment from #{@comment.user}")
   end
   
   def new_offer(offer)
     @offer, @user = offer, offer.need.user
     return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has offered to help you")
+  end
+
+  def remove_offer(offer)
+    @offer, @user = offer, offer.need.user
+    return true unless should_email?(@user)
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@offer.user} has withdrawn their offer")
   end
   
   def accepted_offer(offer)

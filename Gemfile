@@ -13,7 +13,7 @@ gem 'whenever', :require => false
 
 ### Yoomee gems
 gem 'ym_core',          "~> 0.1.66" #, :path => "~/Rails/Gems/ym_core"
-gem 'ym_cms',           "~> 0.3.16"#, :path => "~/Rails/Gems/ym_cms"
+gem 'ym_cms',           "~> 0.3.17"#, :path => "~/Rails/Gems/ym_cms"
 gem 'ym_users',         "~> 0.1.27" #, :path => "~/Rails/Gems/ym_users"
 gem 'ym_posts',         "~> 0.1"    #, :path => "~/Rails/Gems/ym_posts"
 gem 'ym_search',        "~> 0.1"    #, :path => "~/Rails/Gems/ym_search"
@@ -47,7 +47,7 @@ group :development do
  gem 'ruby-debug19'
  gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
  gem 'passenger'
- gem 'thin' 
+ gem 'thin'
  gem 'sqlite3'
 end
 

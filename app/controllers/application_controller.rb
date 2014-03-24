@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include YmUsers::ApplicationController
 
-  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood
+  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :set_unread_messages_count
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -24,6 +24,13 @@ class ApplicationController < ActionController::Base
   def set_neighbourhood
     if current_user.try(:neighbourhood)
       @neighbourhood = current_user.neighbourhood
+    end
+  end
+
+  def set_unread_messages_count
+    if current_user.present?
+      @unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => nil}).count
+      @nch_unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => "NCH"}).count
     end
   end
 

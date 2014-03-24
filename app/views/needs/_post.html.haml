@@ -8,6 +8,11 @@
             %p.small-text
               =post.user
       .span6
+        .small-text.mb-1
+          =post.created_at.strftime("%d %B %Y %H:%M")
+          %br
+          ="Any replies you send below this message will only be seen by #{post.user}" if post.context == 'chat' && current_user == @need.user
+
         .post-speech=simple_format(post.text)
         .post-actions
           -if offer = @need.offers.where(["offers.user_id = ?", post.user_id]).first
@@ -15,17 +20,21 @@
               .post-action
                 %i.icon-comment-alt
                 You can respond when we have validated your account
-            -elsif offer.accepted? && logged_in_as?(@need.user, offer.user)
+            -elsif offer.accepted? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
               %span.badge.badge-success Accepted
               =link_to reject_offer_path(offer), :class=>"post-action" do
                 %i.icon-remove
                 Un-accept
-            -elsif @need.accepted_offer.nil? && logged_in_as?(@need.user)
+            -elsif @need.accepted_offer.nil? && logged_in_as?(@need.user) && post.context != 'chat'
               =link_to accept_offer_path(offer), :class=>"post-action" do
                 %i.icon-ok
                 Accept this offer
-  .comments
-    .comment-list
-      =render(:partial => "comments/comment", :collection => post.comments)
-    -if logged_in_as?(@need.user, offer.user) && current_user.validated?  
-      =render("comments/form", :comment => post.comments.build) 
+            -elsif @need.accepted_offer.nil? && logged_in_as?(offer.user) && post.context != 'chat'
+              =link_to remove_offer_path(offer), :class=>"post-action", :confirm => "Are you sure you want to withdraw your offer?" do
+                %i.icon-remove
+                Withdraw my offer
+    .comments
+      .comment-list
+        =render(:partial => "comments/comment", :collection => post.comments)
+      -if logged_in_as?(@need.user, @offers.collect(&:user), @need.posts.collect(&:user)) && current_user.validated?
+        =render("comments/form", :comment => post.comments.build)

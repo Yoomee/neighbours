@@ -4,7 +4,15 @@ The top level stats stand as follows:
 
 <%=Offer.count%> offers made in total
 
-<%=Offer.where(:accepted => 1).count%> accepted offers 
+<%=Offer.where(:accepted => 1).count%> accepted offers
+
+<%=Need.count%> needs requested in total
+
+<%=Need.resolved.count%> resolved needs
+
+<%=GeneralOffer.count%> general offers made in total
+
+<%=GeneralOffer.joins(:offers).count%> accepted general offers
 
 The <%=Settings.site_name%> team
 

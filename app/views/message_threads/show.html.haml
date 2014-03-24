@@ -33,12 +33,15 @@
       .clearfix
       .alert
         You can't reply at the moment because
-        -if current_user.has_private_messaging?
-          =@message_thread.users_without_messaging.without(current_user).collect(&:first_name).to_sentence
-          =@message_thread.users_without_messaging.without(current_user).count == 1 ? 'has' : 'have'
+        -if @message_thread.users.without(current_user).select{|u| u.is_deleted?}.present?
+          one or more of the users in this conversation have been deleted.
         -else
-          you have
-        disabled private messaging.
+          -if current_user.has_private_messaging?
+            =@message_thread.users_without_messaging.without(current_user).collect(&:first_name).to_sentence
+            =@message_thread.users_without_messaging.without(current_user).count == 1 ? 'has' : 'have'
+          -else
+            you have
+          disabled private messaging.
 
     =link_to("#inappropriate", :data => {:toggle => "modal"}) do
       %i.icon-warning-sign

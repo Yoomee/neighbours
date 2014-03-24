@@ -348,7 +348,7 @@
         $active.addClass(direction)
         $next.addClass(direction)
         this.$element.trigger('slide')
-        this.$element.one($.support.transition.end, function () {
+        this.$element.one("transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd", function () {
           $next.removeClass([type, direction].join(' ')).addClass('active')
           $active.removeClass(['active', direction].join(' '))
           that.sliding = false

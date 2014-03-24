@@ -10,9 +10,10 @@
       NeedsMap.center = #{current_user.try(:has_lat_lng?) ? "[#{current_user.lat}, #{current_user.lng}]" : "undefined"};
       NeedsMap.needs = #{@needs_json};
       NeedsMap.users = #{@users_json};
-      NeedsMap.general_offers = #{@general_offers_json};
+      #{"NeedsMap.general_offers = #{@general_offers_json};" if @general_offers_json.present?}
       #{'NeedsMap.init();' if current_user.try(:fully_registered?)}
       Needs.init();
+      FullyRegister.init();
     });
 
 -if current_user.try(:fully_registered?)
@@ -40,6 +41,17 @@
             
           =render_slideshow_by_slug(:homepage_slideshow) if @slideshow
         / =link_to_slug('Find out more', :about, :class=>"illustration-link")
+
+-if(current_user.try(:role) == 'pre_registration' && session[:seen_preregistered_modal].nil? && current_user.neighbourhood.present?)
+  .modal-bg
+  #fully-register.modal.hide
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+      %h3="Welcome back #{current_user}!"
+    .modal-body
+      %p
+        You haven't fully registered yet.
+      =link_to "Complete your registration", new_registration_path, :class => "cta-intro not-fully-registered-next"
 
 .container
   =render('home/cycled_columns')

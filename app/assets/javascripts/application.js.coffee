@@ -28,6 +28,7 @@ $(document).ready () ->
   $('.help-icon').tooltip()
   $('.link-find-us').tooltip()
   $('*[rel="tooltip"],div[data-tooltip="tooltip"]').tooltip(placement:'bottom')
+  #$('.carousel').carousel() # {interval:$('.carousel').data('interval')})
   YmComments.Form.init({submitOnEnter: false})
   FormErrors.scrollToFirstError()
   NewNeedForm.initShowHideDeadline()
@@ -35,13 +36,53 @@ $(document).ready () ->
   PhotoModal.init()
   NotFullyRegisteredModal.init()
   FlagLinks.init()
+  SlideshowForm.init()
+  Stats.init()
+  if (window.addEventListener)
+    window.addEventListener('message', Vimeo.handleVimeo, false);
+  else
+    window.attachEvent('onmessage', Vimeo.handleVimeo, false);
 
+window.Vimeo =
+  handleVimeo: (e) ->
+        data = JSON.parse(e.data);
+        switch (data.event)
+          when 'ready' then Vimeo.onReady()
+          when 'play' then Vimeo.onPlay()
+          when 'finish' then Vimeo.onFinish()
+  onReady: ->
+        Vimeo.post('addEventListener', 'pause');
+        Vimeo.post('addEventListener', 'play');
+        Vimeo.post('addEventListener', 'finish');
+  post: (action, value)->
+    data = { method: action };
+    if (value)
+      data.value = value;
+    $('iframe').each ->
+      url = $(this).attr('src').split('?')[0]
+      this.contentWindow.postMessage(JSON.stringify(data), url);
+  onPlay: ->
+    $('#slideshow-carousel').carousel('pause')
+  onFinish: ->
+    $('#slideshow-carousel').carousel('cycle')
+
+window.Login =
+  init: ->
+    if $('.flash_container .alert').text() == "xInvalid email or password."
+      $('.flash_container').hide()
 window.FlagLinks =
   init: ->
     $('#group-posts').on 'click', 'a.flag-link', (event) ->
       event.preventDefault()
       $('#flag_resource_id').val($(this).data('post-id'))
       $('#inappropriate').modal('show')
+
+window.FullyRegister =
+  init: ->
+    $("#fully-register").modal "show"
+
+    $("#fully-register").on "hide", ->
+      $(".modal-bg").hide()
 
 window.NotFullyRegisteredModal =
   init: ->
@@ -226,3 +267,71 @@ window.NeedSelect =
   init: ->
     $('#what-help-select').change ->
       window.location.href = "/need_categories/#{$('#what-help-select').val()}/needs/new"
+
+window.SlideshowForm =
+    init:() ->
+      if $('input#homepage_checkbox').data('homepage-slideshow')
+        $('#homepage_checkbox').attr('checked', true)
+        setSlug = ""
+      else if $('input#slideshow_slideshow_slug').val()?
+        setSlug = $('input#slideshow_slideshow_slug').val()
+      else
+        $('input#slideshow_slideshow_slug').val(SlideshowForm.generateRandomString())
+      $('#homepage_checkbox').change ->
+        if $(this).attr('checked')
+          $('input#slideshow_slideshow_slug').val('homepage_slideshow')
+        else
+          if setSlug != ""
+            $('input#slideshow_slideshow_slug').val(setSlug)
+          else
+            $('input#slideshow_slideshow_slug').val(SlideshowForm.generateRandomString())
+      # Sets the default value if there's no value in the database
+      if $('#slideshow_slideshow_interval').val() == ""
+        $('#slideshow_slideshow_interval').val('5000')
+    generateRandomString: ->
+      text = ""
+      possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      i = 0
+
+      while i < 12
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+        i++
+      text
+window.Stats =
+  init: () ->
+    $('.btn-destroy-needs').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('need', 'destroy', $(this).data('neighbourhood'))
+    $('.btn-delete-needs').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('need', 'delete')
+    $('.btn-delete-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('offer', 'delete')
+    $('.btn-destroy-offers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('offer', 'destroy')
+    $('.btn-destroy-generaloffers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('generaloffer', 'destroy')
+    $('.btn-delete-generaloffers').click (event) ->
+      event.preventDefault()
+      Stats.handleButtonClick('generaloffer', 'delete')
+  handleButtonClick: (resourceType, method, neighbourhood) ->
+    ids = []
+
+    $("input[id^='#{resourceType}-select']").each () ->
+      ids.push($(this).data('id')) if $(this)[0].checked
+
+    if ids.length!= 0
+      if confirm("Are you sure you want to #{method} #{ids.length} #{resourceType}s?")
+        resourceType = "general_offer" if resourceType is "generaloffer"
+        urlMethod = if method is 'destroy' then "destroy" else "remove"
+        $.ajax({
+          type: if method is 'destroy' then "DELETE" else "PUT"
+          url: "/#{resourceType}s/#{urlMethod}_all"
+          data: {ids: ids, neighbourhood:neighbourhood}
+        }).done (data) ->
+          history.go(0)
+    else
+      alert("You haven't selected anything.")
