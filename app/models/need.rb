@@ -76,7 +76,12 @@ class Need < ActiveRecord::Base
 
   def description
     return read_attribute(:description) if new_record?
-    read_attribute(:description).presence || category.description
+
+    if Offer.joins(:general_offer).where(:need_id => id).present?
+      Offer.joins(:general_offer).where(:need_id => id).first.general_offer.description
+    else
+      read_attribute(:description).presence || category.description
+    end
   end
   
   def has_accepted_offer?
