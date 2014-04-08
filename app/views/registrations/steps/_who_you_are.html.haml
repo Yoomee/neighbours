@@ -1,9 +1,22 @@
+-content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      Registration.init();
+    });
+
 %p.mb-3
   =neighbourhood_snippet_text(:reg_form_intro)
   =edit_snippet_link(:reg_form_intro)
 =form.inputs(:class => "form-horizontal") do
   =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
+  .as-organisation
+    =check_box_tag :as_organisation
+    =label_tag 'as_organisation', "I'm signing up as an organisation"
+  .control-group#organisation-as-admin-controls{:class => @user.errors.full_messages.include?("Organisation as admin name can't be blank") ? "" : 'hide'}
+    .controls
+    =form.semantic_fields_for :organisation_as_admin do |f|
+      =f.input :name, :label => "Organisation Name", :input_html => {:placeholder => "Enter your organisation's name"}
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
     %label.control-label Date of Birth
     .controls#age-select-controls{:class => "#{@user.undisclosed_age? ? "hide" : "show"}"}

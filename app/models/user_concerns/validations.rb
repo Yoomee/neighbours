@@ -16,7 +16,7 @@ module UserConcerns::Validations
     base.validates :validate_by, :presence => {:if => :validation_step?, :message => "Please click on one of the options below"}
     base.validate :agreed_conditions
 
-    base.validates :organisation_name, :presence => true, :if => :validation_step_with_organisation?
+    base.validates :organisation_id, :presence => true, :if => :validation_step_with_organisation?
 
     base.validate :preauth_credit_card, :if => :validation_step?
     
@@ -41,7 +41,7 @@ module UserConcerns::Validations
   end
 
   def validation_step_with_organisation?
-    validation_step? && validate_by == "organisation"
+    validation_step? && validate_by == "organisation" && organisation_as_admin.nil?
   end  
   
   private

@@ -55,7 +55,10 @@
           %div{:class => @user.current_step == 'where_you_live' ? '' : 'hide'}
             =render("registrations/steps/where_you_live", :form => form)
           %div{:class => @user.current_step == 'validate' ? '' : 'hide'}
-            =render("registrations/steps/validate", :form => form)
+            -if @organisation_name.present?
+              =render("registrations/steps/validate_organisation", :form => form)
+            -else
+              =render("registrations/steps/validate", :form => form)
         .form-actions
           =form.submit("Next", :class => "btn btn-primary register-btn-next")
           -unless @user.first_step?

@@ -147,6 +147,24 @@ window.FormErrors =
     YmCore.scrollTo($('form .control-group.error:first'), {offset: 10})
 
 window.Registration =
+  init: () ->
+    if $('div#organisation-as-admin-controls').hasClass('hide')
+      if $('input#user_organisation_as_admin_attributes_name').val()? && $('input#user_organisation_as_admin_attributes_name').val().trim() != ""
+        $('input#as_organisation')[0].checked = true
+        $('div#organisation-as-admin-controls').show()
+        $('input#user_organisation_as_admin_attributes_name').attr('disabled', false)
+      else
+        $('input#as_organisation')[0].checked = false
+        $('input#user_organisation_as_admin_attributes_name').attr('disabled', true)
+    else
+      $('input#as_organisation')[0].checked = true
+    $('input#as_organisation').change ->
+      if $('input#as_organisation')[0].checked
+        $('div#organisation-as-admin-controls').show()
+        $('input#user_organisation_as_admin_attributes_name').attr('disabled', false)
+      else
+        $('div#organisation-as-admin-controls').hide()
+        $('input#user_organisation_as_admin_attributes_name').attr('disabled', true)
   initValidateStep: () ->
     $('form.user').submit () ->
       if $('#user_validate_by').val() != "credit_card"

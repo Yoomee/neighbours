@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :general_offers
   has_many :flags
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
+  has_one :organisation_as_admin, :class_name => "Organisation", :foreign_key => :admin_id
   has_many :owned_groups, :class_name => 'Group'
   has_and_belongs_to_many :groups, :uniq => true
   has_many :group_invitations
@@ -27,7 +28,7 @@ class User < ActiveRecord::Base
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
 
-  accepts_nested_attributes_for :needs, :general_offers, :owned_groups
+  accepts_nested_attributes_for :needs, :general_offers, :owned_groups, :organisation_as_admin
 
   attr_accessor :credit_card_preauth
   attr_accessor :current_user # used for miles_from_s on home#index
@@ -148,6 +149,10 @@ class User < ActiveRecord::Base
     neighbourhoods_as_admin.count > 0
   end
 
+  def is_organisation_admin?
+    organisation_as_admin.present?
+  end
+
   def is_owner?
     owned_groups.present?
   end
@@ -177,6 +182,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def organisation
+    Organisation.find(organisation_id) if organisation_id.present?
+  end
+
   def radius_options
     Need.radius_options((neighbourhood.try(:max_radius_in_miles) || Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES).to_f)
   end
@@ -203,6 +212,7 @@ class User < ActiveRecord::Base
   end
 
   private
+
   def change_email_if_deleted
     return true if !is_deleted? || email.starts_with?("deleted-#{id}-")
     self.email = "deleted-#{id}-#{email}"

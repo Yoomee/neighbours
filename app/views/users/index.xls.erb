@@ -41,7 +41,7 @@
           <Cell><Data ss:Type="String"><%= user.role.try(:humanize)%></Data></Cell>
           <Cell><Data ss:Type="String"><%= user.validated? ? 'Yes' : 'No'%></Data></Cell>
           <Cell><Data ss:Type="String"><%= user.validate_by.try(:humanize)%></Data></Cell>
-          <Cell><Data ss:Type="String"><%= user.organisation_name%></Data></Cell>
+          <Cell><Data ss:Type="String"><%= user.organisation.name%></Data></Cell>
           <Cell><Data ss:Type="String"><%= user.is_community_champion? ? 'Yes' : 'No'%></Data></Cell>
           <Cell><Data ss:Type="String"><%= user.champion_request_at.present? ? 'Yes' : 'No'%></Data></Cell>
           <Cell><Data ss:Type="String"><%= user.community_champion.try(:full_name)%></Data></Cell>

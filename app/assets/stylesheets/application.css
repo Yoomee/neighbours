@@ -901,6 +901,15 @@ li.active span.tab-number {
 .register-tab-pane {
   padding: 60px 40px 20px;
 }
+.register-tab-pane .as-organisation{
+  padding-left: 45px;
+  padding-bottom:25px;
+}
+.register-tab-pane .as-organisation label{
+  display:inline;
+  padding-left: 10px;
+}
+
 body.controller_group_registrations .register-tab-content {
   border: 1px solid #ccc;
   border-top: none;
@@ -938,6 +947,9 @@ li.or {
 }
 .validate-your-account .thumbnail:hover {
   border-color: #08C;
+}
+.validate-your-account li.thumbnail.organisation-thumbnail{
+  width:690px;
 }
 .validate-by-link {
   color:#333;

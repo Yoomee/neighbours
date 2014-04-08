@@ -53,7 +53,7 @@ module Neighbours
                         "Postcode" => "postcode",
                         "Requested validation by" => "validate_by",
                         "Validated by" => "validate_by",
-                        "Organisation name" => "organisation_name",
+                        "Organisation name" => "organisation_id",
                         "Neighbourhood champion?" => "is_community_champion",
                         "Requested to be a champion?" => "champion_request",
                         "Assigned neighbourhood champion?" => "community_champion_id",
