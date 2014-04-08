@@ -88,6 +88,10 @@ class Need < ActiveRecord::Base
     accepted_offer.present?
   end
 
+  def is_general_offer_need?
+    offers.count == 1 && offers.first.general_offer.present?
+  end
+
   def notifications
     Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
   end
@@ -103,7 +107,7 @@ class Need < ActiveRecord::Base
 
   def read_all_notifications!(user)
     context = (self.user == user) ? 'my_requests' : 'my_offers'
-    notifications.where(["context = '#{context}' AND notifications.user_id = ?", user.id]).update_all(:read => true)
+    notifications.where(["context = '#{context}' OR context = '#{context}_chat' AND notifications.user_id = ?", user.id]).update_all(:read => true)
   end
 
   def removed?

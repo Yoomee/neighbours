@@ -3,15 +3,15 @@
     %h1
       My offers
       %small (These conversations are NOT visible to the public)
-    -if @offers.empty? && @chats.empty?
+    -if @offers.empty? && @need_chats.empty?
       Your haven't offered to help anyone yet. Click
       =link_to("here",new_general_offer_path)
       to see who you could help.
     -else
-      -if @chats.present?
+      -if @need_chats.present?
         %h3 Offers you're chatting about
         %ul.nav.nav-tabs.nav-stacked
-          -@chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }.each do |need|
+          -@need_chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }.each do |need|
             %li
               =link_to need do
                 .list-image{:rel => 'tooltip', :title => user_address_tooltip(need.user)}
@@ -59,7 +59,8 @@
               %h3=general_offer.title
               %p
                 %span.request-message-text=truncate(general_offer.description, :length => 200)
-
+              %p
+                =messages_badge(current_user.new_notification_count("my_offers", general_offer))
 .row
   .span6.offset2
     -if current_user.fully_registered?
