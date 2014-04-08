@@ -7,7 +7,7 @@ module FlashHelper
       unless val == "Welcome back!" && current_user && !current_user.fully_registered? && current_user.neighbourhood
         render_modal(val) if key == :modal
 
-        content_tag(:div, dismiss_link('x','alert') + val.html_safe, :class => alert_class(key))
+        content_tag(:div, dismiss_link('x','alert') + val.try(:html_safe), :class => alert_class(key))
       end
     end.join.html_safe
   end
