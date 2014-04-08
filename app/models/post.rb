@@ -26,8 +26,15 @@ class Post < ActiveRecord::Base
   private
   def create_notification
     if target_type == "Need"
-      # Notify user they have a new offer
-      notifications.create(:user => target.user, :context => "my_requests")
+      # Notify user they have a new offer or a chat
+      if context == 'chat'
+        notifications.create(:user => target.user, :context => "my_requests_chat")
+      else
+        notifications.create(:user => target.user, :context => "my_requests")
+      end
+    elsif target_type == "GeneralOffer"
+      #Someone is chatting on their offer
+      notifications.create(:user => target.user, :context => "my_offers_chat")
     end
   end
 

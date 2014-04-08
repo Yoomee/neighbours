@@ -18,9 +18,15 @@ class Comment < ActiveRecord::Base
 
   private
   def create_notification
-    if user == post.user && post.target_type == "Need"
-      # Notify user their request has been commented on
-      notifications.create(:user => post.target.user, :context => "my_requests")
+    if (user == post.user && post.target_type == "Need")
+      # Notify user their request has been commented on (or if it's a general offer, that their chatting is being chatted back to)
+      if post.context == 'chat'
+        notifications.create(:user => post.target.user, :context => "my_requests_chat")
+      else
+        notifications.create(:user => post.target.user, :context => "my_requests")
+      end
+    elsif post.target_type == "GeneralOffer"
+      notifications.create(:user => post.user, :context => "my_requests_chat")
     elsif post.target_type == 'Need'
       # Notify user their offer has been commented on
       notifications.create(:user => post.user, :context => "my_offers")

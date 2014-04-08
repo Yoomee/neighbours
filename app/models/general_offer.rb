@@ -7,7 +7,9 @@ class GeneralOffer < ActiveRecord::Base
   belongs_to :category, :class_name => "NeedCategory"
   belongs_to :sub_category, :class_name => "NeedCategory"
   has_many :offers
+  has_many :needs, :through => :offers
   has_many :flags, :as => :resource, :dependent => :destroy
+  has_many :posts, :as => :target, :dependent => :destroy
 
   validates :category, :description, :presence => true
 
@@ -71,6 +73,19 @@ class GeneralOffer < ActiveRecord::Base
   def miles_from_s(user = self.current_user)
     return '' if user.nil?
     self.user.miles_from_s(user)
+  end
+
+  def notifications
+    Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])
+  end
+
+  def posts_viewable_by(user)
+    (user == self.user || user.try(:admin?)) ? posts.where("posts.removed_at IS NULL") : posts.where(["posts.user_id = ?", user.try(:id)]).where("posts.removed_at IS NULL")
+  end
+
+  def read_all_notifications!(user)
+    context = (self.user == user) ? 'my_offers' : 'my_requests'
+    notifications.where(["context = '#{context}' OR context = '#{context}_chat' AND notifications.user_id = ?", user.id]).update_all(:read => true)
   end
 
   def removed?

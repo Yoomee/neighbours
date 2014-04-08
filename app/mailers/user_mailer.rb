@@ -22,7 +22,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => Settings.admin_email, :subject => "[Neighbours Can Help] Inappropriate content has been reported")
   end
 
-  def new_chat(post)
+  def new_general_offer_chat(post)
+    @post, @user = post, post.target.user
+    return true unless should_email?(@user)
+    mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@post.user} is chatting about your offer")
+  end
+
+  def new_need_chat(post)
     @post, @user = post, post.target.user
     return true unless should_email?(@user)
     mail(:to => @user.email, :subject => "[Neighbours Can Help] #{@post.user} is chatting about your need")

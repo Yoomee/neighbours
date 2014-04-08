@@ -1,6 +1,7 @@
 class GeneralOffersController < ApplicationController
   
   load_and_authorize_resource :except => :show
+  after_filter :set_notifications_to_read, :only => :show
 
   def index
     @general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)])
@@ -59,6 +60,7 @@ class GeneralOffersController < ApplicationController
     if @general_offer.removed? && !current_user.try(:admin?)
       raise ActionController::RoutingError.new('Not Found')
     end
+    @chat = params[:context] == 'chat' || @general_offer.posts.where(:context => 'chat').collect(&:user).include?(current_user) || @general_offer.posts.where(:context => 'chat').present? && (@general_offer.user == current_user)
   end
   
   def thanks
@@ -80,6 +82,10 @@ class GeneralOffersController < ApplicationController
   def get_suggested_needs
     @suggested_needs = Need.unresolved.visible_to_user(current_user)
     @suggested_needs = current_user.try(:admin?) ? @suggested_needs.order("created_at DESC").page(params[:page]) : @suggested_needs.random(Need.per_page)
+  end
+
+  def set_notifications_to_read
+    @general_offer.read_all_notifications!(current_user) if current_user
   end
   
 end

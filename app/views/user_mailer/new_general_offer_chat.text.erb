@@ -1,0 +1,12 @@
+Hi <%=@user.first_name%>,
+
+Your neighbour <%=@post.user%> has sent you a private message about your offer.
+
+<%=general_offer_url(@post.target)%>
+
+Thanks,
+
+The <%=Settings.site_name%> team
+<%=Settings.site_url%>
+
+Turn these notifications off by updating your profile <%=edit_user_url(@user, :anchor => 'notifications')%>

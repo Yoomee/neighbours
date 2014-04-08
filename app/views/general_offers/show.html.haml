@@ -30,19 +30,41 @@
       -else
         =@general_offer.category.description
       .mt1
-        -if @general_offer.user.try(:validated?)
-          -if !current_user
-            =link_to("Accept #{@general_offer.user}'s offer", sign_in_path(:next => general_offer_path(@general_offer)), :class => 'btn btn-primary')
-          -elsif current_user.validated?
-            =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary') unless current_user == @general_offer.user
-          -elsif current_user.pre_registration? || current_user.group_user?
-            %p.bold
-              You will be able to accept this offer once you are
-              =link_to " fully registered.", new_registration_path
-          -else
-            %p.bold You will be able to accept this offer once you are validated.
-        -if can?(:destroy, @general_offer)
-          =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
+        -if @chat && (current_user != @general_offer.user)
+          %p.mb-3
+            ="You can chat privately about #{@general_offer.user}'s offer by writing a comment below. If you decide you want to accept this offer later, click the 'Accept this offer' button."
+          =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary')
+        -else
+          -if @general_offer.user.try(:validated?) && @general_offer.user != current_user
+            -if !current_user
+              .row
+                If you want to accept this offer, then click 'Accept this offer' to accept and send a private message to
+                ="#{@general_offer.user}. Alternatively, click 'Chat to #{@general_offer.user} to chat privately about this offer."
+              .row.mt-2
+                =link_to("Accept #{@general_offer.user}'s offer", sign_in_path(:next => general_offer_path(@general_offer)), :class => 'btn btn-primary')
+                =link_to "Chat to #{@general_offer.user}", sign_in_path(:next => general_offer_path(@general_offer, :context => "chat")), :class => "btn btn-primary mb-2"
+            -elsif current_user.validated?
+              .row
+                If you want to accept this offer, then click 'Accept this offer' to accept and send a private message to
+                ="#{@general_offer.user}. Alternatively, click 'Chat to #{@general_offer.user} to chat privately about this offer."
+              .row.mt-2
+                =link_to("Accept #{@general_offer.user}'s offer", accept_general_offer_path(@general_offer), :method => :post, :class => 'btn btn-primary') unless current_user == @general_offer.user
+                =link_to "Chat to #{@general_offer.user}", general_offer_path(@general_offer, :context => "chat"), :class => "btn btn-primary"
+            -elsif current_user.pre_registration? || current_user.group_user?
+              %p.bold
+                You will be able to accept this offer once you are
+                =link_to " fully registered.", new_registration_path
+            -else
+              %p.bold You will be able to accept this offer once you are validated.
+          -if can?(:destroy, @general_offer)
+            =link_to("Remove this offer", @general_offer, :method => :delete, :confirm => "Are you sure?", :class => "btn btn-danger")
+
+    .row
+      .span6
+        %ul.unstyled.need-posts.mt-2
+          -if can?(:create, Post) && @chat && @general_offer.user != current_user
+            =render("posts/remote_form", :post => current_user.posts.build(:target => @general_offer, :context => 'chat'))
+          =render(:partial => "general_offers/post", :collection => @general_offer.posts_viewable_by(current_user).order("created_at DESC"))
 .row
   .span12
     =options_panel do
