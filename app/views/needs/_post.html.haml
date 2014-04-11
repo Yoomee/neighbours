@@ -22,9 +22,10 @@
                 You can respond when we have validated your account
             -elsif offer.accepted? && logged_in_as?(@need.user, offer.user) && post.context != 'chat'
               %span.badge.badge-success Accepted
-              =link_to reject_offer_path(offer), :class=>"post-action" do
-                %i.icon-remove
-                Un-accept
+              -unless current_user == offer.user
+                =link_to reject_offer_path(offer), :class=>"post-action" do
+                  %i.icon-remove
+                  Un-accept
             -elsif @need.accepted_offer.nil? && logged_in_as?(@need.user) && post.context != 'chat'
               =link_to accept_offer_path(offer), :class=>"post-action" do
                 %i.icon-ok
