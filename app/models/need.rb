@@ -53,6 +53,10 @@ class Need < ActiveRecord::Base
       search({:geo => [(lat.to_f*Math::PI/180),(lng.to_f*Math::PI/180)], :order => "@geodist ASC"}.merge(options))
     end
 
+    def without_general_offer_generated
+      where("NOT EXISTS(select * FROM offers WHERE offers.need_id = needs.id AND offers.general_offer_id IS NOT NULL)")
+    end
+
     def removed
       unscoped.where('removed_at IS NOT NULL')
     end
@@ -87,10 +91,6 @@ class Need < ActiveRecord::Base
   def has_accepted_offer?
     accepted_offer.present?
   end
-
-   def is_general_offer_need?
-     offers.count == 1 && offers.first.general_offer.present?
-   end
 
   def notifications
     Notification.where(["(resource_type = 'Comment' AND resource_id IN (:comment_ids)) OR (resource_type = 'Post' AND resource_id IN (:post_ids))", {:comment_ids => Comment.where(["post_id IN (?)", post_ids]), :post_ids => post_ids}])

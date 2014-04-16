@@ -11,17 +11,15 @@ class NeedsController < ApplicationController
       @needs = @user.needs.order('created_at DESC')
       render :action => "user_index"
     elsif params[:need_category_id].present?
-      @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user)
+      @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user).without_general_offer_generated
       @needs = current_user.try(:admin?) ? @needs.page(params[:page]) : @needs.random(Need.per_page)
-      @needs = @needs.reject{|n|n.is_general_offer_need?}
     else
-      @needs = Need.unresolved.order("created_at DESC").visible_to_user(current_user)
+      @needs = Need.unresolved.order("created_at DESC").visible_to_user(current_user).without_general_offer_generated
       if current_user.try(:admin?) && request.xhr?
         @needs = @needs.page(params[:page])
       elsif current_user
         @needs = @needs.where("needs.user_id != #{current_user.id}")
       end
-      @needs = @needs.reject{|n|n.is_general_offer_need?}
     end
   end
 
