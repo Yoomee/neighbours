@@ -13,6 +13,7 @@ class NeedsController < ApplicationController
     elsif params[:need_category_id].present?
       @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user)
       @needs = current_user.try(:admin?) ? @needs.page(params[:page]) : @needs.random(Need.per_page)
+      @needs = @needs.reject{|n|n.is_general_offer_need?}
     else
       @needs = Need.unresolved.order("created_at DESC").visible_to_user(current_user)
       if current_user.try(:admin?) && request.xhr?
@@ -20,6 +21,7 @@ class NeedsController < ApplicationController
       elsif current_user
         @needs = @needs.where("needs.user_id != #{current_user.id}")
       end
+      @needs = @needs.reject{|n|n.is_general_offer_need?}
     end
   end
 
