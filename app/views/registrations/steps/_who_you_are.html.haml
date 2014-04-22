@@ -13,7 +13,7 @@
   .as-organisation
     =check_box_tag :as_organisation
     =label_tag 'as_organisation', "I'm signing up as an organisation"
-  .control-group#organisation-as-admin-controls{:class => @user.errors.full_messages.include?("Organisation as admin name can't be blank") ? "" : 'hide'}
+  .control-group#organisation-as-admin-controls{:class => @user.errors.full_messages.include?("Organisation as admin name can't be blank") || (@user.role == 'pre_registered_organisation') ? "" : 'hide'}
     .controls
     =form.semantic_fields_for :organisation_as_admin do |f|
       =f.input :name, :label => "Organisation Name", :input_html => {:placeholder => "Enter your organisation's name"}

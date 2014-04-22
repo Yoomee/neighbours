@@ -353,3 +353,15 @@ window.Stats =
           history.go(0)
     else
       alert("You haven't selected anything.")
+
+window.PreRegisteredOrganisation =
+  init: () ->
+    $('#confirm-organisation-non-live-area').modal 'show'
+
+    $('#confirm-organisation-non-live-area').on 'hidden', ->
+      $('.modal-bg').hide()
+      id = $(this).data('user-id')
+      $.ajax({
+        type: "PUT"
+        url: "/pr/#{id}/update_role"
+        })

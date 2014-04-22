@@ -9,7 +9,12 @@ class RegistrationsController < ApplicationController
 
   def create
     if params[:user][:organisation_as_admin_attributes].nil? && @user.organisation_as_admin
-      @user.organisation_as_admin.destroy
+      #Pre-registered organisation changes their mind and decides to be a normal user but doesn't have a live area
+      if @user.neighbourhood && @user.neighbourhood.live?
+        @user.organisation_as_admin.destroy
+      else
+        redirect_to(pre_registration_path(@user)) and return
+      end
     end
 
     @user.attributes = params[:user].merge(:role => nil)
@@ -71,7 +76,7 @@ class RegistrationsController < ApplicationController
 
   def get_user
     @user = current_user
-    if @user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood
+    if (@user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood) || @user.pre_registered_organisation?
       @user.last_name = nil if @user.last_name == '_BLANK_'
     else      
       raise CanCan::AccessDenied

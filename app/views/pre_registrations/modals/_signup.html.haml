@@ -11,6 +11,9 @@
         =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
         =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
         =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}
+        .controls.organisation-inputs
+          =check_box_tag :as_organisation, 'checked', false, :class=>'pull-left'
+          =label_tag 'as_organisation', "I'm signing up as an organisation", :class=>'pull-left ml-1'
         =link_to "Already registered?", "/login", :class=>"already-registered-link pull-right"
   .modal-footer
     =form.commit_button "Next", :button_html => {:data => {}, :class => "btn btn-primary btn-large"}

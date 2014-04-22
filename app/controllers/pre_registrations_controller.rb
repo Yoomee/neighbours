@@ -1,12 +1,12 @@
 class PreRegistrationsController < ApplicationController  
   
   def create
-    @pre_register_user = User.new(params[:user].merge(:role => 'pre_registration'))
+    @pre_register_user = params[:as_organisation] == 'checked' ? User.new(params[:user].merge(:role => 'pre_registered_organisation')) : User.new(params[:user].merge(:role => 'pre_registration'))
     if @pre_register_user.save
       sign_in(@pre_register_user)
       UserMailer.pre_register_thank_you(@pre_register_user).deliver
       UserMailer.admin_message("A new pre-registration", "Yippee! There has been a new pre-registration on the website.", @pre_register_user.attributes).deliver
-      if @pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live?
+      if (@pre_register_user.neighbourhood && @pre_register_user.neighbourhood.live?) || @pre_register_user.role == 'pre_registered_organisation'
         @next_url = new_registration_path
       elsif @pre_register_user.neighbourhood
         @next_url = neighbourhood_path(@pre_register_user.neighbourhood)
@@ -47,6 +47,12 @@ class PreRegistrationsController < ApplicationController
         @pre_registered_users = User.where(:role => 'pre_registration')
       end
     end
+  end
+
+  def update_role
+    @pre_register_user = User.find(params[:id])
+    @pre_register_user.update_attribute('role', nil) if @pre_register_user.role == 'pre_registered_organisation'
+    render :nothing => true
   end
   
 end

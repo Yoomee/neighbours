@@ -16,12 +16,13 @@
 
 .row
   .span10.offset1.well.center
-    %h3
-      Congratulations
-      =@user.neighbourhood.name
-      is now live!
-    %p
-      =neighbourhood_snippet_text(:congrats_live, "Please enter your details below so that you can start helping neighbours.")
+    -if @user.neighbourhood
+      %h3
+        Congratulations
+        =@user.neighbourhood.name
+        is now live!
+      %p
+        =neighbourhood_snippet_text(:congrats_live, "Please enter your details below so that you can start helping neighbours.")
 .row
   .span10.offset1
     %ul.nav.nav-tabs.nav-tabs-register

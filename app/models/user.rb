@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
     set_property :delta => true
   end
   
-  has_roles :pre_registration, :group_user
+  has_roles :pre_registration, :pre_registered_organisation, :group_user
   
   class << self
     
@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
   end
 
   def fully_registered?
-    !group_user? && !pre_registration?
+    !group_user? && !pre_registration? && !pre_registered_organisation?
   end
 
   def has_address?

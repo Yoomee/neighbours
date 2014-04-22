@@ -2,6 +2,7 @@
 =content_for :head do
   :javascript
     $(document).ready(function() {
+      PreRegisteredOrganisation.init();
       var mapOptions = {
         center: new google.maps.LatLng('#{@pre_register_user.lat}', '#{@pre_register_user.lng}'),
         zoom: 16,
@@ -49,4 +50,6 @@
       %p
         =link_to "Tell us what we can do for you", "/feedback", :class=>"feedback-link"
         
+-if @pre_register_user.pre_registered_organisation?
+  =render('modals/confirm_org_non_live_area')
         

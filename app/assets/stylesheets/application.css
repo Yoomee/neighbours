@@ -121,6 +121,13 @@ body, p {
 .mb-05 {
   margin-bottom: 5px;
 }
+.pt-1{
+  padding-top: 10px;
+}
+.pb-05{
+  padding-bottom: 5px;
+}
+
 .no-color {
   color: inherit;
 }
@@ -1773,6 +1780,15 @@ a.cta-small {
 .modal-body #need_need_to_know_by_input.radio .help-icon {
   right: inherit;
   left: 160px;
+}
+
+.preregister-form .controls.organisation-inputs{
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
+
+.preregister-form .controls.organisation-inputs input#as_organisation{
+  margin-left:30px;
 }
 
 /*========== preregistering pages ==========*/
