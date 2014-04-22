@@ -32,6 +32,11 @@ class Offer < ActiveRecord::Base
     Need.unscoped.find(need_id)
   end
   alias_method :need, :unscoped_need
+
+  def unscoped_general_offer
+    GeneralOffer.unscoped.find(general_offer_id)
+  end
+  alias_method :general_offer, :unscoped_general_offer
   
   private
   def create_post_for_need
