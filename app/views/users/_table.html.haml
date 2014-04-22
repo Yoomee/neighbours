@@ -31,7 +31,7 @@
           %td=user.phone.presence || '-'
           -unless tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
             %td=user.validate_by.try(:humanize).presence || '-'
-          %td=user.validate_by == "organisation" ? user.organisation.presence || '-' : "n/a"
+          %td=user.organisation.present? ? user.organisation : '-'
           -unless tab == "unvalidated" || tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
             %td=user.is_community_champion? ? 'Yes' : 'No'
             %td=user.champion_request_at.present? ? 'Yes' : 'No'
