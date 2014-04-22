@@ -34,7 +34,7 @@ class Offer < ActiveRecord::Base
   alias_method :need, :unscoped_need
 
   def unscoped_general_offer
-    GeneralOffer.unscoped.find(general_offer_id)
+    GeneralOffer.unscoped.find(general_offer_id) if general_offer_id.present?
   end
   alias_method :general_offer, :unscoped_general_offer
   
