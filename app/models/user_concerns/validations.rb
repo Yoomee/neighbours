@@ -3,9 +3,9 @@ module UserConcerns::Validations
   def self.included(base)
     base.validates :postcode, :postcode => true, :presence => true
     base.validates :validation_code, :uniqueness => true    
-    base.validate :dob_or_undiclosed_age, :over_16, :unless => :pre_registration?
+    base.validate :dob_or_undiclosed_age, :over_16, :unless => [:pre_registration?, :pre_registered_organisation?]
     base.validates_confirmation_of :email, :message => "these don't match", :if => [:who_you_are_step?, :group_user?, :new_record?]
-    base.validates_confirmation_of :password, :message => "these don't match", :unless => :pre_registration?
+    base.validates_confirmation_of :password, :message => "these don't match", :unless => [:pre_registration?, :pre_registered_organisation?]
     base.validate :group_invitation_email_matches, :on => :create
 
     base.validates :email_confirmation, :presence => true, :if => [:who_you_are_step?, :group_user?, :new_record?]
@@ -25,7 +25,7 @@ module UserConcerns::Validations
   end  
   
   def who_you_are_step?
-    !pre_registration? && current_step == "who_you_are"
+    (!pre_registration? || !pre_registered_organisation?) && current_step == "who_you_are"
   end
 
   def where_you_live_step?

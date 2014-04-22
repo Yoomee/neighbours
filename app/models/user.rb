@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   end
 
   def is_organisation_admin?
-    organisation_as_admin.present?
+    organisation_as_admin.present? && validated?
   end
 
   def is_owner?
