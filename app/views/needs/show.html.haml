@@ -70,23 +70,23 @@
               ="You can continue your discussion with #{@need.user} by writing a comment below ."
           -elsif @chat
             %p.mb3
-            ="You can chat privately about #{@need.user}'s need by writing a comment below. If you decide you can help with this later, click the 'Maybe I can help' button to continue."
-            =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2 mt-2"
+            ="You can chat privately about #{@need.user}'s need by writing a comment below. If you decide you can help with this later, click the 'I can help' button to continue."
+            =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2 mt-2"
           -else
             %p.mb3
               -if current_user
                 .row
-                  If you think you can help, then click 'Maybe I can help' to send a private offer and a message to
+                  If you think you can help, then click 'I can help' to send a private offer and a message to
                   ="#{@need.user}. Alternatively, click 'Chat to #{@need.user} to chat privately about this need."
                 .row.mt-2                
                   -if current_user.try(:validated?)
-                    =link_to "Maybe I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                    =link_to "I can help", "#offer-form", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
                     =link_to "Chat to #{@need.user}", need_path(@need, :context => "chat"), :class => "btn btn-primary mb-2"
                   -elsif current_user.try(:fully_registered?)
-                    =link_to "Maybe I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
+                    =link_to "I can help", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
                     =link_to "Chat to #{@need.user}", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-primary mb-2"
                   -elsif current_user
-                    =link_to "Maybe I can help", '#', :class => "btn btn-primary mb-2 not-fully-registered-link", :data => {:return_to => need_path(@need)}
+                    =link_to "I can help", '#', :class => "btn btn-primary mb-2 not-fully-registered-link", :data => {:return_to => need_path(@need)}
               -else
                 .row
                   =neighbourhood_snippet_text(:need_cannot_use, "Here is some text explaining why this page be cannot be used. This will be edited by John.")
