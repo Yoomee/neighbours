@@ -6,7 +6,7 @@
       %h3 What can you offer help with?
     .modal-body
       =form.inputs do
-        =form.input :category, :value => @general_offer.category.try(:id), :label => false, :prompt => 'Select a category', :input_html => {:class => 'span6'}
+        =form.input :category, :value => @general_offer.category.try(:id), :collection => NeedCategory.order(:name), :label => false, :prompt => 'Select a category', :input_html => {:class => 'span6'}
         =form.input :description, :label => false, :input_html => { :class => "span6", :rows => "2", :placeholder => "Describe how you can help"}, :required => false
         =form.input :radius, :as => :select, :collection => need_radius_options, :include_blank => false, :label => false, :prompt => "Select a broadcast radius", :help => "Neighbours who live within this distance from you will hear about your offer", :input_html => {:class => "span6"}
     .modal-footer
