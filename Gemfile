@@ -31,6 +31,8 @@ gem 'daemons'
 gem 'activemerchant'
 gem 'twitter'
 gem 'mogli'
+gem 'newrelic_rpm'
+gem 'ey_config'
 
 ### Groups
 # Gems used only for assets and not required
