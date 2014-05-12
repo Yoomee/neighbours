@@ -11,7 +11,7 @@ class NeedsController < ApplicationController
       @needs = @user.needs.order('created_at DESC')
       @needs_accepted = Need.resolved.where(:user_id => current_user.id).reject{|n| n.is_general_offer_need?}
       @need_chats = Need.unresolved.where(:user_id => current_user.id).joins(:posts).where("posts.context = 'chat'").select{|o| !@needs_accepted.include? o}
-      @general_offers_accepted = GeneralOffer.joins(:needs).where('needs.user_id = ?', current_user.id).uniq
+      @general_offers_accepted = GeneralOffer.unscoped.joins(:needs).where('needs.user_id = ?', current_user.id).uniq
       @general_offers_chats = GeneralOffer.where('general_offers.user_id != ?', @user.id).joins(:posts).where('posts.user_id = ?', @user.id).uniq.select{|o| !@general_offers_accepted.include? o}
        #this is wrong
       render :action => "user_index"
