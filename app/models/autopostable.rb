@@ -6,9 +6,11 @@ module Autopostable
   end
   
   def autopost
-    autopost_statuses.pending.each do |autopost_status|
-      autopost_status.update_attribute(:status, 'queued')
-      post_to_provider(autopost_status.provider)
+    if Rails.env.production?
+      autopost_statuses.pending.each do |autopost_status|
+        autopost_status.update_attribute(:status, 'queued')
+        post_to_provider(autopost_status.provider)
+      end
     end
   end
   
