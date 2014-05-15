@@ -1,1 +1,5 @@
-$('#pre-register').html('<%=escape_javascript(render("pre_registrations/modal_form"))%>');
+<%if @pre_register_user.pre_registered_organisation?%>
+  window.location.replace('<%=root_url.chop + @next_url%>');
+<%else%>
+  $('#pre-register').html('<%=escape_javascript(render("pre_registrations/modal_form"))%>');
+<%end%>

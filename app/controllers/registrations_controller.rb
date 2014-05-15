@@ -1,23 +1,13 @@
 class RegistrationsController < ApplicationController
 
   before_filter :get_user
-  before_filter :build_organisation_as_admin
 
   def new
     @user.current_step = @user.group_user? ? @user.steps[1] : @user.steps[0]
   end
 
   def create
-    if params[:user][:organisation_as_admin_attributes].nil? && @user.organisation_as_admin
-      #Pre-registered organisation changes their mind and decides to be a normal user but doesn't have a live area
-      if @user.neighbourhood && @user.neighbourhood.live?
-        @user.organisation_as_admin.destroy
-      else
-        redirect_to(pre_registration_path(@user)) and return
-      end
-    end
-
-    @user.attributes = params[:user].merge(:role => nil)
+    @user.attributes = params[:user].merge(:role => nil)    
     if params[:user][:encrypted_password].present?
       @user.password = 'ignore-this'
       @user.encrypted_password = params[:user][:encrypted_password]
@@ -62,17 +52,12 @@ class RegistrationsController < ApplicationController
         #@user not valid
         @user.credit_card_preauth.try(:deliver_failure_email)
       end
-    end
-    @organisation_name = params[:user][:organisation_as_admin_attributes][:name] if params[:user][:organisation_as_admin_attributes].present?
+    end    
+    @organisation_name = @user.organisation_as_admin.name if @user.organisation_as_admin
     render :action => "new"
   end
 
   private
-  def build_organisation_as_admin
-    if params[:user].nil? || !params[:user].try(:[], 'organisation_as_admin_attributes').present?
-      @user.build_organisation_as_admin
-    end
-  end
 
   def get_user
     @user = current_user

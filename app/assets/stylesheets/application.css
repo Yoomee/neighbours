@@ -1740,6 +1740,21 @@ a.cta-small {
 
 /*========== preregister modal form ==========*/
 
+#organisation-options .call-to-action{
+  padding:15px;
+}
+
+#organisation-options div.center{
+  padding-top:10px;
+}
+
+#organisation-options .call-to-action#individual-option-link{
+  margin-top: 50px;
+}
+
+#organisation-options .call-to-action#organisation-option-link{
+  margin-bottom: 50px;
+}
 
 .modal-bg {
   background: black;

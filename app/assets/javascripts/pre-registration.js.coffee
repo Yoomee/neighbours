@@ -15,6 +15,15 @@ window.PreRegistration =
     $('.modal').on 'click', 'a.pre-register-back-link', (event) ->
       event.preventDefault()
       PreRegistration.showContent('options')
+    $('.modal').on 'click', 'a#organisation-option-link', (event) ->
+      event.preventDefault()
+      $('#organisation-options').hide()
+      $('#preregister-form').show()
+      $('#organisation-as-admin-controls').show()
+    $('.modal').on 'click', 'a#individual-option-link', (event) ->
+      event.preventDefault()
+      $('#organisation-options').hide()
+      $('#preregister-form').show()
   showContent: (type) ->
     selector = "#pre-register-#{type}"
     $("#pre-register >:not(#{selector})").hide()
