@@ -1,3 +1,11 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function(){
+      if ($.browser.msie && 10 >= $.browser.version) {
+        $('.fade').removeClass('fade');
+      }
+    })
+
 .container
   .row
     .span5
