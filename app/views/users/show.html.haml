@@ -17,8 +17,11 @@
       .alert
         You're not fully registered. You can access more features if you
         =link_to("complete your registration", new_registration_path)
-    %h1.mb-1=title(@user)
-    %p.mb-1.deleted-user="This user has been deleted" if @user.is_deleted?
+    %h1.mb-1=@user.organisation_as_admin.present? ? "#{@user.first_name} #{@user.last_name if current_user.admin?}" : title(@user)
+    -if @user.is_deleted?
+      %p.mb-1.deleted-user="This user has been deleted"
+    -else
+      %p.mb-1= "Admin of #{@user.organisation}" if @user.is_organisation_admin? && current_user.admin?
     %h3.block.mb-2
       -if @user.is_community_champion?
         ="#{first_name_or_you(@user, 'is', 'are').capitalize} a neighbourhood champion"
