@@ -24,6 +24,8 @@ window.PreRegistration =
       event.preventDefault()
       $('#organisation-options').hide()
       $('#preregister-form').show()
+      $('input#user_organisation_as_admin_attributes_name').prop('disabled', true)
+      $('#organisation-as-admin-controls').hide()
   showContent: (type) ->
     selector = "#pre-register-#{type}"
     $("#pre-register >:not(#{selector})").hide()

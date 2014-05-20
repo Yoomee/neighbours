@@ -908,14 +908,6 @@ li.active span.tab-number {
 .register-tab-pane {
   padding: 60px 40px 20px;
 }
-.register-tab-pane .as-organisation{
-  padding-left: 45px;
-  padding-bottom:25px;
-}
-.register-tab-pane .as-organisation label{
-  display:inline;
-  padding-left: 10px;
-}
 
 body.controller_group_registrations .register-tab-content {
   border: 1px solid #ccc;
@@ -1795,15 +1787,6 @@ a.cta-small {
 .modal-body #need_need_to_know_by_input.radio .help-icon {
   right: inherit;
   left: 160px;
-}
-
-.preregister-form .controls.organisation-inputs{
-  padding-top: 10px;
-  padding-bottom: 50px;
-}
-
-.preregister-form .controls.organisation-inputs input#as_organisation{
-  margin-left:30px;
 }
 
 /*========== preregistering pages ==========*/

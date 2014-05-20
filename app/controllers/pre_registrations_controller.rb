@@ -1,6 +1,6 @@
 class PreRegistrationsController < ApplicationController
   
-  def create    
+  def create
     @pre_register_user = params[:user][:organisation_as_admin_attributes].present? ? User.new(params[:user].merge(:role => 'pre_registered_organisation')) : User.new(params[:user].merge(:role => 'pre_registration'))
     if @pre_register_user.save
       sign_in(@pre_register_user)

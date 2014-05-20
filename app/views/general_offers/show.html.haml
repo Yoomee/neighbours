@@ -8,7 +8,10 @@
   .row
     .span12
       .alert.alert-error
-        ="#{first_name_or_your(@general_offer.user).capitalize} neighbours will be able to see this offer once #{first_name_or_your(@general_offer.user)} address has been validated."
+        -if @general_offer.user.is_organisation_admin?
+          ="#{organisation.name}'s neighbours will be able to see this offer once #{first_name_or_your(@general_offer.user)} address has been validated."
+        -else
+          ="#{first_name_or_your(@general_offer.user).capitalize} neighbours will be able to see this offer once #{first_name_or_your(@general_offer.user)} address has been validated."
 .row.mt-2
   .span2
     =link_to (can?(:read, @general_offer.user) ? @general_offer.user : '#'), :class => "user-thumbnail-large pull-left" do

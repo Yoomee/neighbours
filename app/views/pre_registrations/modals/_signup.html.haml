@@ -21,10 +21,10 @@
         .control-group#organisation-as-admin-controls{:class => @pre_register_user.organisation_as_admin.present? ? '' : 'hide'}
           .controls
             =form.semantic_fields_for :organisation_as_admin do |f|
-              =f.input :name, :label => "Organisation Name", :input_html => {:placeholder => "Enter your organisation's name"}        
+              =f.input :name, :label => "Organisation Name", :input_html => {:class => 'span4', :placeholder => "Your organisation's name"}
         =form.inputs(:class => 'form-horizontal') do
           =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
-          =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
+          =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => @pre_register_user.organisation_as_admin.present? ? "Your name" : "Name"}
           =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
           =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}         
           =link_to "Already registered?", "/login", :class=>"already-registered-link pull-right"

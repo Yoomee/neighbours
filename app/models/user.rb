@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
+  belongs_to :organisation
 
   accepts_nested_attributes_for :needs, :general_offers, :owned_groups, :organisation_as_admin
 
@@ -133,6 +134,10 @@ class User < ActiveRecord::Base
     self.removed_at = Time.now
   end
 
+  def full_name
+    organisation_as_admin.try(:name) || super
+  end
+
   def fully_registered?
     !group_user? && !pre_registration? && !pre_registered_organisation?
   end
@@ -182,10 +187,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def organisation
-    Organisation.find(organisation_id) if organisation_id.present?
-  end
-
   def radius_options
     Need.radius_options((neighbourhood.try(:max_radius_in_miles) || Neighbourhood::DEFAULT_MAX_RADIUS_IN_MILES).to_f)
   end
@@ -199,7 +200,7 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    first_name
+    organisation_as_admin.try(:name) || first_name
   end
 
   def validation_code
@@ -243,7 +244,7 @@ class User < ActiveRecord::Base
   end
 
   def set_neighbourhood
-    return true unless neighbourhood.nil? || postcode_changed?
+    return true if neighbourhood.present? || organisation_as_admin.present? || !postcode_changed?
     if new_neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
       self.neighbourhood = new_neighbourhood
     end

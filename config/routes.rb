@@ -18,9 +18,6 @@ Neighbours::Application.routes.draw do
       get :about
       delete :destroy_all
     end
-    member do
-      put :update_role
-    end
   end
   
   get "share/email_form" => "share#email_form"

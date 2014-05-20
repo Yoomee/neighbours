@@ -1,6 +1,6 @@
 .span8.offset2
   .well.center
-    %h2="Thanks for offering to help #{current_user.first_name}"
+    %h2="Thanks for offering to help #{current_user.organisation_as_admin.present? ? current_user.organisation.name : current_user.first_name}"
     %p
       -if !current_user.validated?
         Your neighbours will be able to see this offer once your address has been validated.

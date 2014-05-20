@@ -18,7 +18,7 @@ class RegistrationsController < ApplicationController
       if @user.valid?
         if @user.last_step?
           if @user.save
-            @user.update_attribute(:organisation_id, @user.organisation_as_admin.id) if @user.organisation_as_admin.valid?
+            @user.update_attribute(:organisation_id, @user.organisation_as_admin.id) if @user.organisation_as_admin.present?
             send_emails
             sign_in(@user, :bypass => true)
             if @user.validate_by == "post" && !@user.validated?

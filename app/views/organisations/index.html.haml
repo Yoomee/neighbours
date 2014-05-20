@@ -12,7 +12,7 @@
     -@organisations.each do |organisation|
       %tr
         %td=organisation.name
-        %td=link_to organisation.admin.try(:full_name), organisation.admin if organisation.admin.present?
+        %td=link_to "#{organisation.admin.try(:first_name)} #{organisation.admin.try(:last_name)}", organisation.admin if organisation.admin.present?
         %td
           -if organisation.admin.present?
             =organisation.admin.validated? ? "Validated" : "Unvalidated"        
