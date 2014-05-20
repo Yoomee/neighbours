@@ -4,73 +4,98 @@
       =title "My requests"
       %small (These conversations are NOT visible to the public)
     -if @needs.count > 0
-      %p
+      %p.mb-3
         -if current_user.validated?
           Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
           =link_to("click here",needs_path)
           to see if you could help someone else.
         -else
           You will be able to see who is offering help as soon as you're validated.
-      %h3 My requests that I'm chatting about
-      %ul.nav.nav-tabs.nav-stacked
-        -@need_chats.each do |need|
-          %li
-            =link_to need do
-              .list-image
-                =image_for_with_validation(need.user, "60x50#")
-                %p.small-text=need.user
-              %h3=need.title
-              %h5.needs-description=truncate(need.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_requests_chat", need))
-      %h3 My requests where I've accepted help from others
-      %ul.nav.nav-tabs.nav-stacked
-        -@needs_accepted.each do |need|
-          %li
-            =link_to need do
-              .list-image
-                =image_for_with_validation(need.user, "60x50#")
-                %p.small-text=need.user
-              %h3=need.title
-              %h5.needs-description=truncate(need.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_requests", need))
-      %h3 My open requests
-      %ul.nav.nav-tabs.nav-stacked
-        -@needs.order('created_at DESC').reject{ |i| i.has_accepted_offer? }.sort_by{|i| -current_user.new_notification_count("my_requests", i)}.each do |need|
-          %li
-            =link_to need do
-              .list-image
-                =image_for_with_validation(need.user, "60x50#")
-                %p.small-text=need.user
-              %h3=need.title
-              %h5.needs-description=truncate(need.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_requests", need))
-      %h3 Other people's general offers that I'm chatting about
-      %ul.nav.nav-tabs.nav-stacked
-        -@general_offers_chats.each do |offer|
-          %li
-            =link_to offer do
-              .list-image
-                =image_for_with_validation(offer.user, "60x50#")
-                %p.small-text=offer.user
-              %h3=offer.title
-              %h5.needs-description=truncate(offer.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_requests_chat", offer))
-      %h3 Other people's general offers where I've accepted help
-      %ul.nav.nav-tabs.nav-stacked
-        -@general_offers_accepted.each do |offer|
-          %li
-            =link_to offer do
-              .list-image
-                =image_for_with_validation(offer.user, "60x50#")
-                %p.small-text=offer.user
-              %h3=offer.title
-              %h5.needs-description=truncate(offer.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_requests", offer))
+      #needs-accordion.accordionpo0o09
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{'data-parent' => '#needs-accordion', 'data-toggle' => 'collapse', href: '#collapse-need-chats'}
+              %h2.mb-2.mt-3 Chatting
+          .accordion-body.collapse.anim-150{:id => 'collapse-need-chats'}
+            .accordion-inner
+              -if @need_chats || @needs || @general_offers_chats
+                -unless @need_chats.empty?
+                  %h3 My requests that I'm chatting about
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@need_chats.each do |need|
+                      %li
+                        =link_to need do
+                          .list-image
+                            =image_for_with_validation(need.user, "60x50#")
+                            %p.small-text=need.user
+                          %h3=need.title
+                          %h5.needs-description=truncate(need.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_requests_chat", need))
+                -unless @needs.empty?
+                  %h3 My open requests
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@needs.order('created_at DESC').reject{ |i| i.has_accepted_offer? }.sort_by{|i| -current_user.new_notification_count("my_requests", i)}.each do |need|
+                      %li
+                        =link_to need do
+                          .list-image
+                            =image_for_with_validation(need.user, "60x50#")
+                            %p.small-text=need.user
+                          %h3=need.title
+                          %h5.needs-description=truncate(need.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_requests", need))
+                -unless @general_offers_chats.empty?
+                  %h3 Other people's general offers that I'm chatting about
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@general_offers_chats.each do |offer|
+                      %li
+                        =link_to offer do
+                          .list-image
+                            =image_for_with_validation(offer.user, "60x50#")
+                            %p.small-text=offer.user
+                          %h3=offer.title
+                          %h5.needs-description=truncate(offer.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_requests_chat", offer))
+              -else
+                %p No chats yet.
+        %br
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{'data-parent' => '#needs-accordion', 'data-toggle' => 'collapse', href: '#collapse-need-accepted'}
+              %h2.mb-2.mt-3 Accepted
+          .accordion-body.collapse.anim-150{:id => 'collapse-need-accepted'}
+            .accordion-inner
+              -if @needs_accepted || @general_offers_accepted
+                -unless @needs_accepted.empty?
+                  %h3 My requests where I've accepted help from others
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@needs_accepted.each do |need|
+                      %li
+                        =link_to need do
+                          .list-image
+                            =image_for_with_validation(need.user, "60x50#")
+                            %p.small-text=need.user
+                          %h3=need.title
+                          %h5.needs-description=truncate(need.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_requests", need))
+                -unless @general_offers_accepted.empty?
+                  %h3 Other people's general offers where I've accepted help
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@general_offers_accepted.each do |offer|
+                      %li
+                        =link_to offer do
+                          .list-image
+                            =image_for_with_validation(offer.user, "60x50#")
+                            %p.small-text=offer.user
+                          %h3=offer.title
+                          %h5.needs-description=truncate(offer.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_requests", offer))
+              -else
+                %p No accepted needs yet.
       .row
         .span6
           =link_to "Add another request for help", new_need_path, :class=>"btn call-to-action primary"
