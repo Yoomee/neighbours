@@ -18,17 +18,17 @@
       .preregister-form
         %p.popup-intro
           =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
-        %strong.organisation-label="Your Organisation's Details" if @pre_register_user.organisation_as_admin.present?
-        .control-group#organisation-as-admin-controls{:class => @pre_register_user.organisation_as_admin.present? ? '' : 'hide'}
+        %strong.organisation-label="Your Organisation's Details"
+        .control-group#organisation-as-admin-controls
           .controls
             =form.semantic_fields_for :organisation_as_admin do |f|
               =f.input :name, :label => "Organisation Name", :input_html => {:class => 'span4', :placeholder => "Your organisation's name"}
-        %strong.organisation-label="Your Main Contact's Details" if @pre_register_user.organisation_as_admin.present?
+        %strong.organisation-label="Your Main Contact's Details"
         =form.inputs(:class => 'form-horizontal') do
-          =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
-          =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => @pre_register_user.organisation_as_admin.present? ? "Your name" : "Name"}
-          =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
-          =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}         
+          =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Your postcode"}
+          =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Your name"}
+          =form.input :email, :input_html => { :class=>'span4', :placeholder => "Your email address"}
+          =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}
           =link_to "Already registered?", "/login", :class=>"already-registered-link pull-right"
     .modal-footer
       =form.commit_button "Next", :button_html => {:data => {}, :class => "btn btn-primary btn-large"}

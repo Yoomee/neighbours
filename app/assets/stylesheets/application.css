@@ -1784,6 +1784,10 @@ a.cta-small {
   margin-top:20px;
 }
 
+.preregister-form input#user_postcode{
+  width:155px;
+}
+
 .already-registered-link {
  float: left;
  margin: 0px 190px;
