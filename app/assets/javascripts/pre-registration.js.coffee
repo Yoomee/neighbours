@@ -22,7 +22,7 @@ window.PreRegistration =
       $('#organisation-as-admin-controls').show()
     $('.modal').on 'click', 'a#individual-option-link', (event) ->
       event.preventDefault()
-      $('#organisation-options').hide()
+      $('#organisation-options, .organisation-label').hide()
       $('#preregister-form').show()
       $('input#user_organisation_as_admin_attributes_name').prop('disabled', true)
       $('#organisation-as-admin-controls').hide()

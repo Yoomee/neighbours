@@ -1772,6 +1772,18 @@ a.cta-small {
  margin: 0 0 0 120px; 
  float: left;
 }
+
+.preregister-form .organisation-label{
+  margin-left: 20px;
+}
+
+.preregister-form #organisation-as-admin-controls.control-group,
+.preregister-form #user_postcode_input,
+.preregister-form #user_organisation_as_admin_attributes_name_input
+{
+  margin-top:20px;
+}
+
 .already-registered-link {
  float: left;
  margin: 0px 190px;
@@ -1845,6 +1857,16 @@ a.need-help-button:hover {
 	text-align: center;
 	width: 120px;
 	color: #777777;
+}
+
+/*========== main registration - who you are page ==========*/
+
+#organisation-as-admin-controls.control-group{
+  margin-bottom:0;
+}
+
+#user_first_name_input.control-group{
+  margin-top:20px;
 }
 /*========== offer page wireframe ==========*/
 

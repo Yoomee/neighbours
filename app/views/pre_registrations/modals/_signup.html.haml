@@ -18,10 +18,12 @@
       .preregister-form
         %p.popup-intro
           =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
+        %strong.organisation-label="Your Organisation's Details" if @pre_register_user.organisation_as_admin.present?
         .control-group#organisation-as-admin-controls{:class => @pre_register_user.organisation_as_admin.present? ? '' : 'hide'}
           .controls
             =form.semantic_fields_for :organisation_as_admin do |f|
               =f.input :name, :label => "Organisation Name", :input_html => {:class => 'span4', :placeholder => "Your organisation's name"}
+        %strong.organisation-label="Your Main Contact's Details" if @pre_register_user.organisation_as_admin.present?
         =form.inputs(:class => 'form-horizontal') do
           =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
           =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => @pre_register_user.organisation_as_admin.present? ? "Your name" : "Name"}
