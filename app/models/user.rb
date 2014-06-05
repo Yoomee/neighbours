@@ -155,7 +155,7 @@ class User < ActiveRecord::Base
   end
 
   def is_organisation_admin?
-    organisation_as_admin.present? && validated?
+    organisation_as_admin.present?
   end
 
   def is_owner?
@@ -244,7 +244,7 @@ class User < ActiveRecord::Base
   end
 
   def set_neighbourhood
-    return true if neighbourhood.present? || organisation_as_admin.present? || !postcode_changed?
+    return true if neighbourhood.present? || is_organisation_admin? || !postcode_changed?
     if new_neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
       self.neighbourhood = new_neighbourhood
     end

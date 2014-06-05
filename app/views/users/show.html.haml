@@ -17,21 +17,19 @@
       .alert
         You're not fully registered. You can access more features if you
         =link_to("complete your registration", new_registration_path)
-    %h1.mb-1=@user.organisation_as_admin.present? ? "#{@user.first_name} #{@user.last_name if current_user.admin?}" : title(@user)
-    -if @user.is_deleted?
-      %p.mb-1.deleted-user="This user has been deleted"
-    -else
-      %p.mb-1= "Admin of #{@user.organisation}" if @user.is_organisation_admin? && current_user.admin?
-    %h3.block.mb-2
-      -if @user.is_community_champion?
-        ="#{first_name_or_you(@user, 'is', 'are').capitalize} a neighbourhood champion"
-      -elsif @user.community_champion
-        ="#{first_name_or_your(@user).capitalize} neighbourhood champion is #{link_to(@user.community_champion.to_s, user_champion_path(@user))}".html_safe
-      -else
-        -if @user.champion_request_at && current_user.admin?
-          ="#{first_name_or_your(@user).capitalize} request to become a neighbourhood champion is being considered"
+    %h1.mb-1=title(@user)
+    %p.mb-1.deleted-user="This user has been deleted" if @user.is_deleted?
+    -unless @user.is_organisation_admin?
+      %h3.block.mb-2
+        -if @user.is_community_champion?
+          ="#{first_name_or_you(@user, 'is', 'are').capitalize} a neighbourhood champion"
+        -elsif @user.community_champion
+          ="#{first_name_or_your(@user).capitalize} neighbourhood champion is #{link_to(@user.community_champion.to_s, user_champion_path(@user))}".html_safe
         -else
-          ="There isn't a neighbourhood champion for #{first_name_or_your(@user)} area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
+          -if @user.champion_request_at && current_user.admin?
+            ="#{first_name_or_your(@user).capitalize} request to become a neighbourhood champion is being considered"
+          -else
+            ="There isn't a neighbourhood champion for #{first_name_or_your(@user)} area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
 
     -if current_user == @user
       %h3.block.profile-title
@@ -64,6 +62,8 @@
         %small The details below will not be shared with other users.
     -if current_user == @user
       .profile-details.profile-details-private
+        .mb1
+          %h3="These are the details for your organisation's main contact." if @user.is_organisation_admin?
         .mb1
           %h4 Date of birth
           =@user.dob.nil? ? 'Not set yet.' : @user.dob.to_s(:date)
