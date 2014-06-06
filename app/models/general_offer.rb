@@ -38,7 +38,7 @@ class GeneralOffer < ActiveRecord::Base
   class << self
     
     def visible_to_user_with_validated_users(user)
-      if user.try(:admin?)
+      if user.try(:admin?) || user.try(:is_organisation_admin?)
         visible_to_user_without_validated_users(user)
       else
         visible_to_user_without_validated_users(user).joins(:user).select('general_offers.*, users.validated').where(:users => {:validated => true})
