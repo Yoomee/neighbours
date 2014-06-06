@@ -77,9 +77,9 @@ class Ability
       end
       cannot :index, User unless user.is_neighbourhood_admin? || (user.is_organisation_admin? && user.validated?)
       can [:manage], Page do |p|
-        p.try(:neighbourhood).try(:admin_id) == user.id || ((p.try(:organisation).try(:admin_id) == user.id) && user.validated?)
+        p.try(:neighbourhood).try(:admin_id) == user.id || ((p.user.try(:organisation).try(:admin_id) == user.id) && user.validated?)
       end
-      can :new, Page do
+      can [:new, :create], Page do
         user.is_neighbourhood_admin? || (user.is_organisation_admin? && user.validated?)
       end
       can [:create, :join], Group
