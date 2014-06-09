@@ -6,7 +6,7 @@ module Autopostable
   end
   
   def autopost
-    if Rails.env.production?
+    if Rails.env.production? && !STAGING
       autopost_statuses.pending.each do |autopost_status|
         autopost_status.update_attribute(:status, 'queued')
         post_to_provider(autopost_status.provider)
