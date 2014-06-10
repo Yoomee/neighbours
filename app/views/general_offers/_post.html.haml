@@ -1,0 +1,22 @@
+%li.mb-2{:id => "post#{post.id}"}
+  .need-post
+    .row
+      .span1
+        .list-image
+          =link_to_with_tooltip(can?(:read, post.user) ? post.user : '#', :class => "pull-left") do
+            =image_for_with_validation(post.user, "60x60#")
+            %p.small-text
+              =post.user
+      .span6
+        .small-text.mb-1
+          =post.created_at.strftime("%d %B %Y %H:%M")
+          %br
+          ="Any replies you send below this message will only be seen by #{post.user}" if current_user == @general_offer.user
+
+        .post-speech=simple_format(post.text)       
+            
+    .comments
+      .comment-list
+        =render(:partial => "comments/comment", :collection => post.comments)
+      -if logged_in_as?(@general_offer.user, @general_offer.posts.collect(&:user)) && current_user.validated?
+        =render("comments/form", :comment => post.comments.build)

@@ -131,6 +131,8 @@ Neighbours::Application.routes.draw do
       get :stats, :action => 'all_stats'
     end
   end
+
+  resources :organisations
   
   get "neighbourhoods/:neighbourhood_id/emails/:role/new" => "neighbourhood_emails#new", :as => 'email_neighbourhood'
   post "neighbourhoods/:neighbourhood_id/emails/:role" => "neighbourhood_emails#create", :as => 'create_email_neighbourhood'

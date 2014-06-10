@@ -1,16 +1,34 @@
-=semantic_form_for(@pre_register_user ||= User.new, :url => pre_registrations_path, :remote => true, :class => 'preregister-form') do |form|
+#organisation-options{:class => @pre_register_user.present? && @pre_register_user.errors.present? ? 'hide' : ""}
   .modal-header
-    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
-    %h3 Join now
+    =link_to('x', @next_url, :class => 'close')
+    %h3 Who are you signing up as?
   .modal-body
-    .preregister-form
-      %p.popup-intro
-        =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
-      =form.inputs(:class => 'form-horizontal') do
-        =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Postcode"}
-        =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Name"}
-        =form.input :email, :input_html => { :class=>'span4', :placeholder => "Email"}
-        =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}
-        =link_to "Already registered?", "/login", :class=>"already-registered-link pull-right"
-  .modal-footer
-    =form.commit_button "Next", :button_html => {:data => {}, :class => "btn btn-primary btn-large"}
+    .center
+      =neighbourhood_snippet_text(:preregistration_options, "You can choose to sign up as an individual, or as an organisation.")      
+      =link_to "I'm signing up as an individual", '#', :class => "btn call-to-action primary", :id => 'individual-option-link'
+      =link_to "I'm signing up as an organisation", '#', :class => "btn call-to-action", :id => 'organisation-option-link'
+
+#preregister-form{:class => @pre_register_user.present? && @pre_register_user.errors.present? ? "" : 'hide'}
+  =semantic_form_for(@pre_register_user ||= User.new, :url => pre_registrations_path, :remote => true, :class => 'preregister-form') do |form|
+    -@pre_register_user.build_organisation_as_admin unless @pre_register_user.organisation_as_admin
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"} ×
+      %h3 Join now
+    .modal-body
+      .preregister-form
+        %p.popup-intro
+          =neighbourhood_snippet_text(:preregister_popup_intro, "Enter your details below to get involved.")
+        %strong.organisation-label="Your Organisation's Details"
+        .control-group#organisation-as-admin-controls
+          .controls
+            =form.semantic_fields_for :organisation_as_admin do |f|
+              =f.input :name, :label => "Organisation Name", :input_html => {:class => 'span4', :placeholder => "Your organisation's name"}
+        %strong.organisation-label="Your Main Contact's Details"
+        =form.inputs(:class => 'form-horizontal') do
+          =form.input :postcode, :input_html => { :class=>'span2', :placeholder => "Your postcode"}
+          =form.input :full_name, :label => 'Name', :input_html => { :class=>'span4', :placeholder => "Your name"}
+          =form.input :email, :input_html => { :class=>'span4', :placeholder => "Your email address"}
+          =form.input :password, :label => 'Choose a password', :input_html => { :class=>'span4'}
+          =link_to "Already registered?", "/login", :class=>"already-registered-link pull-right"
+    .modal-footer
+      =form.commit_button "Next", :button_html => {:data => {}, :class => "btn btn-primary btn-large"}

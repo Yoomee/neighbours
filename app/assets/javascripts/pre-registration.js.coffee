@@ -15,6 +15,20 @@ window.PreRegistration =
     $('.modal').on 'click', 'a.pre-register-back-link', (event) ->
       event.preventDefault()
       PreRegistration.showContent('options')
+    $('.modal').on 'click', 'a#organisation-option-link', (event) ->
+      event.preventDefault()
+      $('#organisation-options').hide()
+      $('#preregister-form').show()
+      $('#organisation-as-admin-controls').show()
+      $('input#user_full_name').attr('placeholder', "Contact's name")
+      $('input#user_postcode').attr('placeholder', "Contact's postcode")
+      $('input#user_email').attr('placeholder', "Contact's email address")
+    $('.modal').on 'click', 'a#individual-option-link', (event) ->
+      event.preventDefault()
+      $('#organisation-options, .organisation-label').hide()
+      $('#preregister-form').show()
+      $('input#user_organisation_as_admin_attributes_name').prop('disabled', true)
+      $('#organisation-as-admin-controls').hide()
   showContent: (type) ->
     selector = "#pre-register-#{type}"
     $("#pre-register >:not(#{selector})").hide()

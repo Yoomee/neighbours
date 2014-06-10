@@ -8,7 +8,11 @@
 <%else%>
   <%=remotipart_response do%>
     <%if @post.valid?%>
-      $('.need-posts').prepend('<%=escape_javascript(render('needs/post', :post => @post))%>');
+      <%if @post.target_type == "Need"%>
+        $('.need-posts').prepend('<%=escape_javascript(render('needs/post', :post => @post))%>');
+      <%elsif @post.target_type == "GeneralOffer"%>
+        $('.need-posts').prepend('<%=escape_javascript(render('general_offers/post', :post => @post))%>');
+      <%end%>
     <%end%>
     $('form#new_post').remove()
     $('.need-posts').prepend('<%=escape_javascript(render('remote_form', :post => (@new_post || @post)))%>');

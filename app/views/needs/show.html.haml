@@ -118,8 +118,11 @@
           %i.icon-warning-sign
           Report this page as inappropriate
       -if !@need.removed? && can?(:destroy, @need)
-        .clearfix      
-        =link_to("Remove this request", remove_need_path(@need), :confirm => "Are you sure?", :class => "btn btn-danger mt-2")
+        .clearfix
+        -if current_user.try(:validated?)
+          =link_to("Remove this request", remove_need_path(@need), :confirm => "Are you sure?", :class => "btn btn-danger mt-2")
+        -else
+          =link_to "Remove this request", "#not-validated", :'data-toggle' => "modal",  :class => "btn btn-danger mt-2"
 
 -if @need.user != current_user
   #offer-form.modal.hide.fade

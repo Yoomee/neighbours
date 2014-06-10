@@ -9,10 +9,16 @@ class NeedsController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
       @needs = @user.needs.order('created_at DESC')
+      @needs_accepted = Need.resolved.where(:user_id => current_user.id).reject{|n| n.is_general_offer_need?}
+      @need_chats = Need.unresolved.where(:user_id => current_user.id).joins(:posts).where("posts.context = 'chat'").select{|o| !@needs_accepted.include? o}
+      @general_offers_accepted = GeneralOffer.unscoped.joins(:needs).where('needs.user_id = ?', current_user.id).uniq
+      @general_offers_chats = GeneralOffer.where('general_offers.user_id != ?', @user.id).joins(:posts).where('posts.user_id = ?', @user.id).uniq.select{|o| !@general_offers_accepted.include? o}
+       #this is wrong
       render :action => "user_index"
     elsif params[:need_category_id].present?
       @needs = Need.where(:category_id => params[:need_category_id]).unresolved.visible_to_user(current_user).without_general_offer_generated
       @needs = current_user.try(:admin?) ? @needs.page(params[:page]) : @needs.random(Need.per_page)
+      @needs = @needs.reject{|n|n.is_general_offer_need?}
     else
       @needs = Need.unresolved.order("created_at DESC").visible_to_user(current_user).without_general_offer_generated
       if current_user.try(:admin?) && request.xhr?
@@ -20,6 +26,7 @@ class NeedsController < ApplicationController
       elsif current_user
         @needs = @needs.where("needs.user_id != #{current_user.id}")
       end
+      @needs = @needs.reject{|n|n.is_general_offer_need?}
     end
   end
 

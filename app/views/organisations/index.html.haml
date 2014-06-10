@@ -1,0 +1,27 @@
+%h2.mb-2
+  Organisations
+  
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th Name      
+      %th Admin
+      %th Status
+      %th Actions
+  %tbody
+    -@organisations.each do |organisation|
+      %tr
+        %td=organisation.name
+        %td=link_to "#{organisation.admin.try(:first_name)} #{organisation.admin.try(:last_name)}", organisation.admin if organisation.admin.present?
+        %td
+          -if organisation.admin.present?
+            =organisation.admin.validated? ? "Validated" : "Unvalidated"        
+        %td
+          =link_to("Edit", edit_organisation_path(organisation))
+          &middot;
+          =link_to("Delete", organisation, :confirm => "Are you sure? This will remove any user associations with this organisation.", :method => :delete)          
+          
+      
+=options_panel do
+  =back_link
+  =link_to "Add new organisation", new_organisation_path

@@ -23,6 +23,7 @@ class HomeController < ApplicationController
   end
   
   private
+
   def get_items_for_cycle_columns
     lat, lng = Need.get_lat_lng_from_postcode(params[:postcode]) if params[:postcode]
     if current_user.try(:has_lat_lng?)
@@ -39,5 +40,5 @@ class HomeController < ApplicationController
   def set_seen_preregistered_modal
     session[:seen_preregistered_modal] = true if current_user
   end
-  
+
 end

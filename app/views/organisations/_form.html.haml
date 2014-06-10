@@ -1,0 +1,6 @@
+=semantic_form_for @organisation do |form|
+  =form.inputs do
+    =form.input :name
+    =form.input :admin_id, :as => :select, :collection => User.order(:first_name, :last_name)
+  =form.buttons do
+    =form.submit "Save"

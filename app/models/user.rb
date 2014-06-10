@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :general_offers
   has_many :flags
   has_many :neighbourhoods_as_admin, :class_name => "Neighbourhood", :foreign_key => :admin_id
+  has_one :organisation_as_admin, :class_name => "Organisation", :foreign_key => :admin_id
   has_many :owned_groups, :class_name => 'Group'
   has_and_belongs_to_many :groups, :uniq => true
   has_many :group_invitations
@@ -26,8 +27,9 @@ class User < ActiveRecord::Base
   has_many :community_members, :class_name => "User", :foreign_key => :community_champion_id, :dependent => :nullify
   belongs_to :community_champion, :class_name => "User"
   belongs_to :neighbourhood
+  belongs_to :organisation
 
-  accepts_nested_attributes_for :needs, :general_offers, :owned_groups
+  accepts_nested_attributes_for :needs, :general_offers, :owned_groups, :organisation_as_admin
 
   attr_accessor :credit_card_preauth
   attr_accessor :current_user # used for miles_from_s on home#index
@@ -63,7 +65,7 @@ class User < ActiveRecord::Base
     set_property :delta => true
   end
   
-  has_roles :pre_registration, :group_user
+  has_roles :pre_registration, :pre_registered_organisation, :group_user
   
   class << self
     
@@ -132,8 +134,12 @@ class User < ActiveRecord::Base
     self.removed_at = Time.now
   end
 
+  def full_name
+    organisation_as_admin.try(:name) || super
+  end
+
   def fully_registered?
-    !group_user? && !pre_registration?
+    !group_user? && !pre_registration? && !pre_registered_organisation?
   end
 
   def has_address?
@@ -146,6 +152,10 @@ class User < ActiveRecord::Base
   
   def is_neighbourhood_admin?
     neighbourhoods_as_admin.count > 0
+  end
+
+  def is_organisation_admin?
+    organisation_as_admin.present?
   end
 
   def is_owner?
@@ -169,9 +179,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def new_notification_count(context, need = nil)
-    if need
-      need.notifications.where(:context => context, :user_id => id, :read => false).count
+  def new_notification_count(context, resource = nil)
+    if resource
+      resource.notifications.where(:context => context, :user_id => id, :read => false).count
     else
       notifications.where(:context => context, :read => false).count
     end
@@ -190,7 +200,7 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    first_name
+    organisation_as_admin.try(:name) || first_name
   end
 
   def validation_code
@@ -203,6 +213,7 @@ class User < ActiveRecord::Base
   end
 
   private
+
   def change_email_if_deleted
     return true if !is_deleted? || email.starts_with?("deleted-#{id}-")
     self.email = "deleted-#{id}-#{email}"
@@ -233,7 +244,7 @@ class User < ActiveRecord::Base
   end
 
   def set_neighbourhood
-    return true unless neighbourhood.nil? || postcode_changed?
+    return true if neighbourhood.present? || is_organisation_admin? || !postcode_changed?
     if new_neighbourhood = Neighbourhood.find_by_postcode_or_area(postcode)
       self.neighbourhood = new_neighbourhood
     end

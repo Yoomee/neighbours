@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user.attributes = params[:user].merge(:role => nil)
+    @user.attributes = params[:user].merge(:role => nil)    
     if params[:user][:encrypted_password].present?
       @user.password = 'ignore-this'
       @user.encrypted_password = params[:user][:encrypted_password]
@@ -18,6 +18,7 @@ class RegistrationsController < ApplicationController
       if @user.valid?
         if @user.last_step?
           if @user.save
+            @user.update_attribute(:organisation_id, @user.organisation_as_admin.id) if @user.is_organisation_admin?
             send_emails
             sign_in(@user, :bypass => true)
             if @user.validate_by == "post" && !@user.validated?
@@ -51,14 +52,16 @@ class RegistrationsController < ApplicationController
         #@user not valid
         @user.credit_card_preauth.try(:deliver_failure_email)
       end
-    end
+    end    
+    @organisation_name = @user.organisation_as_admin.name if @user.organisation_as_admin
     render :action => "new"
   end
 
   private
+
   def get_user
     @user = current_user
-    if @user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood
+    if (@user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood) || @user.pre_registered_organisation?
       @user.last_name = nil if @user.last_name == '_BLANK_'
     else      
       raise CanCan::AccessDenied

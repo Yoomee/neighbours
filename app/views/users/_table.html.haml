@@ -10,8 +10,8 @@
       %th Phone number
       -unless tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
         %th=sortable "Method"
+      %th=sortable "Organisation name", tab
       -unless tab == "unvalidated" || tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
-        %th=sortable "Organisation name", tab
         %th=sortable "Neighbourhood champion?", tab
         %th=sortable "Requested to be a champion?", tab
         %th=sortable "Assigned neighbourhood champion?", tab
@@ -20,7 +20,7 @@
         %th=sortable "Sent code", tab
       %th Actions
     -users.each do |user|
-      -if current_user.admin? || user.try(:neighbourhood).try(:admin_id) == current_user.id
+      -if current_user.admin? || user.try(:neighbourhood).try(:admin_id) == current_user.id || user.try(:organisation).try(:admin_id) == current_user.id
         %tr
           %td=full_name_and_role(user)
           %td=user.address_without_postcode
@@ -31,8 +31,8 @@
           %td=user.phone.presence || '-'
           -unless tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
             %td=user.validate_by.try(:humanize).presence || '-'
+          %td=user.organisation.present? ? user.organisation : '-'
           -unless tab == "unvalidated" || tab == "group_users" || tab == "pre-registered" || tab == "not_in_sheffield"
-            %td=user.validate_by == "organisation" ? user.organisation_name.presence || '-' : "n/a"
             %td=user.is_community_champion? ? 'Yes' : 'No'
             %td=user.champion_request_at.present? ? 'Yes' : 'No'
             %td=user.community_champion.try(:full_name) || '-'
@@ -47,7 +47,7 @@
                   =link_to "Mark sent", send_activation_code_user_path(user), :method => :put
               -else
                 \-
-          %td=link_to "View actions", "##{tab}-user-#{user.id}", :'data-toggle'=>"modal"
+          %td=link_to "View actions", "##{tab}-user-#{user.id}", :'data-toggle'=>"modal" unless user == current_user
 
           .modal.hide.fade{:id => "#{tab}-user-#{user.id}"}
             .modal-body

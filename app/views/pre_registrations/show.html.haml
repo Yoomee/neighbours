@@ -1,7 +1,7 @@
 =google_maps_javascript_include_tag
 =content_for :head do
   :javascript
-    $(document).ready(function() {
+    $(document).ready(function() {      
       var mapOptions = {
         center: new google.maps.LatLng('#{@pre_register_user.lat}', '#{@pre_register_user.lng}'),
         zoom: 16,
@@ -48,5 +48,4 @@
         Give us feedback
       %p
         =link_to "Tell us what we can do for you", "/feedback", :class=>"feedback-link"
-        
         

@@ -1,0 +1,28 @@
+=form.hidden_field :validate_by, :value => 'organisation'
+.well
+  %strong Safety and security
+  %p
+    Your safety is important to us. We make sure that everybody on
+    %em
+      Neighbours Can Help
+    proves their identify to us. You can't use all the facilities on the website until your address is validated.
+.validate-your-account
+  %h2.mb2.mt2
+    Prove your identity
+  -if @user.errors[:validate_by].present?
+    .control-group.error.mb-2
+      %p.help-inline
+        =@user.errors[:validate_by].to_sentence
+  %ul.thumbnails
+    %li.thumbnail.organisation-thumbnail      
+      %i.icon-group
+      %h3="We'll be validating you with #{@organisation_name}"
+      %p
+        We'll check with your organisation that you are who you say you are.
+      
+
+  =form.input :agreed_conditions, :label => "Please accept our #{link_to 'terms and conditions', '#conditions-popup', :'data-toggle' => 'modal'} and #{link_to 'privacy policy', '#privacy-popup', :'data-toggle' => 'modal'}".html_safe, :required => false
+
+
+=render('modals/conditions_popup')
+=render('modals/privacy_popup')

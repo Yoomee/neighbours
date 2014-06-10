@@ -50,7 +50,7 @@ module HasShoutRadius
     end
     
     def visible_to_user(user)
-      if user.try(:admin?)
+      if user.try(:admin?) || user.try(:is_organisation_admin?)
         from_live_neighbourhood
       elsif user.try(:has_lat_lng?)
         from_live_neighbourhood.visible_from_location(user.lat, user.lng)

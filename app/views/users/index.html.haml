@@ -14,28 +14,35 @@
           =title "Found #{pluralize(@results_count, 'user')}"
         -else
           =title "Users"
-    .span7
-      =form_tag(search_users_path, :method => :get, :class => 'pull-right form form-inline form-user-search form-search') do
-        =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
-        =submit_tag "Go", :class => 'btn'
+    -if current_user.validated?
+      .span7
+        =form_tag(search_users_path, :method => :get, :class => 'pull-right form form-inline form-user-search form-search') do
+          =text_field_tag :q, params[:q], :placeholder => "Search users", :class => 'input-medium'
+          =submit_tag "Go", :class => 'btn'
 
-.users-table.ml-3.mr-3
-  %ul.nav.nav-tabs.nav-tabs-users
-    -users_tabs = {"Unvalidated" => @unvalidated_users, "Validated"=> @validated_users, "Group users" => @group_users, "Pre-registered" => @pre_registered_users, "Champion requests" => @community_champion_requests, "Champions" => @community_champions, "Not in Sheffield" => @not_in_sheffield, "Deleted" => @deleted_users} 
-    =users_tab_li(users_tabs)
+-if current_user.validated?
+  .users-table.ml-3.mr-3
+    %ul.nav.nav-tabs.nav-tabs-users
+      -users_tabs = {"Unvalidated" => @unvalidated_users, "Validated"=> @validated_users, "Group users" => @group_users, "Pre-registered" => @pre_registered_users, "Champion requests" => @community_champion_requests, "Champions" => @community_champions, "Not in Sheffield" => @not_in_sheffield, "Deleted" => @deleted_users} 
+      =users_tab_li(users_tabs)
 
-  .tab-content
-    -active_set = false
-    -users_tabs.each do |name, users|
-      -name = name.downcase.gsub(' ', '-')
-      .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated" && !params[:q].present?) || params[:q].present? && users.present? && active_set == false ? 'active' : ''}"}
-        -if users.size > 0
-          -unless action_name.search?
-            =link_to(users_path({:format => 'xls', :users => name}), :class => 'btn btn-primary pull-right mr-1 mb-1 btn-download-spreadsheet') do
-              %i.icon-download-alt
-              ="Download #{name.gsub('-', ' ').split(' ').collect(&:capitalize).join(' ')} Users"
-          =render('table', :users => users, :tab => name)
-          -active_set = true
-        -else
-          %p No results in this tab.
-  #choose-community-champion.modal.hide.fade
+    .tab-content
+      -active_set = false
+      -users_tabs.each do |name, users|
+        -name = name.downcase.gsub(' ', '-')
+        .tab-pane.fade.in{:id => "#{name}", :class => "#{params[:tab] == name || (params[:tab].nil? && name == "unvalidated" && !params[:q].present?) || params[:q].present? && users.present? && active_set == false ? 'active' : ''}"}
+          -if users.size > 0
+            -unless action_name.search?
+              =link_to(users_path({:format => 'xls', :users => name}), :class => 'btn btn-primary pull-right mr-1 mb-1 btn-download-spreadsheet') do
+                %i.icon-download-alt
+                ="Download #{name.gsub('-', ' ').split(' ').collect(&:capitalize).join(' ')} Users"
+            =render('table', :users => users, :tab => name)
+            -active_set = true
+          -else
+            %p No results in this tab.
+    #choose-community-champion.modal.hide.fade
+-else
+  .container
+    .row
+      .span12
+        %p You will be able to manage users once you are validated.

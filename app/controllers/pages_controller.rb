@@ -18,4 +18,11 @@ class PagesController < ApplicationController
     render :action => "views/#{@page.view_name}"
   end
 
+  def new
+    unless current_user.validated?
+      flash[:notice] = "You will be able to access this page once you are validated."
+      redirect_to root_path
+    end
+  end
+
 end

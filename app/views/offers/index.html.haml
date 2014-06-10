@@ -3,48 +3,70 @@
     %h1
       My offers
       %small (These conversations are NOT visible to the public)
-    -if @offers.empty? && @chats.empty?
+    -if @offers.empty? && @need_chats.empty?
       Your haven't offered to help anyone yet. Click
       =link_to("here",new_general_offer_path)
       to see who you could help.
     -else
-      -if @chats.present?
-        %h3 Offers you're chatting about
-        %ul.nav.nav-tabs.nav-stacked
-          -@chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }.each do |need|
-            %li
-              =link_to need do
-                .list-image{:rel => 'tooltip', :title => user_address_tooltip(need.user)}
-                  =image_for_with_validation(need.user, "60x50#")
-                  %p.small-text=need.user
-                %h3=need.title
-                %h5.needs-description=truncate(need.description, :length =>95)
-                %p
-                  =messages_badge(current_user.new_notification_count("my_offers", need))
-      %h3 Open offers
-      %ul.nav.nav-tabs.nav-stacked
-        -@offers.order("created_at DESC").reject{ |i| i.accepted? }.each do |offer|
-          %li
-            =link_to offer.need do
-              .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
-                =image_for_with_validation(offer.need.user, "60x50#")
-                %p.small-text=offer.need.user
-              %h3=offer.need.title
-              %h5.needs-description=truncate(offer.need.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_offers", offer.need))
-      %h3 Accepted offers
-      %ul.nav.nav-tabs.nav-stacked
-        -@offers.order("created_at DESC").select{ |i| i.accepted? }.each do |offer|
-          %li
-            =link_to offer.need do
-              .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
-                =image_for_with_validation(offer.need.user, "60x50#")
-                %p.small-text=offer.need.user
-              %h3=offer.need.title
-              %h5.needs-description=truncate(offer.need.description, :length =>95)
-              %p
-                =messages_badge(current_user.new_notification_count("my_offers", offer.need))
+      #offers-accordion.accordion
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{'data-parent' => '#offers-accordion', 'data-toggle' => 'collapse', href: '#collapse-offer-chats'}
+              %h2.mb-2.mt-3 Chatting
+          .accordion-body.collapse.anim-150{:id => 'collapse-offer-chats'}
+            .accordion-inner
+              -if @need_chats || @offers
+                -unless @need_chats.empty?
+                  %h3 Offers you're chatting about
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@need_chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }.each do |need|
+                      %li
+                        =link_to need do
+                          .list-image{:rel => 'tooltip', :title => user_address_tooltip(need.user)}
+                            =image_for_with_validation(need.user, "60x50#")
+                            %p.small-text=need.user
+                          %h3=need.title
+                          %h5.needs-description=truncate(need.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_offers", need))
+                -unless @offers.empty?
+                  %h3 Open offers
+                  %ul.nav.nav-tabs.nav-stacked
+                    -@offers.order("created_at DESC").reject{ |i| i.accepted? }.each do |offer|
+                      %li
+                        =link_to offer.need do
+                          .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
+                            =image_for_with_validation(offer.need.user, "60x50#")
+                            %p.small-text=offer.need.user
+                          %h3=offer.need.title
+                          %h5.needs-description=truncate(offer.need.description, :length =>95)
+                          %p
+                            =messages_badge(current_user.new_notification_count("my_offers", offer.need))
+              -else
+                %p No chats yet.
+        %br
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{'data-parent' => '#offers-accordion', 'data-toggle' => 'collapse', href: '#collapse-offer-accepted'}
+              %h2.mb-2.mt-3 Acccepted
+          .accordion-body.collapse.anim-150{:id => 'collapse-offer-accepted'}
+            .accordion-inner
+              -if @offers.order("created_at DESC").select{ |i| i.accepted? }.empty?
+                %p No accepted offers yet.
+              -else
+                %h3 Accepted offers
+                %ul.nav.nav-tabs.nav-stacked
+                  -@offers.order("created_at DESC").select{ |i| i.accepted? }.each do |offer|
+                    %li
+                      =link_to offer.need do
+                        .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
+                          =image_for_with_validation(offer.need.user, "60x50#")
+                          %p.small-text=offer.need.user
+                        %h3=offer.need.title
+                        %h5.needs-description=truncate(offer.need.description, :length =>95)
+                        %p
+                          =messages_badge(current_user.new_notification_count("my_offers", offer.need))
+
 -if @general_offers.present?
   .row.mt1
     .span8.offset2
@@ -59,7 +81,8 @@
               %h3=general_offer.title
               %p
                 %span.request-message-text=truncate(general_offer.description, :length => 200)
-
+              %p
+                =messages_badge(current_user.new_notification_count("my_offers", general_offer))
 .row
   .span6.offset2
     -if current_user.fully_registered?

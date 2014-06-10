@@ -4,11 +4,13 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(params[:post])
-    if @post.target_type = 'Need'
+    if @post.target_type == 'Need'
       @need = Need.find(@post.target_id)
       @offers = @need.offers
+    elsif @post.target_type == 'GeneralOffer'
+      @general_offer = GeneralOffer.find(@post.target_id)
     end
-    current_post.user = current_user
+    @post.user = current_user
     if @post.save
       if (@post.target_type == 'Group') && (@post.user != @post.target.owner)
         @post.target.members.without(@post.user).each do |member|
@@ -22,7 +24,11 @@ class PostsController < ApplicationController
       end
       if @post.context == 'chat'
         @new_post = Post.new(:target => @post.target, :user => @post.user, :context => 'chat')
-        UserMailer.new_chat(@post).deliver
+        if @post.target_type == 'Need'
+          UserMailer.new_need_chat(@post).deliver
+        elsif @post.target_type == 'GeneralOffer'
+          UserMailer.new_general_offer_chat(@post).deliver
+        end
       else
         @new_post = Post.new(:target => @post.target, :user => @post.user)
       end

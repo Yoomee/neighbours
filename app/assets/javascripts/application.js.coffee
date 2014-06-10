@@ -146,7 +146,7 @@ window.FormErrors =
   scrollToFirstError: () ->
     YmCore.scrollTo($('form .control-group.error:first'), {offset: 10})
 
-window.Registration =
+window.Registration =    
   initValidateStep: () ->
     $('form.user').submit () ->
       if $('#user_validate_by').val() != "credit_card"

@@ -2,7 +2,12 @@
   =neighbourhood_snippet_text(:reg_form_intro)
   =edit_snippet_link(:reg_form_intro)
 =form.inputs(:class => "form-horizontal") do
-  =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}
+  %strong="Your Organisation's Details" if @user.is_organisation_admin?
+  .control-group#organisation-as-admin-controls{:class => @user.is_organisation_admin? ? 'mt-2' : 'mt-2 hide'}
+    =form.semantic_fields_for :organisation_as_admin do |f|
+      =f.input :name, :label => "Organisation Name", :input_html => {:placeholder => "Enter your organisation's name"}
+  %strong="Your Main Contact's Details" if @user.is_organisation_admin?
+  =form.input :first_name, :required => false, :help => "Enter your first name", :input_html => {:placeholder => "e.g. John"}, :class => 'mt-2'
   =form.input :last_name, :required => false, :input_html => {:placeholder => "e.g. Smith"}, :help => "Enter your family name"
   .control-group{:class => @user.errors[:dob].present? ? 'error' : ''}
     %label.control-label Date of Birth
