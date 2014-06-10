@@ -75,12 +75,12 @@ class Ability
       can :manage, User do |u|
         u.try(:neighbourhood).try(:admin_id) == user.id || ((u.try(:organisation).try(:admin_id) == user.id) && user.validated?)
       end
-      cannot :index, User unless user.is_neighbourhood_admin? || (user.is_organisation_admin? && user.validated?)
+      cannot :index, User unless user.is_neighbourhood_admin? || user.is_organisation_admin?
       can [:manage], Page do |p|
         p.try(:neighbourhood).try(:admin_id) == user.id || ((p.user.try(:organisation).try(:admin_id) == user.id) && user.validated?)
       end
       can [:new, :create], Page do
-        user.is_neighbourhood_admin? || (user.is_organisation_admin? && user.validated?)
+        user.is_neighbourhood_admin? || user.is_organisation_admin?
       end
       can [:create, :join], Group
       can [:members], Group do |group|
