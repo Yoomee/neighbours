@@ -1,0 +1,2 @@
+$('#suggested-needs').html('<%=escape_javascript(render('needs/list', :needs => @suggested_needs))%>');
+$('#suggested-needs').removeClass('loading')

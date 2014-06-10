@@ -116,7 +116,7 @@ class NeedsController < ApplicationController
     if current_user.try(:admin?)
       @suggested_general_offers = GeneralOffer.page(params[:page])
     else
-      @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).random(GeneralOffer.per_page)
+      @suggested_general_offers = GeneralOffer.visible_to_user(current_user).where(['user_id != ?', current_user.try(:id)]).order_by_rand(seed: session[:seed]).page(params[:page])
     end
   end
   

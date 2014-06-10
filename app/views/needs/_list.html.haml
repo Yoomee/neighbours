@@ -23,4 +23,4 @@
           =link_to("Help #{need.user}", need, :class=>"btn btn-primary small-help-btn")
 .clearfix
 -if needs.respond_to?(:total_pages)
-  =will_paginate(needs, :remote => true, :params => {:controller => 'needs', :action => 'index'})
+  =will_paginate(needs, :remote => true, :params => {:controller => 'general_offers', :action => 'new'})

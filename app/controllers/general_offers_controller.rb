@@ -81,7 +81,7 @@ class GeneralOffersController < ApplicationController
   private
   def get_suggested_needs
     @suggested_needs = Need.unresolved.visible_to_user(current_user).without_general_offer_generated
-    @suggested_needs = current_user.try(:admin?) ? @suggested_needs.order("created_at DESC").page(params[:page]) : @suggested_needs.random(Need.per_page)
+    @suggested_needs = current_user.try(:admin?) ? @suggested_needs.order("created_at DESC").page(params[:page]) : @suggested_needs.order_by_rand(seed: session[:seed]).page(params[:page])
     @suggested_needs = @suggested_needs.reject{|n|n.is_general_offer_need?}
   end
 

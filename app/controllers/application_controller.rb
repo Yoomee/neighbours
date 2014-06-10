@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include YmUsers::ApplicationController
 
-  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :set_unread_messages_count
+  before_filter :authenticate, :clear_new_need_attributes, :set_neighbourhood, :set_unread_messages_count, :set_user_seed
 
   AUTH_USERS = { "neighbour" => "maltby123" }
 
@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
       @unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => nil}).count
       @nch_unread_messages_count = MessageThreadUser.where(:user_id => current_user.id, :read => false).joins(:message_thread).where(message_threads: {:context => "NCH"}).count
     end
+  end
+
+  def set_user_seed
+    session[:seed] ||= rand(100)
   end
 
 end

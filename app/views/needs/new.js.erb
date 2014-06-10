@@ -1,0 +1,2 @@
+$('#suggested-general-offers').html('<%=escape_javascript(render('general_offers/list', :general_offers => @suggested_general_offers))%>');
+$('#suggested-general-offers').removeClass('loading')
