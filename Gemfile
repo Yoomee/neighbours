@@ -46,8 +46,8 @@ end
 group :development do
  gem 'growl'
  gem 'letter_opener'
- gem 'ruby-debug19'
- gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
+ gem 'debugger'
+ # gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
  gem 'passenger'
  gem 'thin'
  gem 'sqlite3'
