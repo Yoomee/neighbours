@@ -61,7 +61,7 @@ class RegistrationsController < ApplicationController
 
   def get_user
     @user = current_user
-    if (@user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood) || @user.pre_registered_organisation?
+    if (@user && %w{pre_registration group_user}.include?(@user.role) && @user.neighbourhood) || @user.try(:pre_registered_organisation?)
       @user.last_name = nil if @user.last_name == '_BLANK_'
     else      
       raise CanCan::AccessDenied
