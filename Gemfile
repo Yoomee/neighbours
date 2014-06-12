@@ -47,7 +47,7 @@ group :development do
  gem 'growl'
  gem 'letter_opener'
  gem 'debugger'
- # gem 'yoomee', :git => "git://git.yoomee.com:4321/gems/yoomee.git", :branch => "rails3"
+ gem 'ym_tools'
  gem 'passenger'
  gem 'thin'
  gem 'sqlite3'

@@ -105,7 +105,19 @@ GEM
     dragonfly (0.9.15)
       multi_json (~> 1.0)
       rack
+    engineyard (1.4.29)
+      engineyard-serverside-adapter (= 1.6.4)
+      escape (~> 0.0.4)
+      highline (~> 1.6.1)
+      json_pure
+      launchy (= 2.0.5)
+      net-ssh (~> 2.2.1)
+      rest-client (~> 1.6.0)
+    engineyard-serverside-adapter (1.6.4)
+      escape (~> 0.0.4)
+      json_pure
     erubis (2.7.0)
+    escape (0.0.4)
     eventmachine (1.0.3)
     exception_notification (2.6.1)
       actionmailer (>= 3.0.4)
@@ -124,6 +136,7 @@ GEM
     formtastic (2.0.2)
       rails (~> 3.0)
     geocoder (1.1.2)
+    git (1.2.7)
     growl (1.0.3)
     guard (1.1.1)
       listen (>= 0.4.2)
@@ -133,6 +146,7 @@ GEM
     haml (4.0.3)
       tilt
     hashie (1.0.0)
+    highline (1.6.21)
     hike (1.2.3)
     hpricot (0.8.6)
     html_truncator (0.3.0)
@@ -148,6 +162,7 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.8.0)
+    json_pure (1.8.1)
     launchy (2.0.5)
       addressable (~> 2.2.6)
     letter_opener (1.0.0)
@@ -173,6 +188,7 @@ GEM
     multi_xml (0.5.3)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
+    net-ssh (2.2.2)
     newrelic_rpm (3.8.0.218)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -224,6 +240,8 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.0.2)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     riddle (1.5.3)
     rinku (1.7.3)
     rspec (2.10.0)
@@ -349,6 +367,11 @@ GEM
       acts-as-taggable-on (~> 2.2.2)
       rails (~> 3.1.0)
       rails3-jquery-autocomplete
+    ym_tools (0.1.14)
+      engineyard (~> 1.4)
+      git
+      net-ssh
+      rails
     ym_users (0.1.27)
       cancan
       devise (~> 2.1.0)
@@ -402,4 +425,5 @@ DEPENDENCIES
   ym_posts (~> 0.1)
   ym_search (~> 0.1)
   ym_snippets (~> 0.1.2)
+  ym_tools
   ym_users (~> 0.1.27)
