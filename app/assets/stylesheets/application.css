@@ -1163,6 +1163,11 @@ a.yoomee-logo {
   font-weight: normal;
 }
 
+#needs-accordion span, #offers-accordion span{
+  color: #000;
+  font-size:16px;
+}
+
 /*========== request page ==========*/
 #request-activity {
 	padding-top: 40px;

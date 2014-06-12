@@ -4,6 +4,7 @@
       =title "My requests"
       %small (These conversations are NOT visible to the public)
     -if @needs.count > 0
+      -open_needs = @needs.order('created_at DESC').reject{ |i| i.has_accepted_offer? }.sort_by{|i| -current_user.new_notification_count("my_requests", i)}
       %p.mb-3
         -if current_user.validated?
           Here are all your requests. Check back here to see if you've got any new messages. In the meantime why not
@@ -11,14 +12,18 @@
           to see if you could help someone else.
         -else
           You will be able to see who is offering help as soon as you're validated.
-      #needs-accordion.accordionpo0o09
+      #needs-accordion.accordion
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{'data-parent' => '#needs-accordion', 'data-toggle' => 'collapse', href: '#collapse-need-chats'}
-              %h2.mb-2.mt-3 Chatting
+              %h2.mb-2.mt-3
+                Chatting
+                %span
+                  =count = @need_chats.count + open_needs.count + @general_offers_chats.count
+                  ="open or chatting about request#{'s' if count > 1 or count == 0}"
           .accordion-body.collapse.anim-150{:id => 'collapse-need-chats'}
             .accordion-inner
-              -if @need_chats || @needs || @general_offers_chats
+              -if @need_chats || open_needs || @general_offers_chats
                 -unless @need_chats.empty?
                   %h3 My requests that I'm chatting about
                   %ul.nav.nav-tabs.nav-stacked
@@ -32,10 +37,10 @@
                           %h5.needs-description=truncate(need.description, :length =>95)
                           %p
                             =messages_badge(current_user.new_notification_count("my_requests_chat", need))
-                -unless @needs.empty?
+                -unless open_needs.empty?
                   %h3 My open requests
                   %ul.nav.nav-tabs.nav-stacked
-                    -@needs.order('created_at DESC').reject{ |i| i.has_accepted_offer? }.sort_by{|i| -current_user.new_notification_count("my_requests", i)}.each do |need|
+                    -open_needs.each do |need|
                       %li
                         =link_to need do
                           .list-image
@@ -64,7 +69,11 @@
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{'data-parent' => '#needs-accordion', 'data-toggle' => 'collapse', href: '#collapse-need-accepted'}
-              %h2.mb-2.mt-3 Accepted
+              %h2.mb-2.mt-3
+                Accepted
+                %span
+                  =count = @needs_accepted.count + @general_offers_accepted.count
+                  ="accepted request#{'s' if count > 1 || count == 0}"
           .accordion-body.collapse.anim-150{:id => 'collapse-need-accepted'}
             .accordion-inner
               -if @needs_accepted || @general_offers_accepted

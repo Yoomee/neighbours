@@ -8,18 +8,25 @@
       =link_to("here",new_general_offer_path)
       to see who you could help.
     -else
+      -offers_chatting = @need_chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }
+      -offers_open = @offers.order("created_at DESC").reject{ |i| i.accepted? }
+      -offers_accepted = @offers.order("created_at DESC").select{ |i| i.accepted? }
       #offers-accordion.accordion
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{'data-parent' => '#offers-accordion', 'data-toggle' => 'collapse', href: '#collapse-offer-chats'}
-              %h2.mb-2.mt-3 Chatting
+              %h2.mb-2.mt-3
+                Chatting
+                %span
+                  =count = offers_chatting.count + offers_open.count + offers_accepted.count
+                  ="open or chatting about offer#{'s' if count > 1 or count == 0}"
           .accordion-body.collapse.anim-150{:id => 'collapse-offer-chats'}
             .accordion-inner
               -if @need_chats || @offers
                 -unless @need_chats.empty?
                   %h3 Offers you're chatting about
                   %ul.nav.nav-tabs.nav-stacked
-                    -@need_chats.order("created_at DESC").reject{ |i| i.offers.select{|o| o.accepted?}.present? }.each do |need|
+                    -offers_chatting.each do |need|
                       %li
                         =link_to need do
                           .list-image{:rel => 'tooltip', :title => user_address_tooltip(need.user)}
@@ -32,7 +39,7 @@
                 -unless @offers.empty?
                   %h3 Open offers
                   %ul.nav.nav-tabs.nav-stacked
-                    -@offers.order("created_at DESC").reject{ |i| i.accepted? }.each do |offer|
+                    -offers_open.each do |offer|
                       %li
                         =link_to offer.need do
                           .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
@@ -48,15 +55,19 @@
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{'data-parent' => '#offers-accordion', 'data-toggle' => 'collapse', href: '#collapse-offer-accepted'}
-              %h2.mb-2.mt-3 Acccepted
+              %h2.mb-2.mt-3
+                Acccepted
+                %span
+                  =count = offers_accepted.count
+                  ="accepted offer#{'s' if count > 1 || count == 0}"
           .accordion-body.collapse.anim-150{:id => 'collapse-offer-accepted'}
             .accordion-inner
-              -if @offers.order("created_at DESC").select{ |i| i.accepted? }.empty?
+              -if offers_accepted.empty?
                 %p No accepted offers yet.
               -else
                 %h3 Accepted offers
                 %ul.nav.nav-tabs.nav-stacked
-                  -@offers.order("created_at DESC").select{ |i| i.accepted? }.each do |offer|
+                  -offers_accepted.each do |offer|
                     %li
                       =link_to offer.need do
                         .list-image{:rel => 'tooltip', :title => user_address_tooltip(offer.need.user)}
