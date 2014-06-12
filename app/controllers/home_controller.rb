@@ -29,7 +29,7 @@ class HomeController < ApplicationController
     if current_user.try(:has_lat_lng?)
       @general_offers = GeneralOffer.joins(:user).where('users.is_deleted IS FALSE').from_live_neighbourhood.visible_to_user(current_user).at_least(20).select{|need| need.removed_at.nil?}
       @helped = Need.resolved.without_general_offer_generated.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => true}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?
-      @needs = Need.unresolved.without_general_offer_generated.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => false}, :without => {:deadline => Need.first.created_at..Time.now}, :limit => 20).at_least(20).select{|need| need.removed_at.nil?}
+      @needs = Need.unresolved.without_general_offer_generated.closest_to(current_user, :with => {:neighbourhood_live => true, :resolved => false}, :without => {:deadline => Need.first.created_at..Time.now}, :limit => 20).at_least(20).select{|need| need.try(:removed_at).nil?}
     else
       @general_offers = GeneralOffer.joins(:user).where('users.is_deleted IS FALSE').from_live_neighbourhood.visible_to_user(current_user).order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?}
       @helped = Need.from_live_neighbourhood.resolved.without_general_offer_generated.order('created_at DESC').limit(20).at_least(20).select{|need| need.removed_at.nil?} if @general_offers.empty?

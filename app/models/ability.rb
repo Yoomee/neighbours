@@ -45,7 +45,7 @@ class Ability
       end
       can :create, Need
       cannot :new, Need
-      can :destroy, Need do |need|
+      can :remove, Need do |need|
         need.user_id == user.id
       end
       can :create, GeneralOffer

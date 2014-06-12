@@ -108,7 +108,8 @@ class NeedsController < ApplicationController
   
   def remove    
     @need.update_attribute(:removed_at, Time.now)
-    return_or_redirect_to @need
+    flash[:notice] = "Need successfully removed."
+    return_or_redirect_to root_path
   end
   
   private
