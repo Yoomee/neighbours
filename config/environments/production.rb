@@ -60,6 +60,7 @@ Neighbours::Application.configure do
   config.active_support.deprecation = :notify
   
   if %x{pwd}.match(/^\/data\/neighbours_staging\//).present?
+    config.action_mailer.default_url_options = { :host => 'neighbours.yoomee.com' }
     config.action_mailer.perform_deliveries = false
   else
     config.action_mailer.default_url_options = { :host => 'neighbourscanhelp.org.uk' }
