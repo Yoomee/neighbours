@@ -62,6 +62,7 @@ Neighbours::Application.configure do
   if %x{pwd}.match(/^\/data\/neighbours_staging\//).present?
     config.action_mailer.default_url_options = { :host => 'neighbours.yoomee.com' }
     config.action_mailer.delivery_method = :letter_opener
+     config.action_mailer.raise_delivery_errors = false
   else
     config.action_mailer.default_url_options = { :host => 'neighbourscanhelp.org.uk' }
   end
