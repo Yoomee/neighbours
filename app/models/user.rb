@@ -230,9 +230,11 @@ class User < ActiveRecord::Base
 
   def geocode
     results = Geocoder.search(address_with_country)
-    geometry = results.first.data['geometry']
-    self.lat = geometry['location']['lat']
-    self.lng = geometry['location']['lng']
+    geometry = results.first.data['geometry'] if results.first.present?
+    if geometry.present?
+      self.lat = geometry['location']['lat']
+      self.lng = geometry['location']['lng']
+    end
     return true if read_attribute(:city).present?
     if neighbourhood
       self.city = neighbourhood.name
