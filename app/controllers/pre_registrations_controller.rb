@@ -13,8 +13,11 @@ class PreRegistrationsController < ApplicationController
       else
         @next_url = pre_registration_path(@pre_register_user)
       end
-      @need = @pre_register_user.needs.build
-      @general_offer = @pre_register_user.general_offers.build
+
+      unless @pre_register_user.pre_registered_organisation?
+        @need = @pre_register_user.needs.build
+        @general_offer = @pre_register_user.general_offers.build
+      end
     end
   end
 
