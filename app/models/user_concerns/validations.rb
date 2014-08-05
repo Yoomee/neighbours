@@ -84,7 +84,7 @@ module UserConcerns::Validations
   end
   
   def dob_or_undiclosed_age
-    dob.present? || undisclosed_age?
+    dob.present? || undisclosed_age? || is_organisation_admin?
   end  
   
   def group_invitation_email_matches
@@ -110,7 +110,7 @@ module UserConcerns::Validations
   end  
   
   def over_16
-    return true if undisclosed_age? || admin?
+    return true if undisclosed_age? || admin? || is_organisation_admin?
     errors.add(:dob, "You must be over 16 to register") unless dob.present? && dob < 16.years.ago.to_date
   end  
   
