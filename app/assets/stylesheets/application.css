@@ -91,7 +91,7 @@
 	color: #777;
 }
 body, p {
-  
+
   -webkit-font-smoothing:antialiased;
 }
 
@@ -194,14 +194,14 @@ a.category,
 .huge-offer-count {
   font-size:70px;
   font-weight:bold;
-  line-height:70px;  
+  line-height:70px;
 }
 
 .offer-count-2 {
   border-bottom: 4px solid #abd424;
 }
 .offer-count-1 {
-  border-bottom: 4px solid #f8bb61;  
+  border-bottom: 4px solid #f8bb61;
 }
 
 h1,
@@ -477,7 +477,7 @@ br.clear {
   background: #8bd7dd;
   color: #fff;
 
-  -webkit-box-shadow:inset 1px 1px 4px rgba(0,0,0,0.2);  
+  -webkit-box-shadow:inset 1px 1px 4px rgba(0,0,0,0.2);
   box-shadow:inset 1px 1px 4px rgba(0,0,0,0.2);
 }
 
@@ -489,7 +489,7 @@ br.clear {
   color: #3a3a3a;
   text-shadow: 1px 1px 0px rgba(255,255,255,0.9);
   font-weight: bold;
-  word-spacing: 2px; 
+  word-spacing: 2px;
 }
 .flash_container .span12 {
   margin: 0 auto;
@@ -583,7 +583,7 @@ a.home-cta-groups.slideshow {
   font-size:14px;
   line-height:17px;
   -webkit-animation: pulsate 2s ease-out;
-  -webkit-animation-iteration-count: infinite; 
+  -webkit-animation-iteration-count: infinite;
 }
 #badge-groups-new.slideshow {
   top: 140px;
@@ -1075,7 +1075,7 @@ a.yoomee-logo {
 .find-us-on li {
   display: inline-block;
 }
-.find-us-on > li {  
+.find-us-on > li {
   margin: 0 0 0 10px;
 }
 .link-find-us {
@@ -1100,7 +1100,7 @@ a.yoomee-logo {
 }
 .link-find-us:hover {
   text-decoration: none;
-  color: #fff; 
+  color: #fff;
   opacity: 0.9;
 }
 /*========== Flickr Feed ==========*/
@@ -1109,13 +1109,13 @@ a.yoomee-logo {
   display: inline;
 }
 .flickr_badge_image img {
-  border: 0px solid #666666 !important; 
-  padding: 1px; 
+  border: 0px solid #666666 !important;
+  padding: 1px;
   margin: 2px;
 }
 #flickr_badge_wrapper {
   width: 250px;
-  text-align: left; 
+  text-align: left;
   margin: 0 auto;
 }
 
@@ -1391,7 +1391,7 @@ body.controller_home.logged_out .header-intro {
   right: -52px;
 }
 .header-intro-fixed .logo-intro .staging-badge {
-  right: 30px;  
+  right: 30px;
 }
 .logo-intro-link {
   background: url(/assets/logo-intro.png) no-repeat 0 0;
@@ -1411,7 +1411,7 @@ body.controller_home.logged_out .header-intro {
   max-width: 119px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;  
+  text-overflow: ellipsis;
 }
 
 @-webkit-keyframes nav_reset {
@@ -1556,7 +1556,7 @@ a.intro-nav-link-security {
   -webkit-border-bottom-left-radius:5px;
   border-bottom-right-radius:5px;
   border-bottom-left-radius:5px;
-  -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);     
+  -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);
   box-shadow:1px 1px 2px rgba(0,0,0,0.2);
 }
 .safety-help-link-logged-out {
@@ -1577,7 +1577,7 @@ a.intro-nav-link-security {
   background-color: white;
   color: #b35860;
   padding-left: 6px;
-  padding-right: 6px;  
+  padding-right: 6px;
 }
 .cta-intro {
   float: right;
@@ -1600,7 +1600,7 @@ a.intro-nav-link-security {
   color: #fff;
 }
 a.cta-small {
-  float: left; 
+  float: left;
   margin-left: 0;
 }
 #cta-1 {
@@ -1646,7 +1646,7 @@ a.cta-small {
 }
 #comic-1 {
   background: #dcd7d3 url(/assets/comic-1.jpg) no-repeat bottom center;
-} 
+}
 #comic-1 .comic-text {
   top: 110px;
 }
@@ -1656,7 +1656,7 @@ a.cta-small {
 }
 #comic-2 {
   background: #fff url(/assets/comic-2.jpg) no-repeat bottom center;
-} 
+}
 #comic-2 .comic-text, #comic-4 .comic-text, #comic-6 .comic-text {
   right: auto;
   left: 20px;
@@ -1664,20 +1664,20 @@ a.cta-small {
 #comic-3 {
   background: #718ac3 url(/assets/comic-3.jpg) no-repeat bottom center;
   color: #fff;
-} 
+}
 #comic-4 {
   background: #fff url(/assets/comic-4.jpg) no-repeat bottom center;
-} 
+}
 #comic-5 {
   background: #a3cd67 url(/assets/comic-5.jpg) no-repeat bottom center;
   color: #fff;
   -webkit-box-shadow: inset 0 2px 7px rgba(0,0,0,0.2);
   box-shadow: inset 0 2px 7px rgba(0,0,0,0.2);
-} 
+}
 #comic-6 {
   background: #958b81 url(/assets/comic-6.jpg) no-repeat bottom center;
   color: #fff;
-} 
+}
 .intro-strip {
   float: left;
   width: 100%;
@@ -1712,7 +1712,7 @@ a.cta-small {
   font-size: 28px;
   padding: 20px 50px;
   float: left;
-  
+
 }
 #big-cta {
   height: 450px;
@@ -1728,7 +1728,7 @@ a.cta-small {
   background: url(/assets/to-top-link.png) no-repeat top center;
 }
 .popup-intro {
-	margin:0 0 30px 20px;  
+	margin:0 0 30px 20px;
 }
 .bottom-paragraph {
   margin-top: 30px;
@@ -1774,7 +1774,7 @@ a.cta-small {
   margin: 8px 20px 0 0;
 }
 .preregister-form #new-pre-registration-form-submit {
- margin: 0 0 0 120px; 
+ margin: 0 0 0 120px;
  float: left;
 }
 
@@ -1886,7 +1886,7 @@ a.need-help-button:hover {
 	margin-bottom:30px;
 	border: 1px solid #ccc;
 	box-shadow:1px 1px 4px rgba(0,0,0,0.1)
-} 
+}
 .tag-selector {
   padding: 20px;
   position: relative;
@@ -1956,9 +1956,9 @@ a.small-help-btn {
   line-height: 30px;
   float: left;
   clear: left;
-} 
+}
 .group-bio-textarea {
-	min-height: 100px;  
+	min-height: 100px;
 }
 
 .all-groups-strip {
@@ -2097,10 +2097,10 @@ img.groups-logo-header {
 
 .messages-header {
   background-color: #eee;
-  color: #000;  
+  color: #000;
 }
 h2.messages-title {
-  color: #000;  
+  color: #000;
 }
 
 /*=============  User notifications edit ===================*/
@@ -2194,7 +2194,7 @@ textarea#user_notes{
 
 .profile-title {
   background: #abd424;
-  border-top: 1px solid; 
+  border-top: 1px solid;
   border-left: 1px solid;
   border-right: 1px solid;
   border-bottom: none;
@@ -2217,4 +2217,10 @@ textarea#user_notes{
 }
 .profile-details-private {
   border: 1px solid #f78a1e;
+}
+
+/*============= Feedback form reverse honeypot ===================*/
+#extra_message {
+  position: absolute;
+  left: -99999px;
 }

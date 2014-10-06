@@ -3,3 +3,4 @@
   =form.input :last_name
   =form.input :email, :label => "Email address"
   =form.input :message, :label => "Your feedback", :as => :text, :input_html => {:class => "span8", :rows => 10}
+  =text_area_tag :extra_message, nil, placeholder: "Don't fill this in! If you do your message will not be sent. It is to catch spam bots"
