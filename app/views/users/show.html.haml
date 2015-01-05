@@ -26,7 +26,7 @@
         -elsif @user.community_champion
           ="#{first_name_or_your(@user).capitalize} neighbourhood champion is #{link_to(@user.community_champion.to_s, user_champion_path(@user))}".html_safe
         -else
-          -if @user.champion_request_at && current_user.admin?
+          -if @user.champion_request_at && (@user == current_user || current_user.admin?)
             ="#{first_name_or_your(@user).capitalize} request to become a neighbourhood champion is being considered"
           -else
             ="There isn't a neighbourhood champion for #{first_name_or_your(@user)} area - #{link_to 'ask to become one', request_to_be_champion_user_path, :method => :put}".html_safe
