@@ -2,4 +2,9 @@
   window.location.replace('<%=root_url.chop + @next_url%>');
 <%else%>
   $('#pre-register').html('<%=escape_javascript(render("pre_registrations/modal_form"))%>');
+  <% unless @pre_register_user.pre_registered_organisation? %>
+    $('#organisation-options, .organisation-label').hide();
+    $('input#user_organisation_as_admin_attributes_name').prop('disabled', true);
+    $('#organisation-as-admin-controls').hide();
+  <% end %>
 <%end%>
