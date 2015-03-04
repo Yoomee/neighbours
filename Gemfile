@@ -2,7 +2,7 @@ source 'https://yoomee:wLjuGMTu30AvxVyIrq3datc73LVUkvo@gems.yoomee.com'
 source 'http://rubygems.org'
 
 ### Always used
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.12'
 gem 'mysql2'
 gem "rake", "0.8.7"
 
@@ -48,7 +48,6 @@ group :development do
  gem 'letter_opener'
  gem 'debugger'
  gem 'ym_tools'
- gem 'passenger'
  gem 'thin'
  gem 'sqlite3'
 end

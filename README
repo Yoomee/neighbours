@@ -1,1 +1,17 @@
-== Neighbours Can Help
+= Neighbours Can Help
+
+== Development
+
+Requires RVM
+
+== Staging
+
+The staging environment is on EngineYard using the eyneighbours@yoomee.com login.
+
+http://neighbours.yoomee.com/
+
+== Production
+
+The staging environment is on EngineYard using the eyneighbours@yoomee.com login.
+
+http://neighbourscanhelp.org.uk
