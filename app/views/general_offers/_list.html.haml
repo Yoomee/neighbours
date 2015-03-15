@@ -1,8 +1,8 @@
 %ul.help-list.unstyled
   -if general_offers.empty?
     %li
-      %p 
-        Looks like no-one is offering help in 
+      %p
+        Looks like no-one is offering help in
         =params[:need_category_id].present? ? 'this category' : 'your neighbourhood'
         at the moment. Explain what you would like help with using the form on the right.
   -else

@@ -2,14 +2,14 @@
   .span12
     %h1 I'd like some help
 .row
-  .span12.tag-selectors  
+  .span12.tag-selectors
     .tag-selector.tag-selector-row-1.clearfix
       %h3.mb1
         Select a category below...
       %ul.help-tags.unstyled
         -NeedCategory.root.each do |category|
           %li=link_to(category, '#', :class => "need-category help-tag btn#{@need.category_id == category.id ? ' btn-primary' : ''}", :data => {:category_id => category.id})
-        
+
     #need-sub-categories{:class => "tag-selector tag-selector-row-2 clearfix#{@need.category.try(:sub_categories).present? ? '' : ' hide'}"}
       %span.tag-selector-arrow
       %h3.mb1 More specifically...

@@ -146,7 +146,7 @@ window.FormErrors =
   scrollToFirstError: () ->
     YmCore.scrollTo($('form .control-group.error:first'), {offset: 10})
 
-window.Registration =    
+window.Registration =
   initValidateStep: () ->
     $('form.user').submit () ->
       if $('#user_validate_by').val() != "credit_card"
@@ -180,7 +180,7 @@ window.Registration =
   toggleValidateByType: (type) ->
     currentType = $('#user_validate_by').val()
     Registration.removeValidateByType()
-    if type == "credit_card"      
+    if type == "credit_card"
       $('#user_requested_validation_by_credit_card').val(1)
       Registration.saveValidateByType(type)
     else if currentType != type
@@ -221,11 +221,10 @@ window.NeedCategorySelector =
         url = "/need_categories/#{categoryId}/general_offers"
       else
         suggestedListId = "#suggested-needs"
-        url = "/need_categories/#{categoryId}/needs"        
-      $("#{suggestedListId}").addClass('loading')
+        url = "/need_categories/#{categoryId}/needs"
       $.ajax
         url: url,
-        dataType: 'script'          
+        dataType: 'script'
         success: () ->
           $("#{suggestedListId}").removeClass('loading')
     $('a.need-sub-category').live 'click', (event) ->
@@ -233,7 +232,7 @@ window.NeedCategorySelector =
       $('a.need-sub-category').removeClass('btn-primary')
       $(this).addClass('btn-primary')
       NeedCategorySelector.selectSubCategory($(this).data('subCategoryId'))
-    
+
 window.NewNeedForm =
   force_submit: false
   init: (logged_in) ->
@@ -245,7 +244,7 @@ window.NewNeedForm =
         NewNeedForm.force_submit = true
         $('form#new_need').submit()
       ClientSideValidations.callbacks.form.pass = (element, callback) ->
-        $('#register-popup').modal('show')        
+        $('#register-popup').modal('show')
       $('form#new_need').submit () ->
         NewNeedForm.force_submit
   initShowHideDeadline: ->
