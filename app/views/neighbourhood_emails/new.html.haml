@@ -1,10 +1,10 @@
 %h2.mb-2
   =title("Email #{params[:role].humanize.downcase.sub('user', '')} users in #{@neighbourhood}")
-  
+
 %p
   Enter the content of the email below and click send. An email will be sent to all
-  ="#{@neighbourhood.users.where(:role => 'pre_registration').count} people in #{@neighbourhood}."
-  
+  ="#{@users.count} #{params[:role].humanize.downcase.sub('user', '')} users in #{@neighbourhood}."
+
 =form_tag(create_email_neighbourhood_path(@neighbourhood, params[:role])) do
   %div{:class => "control-group#{request.post? && params[:subject].blank? ? ' error' : ''}"}
     %label.control-label Subject
@@ -18,8 +18,16 @@
       %span.help-inline Can't be blank
   -if @neighbourhood.live?
     %p="* <USER> will be replaced with the user's name."
-    %p.mb-2="* <REGISTER_URL> will be replaced with the user-specific registration url."    
+    %p.mb-2="* <REGISTER_URL> will be replaced with the user-specific registration url."
   %button.btn{:type => 'submit'} Send emails
-    
+
+%hr
+%h3.mb-2
+  ="Email addresses (#{@users.count})"
+-@users.each do |user|
+  %br
+  =user.email
+  ,
+
 =options_panel do
   =back_link
