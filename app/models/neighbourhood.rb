@@ -46,11 +46,11 @@ class Neighbourhood < ActiveRecord::Base
   end
 
   def snippet_text(slug, default_text = nil)
-    if self.respond_to?("snippet_#{slug}")
-      self.try("snippet_#{slug}")
-    else
+    #if self.respond_to?("snippet_#{slug}")
+    #  self.try("snippet_#{slug}")
+    #else
       YmSnippets::Snippet.find_by_slug(slug).to_s
-    end
+    #end
   end
 
   def max_radius
